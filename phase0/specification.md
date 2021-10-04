@@ -1,4 +1,4 @@
-### Specification for the program
+# Specification for the program
 
 A calendar in which a user can create, edit, or delete birthday events that correspond to certain dates and certain friends. 
 Users can set a time before the event to be notified. Each birthday event should be able to include personal comments and gift ideas. 
