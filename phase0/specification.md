@@ -7,12 +7,12 @@ Users should have the option to look back at previous events or be reminded of t
 ## Example usage
 ```
 $ trackr
->Welcome to TRACKR!                                                            
+> Welcome to TRACKR!                                                            
 
->Upcoming Birthdays:
->Mr Potato Head (2 days)
->John (13 days)
->Dave (21 days)
+> Upcoming Birthdays:
+> Mr Potato Head (2 days)
+> John (13 days)
+> Dave (21 days)
 $ trackr add (create event) -b (event type) -d 2003/01/02 (date in specified format) -n Steve (name) -r 7 (reminder window)
 > New birthday event created for Steve. You will get a reminder 7 days before their birthday.
 $
