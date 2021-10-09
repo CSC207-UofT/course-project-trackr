@@ -15,7 +15,7 @@ class AnniversaryTest {
                 "Wedding",
                 new Date(2021, 11, 10),
                 new Date(2021, 11, 5),
-                new Person());
+                new Person("Mr.", "John"));
 
         assertTrue(anniversary.isReminderDeadline(new Date(2021, 11, 5)));
     }
@@ -26,9 +26,9 @@ class AnniversaryTest {
                 "Wedding",
                 new Date(2021, 11, 10),
                 new Date(2021, 11, 5),
-                new Person());
+                new Person("Hello"));
 
-        assertTrue(anniversary.isReminderDeadline(new Date(2021, 11, 10)));
+        assertFalse(anniversary.isReminderDeadline(new Date(2021, 11, 10)));
     }
 
     @Test
@@ -36,8 +36,8 @@ class AnniversaryTest {
         Anniversary anniversary = new Anniversary(
                 "Wedding",
                 new Date(2021, 11, 10),
-                new Person());
+                new Person("Goodbye"));
 
-        assertTrue(anniversary.isReminderDeadline(new Date(2021, 11, 10)));
+        assertFalse(anniversary.isReminderDeadline(new Date(2021, 11, 10)));
     }
 }
