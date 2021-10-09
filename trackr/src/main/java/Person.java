@@ -4,7 +4,7 @@ public class Person {
     private String firstName;
     private String lastName;
     private String description;
-    private HashSet<String> tags;
+    private final HashSet<String> tags;
 
     /**
      * Create a new person that has a first name, last name, description and tags
