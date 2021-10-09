@@ -1,4 +1,4 @@
-package UseCases;
+package usecases;
 
 import java.util.HashMap;
 
