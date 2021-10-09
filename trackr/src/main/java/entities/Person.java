@@ -1,3 +1,5 @@
+package entities;
+
 import java.util.HashSet;
 
 public class Person {
@@ -89,7 +91,7 @@ public class Person {
      * Remove the tag from this person.
      * Return true if successfully removed, return false if this person doesn't have that tag
      * @param tag the tag to remove from this person
-     * @return false if the Person does not have the tag
+     * @return false if the entities.Person does not have the tag
      * otherwise return remove the tag and return true
      */
     public boolean removeTag(String tag) {
