@@ -1,4 +1,4 @@
-package events;
+package entities;
 
 import java.util.Date;
 
