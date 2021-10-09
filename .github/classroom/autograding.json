@@ -2,7 +2,7 @@
   "tests": [
     {
       "name": "Autotesting Action",
-      "setup": "",
+      "setup": "cd trackr",
       "run": "gradle test",
       "input": "",
       "output": "",
