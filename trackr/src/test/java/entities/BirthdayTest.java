@@ -27,7 +27,7 @@ class BirthdayTest {
                 new Date(2021, 11, 5),
                 new Person("Thing", "Goodbye"));
 
-        assertTrue(birthday.isReminderDeadline(new Date(2021, 11, 10)));
+        assertFalse(birthday.isReminderDeadline(new Date(2021, 11, 10)));
     }
 
     @Test
@@ -37,6 +37,6 @@ class BirthdayTest {
                 new Date(2021, 11, 10),
                 new Person("Geniveve", "King"));
 
-        assertTrue(birthday.isReminderDeadline(new Date(2021, 11, 10)));
+        assertFalse(birthday.isReminderDeadline(new Date(2021, 11, 10)));
     }
 }
