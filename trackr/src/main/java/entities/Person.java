@@ -98,7 +98,7 @@ public class Person {
      * @return false if the person already has this tag, true otherwise
      */
     public boolean addTag(String tag) {
-        return tags.add(tag);
+        return this.tags.add(tag);
     }
 
     /**
@@ -109,6 +109,6 @@ public class Person {
      * otherwise return remove the tag and return true
      */
     public boolean removeTag(String tag) {
-        return tags.remove(tag);
+        return this.tags.remove(tag);
     }
 }
