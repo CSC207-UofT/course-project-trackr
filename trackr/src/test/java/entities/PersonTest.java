@@ -19,7 +19,7 @@ class PersonTest {
     }
 
     @Test
-    public void testAddExitingTag() {
+    public void testAddExistingTag() {
         this.person.addTag("Cool");
         assertFalse(this.person.addTag("Cool"));
     }
