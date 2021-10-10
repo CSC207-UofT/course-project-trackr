@@ -77,6 +77,8 @@ public class Person {
         this.description = description;
     }
 
+    public HashSet<String> getTags() { return tags; }
+
     /**
      * Add a tag to this person.
      * Return true if the tag was successfully added and false if this person already has this tag.
