@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class Person {
     private String firstName;
@@ -77,7 +78,9 @@ public class Person {
         this.description = description;
     }
 
-    public HashSet<String> getTags() { return tags; }
+    public Set<String> getTags() { return tags; }
+
+    public boolean hasTags() { return !this.tags.isEmpty(); }
 
     /**
      * Add a tag to this person.
