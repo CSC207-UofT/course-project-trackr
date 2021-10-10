@@ -9,26 +9,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AnniversaryTest {
 
-    @Test
-    void testReminderDatesTrue() {
-        Anniversary anniversary = new Anniversary(
+    Anniversary anniversary;
+
+    @BeforeEach
+    void setup() {
+        this.anniversary = new Anniversary(
                 "Wedding",
                 new Date(2021, 11, 10),
                 new Date(2021, 11, 5),
-                new Person("Mr.", "John"));
+                new Person("Nopity", "Nope"));
+    }
 
-        assertTrue(anniversary.isReminderDeadline(new Date(2021, 11, 5)));
+    @Test
+    void testReminderDatesTrue() {
+        assertTrue(this.anniversary.isReminderDeadline(new Date(2021, 11, 5)));
     }
 
     @Test
     void testReminderDatesFalse() {
-        Anniversary anniversary = new Anniversary(
-                "Wedding",
-                new Date(2021, 11, 10),
-                new Date(2021, 11, 5),
-                new Person("Hello"));
-
-        assertFalse(anniversary.isReminderDeadline(new Date(2021, 11, 10)));
+        assertFalse(this.anniversary.isReminderDeadline(new Date(2021, 11, 10)));
     }
 
     @Test

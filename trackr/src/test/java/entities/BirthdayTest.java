@@ -1,5 +1,6 @@
 package entities;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -7,27 +8,25 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BirthdayTest {
+    Birthday birthday;
 
-    @Test
-    void testReminderDatesTrue() {
-        Birthday birthday = new Birthday(
+    @BeforeEach
+    void setup() {
+        this.birthday = new Birthday(
                 "Wedding",
                 new Date(2021, 11, 10),
                 new Date(2021, 11, 5),
                 new Person("Nopity", "Nope"));
+    }
 
-        assertTrue(birthday.isReminderDeadline(new Date(2021, 11, 5)));
+    @Test
+    void testReminderDatesTrue() {
+        assertTrue(this.birthday.isReminderDeadline(new Date(2021, 11, 5)));
     }
 
     @Test
     void testReminderDatesFalse() {
-        Birthday birthday = new Birthday(
-                "Wedding",
-                new Date(2021, 11, 10),
-                new Date(2021, 11, 5),
-                new Person("Thing", "Goodbye"));
-
-        assertFalse(birthday.isReminderDeadline(new Date(2021, 11, 10)));
+        assertFalse(this.birthday.isReminderDeadline(new Date(2021, 11, 10)));
     }
 
     @Test
