@@ -78,9 +78,18 @@ public class Person {
         this.description = description;
     }
 
-    public Set<String> getTags() { return tags; }
+    public Set<String> getTags() {
+        return tags;
+    }
 
-    public boolean hasTags() { return !this.tags.isEmpty(); }
+    /**
+     * Return whether the person has the given tag
+     * @param tag the tag to test for
+     * @return a boolean representing whether the person has the given tag or not
+     */
+    public boolean hasTag(String tag) {
+        return this.tags.contains(tag);
+    }
 
     /**
      * Add a tag to this person.
