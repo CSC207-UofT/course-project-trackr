@@ -36,13 +36,19 @@ class PersonTest {
     }
 
     @Test
-    public void testPersonHasTags() {
+    public void testPersonHasTagsNonEmpty() {
         this.person.addTag("Cool");
-        assertTrue(this.person.hasTags());
+        assertTrue(this.person.hasTag("Cool"));
     }
 
     @Test
-    public void testPersonDoesNotHaveTags() {
-        assertFalse(this.person.hasTags());
+    public void testPersonDoesNotHaveTagsNonEmpty() {
+        this.person.addTag("isCool");
+        assertFalse(this.person.hasTag("Cool"));
+    }
+
+    @Test
+    public void testPersonDoesNotHaveTagsEmpty() {
+        assertFalse(this.person.hasTag("Cool"));
     }
 }
