@@ -34,4 +34,15 @@ class PersonTest {
     public void testRemoveNonexistentTag() {
         assertFalse(this.person.removeTag("Cool"));
     }
+
+    @Test
+    public void testPersonHasTags() {
+        this.person.addTag("Cool");
+        assertTrue(this.person.hasTags());
+    }
+
+    @Test
+    public void testPersonDoesNotHaveTags() {
+        assertFalse(this.person.hasTags());
+    }
 }
