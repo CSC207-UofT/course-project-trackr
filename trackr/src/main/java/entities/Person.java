@@ -78,9 +78,13 @@ public class Person {
         this.description = description;
     }
 
-    public Set<String> getTags() { return tags; }
+    public Set<String> getTags() { 
+        return tags;
+    }
 
-    public boolean hasTags() { return !this.tags.isEmpty(); }
+    public boolean hasTags() { 
+        return !this.tags.isEmpty();
+    }
 
     /**
      * Add a tag to this person.
