@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class Person {
     private String firstName;
@@ -77,6 +78,19 @@ public class Person {
         this.description = description;
     }
 
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    /**
+     * Return whether the person has the given tag
+     * @param tag the tag to test for
+     * @return a boolean representing whether the person has the given tag or not
+     */
+    public boolean hasTag(String tag) {
+        return this.tags.contains(tag);
+    }
+
     /**
      * Add a tag to this person.
      * Return true if the tag was successfully added and false if this person already has this tag.
@@ -84,7 +98,7 @@ public class Person {
      * @return false if the person already has this tag, true otherwise
      */
     public boolean addTag(String tag) {
-        return tags.add(tag);
+        return this.tags.add(tag);
     }
 
     /**
@@ -95,6 +109,6 @@ public class Person {
      * otherwise return remove the tag and return true
      */
     public boolean removeTag(String tag) {
-        return tags.remove(tag);
+        return this.tags.remove(tag);
     }
 }
