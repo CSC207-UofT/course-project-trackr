@@ -1,4 +1,4 @@
-package UseCases;
+package usecases;
 import entities.Person;
 
 import java.util.HashMap;
