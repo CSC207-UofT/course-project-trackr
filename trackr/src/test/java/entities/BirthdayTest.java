@@ -13,10 +13,10 @@ class BirthdayTest {
     @BeforeEach
     void setup() {
         this.birthday = new Birthday(
-                "Wedding",
+                new Person("Nopity", "Nope"),
                 new Date(2021, 11, 10),
-                new Date(2021, 11, 5),
-                new Person("Nopity", "Nope"));
+                new Date(2021, 11, 5)
+                );
     }
 
     @Test
@@ -32,9 +32,9 @@ class BirthdayTest {
     @Test
     void testReminderDatesNull() {
         Birthday birthday = new Birthday(
-                "Wedding",
-                new Date(2021, 11, 10),
-                new Person("Geniveve", "King"));
+                new Person("Geniveve", "King"),
+                new Date(2021, 11, 10)
+                );
 
         assertFalse(birthday.isReminderDeadline(new Date(2021, 11, 10)));
     }

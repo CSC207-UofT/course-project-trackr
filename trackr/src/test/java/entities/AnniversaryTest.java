@@ -14,10 +14,10 @@ class AnniversaryTest {
     @BeforeEach
     void setup() {
         this.anniversary = new Anniversary(
-                "Wedding",
+                new Person("Nopity", "Nope"),
                 new Date(2021, 11, 10),
-                new Date(2021, 11, 5),
-                new Person("Nopity", "Nope"));
+                new Date(2021, 11, 5)
+                );
     }
 
     @Test
@@ -33,9 +33,9 @@ class AnniversaryTest {
     @Test
     void testReminderDatesNull() {
         Anniversary anniversary = new Anniversary(
-                "Wedding",
-                new Date(2021, 11, 10),
-                new Person("Goodbye"));
+                new Person("Goodbye"),
+                new Date(2021, 11, 10)
+                );
 
         assertFalse(anniversary.isReminderDeadline(new Date(2021, 11, 10)));
     }
