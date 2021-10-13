@@ -12,7 +12,7 @@ public class CommandInterface {
     public static void Startup() {
         System.out.println("=-=-=-=-=-=-=-=-=-=\nWelcome to Trackr!\n=-=-=-=-=-=-=-=-=-=\n   Upcoming Events:\n");
         /*
-        implement iteration over events in their reminder period
+        TODO: implement iteration over events in their reminder period
          */
         if (false) { //if there is at least 1 upcoming event:
             assert true; // display all upcoming events
