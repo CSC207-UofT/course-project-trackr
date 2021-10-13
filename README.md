@@ -16,9 +16,10 @@ On cloning the project (and opening it in IntelliJ idea), you will have to mark 
 To do this, go to:
 
 - `File` -> `Project Structure`
-- `Project Settings` -> `Modules` -> `+` (in the top left corner) -> `Import Module`
-- Select the `trackr` folder in this project -> `Okay`
-- `Import Module from externel model` -> `Gradel` -> `Finish`
+   - Under `Project SDK`, select **openjdk-16 version 16.0.2**
+   - Next, go to`Project Settings` -> `Modules` -> `+` (in the top left corner) -> `Import Module`
+      - Select the `trackr` folder in this project -> `Okay`
+      - `Import Module from externel model` -> `Gradel` -> `Finish`
 
 IntelliJ should now properly see the project source, and download the relevant JDK and libraries.
 
