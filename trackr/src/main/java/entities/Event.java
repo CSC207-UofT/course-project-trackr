@@ -3,33 +3,33 @@ package entities;
 import java.util.Date;
 
 public abstract class Event {
-    String name;
     Date date;
     Date reminderDeadline;
+    Person person;
 
     /**
      * Create a new event with a reminder time.
-     * @param name the name of this event
+     * @param person the person associated with this event
      * @param date the date this event will take place
      * @param reminderDeadline when this event should be reminded to the user.
      */
-    public Event(String name, Date date, Date reminderDeadline) {
-        this.name = name;
+    public Event(Person person, Date date, Date reminderDeadline) {
         this.date = date;
         this.reminderDeadline = reminderDeadline;
+        this.person = person;
     }
 
     /**
      * Create an event without a reminder time.
-     * @param name the name of this event
+     * @param person the person associated with this event
      * @param date the date this event will take place
      */
-    public Event(String name, Date date) {
-        this(name, date, null);
+    public Event(Person person, Date date) {
+        this(person, date, null);
     }
 
-    public String getName() {
-        return name;
+    public Person getPerson() {
+        return person;
     }
 
     public Date getDate() {
