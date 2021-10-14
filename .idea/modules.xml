@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/course-project-trackr.iml" filepath="$PROJECT_DIR$/.idea/course-project-trackr.iml" />
-      <module fileurl="file://$PROJECT_DIR$/trackr/trackr.iml" filepath="$PROJECT_DIR$/trackr/trackr.iml" />
     </modules>
   </component>
 </project>
