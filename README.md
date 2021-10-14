@@ -9,8 +9,8 @@ Event Trackr Android app. Allows users to track birthdays and anniversaries of f
 ## Configuring the Project
 
 To keep things organized, this project uses the modules feature of IntelliJ. IntelliJ modules separate out the
-phase-specific folders from the source code, and keep the project root from getting cluttered by gradle build files (
-which are only necessary for the source code).
+phase-specific folders from the source code, and keep the project root from getting cluttered by gradle build files 
+(which are only necessary for the source code).
 
 To set this up, you need to import the gradle project:
 
