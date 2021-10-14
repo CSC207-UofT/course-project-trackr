@@ -3,9 +3,9 @@ package entities;
 import java.util.Date;
 
 public abstract class Event {
-    Date date;
-    Date reminderDeadline;
-    Person person;
+    private Date date;
+    private Date reminderDeadline;
+    private Person person;
 
     /**
      * Create a new event with a reminder time.
