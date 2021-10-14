@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="trackr.main" target="16" />
+      <module name="trackr.test" target="16" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
