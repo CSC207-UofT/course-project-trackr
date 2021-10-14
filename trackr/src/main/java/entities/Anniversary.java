@@ -1,6 +1,6 @@
 package entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Anniversary extends Event{
     /**
@@ -9,7 +9,7 @@ public class Anniversary extends Event{
      * @param date the date this event will take place
      * @param reminderDeadline when this event should be reminded to the user.
      */
-    public Anniversary(Person person, Date date, Date reminderDeadline) {
+    public Anniversary(Person person, LocalDate date, LocalDate reminderDeadline) {
         super(person, date, reminderDeadline);
     }
 
@@ -18,7 +18,7 @@ public class Anniversary extends Event{
      * @param person The person this anniversary is associated with
      * @param date the date this event will take place
      */
-    public Anniversary(Person person, Date date) {
+    public Anniversary(Person person, LocalDate date) {
         this(person, date, null);
     }
 }
