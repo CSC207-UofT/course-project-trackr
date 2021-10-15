@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * A class representing the target Person for an Event.
+ */
 class PersonTest {
     private Person person;
 
