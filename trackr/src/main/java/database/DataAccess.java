@@ -6,6 +6,9 @@ import entities.Person;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An implementation for the DatabaseAccessInterface, which preforms Database operations.
+ */
 public class DataAccess implements DatabaseAccessInterface{
     private final Database database = new Database();
 
