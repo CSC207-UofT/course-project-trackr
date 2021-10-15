@@ -1,4 +1,4 @@
-# Progress Report 
+# Progress Report
 
 ### Part 1: Project Summary
 
@@ -17,52 +17,54 @@ Our typical walk-through has the user decide between creating a new event or man
 #### Skeleton Program
 
 Our Skeleton Program will be able to do the following
-<ul>
-  <li> Create new Birthday Events
-  <li> Create new Anniversary Events
-  <li> More
-</ul>
+
+- Create new Birthday Events
+- Create new Anniversary Events
+- More
 
 ### Part 2: Open Questions
 
-Add Questions Here
+- How should we differentiate between different Objects. That is, given two Events/Person objects which have identical attributes, how can we distinguish between them?
+
+- Do we need subclasses for the Event class? The Anniversay subclass and Birthday subclass are identical except for the class name. Should a Birthday exhibit different behavior than a Anniversay?
+
+- Should we use tags on Events instead of subclasses, or maybe a Tagable Interface?
+
+- How should the Data from the database be transported to the UI? Is the current architecture valid and sustainable?
 
 ### Part 3: Things That Have Worked Well With Our Design
 
 ### Part 4: Work Distribution
 
-Person 1
-<ul>
-  <li> Task 1
-  <li> Task 2
-</ul>
+Person 1: Menghao Yu
+
+- Implemented a Person class with various methods that allow the object to be edited.
+- Implemented a tentative Database which stores Event objects
+- Created a DatabaseAccessInterface to allow other classes to preform operations on the Database.
+- Created a DataAccess class which provides an implementation for the DatabaseAccessInterface
+- Created a DatabaseAccessFactory to create DatabaseAccessInterfaces without directly instantiating the DataAccess class.
 
 Person 2
-<ul>
-  <li> Task 1
-  <li> Task 2
-</ul>
+
+- Task 1
+- Task 2
 
 Person 3
-<ul>
-  <li> Task 1
-  <li> Task 2
-</ul>
+
+- Task 1
+- Task 2
 
 Person 4
-<ul>
-  <li> Task 1
-  <li> Task 2
-</ul>
+
+- Task 1
+- Task 2
 
 Person 5
-<ul>
-  <li> Task 1
-  <li> Task 2
-</ul>
+
+- Task 1
+- Task 2
 
 Person 6
-<ul>
-  <li> Task 1
-  <li> Task 2
-</ul>
+
+- Task 1
+- Task 2
