@@ -6,6 +6,9 @@ import entities.Event;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * A dataclass representing the Data that Presenter will retrieve from EventManager
+ */
 public class EventOutputData {
     private final EventTypes eventType;
     private final String firstName;
