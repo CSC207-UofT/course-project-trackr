@@ -1,22 +1,12 @@
 package database;
 
 import entities.Event;
-import entities.Person;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Database {
-    private final List<Person> PersonData = new ArrayList<>();
-    private final List<Event> EventData = new ArrayList<>();
-
-    /**
-     * Add a new Person to this database
-     * @param person the Person to add to this Database
-     */
-    public void addPerson(Person person) {
-        this.PersonData.add(person);
-    }
+    private final Set<Event> EventData = new HashSet<>();
 
     /**
      * Add a new Event to this Database
@@ -36,27 +26,10 @@ public class Database {
     }
 
     /**
-     * Remove a Person from this Database. Return a boolean representing if the operation was successful.
-     * @param person the Person to remove from this Database.
-     * @return a boolean representing if the Person was successfully removed from this Database
-     */
-    public boolean removePerson(Person person) {
-        return this.PersonData.remove(person);
-    }
-
-    /**
-     * Return a List of ALL People in this Database
-     * @return a List of ALL people in this Database
-     */
-    public List<Person> getPersonData() {
-        return this.PersonData;
-    }
-
-    /**
      * Return a List of ALL Events in this Database
      * @return a List of ALL events in this Database
      */
-    public List<Event> getEventData() {
+    public Set<Event> getEventData() {
         return this.EventData;
     }
 }
