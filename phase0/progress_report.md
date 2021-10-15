@@ -1,43 +1,68 @@
 # Progress Report 
 
----
+### Part 1: Project Summary
 
-Prepare a short written document updating your TA on your group's progress so far. At your next meeting with your TA, your group should be ready to present a summary of your progress report to your TA. Each group member must present part of the progress report.
+#### Specification
 
-The report should include:
-- a brief summary of your specification, CRC model, scenario walk-through, and skeleton program,
-- open questions your group is struggling with,
-- what has worked well so far with your design,
-- and a brief summary of what each group member has been working on and plans to work on next.
+Our reminder application allows users to create, edit, or delete events that correspond to the date of a special occasion such as a birthday or anniversary.
 
-## Brief Summary
+#### CRC Model
 
-Trackr is a birthday tracking application in which users can create events (specialized as Birthdays or Anniversaries,
-etc.), set reminders for events, and receive notifications for those events when reminders are due. Events are also
-associated with people specifically, and users can attack multiple events to the same person.
+Our CRC model has four **Entities** (Anniversary, Event, Birthday, Person), two **Use Cases** (Event Manager, Person Manager), one **Controller** (BirthdayPresenter), and two **Drivers** (Command Line Interface, Data Storage).
 
-## Our CRC Model
+#### Scenario Walk-Through
 
-Our CRC model provides an outline for the structure of the back-end (and a primitive CLI front-end) of our application.
+Our typical walk-through has the user decide between creating a new event or managing previously set events. If they want to create an event, they need give it a name, date, associated person, and set time they want to be reminded before the event. If the user wants to view and edit their evetns, they can search through the events and have the option to change certain elements of that event or delete it entirley.
 
-We've split our CRC model into Clean Architecture Layers:
+#### Skeleton Program
 
-### Entities
+Our Skeleton Program will be able to do the following
+<ul>
+  <li> Create new Birthday Events
+  <li> Create new Anniversary Events
+  <li> More
+</ul>
 
-- Event
-- Anniversary
-- Birthday
-- Person
+### Part 2: Open Questions
 
-These are all raw data classes. They store and manipulate data related only to them; their methods do not directly
-affect the rest of the application.
+Add Questions Here
 
-### Use Cases
+### Part 3: Things That Have Worked Well With Our Design
 
-- PersonManager
-- EventManager
-- NotificationManager
+### Part 4: Work Distribution
 
-### Interface Adaptors/Controllers
+Person 1
+<ul>
+  <li> Task 1
+  <li> Task 2
+</ul>
 
-- Birthday Presenter
+Person 2
+<ul>
+  <li> Task 1
+  <li> Task 2
+</ul>
+
+Person 3
+<ul>
+  <li> Task 1
+  <li> Task 2
+</ul>
+
+Person 4
+<ul>
+  <li> Task 1
+  <li> Task 2
+</ul>
+
+Person 5
+<ul>
+  <li> Task 1
+  <li> Task 2
+</ul>
+
+Person 6
+<ul>
+  <li> Task 1
+  <li> Task 2
+</ul>

@@ -1,10 +1,10 @@
 package entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class Event {
-    Date date;
-    Date reminderDeadline;
+    LocalDate date;
+    LocalDate reminderDeadline;
     Person person;
 
     /**
@@ -13,7 +13,7 @@ public abstract class Event {
      * @param date the date this event will take place
      * @param reminderDeadline when this event should be reminded to the user.
      */
-    public Event(Person person, Date date, Date reminderDeadline) {
+    public Event(Person person, LocalDate date, LocalDate reminderDeadline) {
         this.date = date;
         this.reminderDeadline = reminderDeadline;
         this.person = person;
@@ -24,7 +24,7 @@ public abstract class Event {
      * @param person the person associated with this event
      * @param date the date this event will take place
      */
-    public Event(Person person, Date date) {
+    public Event(Person person, LocalDate date) {
         this(person, date, null);
     }
 
@@ -32,16 +32,19 @@ public abstract class Event {
         return person;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
+    public LocalDate getReminderDeadline() {
+        return reminderDeadline;
+    }
     /**
      * Check whether the input date matches a reminderDeadline of this object
      * @param date The date to test for a deadline
      * @return A boolean value if the input matches a reminder deadline
      */
-    public boolean isReminderDeadline(Date date) {
+    public boolean isReminderDeadline(LocalDate date) {
         return date.equals(this.reminderDeadline);
     }
 }
