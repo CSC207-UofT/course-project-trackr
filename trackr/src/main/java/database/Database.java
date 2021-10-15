@@ -1,13 +1,12 @@
 package database;
 
 import entities.Event;
-import entities.Person;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Database {
-    private final List<Event> EventData = new ArrayList<>();
+    private final Set<Event> EventData = new HashSet<>();
 
     /**
      * Add a new Event to this Database
@@ -30,7 +29,7 @@ public class Database {
      * Return a List of ALL Events in this Database
      * @return a List of ALL events in this Database
      */
-    public List<Event> getEventData() {
+    public Set<Event> getEventData() {
         return this.EventData;
     }
 }
