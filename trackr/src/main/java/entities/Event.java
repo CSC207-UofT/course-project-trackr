@@ -36,6 +36,9 @@ public abstract class Event {
         return date;
     }
 
+    public LocalDate getReminderDeadline() {
+        return reminderDeadline;
+    }
     /**
      * Check whether the input date matches a reminderDeadline of this object
      * @param date The date to test for a deadline
