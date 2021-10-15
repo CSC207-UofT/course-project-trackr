@@ -11,7 +11,7 @@ import java.util.Set;
  * An implementation for the DatabaseAccessInterface, which preforms Database operations.
  */
 public class DataAccess implements DatabaseAccessInterface{
-    private final Database database = new Database();
+    private final static Database database = new Database();
 
     /**
      * Return a List of all Events in the Database
@@ -19,7 +19,7 @@ public class DataAccess implements DatabaseAccessInterface{
      */
     @Override
     public Set<Event> getEventData() {
-        return this.database.getEventData();
+        return database.getEventData();
     }
 
     /**
@@ -28,7 +28,7 @@ public class DataAccess implements DatabaseAccessInterface{
      */
     @Override
     public void addEvent(Event event) {
-        this.database.addEvent(event);
+        database.addEvent(event);
     }
 
 
@@ -40,7 +40,7 @@ public class DataAccess implements DatabaseAccessInterface{
      */
     @Override
     public boolean removeEvent(Event event) {
-        return this.database.removeEvent(event);
+        return database.removeEvent(event);
     }
 
 
