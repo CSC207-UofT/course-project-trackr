@@ -10,3 +10,18 @@ The report should include:
   <li> and a brief summary of what each group member has been working on and plans to work on next.
 </ul>
 
+### Part 1: Project Summary
+
+#### Specification
+
+Our reminder application allows users to create, edit, or delete events that correspond to the date of a special occasion such as a birthday or anniversary.
+
+#### CRC Model
+
+Our CRC model has four **Entities** (Anniversary, Event, Birthday, Person), two **Use Cases** (Event Manager, Person Manager), one **Controller** (BirthdayPresenter), and two **Drivers** (Command Line Interface, Data Storage).
+
+#### Scenario Walk-Through
+
+
+
+##### Skeleton Program
