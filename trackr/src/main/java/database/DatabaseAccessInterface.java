@@ -58,25 +58,11 @@ public interface DatabaseAccessInterface {
     List<Person> findPerson(String firstName, String lastName);
 
     /**
-     * Return a List of Events in the Database which have the specified
-     * date of the event, remindDeadline, along with the firstName and lastName
-     * of the Person who the event is for.
-     * @param date the Date of the specified Event
-     * @param remindDeadline the remindDeadline of the specified Event
+     * Return a List of Events in the Database which have a Person with the
+     * specified first and last name.
      * @param firstName the firstName of the Person which the Event is for
      * @param lastName the lastName of the Person for which the Event is for
      * @return A List of Events which have the specified properties
      */
-    List<Event> findEvent(LocalDate date, LocalDate remindDeadline, String firstName, String lastName);
-
-    /**
-     * Return a List of Events in the Database which have the specified
-     * date of the event, along with the firstName and lastName
-     * of the Person who the event is for.
-     * @param date the Date of the specified Event
-     * @param firstName the firstName of the Person which the Event is for
-     * @param lastName the lastName of the Person for which the Event is for
-     * @return A List of Events which have the specified properties
-     */
-    List<Event> findEvent(LocalDate date, String firstName, String lastName);
+    List<Event> findEvent(String firstName, String lastName);
 }
