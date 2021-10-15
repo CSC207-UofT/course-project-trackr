@@ -38,33 +38,35 @@ Our Skeleton Program will be able to do the following
 
 Person 1: Menghao Yu
 
-- Implemented a Person class with various methods that allow the object to be edited.
-- Implemented a tentative Database which stores Event objects
-- Created a DatabaseAccessInterface to allow other classes to preform operations on the Database.
-- Created a DataAccess class which provides an implementation for the DatabaseAccessInterface
-- Created a DatabaseAccessFactory to create DatabaseAccessInterfaces without directly instantiating the DataAccess class.
+- Implemented a `Person` class with various methods that allow the object to be edited.
+- Implemented a tentative `Database` which stores `Event` objects
+- Created a `DatabaseAccessInterface` to allow other classes to preform operations on the `Database`.
+- Created a `DataAccess` class which provides an implementation for the `DatabaseAccessInterface`.
+- Created a `DatabaseAccessFactory` to create `DatabaseAccessInterfaces` without directly instantiating the `DataAccess` class.
 
-Person 2
+Person 2: Roman Zupancic
 
-- Task 1
+- Created the `Event` class and its subclasses `Birthday` and `Anniversary`
+- Implemented tests for `Birthday` and `Anniversary` classes
+- Wrote part of this report
+- Wrote and troubleshooted the project build instructions
+
+Person 3: Jonathan Ginervro
+
+- Implemented the `PersonManager` class
+- Wrote part of this report
+
+Person 4: Nathan Hansen
+
+- Created the `CommandInterface` class
 - Task 2
 
-Person 3
+Person 5: Jeremiah Djianto
 
-- Task 1
-- Task 2
+- Wrote the `BirthdayPresenter` class
+- Wrote the `InputBoundary` and `OutputBoundary` classes
 
-Person 4
+Person 6: Daniel Hocevar
 
-- Task 1
-- Task 2
-
-Person 5
-
-- Task 1
-- Task 2
-
-Person 6
-
-- Task 1
+- Wrote the `EventManager` class, including its interaction with our database architecture.
 - Task 2
