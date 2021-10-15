@@ -1,5 +1,6 @@
 package cli;
-
+import interface_adapters.BirthdayPresenter;
+import input_output_interfaces.OutputBoundary;
 import java.util.Scanner;
 
 public class CommandInterface {
@@ -10,15 +11,8 @@ public class CommandInterface {
      * Startup script. Welcomes user and lists any upcoming events.
      */
     public static void Startup() {
-        System.out.println("=-=-=-=-=-=-=-=-=-=\nWelcome to Trackr!\n=-=-=-=-=-=-=-=-=-=\n   Upcoming Events:\n");
-        /*
-        TODO: implement iteration over events in their reminder period
-         */
-        if (false) { //if there is at least 1 upcoming event:
-            assert true; // display all upcoming events
-        } else {
-            System.out.println("None for now!");
-        }
+        System.out.println("=-=-=-=-=-=-=-=-=-=\nWelcome to Trackr!\n=-=-=-=-=-=-=-=-=-=\n");
+        DisplayEvents();
         System.out.println("Type 'help' for a list of commands or 'quit' to exit:");
     }
     public static String AwaitInput() {
@@ -27,9 +21,19 @@ public class CommandInterface {
         return sc.nextLine();
 
     }
-
+    public static void DisplayEvents() {
+        /*
+        TODO: implement iteration over events in their reminder period
+         */
+        if (false) { //if there is at least 1 upcoming event:
+            assert true; // display all upcoming events
+        } else { //otherwise say this
+            System.out.println("None for now!");
+        }
+    }
     /**
      * Print list of commands
+     * TODO: add add command here once implemented
      */
     public static void Help() {
         System.out.println("help        shows help page\nquit       quit Trackr");
@@ -45,19 +49,54 @@ public class CommandInterface {
      * @param input whatever the user types
      */
     public static void InputHandler(String input) {
+        String[] inputArray;
         if (input.equals("")) {
-            input = CommandInterface.AwaitInput();
+            input = AwaitInput();
         }
         while (!input.equals("quit")) {
-            if (input.equals("add")) {
-                assert true; //add birthday here. TODO: make layer 3 argument parser
+            inputArray = input.split(" ");
+            if (inputArray[0].equals("add")) {
+            AddHandler(inputArray);
+            input = AwaitInput();
             } else if (input.equals("help")) {
                 Help();
-                input = CommandInterface.AwaitInput();
+                input = AwaitInput();
             } else {
                 NotRecognized(input);
-                input = CommandInterface.AwaitInput();
+                input = AwaitInput();
+            }
+
+        }
+    }
+    public static void AddHandler(String[] inputArray) {
+        String date = null;
+        String personName = null;
+        String interval = null;
+        // not enough arguments case
+        if (inputArray.length < 7) {
+            System.out.println("Error: not enough information. See 'help' for more details.");
+            return;
+        }
+        // get arguments in any order by iterating
+        for (int i = 1; i < inputArray.length; i++) {
+            //if all fields have been filled, create the event
+            if (date != null && personName != null && interval != null) {
+                String[] args = new String[2];
+                args[0] = date;
+                args[1] = personName;
+                args[2] = interval;
+                //TODO: create birthday event
+                //BirthdayPresenter.executeCommand("add", args, );
+                System.out.println(date + personName + interval);
+                return;
+            } else if (inputArray[i].equals("-d")) {
+                date = inputArray[i+1];
+            } else if (inputArray[i].equals("-p")) {
+                personName = inputArray[i+1];
+            } else if (inputArray[i].equals("-i")) {
+                interval = inputArray[i+1];
             }
         }
+
     }
 }
