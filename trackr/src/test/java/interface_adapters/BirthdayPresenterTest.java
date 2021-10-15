@@ -18,18 +18,18 @@ public class BirthdayPresenterTest {
     @Test
     public void runTest() {
         String[] expectedOutput = new String[]{
-                "You have added a birthday on 2022/01/01 for James Jameson." +
+                "You have added a BIRTHDAY event on 2022/01/01 for James Jameson." +
                         "You will be reminded 7 days before.",
-                "You have a birthday event for James Jameson on 2022/01/01." +
+                "You have a BIRTHDAY event for James Jameson on 2022/01/01." +
                         "You will be reminded 7 days before.",
-                "You have removed a birthday on 2022/01/01 for James Jameson"
+                "You have removed a BIRTHDAY event on 2022/01/01 for James Jameson"
                 };
 
         FakeUserInterface userInterface = new FakeUserInterface(
                 new String[][] {
-                        new String[]{"add", "2022/01/01", "James Jameson", "7"},
-                        new String[]{"view", "James Jameson"},
-                        new String[]{"remove", "2022/01/01", "James Jameson"}
+                        new String[]{"add", "Birthday", "2022/01/01", "James Jameson", "7"},
+                        new String[]{"view", "Birthday", "James Jameson"},
+                        new String[]{"remove", "Birthday", "James Jameson"}
                 }, 3);
 
         birthdayPresenter.run(userInterface, userInterface);
