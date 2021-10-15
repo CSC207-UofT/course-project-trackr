@@ -19,7 +19,7 @@ public interface EventInOut {
      * @param remindDate    The date to send a notification for the event.
      * @return              Whether the event outlined by info was successfully created or not.
      */
-    boolean addEvent(String[] name, LocalDate date, LocalDate remindDate);
+    boolean add(String[] name, LocalDate date, LocalDate remindDate);
 
     /**
      * Returns whether the event outlined by info was successfully removed or not.
@@ -29,7 +29,7 @@ public interface EventInOut {
      * @param date  The date of the event to be removed.
      * @return      Whether the event outlined by info was successfully removed or not.
      */
-    boolean removeEvent(String[] name, LocalDate date);
+    boolean remove(String[] name, LocalDate date);
 
     /**
      * Returns information on the event being specified.
@@ -38,7 +38,7 @@ public interface EventInOut {
      *              the event is for.
      * @return      The information of the event specified.
      */
-    EventOutputData getEventInfo(String[] name);
+    EventOutputData view(String[] name);
 
 
 
