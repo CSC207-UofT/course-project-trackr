@@ -1,6 +1,6 @@
 package entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Birthday extends Event{
     /**
@@ -9,7 +9,7 @@ public class Birthday extends Event{
      * @param date the date this event will take place
      * @param reminderDeadline when this event should be reminded to the user.
      */
-    public Birthday(Person person, Date date, Date reminderDeadline) {
+    public Birthday(Person person, LocalDate date, LocalDate reminderDeadline) {
         super(person, date, reminderDeadline);
     }
 
@@ -18,7 +18,7 @@ public class Birthday extends Event{
      * @param person The person this birthday is associated with
      * @param date the date this event will take place
      */
-    public Birthday(Person person, Date date) {
+    public Birthday(Person person, LocalDate date) {
         this(person, date, null);
     }
 }
