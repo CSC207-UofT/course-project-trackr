@@ -3,6 +3,11 @@ package entities;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A Person who is the target for an Event.
+ * The Person class is responsible for storing the first and last name of the person,
+ * along with a description and tags associated with this person.
+ */
 public class Person {
     private String firstName;
     private String lastName;
