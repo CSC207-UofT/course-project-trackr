@@ -12,17 +12,21 @@ import java.util.Arrays;
  * outputted.
  */
 public class BirthdayPresenter {
-    private EventManager eventManager;
+    private EventManager em = new EventManager();
 
     /**
-     * Constructs an instance of interface_adapters.BirthdayPresenter
-     *
-     * @param em The EventManager for this interface_adapters.BirthdayPresenter
+     * Interface for allowing BirthdayPresenter to receive input from user interface drivers.
      */
-    public BirthdayPresenter(EventManager em) {
-        this.eventManager = em;
+    public interface InputBoundary {
+        String[] getInput() throws IOException;
     }
 
+    /**
+     * Interface for allowing BirthdayPresenter to send output to user interface drivers.
+     */
+    public interface OutputBoundary {
+        void sendOutput(String output);
+    }
     /**
      * Interacts with user to get input and send outputs about depending on what the user wants
      * to do.
