@@ -18,12 +18,12 @@ public class Database {
         this.EventData.add(event);
     }
 
-    public void removeEvent(Event event) {
-        this.EventData.remove(event);
+    public boolean removeEvent(Event event) {
+        return this.EventData.remove(event);
     }
 
-    public void removePerson(Person person) {
-        this.PersonData.remove(person);
+    public boolean removePerson(Person person) {
+        return this.PersonData.remove(person);
     }
 
     public List<Person> getPersonData() {
