@@ -25,6 +25,7 @@ public class CommandInterface {
         /*
         TODO: implement iteration over events in their reminder period
          */
+        System.out.println("Upcoming events:\n");
         if (false) { //if there is at least 1 upcoming event:
             assert true; // display all upcoming events
         } else { //otherwise say this
@@ -60,6 +61,9 @@ public class CommandInterface {
             input = AwaitInput();
             } else if (input.equals("help")) {
                 Help();
+                input = AwaitInput();
+            } else if (input.equals("list")) {
+                DisplayEvents();
                 input = AwaitInput();
             } else {
                 NotRecognized(input);
