@@ -1,8 +1,11 @@
 package interface_adapters;
 
+import input_output_interfaces.InputBoundary;
+import input_output_interfaces.OutputBoundary;
 import usecases.EventManager;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 /**
@@ -14,19 +17,6 @@ import java.util.Arrays;
 public class BirthdayPresenter {
     private EventManager em = new EventManager();
 
-    /**
-     * Interface for allowing BirthdayPresenter to receive input from user interface drivers.
-     */
-    public interface InputBoundary {
-        String[] getInput() throws IOException;
-    }
-
-    /**
-     * Interface for allowing BirthdayPresenter to send output to user interface drivers.
-     */
-    public interface OutputBoundary {
-        void sendOutput(String output);
-    }
     /**
      * Interacts with user to get input and send outputs about depending on what the user wants
      * to do.
@@ -47,7 +37,6 @@ public class BirthdayPresenter {
         } catch (IOException e) {
             out.sendOutput("Oops! Something went wrong");
         }
-
     }
 
     /**
@@ -60,14 +49,30 @@ public class BirthdayPresenter {
      * @param out     The instance interface_adapters.OutputBoundary that output what is given.
      */
     public void executeCommand(String command, String[] args, OutputBoundary out) {
-        if (command.equals("add")) {
-            //TODO: implement behaviour using em.addEvent()
-        } else if (command.equals("remove")) {
-            //TODO: implement behaviour using em.removeEvent()
-        } else if (command.equals("view")) {
-            //TODO: implement behaviour, NEEDED: EventManager.viewInfo() or something along those lines
-        } else {
-            out.sendOutput("Not a valid command");
+        switch (command) {
+            case "add":
+                String[] dateString = args[0].split("/");
+                LocalDate date = LocalDate.of(Integer.parseInt(dateString[0]),
+                        Integer.parseInt(dateString[1]),
+                        Integer.parseInt(dateString[2]));
+                String name = args[1];
+                LocalDate remindDeadline = date.minusDays(Integer.parseInt(args[2]));
+
+                //TODO:em.addEvent();
+                break;
+
+            case "remove":
+                //TODO: em.removeEvent()
+                break;
+
+            case "view":
+                name = args[0];
+                //TODO: implement behaviour, NEEDED: EventManager.viewInfo() or something along those lines
+                break;
+
+            default:
+                out.sendOutput("Not a valid command");
+                break;
         }
     }
 }
