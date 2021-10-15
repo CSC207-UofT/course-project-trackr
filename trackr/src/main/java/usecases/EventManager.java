@@ -30,7 +30,7 @@ public class EventManager {
      * @param eventTyoe - a string representing the type of event (either Birthday or Anniversary)
      * @param date - the date of the event
      * @param reminderDeadline - the date to innitiate a reminder
-     * @return true if the key is not already in the hashmap and false otherwise
+     * @return true if the event was successfully added
      */
     public boolean addEvent(Person person, String eventTyoe, LocalDate date, LocalDate reminderDeadline) {
         Event event;
@@ -47,14 +47,15 @@ public class EventManager {
      * Remove an event from the event hash map
      * @param firstName - the first name of the person whose events we are removing
      * @param lastName - the last name of the person whose events we are removing
-     * @return false if the key is not in the hashmap and true if we
-     * succesfully remove the key and corresponding value
+     * @return false if no events were removed, and true if one or more events were removed
      */
     public boolean removeEvent(String firstName, String lastName) {
         List<Event> whichEventsToRemove = dataAccessor.findEvent(firstName, lastName);
+        boolean eventRemoved = false;
         for (Event e : whichEventsToRemove) {
             dataAccessor.removeEvent(e);
+            eventRemoved = true;
         }
-        return false;
+        return eventRemoved;
     }
 }
