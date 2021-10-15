@@ -6,7 +6,10 @@ import entities.Person;
 import java.time.LocalDate;
 import java.util.List;
 
-
+/**
+ * An interface which preforms database operations and allows other classes to
+ * operate on the database through its methods.
+ */
 public interface DatabaseAccessInterface {
     /**
      * Return a List of Person objects representing all the Person objects in the Database
