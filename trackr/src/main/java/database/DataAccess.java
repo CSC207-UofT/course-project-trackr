@@ -1,10 +1,11 @@
 package database;
 
+import entities.Anniversary;
+import entities.Birthday;
 import entities.Event;
-import entities.Person;
+import usecases.EventOutputData.EventTypes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 /**
  * An implementation for the DatabaseAccessInterface, which preforms Database operations.
@@ -13,42 +14,12 @@ public class DataAccess implements DatabaseAccessInterface{
     private final Database database = new Database();
 
     /**
-     * Return a List of Person objects representing all the Person objects in the Database
-     * @return a List of all Person objects in the Database
-     */
-    @Override
-    public List<Person> getPersonData() {
-        return this.database.getPersonData();
-    }
-
-    /**
      * Return a List of all Events in the Database
      * @return a list of all Events in the Database
      */
     @Override
-    public List<Event> getEventData() {
+    public Set<Event> getEventData() {
         return this.database.getEventData();
-    }
-
-    /**
-     * Add a new Person to the Database
-     * @param person the Person to add to the Database
-     */
-    @Override
-    public void addPerson(Person person) {
-        this.database.addPerson(person);
-    }
-
-
-    /**
-     * Remove an existing Person from the database. Return a boolean representing if the
-     * Person was successfully removed or not.
-     * @param person the person to remove from the database
-     * @return return a boolean representing if the person was successfully removed or not
-     */
-    @Override
-    public boolean removePerson(Person person) {
-        return this.database.removePerson(person);
     }
 
     /**
@@ -74,39 +45,26 @@ public class DataAccess implements DatabaseAccessInterface{
 
 
     /**
-     * Return a List of all Person objects in the database that have
-     * the specified first and last names
-     * @param firstName the first name of the person to search for
-     * @param lastName the last name of the person to search for
-     * @return A List of all Person objects
-     */
-    @Override
-    public List<Person> findPerson(String firstName, String lastName) {
-        List<Person> personCandidates = new ArrayList<>();
-        for (Person person : this.database.getPersonData()) {
-            if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
-                personCandidates.add(person);
-            }
-        }
-        return personCandidates;
-    }
-
-    /**
-     * Return a List of Events in the Database which have a Person with the
+     * Return an Event in the Database which have the corresponding type and
      * specified first and last name.
+     * @param targetEventType the EventType of the target Event
      * @param firstName the firstName of the Person which the Event is for
      * @param lastName the lastName of the Person for which the Event is for
-     * @return A List of Events which have the specified properties
+     * @return the Event which has the specified properties, or null if none is found
      */
     @Override
-    public List<Event> findEvent(String firstName, String lastName) {
-        List<Event> eventCandidates = new ArrayList<>();
-        for (Event event : this.database.getEventData()) {
-            Person eventTarget = event.getPerson();
-            if (eventTarget.getFirstName().equals(firstName) && eventTarget.getLastName().equals(lastName)) {
-                eventCandidates.add(event);
-            }
+    public Event findEvent(EventTypes targetEventType, String firstName, String lastName) {
+        for (Event event : this.getEventData()) {
+           boolean hasSameName = event.getPerson().getFirstName().equals(firstName) &&
+                                 event.getPerson().getLastName().equals(lastName);
+
+           boolean hasSameType = (event instanceof Anniversary && targetEventType.equals(EventTypes.ANNIVERSARY)) ||
+                   (event instanceof Birthday && targetEventType.equals(EventTypes.BIRTHDAY));
+
+           if (hasSameName && hasSameType) {
+               return event;
+           }
         }
-        return eventCandidates;
+        return null;
     }
 }
