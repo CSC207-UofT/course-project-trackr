@@ -3,6 +3,11 @@ package entities;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A Person who is the target for an Event.
+ * The Person class is responsible for storing the first and last name of the person,
+ * along with a description and tags associated with this person.
+ */
 public class Person {
     private String firstName;
     private String lastName;
@@ -55,29 +60,50 @@ public class Person {
         return firstName;
     }
 
-
+    /**
+     * Set the first name of this Person to firstName
+     * @param firstName the new firstName of this Person
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * Return the lastName of this Person
+     * @return the lastName of this Person
+     */
     public String getLastName() {
         return lastName;
     }
 
-
+    /**
+     * Set the last name of this Person to lastName
+     * @param lastName the new lastName of this Person
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-
+    /**
+     * Return a description of this person
+     * @return the description of this person
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Set the description of this Person to description
+     * @param description the new description of this Person
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Return the tags that this Person has
+     * @return the tags associated with this Person
+     */
     public Set<String> getTags() {
         return tags;
     }
