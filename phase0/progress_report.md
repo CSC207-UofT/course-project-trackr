@@ -22,6 +22,25 @@ Our CRC model has four **Entities** (Anniversary, Event, Birthday, Person), two 
 
 #### Scenario Walk-Through
 
+Our typical walk-through has the user decide between creating a new event or managing previously set events. If they want to create an event, they need give it a name, date, associated person, and set time they want to be reminded before the event. If the user wants to view and edit their evetns, they can search through the events and have the option to change certain elements of that event or delete it entirley.
+
+#### Skeleton Program
+
+Our Skeleton Program will be able to do the following
+<ul>
+  <li> Create new Birthday Events
+  <li> Create new Anniversary Events
+  <li> More
+</ul>
+
+### Part 2: Open Questions
+
+Add Questions Here
+
+### Part 3: Things That Have Worked Well With Our Design
+
+### Part 4: Work Distribution
 
 
-##### Skeleton Program
+  
+
