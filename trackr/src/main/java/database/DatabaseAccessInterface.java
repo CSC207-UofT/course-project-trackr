@@ -1,10 +1,9 @@
 package database;
 
 import entities.Event;
-import entities.Person;
+import usecases.EventOutputData.EventTypes;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 /**
  * An interface which preforms database operations and allows other classes to
@@ -15,7 +14,7 @@ public interface DatabaseAccessInterface {
      * Return a List of all Events in the Database
      * @return a list of all Events in the Database
      */
-    List<Event> getEventData();
+    Set<Event> getEventData();
 
     /**
      * Add a new Event to the Database
@@ -38,5 +37,5 @@ public interface DatabaseAccessInterface {
      * @param lastName the lastName of the Person for which the Event is for
      * @return A List of Events which have the specified properties
      */
-    List<Event> findEvent(String firstName, String lastName);
+    Event findEvent(EventTypes targetEventType, String firstName, String lastName);
 }
