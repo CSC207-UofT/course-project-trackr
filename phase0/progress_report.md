@@ -122,4 +122,5 @@ Code Level Goals (we will all work together to realize these goals):
 - Clean up the interaction between the CLI class and the BirthdayPresenter class
 - Add more features for the user (such as the ability to edit events)
 - Add Notifications class to support notification feature
-
+- Add input sanitization to handle unusual input cases from users (i.e. spelling mistakes and incorrect usages).
+    - Write messages to notify the users of these edge cases
