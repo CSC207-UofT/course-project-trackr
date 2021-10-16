@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 public class CommandInterface implements InputBoundary, OutputBoundary {
 
-    public CommandInterface() {}
+    public CommandInterface() {
+        this.Startup();
+    }
 
     /**
      * Startup script. Welcomes user and lists any upcoming events.
