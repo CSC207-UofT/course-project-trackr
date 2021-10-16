@@ -12,7 +12,7 @@ Our CRC model has four **Entities** (Anniversary, Event, Birthday, Person), two 
 
 #### Scenario Walk-Through
 
-Our typical walk-through has the user decide between creating a new event or managing previously set events. If they want to create an event, they need give it a name, date, associated person, and set time they want to be reminded before the event. If the user wants to view and edit their events, they can search through the events and have the option to change certain elements of that event or delete it entirley.
+Our typical walk-through has the user decide between creating a new event or managing previously set events. If they want to create an event, they need give it a name, date, associated person, and set time they want to be reminded before the event. If the user wants to view their events the program will display a list of upcoming events, the user can then choose to view more information about the event or delete it entirley.
 
 #### Skeleton Program
 
@@ -20,6 +20,8 @@ Our Skeleton Program will be able to do the following
 
 - Create new Birthday Events
 - Create new Anniversary Events
+- Delete Existing Birthdays and Anniversaries
+- View upcoming Events
 - More
 
 ### Part 2: Open Questions
@@ -31,6 +33,8 @@ Our Skeleton Program will be able to do the following
 - Should we use tags on Events instead of subclasses, or maybe a Tagable Interface?
 
 - How should the Data from the database be transported to the UI? Is the current architecture valid and sustainable?
+
+- Does the EventManager have too much responsibility? Should we divide EventManager into smaller classes?
 
 ### Part 3: Things That Have Worked Well With Our Design
 
