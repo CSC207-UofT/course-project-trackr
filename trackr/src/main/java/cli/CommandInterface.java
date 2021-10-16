@@ -1,31 +1,37 @@
 package cli;
 import interface_adapters.BirthdayPresenter;
-import input_output_interfaces.OutputBoundary;
+import input_output_interfaces.*;
+
+import java.io.IOException;
 import java.util.Scanner;
 
-public class CommandInterface {
+public class CommandInterface implements InputBoundary, OutputBoundary {
 
     public CommandInterface() {}
 
     /**
      * Startup script. Welcomes user and lists any upcoming events.
      */
-    public static void Startup() {
+    public void Startup() {
         System.out.println("=-=-=-=-=-=-=-=-=-=\nWelcome to Trackr!\n=-=-=-=-=-=-=-=-=-=\n");
         DisplayEvents();
         System.out.println("Type 'help' for a list of commands or 'quit' to exit:");
     }
-    public static String AwaitInput() {
+    @Override
+    public String getInput() {
         System.out.print("\n>");
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
-
     }
-    public static void DisplayEvents() {
+    @Override
+    public void sendOutput(String out) {
+        System.out.println(out);
+    }
+    public void DisplayEvents() {
         /*
         TODO: implement iteration over events in their reminder period
          */
-        System.out.println("Upcoming events:\n");
+        sendOutput("Upcoming events:\n");
         if (false) { //if there is at least 1 upcoming event:
             assert true; // display all upcoming events
         } else { //otherwise say this
@@ -36,43 +42,43 @@ public class CommandInterface {
      * Print list of commands
      * TODO: add add command here once implemented
      */
-    public static void Help() {
+    public void Help() {
         System.out.println("help        shows help page\nquit       quit Trackr");
     }
     /**
      * Let the user know what they just typed was wack
      */
-    public static void NotRecognized(String input) {
+    public void NotRecognized(String input) {
         System.out.println("'" + input + "' is not a recognized command. Use the 'help' command for a list of valid commands.");
     }
     /**
      * Takes user input and reacts accordingly.
      * @param input whatever the user types
      */
-    public static void InputHandler(String input) {
+    public void InputHandler(String input) {
         String[] inputArray;
         if (input.equals("")) {
-            input = AwaitInput();
+            input = getInput();
         }
         while (!input.equals("quit")) {
             inputArray = input.split(" ");
             if (inputArray[0].equals("add")) {
             AddHandler(inputArray);
-            input = AwaitInput();
+            input = getInput();
             } else if (input.equals("help")) {
                 Help();
-                input = AwaitInput();
+                input = getInput();
             } else if (input.equals("list")) {
                 DisplayEvents();
-                input = AwaitInput();
+                input = getInput();
             } else {
                 NotRecognized(input);
-                input = AwaitInput();
+                input = getInput();
             }
 
         }
     }
-    public static void AddHandler(String[] inputArray) {
+    public void AddHandler(String[] inputArray) {
         String date = null;
         String personName = null;
         String interval = null;
