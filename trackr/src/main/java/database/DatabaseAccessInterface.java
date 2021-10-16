@@ -17,10 +17,11 @@ public interface DatabaseAccessInterface {
     Set<Event> getEventData();
 
     /**
-     * Add a new Event to the Database
+     * Add a new Event to the Database. Return true if the Database was successfully added.
      * @param event the Event to add to the Database
+     * @return a boolean
      */
-    void addEvent(Event event);
+    boolean addEvent(Event event);
 
     /**
      * Remove an existing Event from the Database. Return a boolean representing

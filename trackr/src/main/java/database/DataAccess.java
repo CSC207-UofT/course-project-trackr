@@ -27,8 +27,8 @@ public class DataAccess implements DatabaseAccessInterface{
      * @param event the Event to add to the Database
      */
     @Override
-    public void addEvent(Event event) {
-        database.addEvent(event);
+    public boolean addEvent(Event event) {
+        return database.addEvent(event);
     }
 
 
