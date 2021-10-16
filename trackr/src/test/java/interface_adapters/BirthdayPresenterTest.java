@@ -18,18 +18,19 @@ public class BirthdayPresenterTest {
     @Test
     public void runTest() {
         String[] expectedOutput = new String[]{
-                "You have added a BIRTHDAY event on 2022/01/01 for James Jameson." +
-                        "You will be reminded 7 days before.",
-                "You have a BIRTHDAY event for James Jameson on 2022/01/01." +
-                        "You will be reminded 7 days before.",
-                "You have removed a BIRTHDAY event on 2022/01/01 for James Jameson"
+                "You have successfully added a Birthday event on 2022/01/01 for James Jameson." +
+                        " You will be reminded 7 days beforehand.",
+                "You have a Birthday event on 2022/01/01 for James Jameson." +
+                        " You will be reminded 7 days beforehand.",
+                "You have successfully removed a Birthday event for James Jameson."
                 };
 
         FakeUserInterface userInterface = new FakeUserInterface(
-                new String[][] {
-                        new String[]{"add", "Birthday", "2022/01/01", "James Jameson", "7"},
-                        new String[]{"view", "Birthday", "James Jameson"},
-                        new String[]{"remove", "Birthday", "James Jameson"}
+                new String[] {
+                        "add Birthday 2022/01/01 James_Jameson 7",
+                        "view Birthday James_Jameson",
+                        "remove Birthday James_Jameson",
+                        "exit"
                 }, 3);
 
         birthdayPresenter.run(userInterface, userInterface);
@@ -42,18 +43,18 @@ public class BirthdayPresenterTest {
      * needs an InputBoundary and OutputBoundary to get inputs from and send outputs to.
      */
     public static class FakeUserInterface implements InputBoundary, OutputBoundary {
-        private final String[][] testInputs;
+        private final String[] testInputs;
         private final String[] testOutputs;
         private int testInputIndex;
         private int testOutputIndex;
 
-        public FakeUserInterface(String[][] testInputs,int numTestOutputs) {
+        public FakeUserInterface(String[] testInputs,int numTestOutputs) {
             this.testInputs = testInputs;
             this.testOutputs = new String[numTestOutputs];
         }
 
         @Override
-        public String[] getInput() {
+        public String getInput() {
             return this.testInputs[testInputIndex++];
         }
 

@@ -11,8 +11,8 @@ import java.util.Set;
  */
 public interface DatabaseAccessInterface {
     /**
-     * Return a List of all Events in the Database
-     * @return a list of all Events in the Database
+     * Return a Set of all Events in the Database
+     * @return a Set of all Events in the Database
      */
     Set<Event> getEventData();
 
@@ -33,6 +33,7 @@ public interface DatabaseAccessInterface {
     /**
      * Return a List of Events in the Database which have a Person with the
      * specified first and last name.
+     * @param targetEventType the event type for the specified event
      * @param firstName the firstName of the Person which the Event is for
      * @param lastName the lastName of the Person for which the Event is for
      * @return A List of Events which have the specified properties
