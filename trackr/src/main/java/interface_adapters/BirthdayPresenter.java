@@ -1,5 +1,6 @@
 package interface_adapters;
 
+import entities.Person;
 import input_output_interfaces.InputBoundary;
 import input_output_interfaces.OutputBoundary;
 import usecases.EventManager;
@@ -15,15 +16,19 @@ import java.util.Arrays;
  * outputted.
  */
 public class BirthdayPresenter {
-    private EventManager em = new EventManager();
+    private EventInputBoundary eventInputBoundary;
 
     /**
      * Interacts with user to get input and send outputs about depending on what the user wants
      * to do.
      *
-     * @param out An instance of interface_adapters.OutputBoundary that will output the information from the Use Case
+     * @param eib An instance of interface_adapters.EventInputBoundary that will output the information from the Use Case
      *            classes to the user.
      */
+    public BirthdayPresenter(EventInputBoundary eib) {
+        this.eventInputBoundary = eib;
+    }
+
     public void run(InputBoundary in, OutputBoundary out) {
         try {
            String[] input = in.getInput();
@@ -55,18 +60,23 @@ public class BirthdayPresenter {
                 LocalDate date = LocalDate.of(Integer.parseInt(dateString[0]),
                         Integer.parseInt(dateString[1]),
                         Integer.parseInt(dateString[2]));
-                String name = args[1];
-                LocalDate remindDeadline = date.minusDays(Integer.parseInt(args[2]));
+                String firstName = args[1];
+                String lastName = args[2];
+                LocalDate remindDeadline = date.minusDays(Integer.parseInt(args[3]));
 
-                //TODO:em.addEvent();
+                eventInputBoundary.addEvent(firstName, lastName, "Birthday", date, remindDeadline);
+
                 break;
 
             case "remove":
-                //TODO: em.removeEvent()
+                String firstNameRemove = args[1];
+                String lastNameRemove = args[2];
+                eventInputBoundary.removeEvent("Birthday", firstNameRemove, lastNameRemove);
                 break;
 
             case "view":
-                name = args[0];
+                String firstNameView = args[1];
+                String lastNameView = args[2];
                 //TODO: implement behaviour, NEEDED: EventManager.viewInfo() or something along those lines
                 break;
 

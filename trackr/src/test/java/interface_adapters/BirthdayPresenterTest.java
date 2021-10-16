@@ -1,9 +1,11 @@
 package interface_adapters;
 
+import database.DataAccess;
 import input_output_interfaces.InputBoundary;
 import input_output_interfaces.OutputBoundary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import usecases.EventManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +14,7 @@ public class BirthdayPresenterTest {
 
     @BeforeEach
     public void setUp() {
-        birthdayPresenter = new BirthdayPresenter();
+        birthdayPresenter = new BirthdayPresenter(new EventManager(new DataAccess()));
     }
 
     @Test

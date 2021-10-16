@@ -5,6 +5,7 @@ import entities.Anniversary;
 import entities.Birthday;
 import entities.Event;
 import entities.Person;
+import interface_adapters.EventInputBoundary;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,8 +14,9 @@ import java.util.Set;
 /**
  * EventManager is a use case class that manages the creation and deletion of events
  */
-public class EventManager {
+public class EventManager implements EventInputBoundary {
 
+    private PersonManager personManager = new PersonManager();
     private DatabaseAccessInterface dataAccessor;
 
     public EventManager(DatabaseAccessInterface dataAccessorObj) {
@@ -27,18 +29,20 @@ public class EventManager {
 
     /**
      * Add an event to the database
-     * @param person - the key we are adding to the hashmap
-     * @param eventTyoe - a string representing the type of event (either Birthday or Anniversary)
+     * @param firstName - first name of the person for which the event corresponds
+     * @param lastName - last name of the person for which the event corresponds
+     * @param eventType - a string representing the type of event (either Birthday or Anniversary)
      * @param date - the date of the event
      * @param reminderDeadline - the date to innitiate a reminder
      * @return true if the event was successfully added
      */
-    public boolean addEvent(Person person, String eventTyoe, LocalDate date, LocalDate reminderDeadline) {
+    public boolean addEvent(String firstName, String lastName, String eventType, LocalDate date, LocalDate reminderDeadline) {
+        Person personObj = personManager.createPerson(firstName, lastName);
         Event event;
-        if (eventTyoe.equals("Birthday")) {
-            event = new Birthday(person, date, reminderDeadline);
+        if (eventType.equals("Birthday")) {
+            event = new Birthday(personObj, date, reminderDeadline);
         } else {
-            event = new Anniversary(person, date, reminderDeadline);
+            event = new Anniversary(personObj, date, reminderDeadline);
         }
         dataAccessor.addEvent(event);
         return true;
