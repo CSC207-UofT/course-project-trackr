@@ -30,3 +30,11 @@ Once the project has been configured, it can be built in two ways:
 
 Once the project has been configured, the simplest way to run all tests is to navigate (in IntelliJ)
 to `trackr/src/test/java`, right click on this folder, and select `run 'All Tests'`.
+
+## Running the project
+
+- Navigate to `trackr/src/main/java/Main.java` and press the play icon next to the class
+  declaration or the main function declaration.
+- Here are some sample commands:
+  - `add Birthday 2020/04/05 Jeffry_Bezos 30`; add a birthday associated with Jeffry Bezos
+  - `remove Birthday Jeffry_Bezos`; remove that same birthday event associated with Jeffry Bezos
