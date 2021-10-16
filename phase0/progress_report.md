@@ -110,3 +110,16 @@ Person 6: Daniel Hocevar
 
 - Wrote the `EventManager` class, including its interaction with our database architecture.
 - Architected how `Event` classes and the `Person` class interact with each other.
+- Wrote part of this report
+
+### Part 4b): What we plan to work on next
+Big Goals:
+- Our primary goal for the next phase of the project will be to build an android app. We plan to have Daniel, Johnathan and Jeremiah work on this.
+- Building an android app will provide users with a simpler and more friendly way of interacting with our application. 
+- Another goal we have is to replace the Database class with a real Database. We have discussed the possibility of using SQL or Firebase. We plan to have Menghao, Roman and Nathan work on this.
+
+Code Level Goals (we will all work together to realize these goals):
+- Clean up the interaction between the CLI class and the BirthdayPresenter class
+- Add more features for the user (such as the ability to edit events)
+- Add Notifications class to support notification feature
+
