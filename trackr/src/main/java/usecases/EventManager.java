@@ -44,8 +44,8 @@ public class EventManager implements EventInOut {
         } else {
             event = new Anniversary(person, date, reminderDeadline);
         }
-        dataAccessor.addEvent(event);
-        return true;
+
+        return dataAccessor.addEvent(event);
     }
 
     /**
