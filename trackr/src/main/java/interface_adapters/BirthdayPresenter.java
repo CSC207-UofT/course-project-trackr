@@ -29,7 +29,6 @@ public class BirthdayPresenter {
      *            classes to the user.
      */
     public void run(InputBoundary in, OutputBoundary out) {
-//        try {
        String input = in.getInput();
        while (!input.equals("exit") && !input.equals("quit")) {
            String[] inputArray = input.split(" ");
@@ -39,9 +38,6 @@ public class BirthdayPresenter {
            executeCommand(command, args, out);
            input = in.getInput();
            }
-//        } catch (IOException e) {
-//            out.sendOutput("Oops! Something went wrong");
-//        }
     }
 
     /**
