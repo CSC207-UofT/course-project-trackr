@@ -10,13 +10,13 @@ import java.util.Set;
  * A dataclass representing the Data that Presenter will retrieve from EventManager
  */
 public class EventOutputData {
-    private final EventTypes eventType;
-    private final String firstName;
-    private final String lastName;
-    private final String personDescription;
-    private final Set<String> tags;
-    private final LocalDate date;
-    private final LocalDate remindDeadline;
+    private EventTypes eventType;
+    private String firstName;
+    private String lastName;
+    private String personDescription;
+    private Set<String> tags;
+    private LocalDate date;
+    private LocalDate remindDeadline;
 
     public enum EventTypes {
         ANNIVERSARY,
@@ -24,13 +24,15 @@ public class EventOutputData {
     }
 
     public EventOutputData(Event event) {
-        this.eventType = event instanceof Anniversary ? EventTypes.ANNIVERSARY : EventTypes.BIRTHDAY;
-        this.firstName = event.getPerson().getFirstName();
-        this.lastName = event.getPerson().getLastName();
-        this.personDescription = event.getPerson().getDescription();
-        this.tags = event.getPerson().getTags();
-        this.date = event.getDate();
-        this.remindDeadline = event.getReminderDeadline();
+        if (event != null) {
+            this.eventType = event instanceof Anniversary ? EventTypes.ANNIVERSARY : EventTypes.BIRTHDAY;
+            this.firstName = event.getPerson().getFirstName();
+            this.lastName = event.getPerson().getLastName();
+            this.personDescription = event.getPerson().getDescription();
+            this.tags = event.getPerson().getTags();
+            this.date = event.getDate();
+            this.remindDeadline = event.getReminderDeadline();
+        }
     }
 
     public String getEventType() {
