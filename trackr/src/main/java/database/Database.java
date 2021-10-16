@@ -9,11 +9,12 @@ public class Database {
     private final Set<Event> EventData = new HashSet<>();
 
     /**
-     * Add a new Event to this Database
+     * Add a new Event to this Database. Return a boolean representing if the event was successfully added or not.
      * @param event the Event to add to this Database
+     * @return a boolean representing if the event was successfully added or not.
      */
-    public void addEvent(Event event) {
-        this.EventData.add(event);
+    public boolean addEvent(Event event) {
+        return this.EventData.add(event);
     }
 
     /**
