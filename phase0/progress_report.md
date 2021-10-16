@@ -12,7 +12,7 @@ Our CRC model has four **Entities** (Anniversary, Event, Birthday, Person), two 
 
 #### Scenario Walk-Through
 
-Our typical walk-through has the user decide between creating a new event or managing previously set events. If they want to create an event, they need give it a name, date, associated person, and set time they want to be reminded before the event. If the user wants to view and edit their evetns, they can search through the events and have the option to change certain elements of that event or delete it entirley.
+Our typical walk-through has the user decide between creating a new event or managing previously set events. If they want to create an event, they need give it a name, date, associated person, and set time they want to be reminded before the event. If the user wants to view and edit their events, they can search through the events and have the option to change certain elements of that event or delete it entirley.
 
 #### Skeleton Program
 
@@ -33,6 +33,29 @@ Our Skeleton Program will be able to do the following
 - How should the Data from the database be transported to the UI? Is the current architecture valid and sustainable?
 
 ### Part 3: Things That Have Worked Well With Our Design
+
+While we haven't yet directly dealt with the consequences of our project architecture (we're still _in_ the architecting
+phase), we've certainly planned for numerous areas of expansion.
+
+#### DataAccess
+
+The `DataAccess` class, and its related classes `Database`, `DatabaseAccessFactory`, and `DatabaseAccessInterface` are
+designed to make swapping out database solutions easy and with minimal refactoring.
+
+Why do we need this extensibility? For now, we have decided that only using volatile memory to store database objects (
+like `Event`s and `Person`s) is sufficient to test and showcase our application: by not having to support some external
+database schema, and by not having to work through the challenges that come with object serialization (what attributes
+are important? what can we re-assemble from the data we've decided to store?) greatly decreases the complexity of our
+application and allows us to focus on the core user experience.
+
+Eventually, however, we'll want persistence: our users shouldn't have to re-create events every time they launch our
+app! The `DataAccess` class will simplify this extension by providing a common interface for the rest of our program to
+access this kind of data: it provides adders and removers that will be common to all types of databases (this means that
+the rest of the app doesn't _need_ to care about what database is being used).
+
+In the future, when we decide to add a database, we will only need to modify `DataAccess` to use the API of our
+database (and remove our temporary volatile database); since the rest of our program works _through_ `DataAccess`, it
+doesn't even have to be refactored.
 
 ### Part 4: Work Distribution
 
