@@ -12,7 +12,7 @@ Our CRC model has four **Entities** (Anniversary, Event, Birthday, Person), two 
 
 #### Scenario Walk-Through
 
-Our typical walk-through has the user decide between creating a new event or managing previously set events. If they want to create an event, they need give it a name, date, associated person, and set time they want to be reminded before the event. If the user wants to view their events the program will display a list of upcoming events, the user can then choose to view more information about the event or delete it entirley.
+Our typical walk-through has the user decide between creating a new event or managing previously set events. If they want to create an event, they need to give it a name, date, associated person, and set time they want to be reminded before the event. If the user wants to view their events the program will display a list of upcoming events, the user can then choose to view more information about the event or delete it entirely.
 
 #### Skeleton Program
 
@@ -28,7 +28,7 @@ Our Skeleton Program will be able to do the following
 
 - How should we differentiate between different Objects. That is, given two Events/Person objects which have identical attributes, how can we distinguish between them?
 
-- Do we need subclasses for the Event class? The Anniversay subclass and Birthday subclass are identical except for the class name. Should a Birthday exhibit different behavior than a Anniversay?
+- Do we need subclasses for the Event class? The Anniversay subclass and Birthday subclass are identical except for the class name. Should a Birthday exhibit different behaviour than an Anniversay?
 
 - Should we use tags on Events instead of subclasses, or maybe a Tagable Interface?
 
@@ -75,13 +75,13 @@ The class hierarchy also makes it easy to add new classes without having to refa
 subclass (and the appropriate UI flags to create it), and, since the rest of the app only ever refers to the
 non-specific `Event` class, the new event type is automatically compatible.
 
-### Part 4: Work Distribution
+### Part 4a: Work Distribution
 
 Person 1: Menghao Yu
 
 - Implemented a `Person` class with various methods that allow the object to be edited.
 - Implemented a tentative `Database` which stores `Event` objects
-- Created a `DatabaseAccessInterface` to allow other classes to preform operations on the `Database`.
+- Created a `DatabaseAccessInterface` to allow other classes to perform operations on the `Database`.
 - Created a `DataAccess` class which provides an implementation for the `DatabaseAccessInterface`.
 - Created a `DatabaseAccessFactory` to create `DatabaseAccessInterfaces` without directly instantiating the `DataAccess` class.
 
@@ -91,7 +91,7 @@ Person 2: Roman Zupancic
 - Implemented tests for `Birthday` and `Anniversary` classes
 - Wrote part of this report
 
-Person 3: Jonathan Ginervro
+Person 3: Jonathan Ginevro
 
 - Implemented the `PersonManager` class and architected its interactions with other classes
 - Wrote part of this report
@@ -112,9 +112,9 @@ Person 6: Daniel Hocevar
 - Architected how `Event` classes and the `Person` class interact with each other.
 - Wrote part of this report
 
-### Part 4b): What we plan to work on next
+### Part 4b: What we plan to work on next
 Big Goals:
-- Our primary goal for the next phase of the project will be to build an android app. We plan to have Daniel, Johnathan and Jeremiah work on this.
+- Our primary goal for the next phase of the project will be to build an android app. We plan to have Daniel, Jonathan and Jeremiah work on this.
 - Building an android app will provide users with a simpler and more friendly way of interacting with our application. 
 - Another goal we have is to replace the Database class with a real Database. We have discussed the possibility of using SQL or Firebase. We plan to have Menghao, Roman and Nathan work on this.
 
