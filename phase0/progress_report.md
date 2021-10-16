@@ -57,7 +57,7 @@ app! The `DataAccess` class will simplify this extension by providing a common i
 access this kind of data: it provides adders and removers that will be common to all types of databases (this means that
 the rest of the app doesn't _need_ to care about what database is being used).
 
-In the future, when we decide to add a database, we will only need to modify `DataAccess` to use the API of our
+When we decide to add a database, then, we will only need to modify `DataAccess` to use the API of our
 database (and remove our temporary volatile database); since the rest of our program works _through_ `DataAccess`, it
 doesn't even have to be refactored.
 
