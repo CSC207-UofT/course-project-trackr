@@ -1,11 +1,15 @@
 package interface_adapters;
 
+import database.DataAccess;
+import input_output_interfaces.EventInOut;
 import input_output_interfaces.InputBoundary;
 import input_output_interfaces.OutputBoundary;
 import usecases.EventManager;
+import usecases.EventOutputData;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 /**
@@ -15,7 +19,7 @@ import java.util.Arrays;
  * outputted.
  */
 public class BirthdayPresenter {
-    private EventManager em = new EventManager();
+    private final EventInOut em = new EventManager( new DataAccess());
 
     /**
      * Interacts with user to get input and send outputs about depending on what the user wants
@@ -50,29 +54,94 @@ public class BirthdayPresenter {
      */
     public void executeCommand(String command, String[] args, OutputBoundary out) {
         switch (command) {
-            case "add":
-                String[] dateString = args[0].split("/");
+            case "add" -> {
+                EventOutputData.EventTypes eventType = getEventType(args[0]);
+                String[] name = getFirstLastName(args[2]);
+                String firstName = name[0];
+                String lastName = name[1];
+
+                String[] dateString = args[1].split("/");
+
                 LocalDate date = LocalDate.of(Integer.parseInt(dateString[0]),
                         Integer.parseInt(dateString[1]),
                         Integer.parseInt(dateString[2]));
-                String name = args[1];
-                LocalDate remindDeadline = date.minusDays(Integer.parseInt(args[2]));
 
-                //TODO:em.addEvent();
-                break;
+                LocalDate remindDeadline = date.minusDays(Integer.parseInt(args[3]));
 
-            case "remove":
-                //TODO: em.removeEvent()
-                break;
+                boolean success = em.add(eventType, firstName, lastName, date, remindDeadline);
+                String successString = "unsuccessfully";
+                if (success) {successString = "successfully";}
+                String outString = "You have " + successString + " added a " + args[0] +
+                        " event on " + args[1] + " for " + args[2] + ". You will be reminded " +
+                        args[3] + " days beforehand.";
 
-            case "view":
-                name = args[0];
-                //TODO: implement behaviour, NEEDED: EventManager.viewInfo() or something along those lines
-                break;
+                out.sendOutput(outString);
+            }
+            case "remove" -> {
+                EventOutputData.EventTypes eventType = getEventType(args[0]);
+                String[] name = getFirstLastName(args[1]);
+                String firstName = name[0];
+                String lastName = name[1];
 
-            default:
-                out.sendOutput("Not a valid command");
-                break;
+                boolean success = em.remove(eventType, firstName, lastName);
+                String successString = "unsuccessfully";
+                if (success) {successString = "successfully";}
+                String outString = "You have " + successString + " removed a " + args[0] +
+                        " event on for " + args[1] + ".";
+
+                out.sendOutput(outString);
+            }
+            case "view" -> {
+                EventOutputData.EventTypes eventType = getEventType(args[0]);
+                String[] name = getFirstLastName(args[1]);
+                String firstName = name[0];
+                String lastName = name[1];
+
+                EventOutputData info = em.view(eventType, firstName, lastName);
+                String dateString = info.getDate().toString().replace('-', '/');
+                int days = (int) info.getRemindDeadline().until(info.getDate(), ChronoUnit.DAYS);
+
+                String outString = "You have a " + args[0] +
+                        " event on " + dateString + " for " + args[1] + ". You will be reminded " +
+                        days + " days beforehand.";
+
+                out.sendOutput(outString);
+            }
+            default -> out.sendOutput("Not a valid command");
         }
+    }
+
+    /**
+     * Returns the eventType from the given input.
+     *
+     * @param input The given input from the user representing the event type.
+     * @return      The event type in a form the use case classes can use.
+     */
+    private EventOutputData.EventTypes getEventType(String input) {
+        if (input.equalsIgnoreCase("BIRTHDAY")) {
+            return EventOutputData.EventTypes.BIRTHDAY;
+        } else {
+            return EventOutputData.EventTypes.ANNIVERSARY;
+        }
+    }
+
+    /**
+     * Returns the first and last names of an individual split between their fist and last names
+     * in the form [<firstName>,<lastName>].
+     *
+     * @param input The given input from the user representing the name.
+     * @return      The first and last names.
+     */
+    private String[] getFirstLastName(String input) {
+        String lastName;
+        String[] name = input.split(" ");
+        String firstName = name[0];
+        if (name.length == 2) {
+            lastName = name[1];
+        } else {
+            lastName = "";
+        }
+
+        return new String[] {firstName, lastName};
     }
 }
