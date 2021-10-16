@@ -1,6 +1,7 @@
 package interface_adapters;
 
 import database.DataAccess;
+import database.DatabaseAccessFactory;
 import input_output_interfaces.EventInOut;
 import input_output_interfaces.InputBoundary;
 import input_output_interfaces.OutputBoundary;
@@ -19,7 +20,8 @@ import java.util.Arrays;
  * outputted.
  */
 public class BirthdayPresenter {
-    private final EventInOut em = new EventManager( new DataAccess());
+
+    private final EventInOut em = new EventManager(DatabaseAccessFactory.createDatabaseAccessInterface());
 
     /**
      * Interacts with user to get input and send outputs about depending on what the user wants
@@ -30,10 +32,11 @@ public class BirthdayPresenter {
      */
     public void run(InputBoundary in, OutputBoundary out) {
         try {
-           String[] input = in.getInput();
-           while (!input[0].equals("exit")) {
-               String command = input[0];
-               String[] args = Arrays.copyOfRange(input, 1, input.length);
+           String input = in.getInput();
+           while (!input.equals("exit")) {
+               String[] inputArray = input.split(" ");
+               String command = inputArray[0];
+               String[] args = Arrays.copyOfRange(inputArray, 1, inputArray.length);
 
                executeCommand(command, args, out);
                input = in.getInput();
@@ -72,7 +75,7 @@ public class BirthdayPresenter {
                 String successString = "unsuccessfully";
                 if (success) {successString = "successfully";}
                 String outString = "You have " + successString + " added a " + args[0] +
-                        " event on " + args[1] + " for " + args[2] + ". You will be reminded " +
+                        " event on " + args[1] + " for " + firstName + " " + lastName + ". You will be reminded " +
                         args[3] + " days beforehand.";
 
                 out.sendOutput(outString);
@@ -87,7 +90,7 @@ public class BirthdayPresenter {
                 String successString = "unsuccessfully";
                 if (success) {successString = "successfully";}
                 String outString = "You have " + successString + " removed a " + args[0] +
-                        " event on for " + args[1] + ".";
+                        " event for " + firstName + " " + lastName + ".";
 
                 out.sendOutput(outString);
             }
@@ -102,7 +105,7 @@ public class BirthdayPresenter {
                 int days = (int) info.getRemindDeadline().until(info.getDate(), ChronoUnit.DAYS);
 
                 String outString = "You have a " + args[0] +
-                        " event on " + dateString + " for " + args[1] + ". You will be reminded " +
+                        " event on " + dateString + " for " + firstName + " " + lastName + ". You will be reminded " +
                         days + " days beforehand.";
 
                 out.sendOutput(outString);
@@ -134,7 +137,7 @@ public class BirthdayPresenter {
      */
     private String[] getFirstLastName(String input) {
         String lastName;
-        String[] name = input.split(" ");
+        String[] name = input.split("_");
         String firstName = name[0];
         if (name.length == 2) {
             lastName = name[1];
