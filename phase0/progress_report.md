@@ -90,24 +90,23 @@ Person 2: Roman Zupancic
 - Created the `Event` class and its subclasses `Birthday` and `Anniversary`
 - Implemented tests for `Birthday` and `Anniversary` classes
 - Wrote part of this report
-- Wrote and troubleshooted the project build instructions
 
 Person 3: Jonathan Ginervro
 
-- Implemented the `PersonManager` class
+- Implemented the `PersonManager` class and architected its interactions with other classes
 - Wrote part of this report
 
 Person 4: Nathan Hansen
 
-- Created the `CommandInterface` class
+- Created the `CommandInterface` class that acts as a (temporary) front end for interacting with our application
 - Wrote handling logic for directing commands to internal classes (early command parsing) 
 
 Person 5: Jeremiah Djianto
 
-- Wrote the `BirthdayPresenter` class
-- Wrote the `InputBoundary` and `OutputBoundary` classes
+- Wrote the `BirthdayPresenter` class, including the logic for handling `add`, `remove` and `view` commands and parsing their parameters for compatibility with the higher-level layers
+- Wrote the `InputBoundary` and `OutputBoundary` classes, which separates the core of our program from I/O
 
 Person 6: Daniel Hocevar
 
 - Wrote the `EventManager` class, including its interaction with our database architecture.
-- Task 2
+- Architected how `Event` classes and the `Person` class interact with each other.
