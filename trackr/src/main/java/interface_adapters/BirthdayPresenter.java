@@ -1,6 +1,5 @@
 package interface_adapters;
 
-import database.DataAccess;
 import database.DatabaseAccessFactory;
 import input_output_interfaces.EventInOut;
 import input_output_interfaces.InputBoundary;
@@ -8,7 +7,6 @@ import input_output_interfaces.OutputBoundary;
 import usecases.EventManager;
 import usecases.EventOutputData;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
@@ -31,19 +29,19 @@ public class BirthdayPresenter {
      *            classes to the user.
      */
     public void run(InputBoundary in, OutputBoundary out) {
-        try {
-           String input = in.getInput();
-           while (!input.equals("exit")) {
-               String[] inputArray = input.split(" ");
-               String command = inputArray[0];
-               String[] args = Arrays.copyOfRange(inputArray, 1, inputArray.length);
+//        try {
+       String input = in.getInput();
+       while (!input.equals("exit")) {
+           String[] inputArray = input.split(" ");
+           String command = inputArray[0];
+           String[] args = Arrays.copyOfRange(inputArray, 1, inputArray.length);
 
-               executeCommand(command, args, out);
-               input = in.getInput();
+           executeCommand(command, args, out);
+           input = in.getInput();
            }
-        } catch (IOException e) {
-            out.sendOutput("Oops! Something went wrong");
-        }
+//        } catch (IOException e) {
+//            out.sendOutput("Oops! Something went wrong");
+//        }
     }
 
     /**
