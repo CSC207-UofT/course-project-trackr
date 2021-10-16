@@ -6,6 +6,5 @@ public class Main {
         CommandInterface cli = new CommandInterface();
         BirthdayPresenter bp = new BirthdayPresenter();
         bp.run(cli, cli);
-
     }
 }

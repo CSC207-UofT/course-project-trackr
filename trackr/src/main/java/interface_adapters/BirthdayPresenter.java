@@ -31,7 +31,7 @@ public class BirthdayPresenter {
     public void run(InputBoundary in, OutputBoundary out) {
 //        try {
        String input = in.getInput();
-       while (!input.equals("exit")) {
+       while (!input.equals("exit") && !input.equals("quit")) {
            String[] inputArray = input.split(" ");
            String command = inputArray[0];
            String[] args = Arrays.copyOfRange(inputArray, 1, inputArray.length);
@@ -101,6 +101,10 @@ public class BirthdayPresenter {
                 String lastName = name[1];
 
                 EventOutputData info = em.view(eventType, firstName, lastName);
+                if (info.getFirstName()==null) {
+                    out.sendOutput("This event doesn't exist.");
+                    break;
+                }
                 String dateString = info.getDate().toString().replace('-', '/');
                 int days = (int) info.getRemindDeadline().until(info.getDate(), ChronoUnit.DAYS);
 
@@ -109,6 +113,15 @@ public class BirthdayPresenter {
                         days + " days beforehand.";
 
                 out.sendOutput(outString);
+
+                break;
+            }
+            case "help": {
+                out.sendOutput("help\t\tshows help page\nquit\t\tquit Trackr");
+                out.sendOutput("add <event_type> <yyyy/mm/dd> <firstname_lastname> <reminder_interval>");
+                out.sendOutput("example: add Birthday 2020/04/05 Jeffry_Bezos 30");
+                out.sendOutput("remove <event_type> <firstname_lastname>");
+                out.sendOutput("view <event_type> <firstname_lastname>");
                 break;
             }
             default: {
