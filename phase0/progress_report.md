@@ -63,6 +63,18 @@ When we decide to add a database, then, we will only need to modify `DataAccess`
 database (and remove our temporary volatile `Database`); since the rest of our program works _through_ `DataAccess`, it
 doesn't even have to be refactored.
 
+#### Subclassing `Event`
+
+Why our event structure (having an abstract `Event` class as a parent class to different types of event classes) is a
+point of contention right now (as in, is it really necessary?), as of phase0 it seems to be the best way to represent
+events. Having an abstract `Event` class forces us to implement new events as subclasses, allowing us the extensibility
+of subclasses: like adding event-specific features and messages. The class hierarchy also makes for easy polymorphism: 
+instead of keeping track of specific events in the rest of our program, we can just refer to the general `Event` class.
+
+The class hierarchy also makes it easy to add new classes without having to refactor the entire program: just add a new
+subclass (and the appropriate UI flags to create it), and, since the rest of the app only ever refers to the
+non-specific `Event` class, the new event type is automatically compatible.
+
 ### Part 4: Work Distribution
 
 Person 1: Menghao Yu
