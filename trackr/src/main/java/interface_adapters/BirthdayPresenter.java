@@ -57,7 +57,7 @@ public class BirthdayPresenter {
      */
     public void executeCommand(String command, String[] args, OutputBoundary out) {
         switch (command) {
-            case "add" -> {
+            case "add": {
                 EventOutputData.EventTypes eventType = getEventType(args[0]);
                 String[] name = getFirstLastName(args[2]);
                 String firstName = name[0];
@@ -79,8 +79,9 @@ public class BirthdayPresenter {
                         args[3] + " days beforehand.";
 
                 out.sendOutput(outString);
+                break;
             }
-            case "remove" -> {
+            case "remove": {
                 EventOutputData.EventTypes eventType = getEventType(args[0]);
                 String[] name = getFirstLastName(args[1]);
                 String firstName = name[0];
@@ -93,8 +94,9 @@ public class BirthdayPresenter {
                         " event for " + firstName + " " + lastName + ".";
 
                 out.sendOutput(outString);
+                break;
             }
-            case "view" -> {
+            case "view": {
                 EventOutputData.EventTypes eventType = getEventType(args[0]);
                 String[] name = getFirstLastName(args[1]);
                 String firstName = name[0];
@@ -109,8 +111,12 @@ public class BirthdayPresenter {
                         days + " days beforehand.";
 
                 out.sendOutput(outString);
+                break;
             }
-            default -> out.sendOutput("Not a valid command");
+            default: {
+                out.sendOutput("Not a valid command");
+                break;
+            }
         }
     }
 
