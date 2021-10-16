@@ -36,6 +36,8 @@ Our Skeleton Program will be able to do the following
 
 - Does the EventManager have too much responsibility? Should we divide EventManager into smaller classes?
 
+- Should we be storing `Person` classes as instance attributes for `Events`? Should we be using generated ID's to link people and events together instead? Should we have person classes at all (and just store names in events)?
+
 ### Part 3: Things That Have Worked Well With Our Design
 
 While we haven't yet directly dealt with the consequences of our project architecture (we're still _in_ the architecting
@@ -58,7 +60,7 @@ access this kind of data: it provides adders and removers that will be common to
 the rest of the app doesn't _need_ to care about what database is being used).
 
 When we decide to add a database, then, we will only need to modify `DataAccess` to use the API of our
-database (and remove our temporary volatile database); since the rest of our program works _through_ `DataAccess`, it
+database (and remove our temporary volatile `Database`); since the rest of our program works _through_ `DataAccess`, it
 doesn't even have to be refactored.
 
 ### Part 4: Work Distribution
