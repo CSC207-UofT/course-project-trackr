@@ -100,7 +100,7 @@ Person 3: Jonathan Ginervro
 Person 4: Nathan Hansen
 
 - Created the `CommandInterface` class
-- Task 2
+- Wrote handling logic for directing commands to internal classes (early command parsing) 
 
 Person 5: Jeremiah Djianto
 
