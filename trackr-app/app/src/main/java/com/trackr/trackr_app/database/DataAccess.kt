@@ -1,9 +1,7 @@
 package database
 
-import database.DataAccess
+import com.trackr.trackr_app.entities.Event
 import usecases.EventOutputData.EventTypes
-import entities.Anniversary
-import entities.Birthday
 
 /**
  * An implementation for the DatabaseAccessInterface, which preforms Database operations.
@@ -20,7 +18,7 @@ class DataAccess : DatabaseAccessInterface {
      * Add a new Event to the Database
      * @param event the Event to add to the Database
      */
-    fun addEvent(event: entities.Event?): Boolean {
+    fun addEvent(event: Event?): Boolean {
         return database.addEvent(event)
     }
 
@@ -30,7 +28,7 @@ class DataAccess : DatabaseAccessInterface {
      * @param event the Event to remove
      * @return the boolean indicating if the Event was removed or not.
      */
-    fun removeEvent(event: entities.Event?): Boolean {
+    fun removeEvent(event: Event?): Boolean {
         return database.removeEvent(event)
     }
 
@@ -46,7 +44,7 @@ class DataAccess : DatabaseAccessInterface {
         targetEventType: EventTypes,
         firstName: String?,
         lastName: String?
-    ): entities.Event? {
+    ): Event? {
         for (event in eventData) {
             val hasSameName = event.getPerson().getFirstName().equals(firstName) &&
                     event.getPerson().getLastName().equals(lastName)

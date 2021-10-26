@@ -1,5 +1,6 @@
 package database
 
+import com.trackr.trackr_app.entities.Event
 import usecases.EventOutputData.EventTypes
 
 /**
@@ -18,7 +19,7 @@ interface DatabaseAccessInterface {
      * @param event the Event to add to the Database
      * @return a boolean
      */
-    fun addEvent(event: entities.Event?): Boolean
+    fun addEvent(event: Event?): Boolean
 
     /**
      * Remove an existing Event from the Database. Return a boolean representing
@@ -26,7 +27,7 @@ interface DatabaseAccessInterface {
      * @param event the Event to remove
      * @return the boolean indicating if the Event was removed or not.
      */
-    fun removeEvent(event: entities.Event?): Boolean
+    fun removeEvent(event: Event?): Boolean
 
     /**
      * Return a List of Events in the Database which have a Person with the
@@ -40,5 +41,5 @@ interface DatabaseAccessInterface {
         targetEventType: EventTypes?,
         firstName: String?,
         lastName: String?
-    ): entities.Event?
+    ): Event?
 }

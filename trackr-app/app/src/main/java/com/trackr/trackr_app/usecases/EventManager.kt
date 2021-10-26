@@ -3,9 +3,7 @@ package usecases
 import database.DatabaseAccessInterface
 import input_output_interfaces.EventInOut
 import EventOutputData.EventTypes
-import entities.Birthday
-import entities.Anniversary
-import entities.Event
+import com.trackr.trackr_app.entities.Event
 import entities.Person
 import java.time.LocalDate
 import java.util.HashSet

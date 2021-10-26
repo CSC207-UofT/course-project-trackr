@@ -1,16 +1,17 @@
 package database
 
+import com.trackr.trackr_app.entities.Event
 import java.util.HashSet
 
 class Database {
-    private val EventData: MutableSet<entities.Event> = HashSet<entities.Event>()
+    private val EventData: MutableSet<Event> = HashSet<Event>()
 
     /**
      * Add a new Event to this Database. Return a boolean representing if the event was successfully added or not.
      * @param event the Event to add to this Database
      * @return a boolean representing if the event was successfully added or not.
      */
-    fun addEvent(event: entities.Event): Boolean {
+    fun addEvent(event: Event): Boolean {
         return EventData.add(event)
     }
 
@@ -19,7 +20,7 @@ class Database {
      * @param event the Event to remove from the Database
      * @return a boolean representing if the Event was successfully removed from this Database
      */
-    fun removeEvent(event: entities.Event): Boolean {
+    fun removeEvent(event: Event): Boolean {
         return EventData.remove(event)
     }
 
@@ -27,7 +28,7 @@ class Database {
      * Return a List of ALL Events in this Database
      * @return a List of ALL events in this Database
      */
-    fun getEventData(): Set<entities.Event> {
+    fun getEventData(): Set<Event> {
         return EventData
     }
 }
