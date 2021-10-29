@@ -11,7 +11,7 @@ interface DatabaseAccessInterface {
      * Return a Set of all Events in the Database
      * @return a Set of all Events in the Database
      */
-    val eventData: Set<Any?>?
+    fun getEventData(): Set<Event?>?
 
     /**
      * Add a new Event to the Database. Return true if the Database was successfully added.

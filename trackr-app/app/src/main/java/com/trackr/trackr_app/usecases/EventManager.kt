@@ -2,7 +2,7 @@ package usecases
 
 import database.DatabaseAccessInterface
 import input_output_interfaces.EventInOut
-import EventOutputData.EventTypes
+import usecases.EventOutputData.EventTypes
 import entities.Birthday
 import entities.Anniversary
 import entities.Event
@@ -15,8 +15,15 @@ import java.util.HashSet
  */
 class EventManager(private val dataAccessor: DatabaseAccessInterface) : EventInOut {
     private val personManager: PersonManager
-    val allEvents: Set<Event?>?
-        get() = dataAccessor.eventData
+
+    /**
+     * Returns all events in the database
+     *
+     * @return all events in the database
+     */
+    fun getAllEvents(): Set<Event?>? {
+        return dataAccessor.getEventData()
+    }
 
     /**
      * Add an event to the database
