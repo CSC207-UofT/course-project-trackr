@@ -1,7 +1,7 @@
 package usecases
 
-import entities.Anniversary
-import entities.Event
+import com.trackr.trackr_app.entities.Anniversary
+import com.trackr.trackr_app.entities.Event
 import java.time.LocalDate
 
 /**
@@ -27,10 +27,10 @@ class EventOutputData(event: Event?) {
     init {
         if (event != null) {
             eventType = if (event is Anniversary) EventTypes.ANNIVERSARY else EventTypes.BIRTHDAY
-            firstName = event.getPerson().firstName
-            lastName = event.getPerson().lastName
-            personDescription = event.getPerson().description
-            personTags = event.getPerson().getTags()
+            firstName = event.person.firstName
+            lastName = event.person.lastName
+            personDescription = event.person.description
+            personTags = event.person.getTags()
             date = event.date
             remindDeadline = event.reminderDeadline
         }

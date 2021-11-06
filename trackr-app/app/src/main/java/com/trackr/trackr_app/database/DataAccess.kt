@@ -1,9 +1,11 @@
-package database
+package com.trackr.trackr_app.database
 
-import database.DataAccess
+import com.trackr.trackr_app.entities.Event
 import usecases.EventOutputData.EventTypes
-import entities.Anniversary
-import entities.Birthday
+import com.trackr.trackr_app.entities.Anniversary
+import com.trackr.trackr_app.entities.Birthday
+import database.Database
+import database.DatabaseAccessInterface
 
 /**
  * An implementation for the DatabaseAccessInterface, which preforms Database operations.
@@ -13,14 +15,15 @@ class DataAccess : DatabaseAccessInterface {
      * Return a List of all Events in the Database
      * @return a list of all Events in the Database
      */
-    fun getEventData(): Set<Event>
+    override fun getEventData(): Set<Event> {
         return database.getEventData()
+    }
 
     /**
      * Add a new Event to the Database
      * @param event the Event to add to the Database
      */
-    fun addEvent(event: entities.Event?): Boolean {
+    override fun addEvent(event: Event): Boolean {
         return database.addEvent(event)
     }
 
@@ -30,7 +33,7 @@ class DataAccess : DatabaseAccessInterface {
      * @param event the Event to remove
      * @return the boolean indicating if the Event was removed or not.
      */
-    fun removeEvent(event: entities.Event?): Boolean {
+    override fun removeEvent(event: Event): Boolean {
         return database.removeEvent(event)
     }
 
@@ -42,14 +45,14 @@ class DataAccess : DatabaseAccessInterface {
      * @param lastName the lastName of the Person for which the Event is for
      * @return the Event which has the specified properties, or null if none is found
      */
-    fun findEvent(
+    override fun findEvent(
         targetEventType: EventTypes,
-        firstName: String?,
-        lastName: String?
-    ): entities.Event? {
-        for (event in eventData) {
-            val hasSameName = event.getPerson().getFirstName().equals(firstName) &&
-                    event.getPerson().getLastName().equals(lastName)
+        firstName: String,
+        lastName: String
+    ): Event? {
+        for (event in getEventData()) {
+            val hasSameName = event.person.firstName == firstName &&
+                    event.person.lastName == lastName
             val hasSameType = event is Anniversary && targetEventType == EventTypes.ANNIVERSARY ||
                     event is Birthday && targetEventType == EventTypes.BIRTHDAY
             if (hasSameName && hasSameType) {

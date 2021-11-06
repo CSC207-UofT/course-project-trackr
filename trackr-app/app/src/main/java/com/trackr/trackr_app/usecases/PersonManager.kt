@@ -1,6 +1,6 @@
-package usecases
+package com.trackr.trackr_app.usecases
 
-import entities.Person
+import com.trackr.trackr_app.entities.Person
 import java.util.HashSet
 
 /**
@@ -16,12 +16,12 @@ class PersonManager {
      * @return newly created Person
      */
     fun createPerson(
-        firstName: String?,
-        lastName: String?,
-        description: String?,
-        tags: HashSet<String?>?
+        firstName: String,
+        lastName: String = "",
+        description: String = "",
+        tags: HashSet<String> = HashSet()
     ): Person {
-        return Person(firstName!!, lastName!!, description!!, tags!!)
+        return Person(firstName, lastName, description, tags)
     }
 
     /**
@@ -86,7 +86,7 @@ class PersonManager {
      * @param person - a Person object
      * @param tag - the tag to add to this person
      */
-    fun addTags(person: Person, tag: String?) {
+    fun addTags(person: Person, tag: String) {
         person.addTag(tag)
     }
 
@@ -95,7 +95,7 @@ class PersonManager {
      * @param person - a Person object
      * @param tag - the tag to remove from this person
      */
-    fun removeTags(person: Person, tag: String?) {
+    fun removeTags(person: Person, tag: String) {
         person.removeTag(tag)
     }
 }

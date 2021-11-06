@@ -1,14 +1,8 @@
 package interface_adapters
 
 import database.DatabaseAccessFactory.createDatabaseAccessInterface
-import input_output_interfaces.InputBoundary.input
-import input_output_interfaces.EventInOut.add
-import input_output_interfaces.OutputBoundary.sendOutput
-import input_output_interfaces.EventInOut.remove
-import input_output_interfaces.EventInOut.view
 import input_output_interfaces.EventInOut
 import usecases.EventManager
-import database.DatabaseAccessFactory
 import input_output_interfaces.InputBoundary
 import input_output_interfaces.OutputBoundary
 import usecases.EventOutputData.EventTypes
@@ -96,13 +90,13 @@ class BirthdayPresenter {
                 val name = getFirstLastName(args[1])
                 val firstName = name[0]
                 val lastName = name[1]
-                val info: EventOutputData? = em.view(eventType, firstName, lastName)
-                if (info.getFirstName() == null) {
+                val info: EventOutputData = em.view(eventType, firstName, lastName)
+                if (info.firstName == null) {
                     out.sendOutput("This event doesn't exist.")
-                    break
+                    return
                 }
-                val dateString: String = info.getDate().toString().replace('-', '/')
-                val days = info.getRemindDeadline().until(info.getDate(), ChronoUnit.DAYS) as Int
+                val dateString: String = info.date.toString().replace('-', '/')
+                val days = info.remindDeadline?.until(info.date, ChronoUnit.DAYS)?.toInt()
                 val outString = "You have a " + args[0] +
                         " event on " + dateString + " for " + firstName + " " + lastName + ". You will be reminded " +
                         days + " days beforehand."
