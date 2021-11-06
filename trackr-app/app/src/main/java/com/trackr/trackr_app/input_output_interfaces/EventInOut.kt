@@ -22,7 +22,7 @@ interface EventInOut {
      */
     fun add(
         eventType: EventTypes, firstName: String, lastName: String,
-        date: LocalDate, remindDate: LocalDate
+        date: LocalDate, remindDate: LocalDate?
     ): Boolean
 
     /**

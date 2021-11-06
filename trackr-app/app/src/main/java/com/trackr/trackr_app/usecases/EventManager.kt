@@ -21,7 +21,7 @@ class EventManager(private val dataAccessor: DatabaseAccessInterface) : EventInO
      *
      * @return all events in the database
      */
-    fun getAllEvents(): Set<Event?>? {
+    fun getAllEvents(): Set<Event?> {
         return dataAccessor.getEventData()
     }
 
@@ -34,11 +34,10 @@ class EventManager(private val dataAccessor: DatabaseAccessInterface) : EventInO
      * @return true if the event was successfully added
      */
     fun addEvent(
-        person: Person?, eventType: EventTypes,
-        date: LocalDate?, reminderDeadline: LocalDate?
+        person: Person, eventType: EventTypes,
+        date: LocalDate, reminderDeadline: LocalDate?
     ): Boolean {
-        val event: Event
-        event = if (eventType.equals(EventOutputData.EventTypes.BIRTHDAY)) {
+        val event: Event = if (eventType == EventTypes.BIRTHDAY) {
             Birthday(person, date, reminderDeadline)
         } else {
             Anniversary(person, date, reminderDeadline)
@@ -53,9 +52,9 @@ class EventManager(private val dataAccessor: DatabaseAccessInterface) : EventInO
      * @param lastName - the last name of the person whose events we are removing
      * @return false if no events were removed, and true if one or more events were removed
      */
-    fun removeEvent(eventType: EventTypes?, firstName: String?, lastName: String?): Boolean {
+    fun removeEvent(eventType: EventTypes, firstName: String, lastName: String): Boolean {
         val toRemove = dataAccessor.findEvent(eventType, firstName, lastName)
-        return dataAccessor.removeEvent(toRemove)
+        return if(toRemove != null) dataAccessor.removeEvent(toRemove) else false
     }
 
     /**
@@ -66,36 +65,36 @@ class EventManager(private val dataAccessor: DatabaseAccessInterface) : EventInO
      * @param lastName      The last name of the person the event is for.
      * @return              The information of the event specified.
      */
-    fun viewEvent(eventType: EventTypes?, firstName: String?, lastName: String?): EventOutputData {
+    fun viewEvent(eventType: EventTypes, firstName: String, lastName: String): EventOutputData {
         val event = dataAccessor.findEvent(eventType, firstName, lastName)
         return EventOutputData(event)
     }
 
     override fun add(
-        eventType: EventTypes, firstName: String?, lastName: String?,
-        date: LocalDate?, remindDate: LocalDate?
+        eventType: EventTypes, firstName: String, lastName: String,
+        date: LocalDate, remindDate: LocalDate?
     ): Boolean {
         val person: Person = personManager.createPerson(firstName, lastName)
         return addEvent(person, eventType, date, remindDate)
     }
 
-    override fun remove(eventType: EventTypes?, firstName: String?, lastName: String?): Boolean {
+    override fun remove(eventType: EventTypes, firstName: String, lastName: String): Boolean {
         return removeEvent(eventType, firstName, lastName)
     }
 
     override fun view(
-        eventType: EventTypes?,
-        firstName: String?,
-        lastName: String?
+        eventType: EventTypes,
+        firstName: String,
+        lastName: String
     ): EventOutputData {
         return viewEvent(eventType, firstName, lastName)
     }
 
-    override val all: Set<Any>
+    override val all: Set<EventOutputData>
         get() {
-            val events = allEvents
+            val events = getAllEvents()
             val set: MutableSet<EventOutputData> = HashSet<EventOutputData>()
-            for (e in events!!) {
+            for (e in events) {
                 set.add(EventOutputData(e))
             }
             return set
