@@ -7,6 +7,7 @@ import com.trackr.trackr_app.entities.Birthday
 import com.trackr.trackr_app.entities.Anniversary
 import com.trackr.trackr_app.entities.Event
 import com.trackr.trackr_app.entities.Person
+import com.trackr.trackr_app.usecases.PersonManager
 import java.time.LocalDate
 import java.util.HashSet
 

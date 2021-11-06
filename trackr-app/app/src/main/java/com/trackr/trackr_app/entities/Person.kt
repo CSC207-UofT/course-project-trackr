@@ -22,7 +22,8 @@ class Person(
      * Set the description of this Person to description
      * @param description the new description of this Person
      */
-    var description: String = "", private val tags: HashSet<String> = HashSet()
+    var description: String = "",
+    private val tags: HashSet<String> = HashSet()
 ) {
     /**
      * Return the lastName of this Person
