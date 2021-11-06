@@ -90,8 +90,8 @@ class BirthdayPresenter {
                 val name = getFirstLastName(args[1])
                 val firstName = name[0]
                 val lastName = name[1]
-                val info: EventOutputData? = em.view(eventType, firstName, lastName)
-                if (info.getFirstName() == null) {
+                val info: EventOutputData = em.view(eventType, firstName, lastName)
+                if (info.firstName == null) {
                     out.sendOutput("This event doesn't exist.")
                     return
                 }
