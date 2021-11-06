@@ -13,8 +13,8 @@ class DataAccess : DatabaseAccessInterface {
      * Return a List of all Events in the Database
      * @return a list of all Events in the Database
      */
-    val eventData: Set<Any>
-        get() = database.getEventData()
+    fun getEventData(): Set<Event>
+        return database.getEventData()
 
     /**
      * Add a new Event to the Database
