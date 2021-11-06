@@ -1,7 +1,7 @@
 package usecases
 
-import entities.Anniversary
-import entities.Event
+import com.trackr.trackr_app.entities.Anniversary
+import com.trackr.trackr_app.entities.Event
 import java.time.LocalDate
 
 /**

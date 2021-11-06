@@ -1,6 +1,6 @@
 package usecases
 
-import entities.Person
+import com.trackr.trackr_app.entities.Person
 import java.util.HashSet
 
 /**

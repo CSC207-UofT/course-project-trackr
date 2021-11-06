@@ -21,8 +21,8 @@ interface EventInOut {
      * @return              Whether the event outlined by info was successfully created or not.
      */
     fun add(
-        eventType: EventTypes?, firstName: String?, lastName: String?,
-        date: LocalDate?, remindDate: LocalDate?
+        eventType: EventTypes, firstName: String, lastName: String,
+        date: LocalDate, remindDate: LocalDate
     ): Boolean
 
     /**
@@ -34,7 +34,7 @@ interface EventInOut {
      *
      * @return              Whether the event outlined by info was successfully removed or not.
      */
-    fun remove(eventType: EventTypes?, firstName: String?, lastName: String?): Boolean
+    fun remove(eventType: EventTypes, firstName: String, lastName: String): Boolean
 
     /**
      * Returns information on the event being specified.
@@ -44,12 +44,12 @@ interface EventInOut {
      * @param lastName      The last name of the person the event is for.
      * @return              The information of the event specified.
      */
-    fun view(eventType: EventTypes?, firstName: String?, lastName: String?): EventOutputData?
+    fun view(eventType: EventTypes, firstName: String, lastName: String): EventOutputData
 
     /**
      * Returns a set of information for each event in the database.
      *
      * @return  A set of EventOutputData. One for each event in the database.
      */
-    val all: Set<Any?>?
+    val all: Set<EventOutputData>
 }

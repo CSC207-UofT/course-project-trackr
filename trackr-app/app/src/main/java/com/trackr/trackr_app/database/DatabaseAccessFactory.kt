@@ -1,7 +1,6 @@
 package database
 
-import database.DatabaseAccessInterface
-import database.DataAccess
+import com.trackr.trackr_app.database.DataAccess
 
 /**
  * A factory class that is responsible for creating/return DatabaseAccessInterfaces
