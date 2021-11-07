@@ -9,7 +9,8 @@ val Teal200 = Color(0xFF03DAC5)
 
 // CustomColors
 val DarkBlue = Color(0xFF00072B)
-val DarkBlueVariant = Color(0xFF05419A)
+val DarkBlueVariant = Color(0xFF000A18)
 val LightBlue = Color(0xFF9DC2CD)
+val LightBlueVariant = Color(0xFFEAF9FD)
 val BackgroundBlue = Color(0xFF111F36)
 val LightBackground = Color(0xFFF7FEFF)

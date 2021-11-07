@@ -139,7 +139,6 @@ fun EventList(events: List<Any>) {
 fun BottomAppBar() {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
-        elevation = 10.dp,
     ) {
     }
 }
