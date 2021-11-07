@@ -8,8 +8,8 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 // CustomColors
-val DarkBlue = Color(0x060028FF)
-val DarkBlueVariant = Color(0x1F1361FF)
-val LightBlue = Color(0x9DC2CDFF)
-val BackgroundBlue = Color(0x0D0345FF)
-val LightBackground = Color(0x1F1361FF)
+val DarkBlue = Color(0xFF00072B)
+val DarkBlueVariant = Color(0xFF05419A)
+val LightBlue = Color(0xFF9DC2CD)
+val BackgroundBlue = Color(0xFF111F36)
+val LightBackground = Color(0xFFF7FEFF)
