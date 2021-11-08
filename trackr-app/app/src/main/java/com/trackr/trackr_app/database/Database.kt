@@ -6,6 +6,9 @@ import java.util.HashSet
 class Database {
     private val EventData: MutableSet<Event> = HashSet<Event>()
 
+    fun dbInit() {
+
+    }
     /**
      * Add a new Event to this Database. Return a boolean representing if the event was successfully added or not.
      * @param event the Event to add to this Database
