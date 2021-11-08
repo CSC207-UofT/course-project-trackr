@@ -16,7 +16,7 @@ class UserManager {
             id: UUID,
             username: String,
     ): User {
-        return User(id, username)
+        return User(UUID.randomUUID(), username)
     }
 
     /**
