@@ -1,4 +1,4 @@
-package com.trackr.trackr_app.ui.main
+package com.trackr.trackr_app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
