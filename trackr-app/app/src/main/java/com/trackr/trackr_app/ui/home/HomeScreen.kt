@@ -31,13 +31,14 @@ val temp_data = listOf(1,2,3,4,5)
 @Composable
 private fun PreviewWithTheme() {
     TrackrappTheme {
-        HomeScreen()
+        HomeScreen(listOf<String>("hello", "hi"))
     }
 }
 
 @Composable
 fun HomeScreen(
 //    homeViewModel: HomeViewModel,
+    eventList: List<String>
 ) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
@@ -59,14 +60,14 @@ fun HomeScreen(
                    .padding(0.dp, 10.dp)
                    .weight(2f),
                stringResource(R.string.upcoming_events),
-               temp_data
+               eventList
            )
        }
     }
 }
 
 @Composable
-fun HomeFeed(modifier: Modifier, title: String, events: List<Int>) {
+fun HomeFeed(modifier: Modifier, title: String, events: List<String>) {
     Column(
         modifier = modifier,
     ) {
