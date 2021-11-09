@@ -1,9 +1,10 @@
 package com.trackr.trackr_app.entities.eventrepeaterstrategy
 
+import com.trackr.trackr_app.entities.Event
 import java.time.LocalDate
 
-class EventAnnualRepeaterStrategy(maximum: LocalDate?) : EventRepeaterStrategy(maximum) {
-    override fun getBetween(from: LocalDate, to: LocalDate): List<LocalDate> {
+class EventAnnualRepeaterStrategy() : EventRepeaterStrategy("Annual") {
+    override fun getBetween(event: Event, from: LocalDate, to: LocalDate): List<LocalDate> {
         var pos = from
         var soFar = mutableListOf<LocalDate>()
 
