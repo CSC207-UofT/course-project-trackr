@@ -1,12 +1,9 @@
 package com.trackr.trackr_app.ui.calendar
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -19,36 +16,44 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.theme.Rubik
+import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.time.temporal.WeekFields
 import java.util.*
 
-
+/**
+ * A Preview for the calendar component
+ */
 @Preview(
-    uiMode = UI_MODE_NIGHT_YES,  // enables dark mode in preview]
+//    uiMode = UI_MODE_NIGHT_YES,  // enables dark mode in preview]
 )
 @Composable
 fun Preview() {
-    var selectedDate by rememberSaveable { mutableStateOf(LocalDate.now()) }
-    Calendar(
-        selectedDate,
-        { selectedDate = selectedDate.withDayOfMonth(it)} ,
-        { selectedDate = selectedDate.plusMonths(it) }
-    )
+    TrackrappTheme() {
+        var selectedDate by rememberSaveable { mutableStateOf(LocalDate.now()) }
+        Calendar(
+            selectedDate,
+            { selectedDate = selectedDate.withDayOfMonth(it)} ,
+            { selectedDate = selectedDate.plusMonths(it) }
+        )
+    }
 }
 
+
+/**
+ * The Calendar Component - Displays a responsive kCalendar
+ * @param selectedDate the selected date in the calendar
+ * @param onSelect the function to invoke when a new date is selected. This function takes an int
+ * as an argument, which represents the new selected date
+ * @param onSwipe the function to invoke when the previous month and next month buttons are clicked.
+ * This function takes in an integer (1 or -1) to represent the next month or previous month.
+ */
 @Composable
 fun Calendar(
     selectedDate: LocalDate,
@@ -98,6 +103,12 @@ fun Calendar(
     }
 }
 
+/**
+ * A body of the Calendar. This component displays all the calendar days and the names of the
+ * weekdays.
+ * @param selectedDate the date selected
+ * @param onSelect the function to invoke when a new date is selected
+ */
 @Composable
 fun CalendarMonth(
     selectedDate: LocalDate,
@@ -129,6 +140,9 @@ fun CalendarMonth(
     }
 }
 
+/**
+ * A component that displays a row of weekday names.
+ */
 @Composable
 fun CalendarHeader() {
     Row() {
@@ -142,6 +156,12 @@ fun CalendarHeader() {
     }
 }
 
+/**
+ * A component that contains a single day.
+ * @param gridText the text (the date of the month) to be displayed in this component
+ * @param isSelected a Boolean representing whether or not this date was selected
+ * @param onSelect the function to invoke when this date is selected.
+ */
 @Composable
 fun CalendarGridContainer(
     gridText: String,
