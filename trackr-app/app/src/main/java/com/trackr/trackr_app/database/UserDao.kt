@@ -1,0 +1,22 @@
+package com.trackr.trackr_app.database
+
+import androidx.room.*
+import com.trackr.trackr_app.entities.User
+import kotlinx.coroutines.flow.Flow
+import java.util.UUID
+
+@Dao
+interface UserDao {
+
+    @Query("SELECT * FROM `user-table` ORDER BY username ASC")
+    fun listUsernames(): Flow<List<User>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(user: User)
+
+    @Query("UPDATE `user-table` SET username = :new_username WHERE id = :userid")
+    suspend fun updateUsername(userid:UUID, new_username:String)
+
+    @Query("DELETE FROM `user-table`")
+    suspend fun deleteAll()
+}
