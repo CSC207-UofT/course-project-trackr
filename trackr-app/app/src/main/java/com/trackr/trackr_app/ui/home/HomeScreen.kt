@@ -1,15 +1,15 @@
 package com.trackr.trackr_app.ui.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Event
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -40,14 +40,13 @@ import com.trackr.trackr_app.ui.theme.allGradients
 
 
 val temp_data = listOf(1,2,3,4,5)
-//
 //@Preview(
 //    uiMode = UI_MODE_NIGHT_YES  // enables dark mode for preview
 //)
 //@Composable
 //private fun PreviewWithTheme() {
 //    TrackrappTheme {
-//        HomeScreen(listOf<String>("hello", "hi"))
+//        HomeScreen(listOf("hello", "hi"))
 //    }
 //}
 
@@ -62,20 +61,28 @@ class HomeScreenViewModel: ViewModel() {
 }
 
 @Composable
-fun HomeScreenActivity(viewModel: HomeScreenViewModel, nav: NavHostController) {
+fun HomeScreenActivity(
+    viewModel: HomeScreenViewModel,
+    navController: NavHostController
+) {
     val events: List<List<Any>> by viewModel.events.observeAsState(listOf())
-    HomeScreen(eventList = events, viewModel = viewModel, nav = nav)
+    HomeScreen(
+        eventList = events,
+        viewModel = viewModel,
+        navController = navController)
 }
 
 @Composable
 fun HomeScreen(
-    eventList: List<List<Any>>, viewModel: HomeScreenViewModel, nav: NavHostController
+    eventList: List<List<Any>>,
+    viewModel: HomeScreenViewModel,
+    navController: NavHostController
 ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    nav.navigate("Add")
+                    navController.navigate("Add")
 //                    onAddItem("Bob's Birthday")
 //                    Log.d("HELLO", eventList.toString())
                 },
@@ -84,7 +91,9 @@ fun HomeScreen(
             }
         },
         backgroundColor = MaterialTheme.colors.background,
-        bottomBar = { BottomAppBar() }
+        bottomBar = { BottomAppBar(
+            navController,
+        ) }
     ) {
        Column(
            modifier = Modifier
@@ -136,17 +145,23 @@ fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>) {
                 )
             }
         } else {
-            EventList(events)
+            EventList(
+                events,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
 
 
 @Composable
-fun EventList(events: List<Any>) {
+fun EventList(
+    events: List<Any>,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         items(events.count()) { index ->
             val event = events[index]
@@ -178,9 +193,33 @@ fun EventList(events: List<Any>) {
 }
 
 @Composable
-fun BottomAppBar() {
+fun BottomAppBar(
+    navController: NavHostController,
+) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
+        BottomNavigationItem(
+            selected = false,
+            icon = { Icon(
+                Icons.Filled.Event,
+                "Calendar View",
+                Modifier,
+                MaterialTheme.colors.onBackground
+            )},
+            label = {Text("View Calendar", fontFamily = Rubik)},
+            onClick = {navController.navigate("Calendar")}
+        )
+        BottomNavigationItem(
+            selected = false,
+            icon = { Icon(
+                Icons.Filled.Edit,
+                "Edit Events",
+                Modifier,
+                MaterialTheme.colors.onBackground
+            )},
+            label = {Text("View Calendar", fontFamily = Rubik)},
+            onClick = {}  // add navigation
+        )
     }
 }

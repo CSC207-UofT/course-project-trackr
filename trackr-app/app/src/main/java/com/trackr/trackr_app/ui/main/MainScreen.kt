@@ -19,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.entities.Event
 import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreen
@@ -51,6 +52,7 @@ fun MainScreen() {
         NavHost(navController = navController, startDestination = "Home") {
             composable("Add") { AddScreenActivity(homeScreenViewModel, navController) }
             composable("Home") { HomeScreenActivity(homeScreenViewModel, navController) }
+            composable("Calendar") { CalendarScreenActivity() }
         }
 //        NavHost(navController = navController, startDestination = NavScreen.Home.route) {
 //            composable(NavScreen.Home.route) { AddScreenActivity(homeScreenViewModel) }

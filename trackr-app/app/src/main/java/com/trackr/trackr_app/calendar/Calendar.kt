@@ -38,6 +38,7 @@ fun Preview() {
         var selectedDate by rememberSaveable { mutableStateOf(LocalDate.now()) }
         Calendar(
             selectedDate,
+            Modifier.padding(10.dp),
             { selectedDate = selectedDate.withDayOfMonth(it)} ,
             { selectedDate = selectedDate.plusMonths(it) }
         )
@@ -56,13 +57,12 @@ fun Preview() {
 @Composable
 fun Calendar(
     selectedDate: LocalDate,
+    modifier: Modifier = Modifier,
     onSelect: (Int) -> Unit = {},
-    onSwipe: (Long) -> Unit = {}
+    onSwipe: (Long) -> Unit = {},
 ) {
     Column(
-        modifier = Modifier
-            .padding(10.dp)
-            .background(MaterialTheme.colors.primary),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row {
@@ -97,7 +97,7 @@ fun Calendar(
         }
         CalendarHeader()
         CalendarMonth(
-            selectedDate
+            selectedDate,
         ) { onSelect(it) }
     }
 }
@@ -167,7 +167,7 @@ fun CalendarGridContainer(
     isSelected: Boolean = false,
     onSelect: (Int) -> Unit = {},
 ) {
-    var modifier = Modifier.size(30.dp, 30.dp)
+    var modifier = Modifier.size(40.dp, 40.dp)
 
     if (isSelected) {
         modifier = modifier.border(
@@ -188,7 +188,7 @@ fun CalendarGridContainer(
             text = gridText,
             textAlign = TextAlign.Center,
             fontFamily = Rubik,
-            fontSize = 12.sp,
+            fontSize = 15.sp,
             color = MaterialTheme.colors.onPrimary,
         )
     }
