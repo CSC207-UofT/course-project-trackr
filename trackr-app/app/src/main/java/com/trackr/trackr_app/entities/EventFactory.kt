@@ -1,7 +1,7 @@
-package com.trackr.trackr_app.entities.eventrepeaterstrategy
+package com.trackr.trackr_app.entities
 
-import com.trackr.trackr_app.entities.Event
-import com.trackr.trackr_app.entities.Person
+import com.trackr.trackr_app.entities.eventrepeaterstrategy.EventAnnualRepeaterStrategy
+import com.trackr.trackr_app.entities.eventrepeaterstrategy.EventNoRepeaterStrategy
 import java.time.LocalDate
 
 class EventFactory {
