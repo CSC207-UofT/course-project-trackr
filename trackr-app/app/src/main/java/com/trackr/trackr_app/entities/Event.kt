@@ -6,6 +6,6 @@ import java.util.*
 data class Event constructor(
     val person: UUID,
     val date: LocalDate,
-    val remindDate: LocalDate,
+    val daysBeforeRemind: Int,
     val eventRepeaterStrategy: String,
 )
