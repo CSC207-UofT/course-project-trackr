@@ -37,6 +37,7 @@ import com.trackr.trackr_app.ui.navigation.NavScreen
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import com.trackr.trackr_app.ui.theme.allGradients
+import com.trackr.trackr_app.ui.theme.blueGradient
 
 
 val temp_data = listOf(1,2,3,4,5)
@@ -83,17 +84,20 @@ fun HomeScreen(
             FloatingActionButton(
                 onClick = {
                     navController.navigate("Add")
-//                    onAddItem("Bob's Birthday")
-//                    Log.d("HELLO", eventList.toString())
                 },
-                backgroundColor = Color.Blue) {
+                backgroundColor = MaterialTheme.colors.onBackground,
+            ) {
                 Icon(Icons.Filled.Add, "Add event")
             }
         },
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center,
         backgroundColor = MaterialTheme.colors.background,
-        bottomBar = { BottomAppBar(
-            navController,
-        ) }
+        bottomBar = {
+            BottomAppBar(
+                navController,
+            )
+        }
     ) {
        Column(
            modifier = Modifier
@@ -208,7 +212,12 @@ fun BottomAppBar(
                 MaterialTheme.colors.onBackground
             )},
             label = {Text("View Calendar", fontFamily = Rubik)},
-            onClick = {navController.navigate("Calendar")}
+            onClick = {
+                navController.navigate("Calendar")
+                {
+                    launchSingleTop = true
+                }
+            }
         )
         BottomNavigationItem(
             selected = false,
