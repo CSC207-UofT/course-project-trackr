@@ -50,6 +50,31 @@ fun AddScreenActivity(viewModel: HomeScreenViewModel, nav: NavHostController) {
 }
 
 @Composable
+fun InputWidget(title: String, widgets: List<@Composable() () -> Unit>) {
+    Column() {
+        Text(text = title, Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+        Row() {
+            for (widget in widgets) {
+                Box(Modifier.padding(bottom = 20.dp, end = 5.dp).border(width = 3.dp, brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFF3E69FF),
+                        Color(0xFF6CCFF8)
+                    )),
+                    shape = RoundedCornerShape(10.dp)
+                )){
+                    widget()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun InputWidget(title: String, widget: @Composable() () -> Unit) {
+    InputWidget(title = title, widgets = listOf(widget))
+}
+
+@Composable
 fun AddScreen(
     onAddItem: (List<Any>) -> Unit, nav: NavHostController
 ) {
@@ -66,62 +91,55 @@ fun AddScreen(
         Column(
             Modifier.padding(20.dp)
         ) {
-            Text(text = "Whose birthday is it?", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
-            TextField(
-                value = eventName,
-                onValueChange = { eventName = it } ,
-                Modifier.border(width = 3.dp, brush = Brush.horizontalGradient(
-                    colors = listOf(
-                        Color(0xFF3E69FF),
-                        Color(0xFF6CCFF8)
-                    )),
-                shape = RoundedCornerShape(10.dp)
-            ),
-                colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent, textColor = Color.Black)
-            )
-            Text(text = "Date", Modifier.padding(top = 20.dp, bottom = 5.dp), fontWeight = FontWeight.Bold)
-
-            Row() {
-                Box(modifier = Modifier
-                    .padding(end = 20.dp)
-                    .border(
-                        width = 3.dp, brush = Brush.horizontalGradient(
-                            colors = listOf(
-                                Color(0xFF3E69FF),
-                                Color(0xFF6CCFF8)
-                            )
-                        ),
-                        shape = RoundedCornerShape(10.dp)
-                    )) {
+            InputWidget(title = "Whose birthday is it again?") {
+                TextField(
+                    value = eventName,
+                    onValueChange = { eventName = it },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        textColor = Color.Black
+                    )
+                )
+            }
+            InputWidget(title = "Date", widgets = listOf(
+                {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(chosenMonth, Modifier.padding(start = 15.dp))
                         IconButton(onClick = { expandedMonth = true }) {
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Localized description")
+                            Icon(
+                                Icons.Default.ArrowDropDown,
+                                contentDescription = "Localized description"
+                            )
                         }
                     }
                     DropdownMenu(
                         expanded = expandedMonth,
                         onDismissRequest = { expandedMonth = false }
                     ) {
-                        val months = listOf<String>("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+                        val months = listOf<String>(
+                            "Jan",
+                            "Feb",
+                            "Mar",
+                            "Apr",
+                            "May",
+                            "Jun",
+                            "Jul",
+                            "Aug",
+                            "Sep",
+                            "Oct",
+                            "Nov",
+                            "Dec"
+                        )
                         for (month in months) {
-                            DropdownMenuItem(onClick = { chosenMonth = month; expandedMonth = false }) {
+                            DropdownMenuItem(onClick = {
+                                chosenMonth = month; expandedMonth = false
+                            }) {
                                 Text(month)
                             }
                         }
                     }
-                }
-                Box(modifier = Modifier
-                    .padding(end = 20.dp)
-                    .border(
-                        width = 3.dp, brush = Brush.horizontalGradient(
-                            colors = listOf(
-                                Color(0xFF3E69FF),
-                                Color(0xFF6CCFF8)
-                            )
-                        ),
-                        shape = RoundedCornerShape(10.dp)
-                    )) {
+                },
+                {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(chosenDay.toString(), Modifier.padding(start = 15.dp))
                         IconButton(onClick = { expandedDay = true }) {
@@ -139,37 +157,27 @@ fun AddScreen(
                         }
                     }
                 }
-            }
-            Text(text = "Remind Me", Modifier.padding(top = 20.dp, bottom = 5.dp), fontWeight = FontWeight.Bold)
-
-            Row() {
-                Box(modifier = Modifier
-                    .padding(end = 20.dp)
-                    .border(
-                        width = 3.dp, brush = Brush.horizontalGradient(
-                            colors = listOf(
-                                Color(0xFF3E69FF),
-                                Color(0xFF6CCFF8)
-                            )
-                        ),
-                        shape = RoundedCornerShape(10.dp)
-                    )) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(chosenReminder, Modifier.padding(start = 15.dp))
-                        IconButton(onClick = { expandedReminder = true }) {
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Remind me")
-                        }
+            ))
+            InputWidget(title = "Remind Me") {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(chosenReminder, Modifier.padding(start = 15.dp))
+                    IconButton(onClick = { expandedReminder = true }) {
+                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Remind me")
                     }
-                    DropdownMenu(
-                        expanded = expandedReminder,
-                        onDismissRequest = { expandedReminder = false }
-                    ) {
-                        val months = listOf<String>("1 day before", "3 days before",
-                            "1 week before", "2 weeks before", "1 month before")
-                        for (month in months) {
-                            DropdownMenuItem(onClick = { chosenReminder = month; expandedReminder = false }) {
-                                Text(month)
-                            }
+                }
+                DropdownMenu(
+                    expanded = expandedReminder,
+                    onDismissRequest = { expandedReminder = false }
+                ) {
+                    val months = listOf<String>(
+                        "1 day before", "3 days before",
+                        "1 week before", "2 weeks before", "1 month before"
+                    )
+                    for (month in months) {
+                        DropdownMenuItem(onClick = {
+                            chosenReminder = month; expandedReminder = false
+                        }) {
+                            Text(month)
                         }
                     }
                 }
