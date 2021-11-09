@@ -1,6 +1,5 @@
-package com.trackr.trackr_app.ui.calendar
+package com.trackr.trackr_app.calendar
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

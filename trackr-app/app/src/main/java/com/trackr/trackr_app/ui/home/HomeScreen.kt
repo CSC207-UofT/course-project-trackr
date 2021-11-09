@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.TrackrappTheme
+import com.trackr.trackr_app.ui.theme.allGradients
 
 
 val temp_data = listOf(1,2,3,4,5)
@@ -98,13 +99,15 @@ fun HomeFeed(modifier: Modifier, title: String, events: List<Int>) {
     }
 }
 
+
 @Composable
 fun EventList(events: List<Any>) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        items(events) { event ->
+        items(events.count()) { index ->
+            val event = events[index]
             Surface(
                 modifier = Modifier
                     .padding(vertical = 5.dp)
@@ -115,10 +118,7 @@ fun EventList(events: List<Any>) {
                     modifier = Modifier
                         .background(
                             brush = Brush.horizontalGradient(
-                                colors = listOf(
-                                    Color(0xFF3E69FF),
-                                    Color(0xFF6CCFF8)
-                                )
+                                colors = allGradients[index % 3]
                             )
                         )
                         .padding(20.dp)

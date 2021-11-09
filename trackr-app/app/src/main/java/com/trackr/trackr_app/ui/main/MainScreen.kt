@@ -11,10 +11,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.calendar.CalendarScreen
+import com.trackr.trackr_app.calendar.CalendarViewModel
 import com.trackr.trackr_app.ui.home.HomeScreen
 import com.trackr.trackr_app.ui.navigation.NavScreen
 import com.trackr.trackr_app.ui.theme.Rubik
@@ -40,6 +43,10 @@ fun MainScreen() {
     ) {
         NavHost(navController = navController, startDestination = NavScreen.Home.route) {
             composable(NavScreen.Home.route) { HomeScreen() }
+            composable(NavScreen.Calendar.route) {
+                val calendarViewModel: CalendarViewModel = viewModel()
+                CalendarScreen(calendarViewModel)
+            }
         }
     }
 }
