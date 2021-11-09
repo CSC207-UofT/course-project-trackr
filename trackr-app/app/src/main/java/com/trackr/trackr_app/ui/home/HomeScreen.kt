@@ -26,8 +26,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.main.MainScreen
+import com.trackr.trackr_app.ui.navigation.NavScreen
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.TrackrappTheme
 
@@ -47,29 +53,30 @@ val temp_data = listOf(1,2,3,4,5)
 class HomeScreenViewModel: ViewModel() {
     //NOTE: This design is inspired by documentation from Google:
     //https://developer.android.com/codelabs/jetpack-compose-state#3
-    private var _events = MutableLiveData(listOf<String>())
-    val events: LiveData<List<String>> = _events
-    fun addEvent(event: String) {
+    private var _events = MutableLiveData(listOf<List<Any>>())
+    val events: LiveData<List<List<Any>>> = _events
+    fun addEvent(event: List<Any>) {
         _events.value = _events.value!! + listOf(event)
     }
 }
 
 @Composable
-fun HomeScreenActivity(viewModel: HomeScreenViewModel) {
-    val events: List<String> by viewModel.events.observeAsState(listOf())
-    HomeScreen(eventList = events, onAddItem = {viewModel.addEvent(it)})
+fun HomeScreenActivity(viewModel: HomeScreenViewModel, nav: NavHostController) {
+    val events: List<List<Any>> by viewModel.events.observeAsState(listOf())
+    HomeScreen(eventList = events, viewModel = viewModel, nav = nav)
 }
 
 @Composable
 fun HomeScreen(
-    eventList: List<String>, onAddItem: (String) -> Unit
+    eventList: List<List<Any>>, viewModel: HomeScreenViewModel, nav: NavHostController
 ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    onAddItem("Bob's Birthday")
-                    Log.d("HELLO", eventList.toString())
+                    nav.navigate("Add")
+//                    onAddItem("Bob's Birthday")
+//                    Log.d("HELLO", eventList.toString())
                 },
                 backgroundColor = Color.Blue) {
                 Icon(Icons.Filled.Add, "Add event")
@@ -101,7 +108,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeFeed(modifier: Modifier, title: String, events: List<String>) {
+fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>) {
     Column(
         modifier = modifier,
     ) {

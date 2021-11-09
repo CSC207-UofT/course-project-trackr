@@ -48,8 +48,9 @@ fun MainScreen() {
             }
         }
     ) {
-        NavHost(navController = navController, startDestination = NavScreen.Home.route) {
-            composable(NavScreen.Home.route) { HomeScreenActivity(homeScreenViewModel) }
+        NavHost(navController = navController, startDestination = "Home") {
+            composable("Add") { AddScreenActivity(homeScreenViewModel, navController) }
+            composable("Home") { HomeScreenActivity(homeScreenViewModel, navController) }
         }
 //        NavHost(navController = navController, startDestination = NavScreen.Home.route) {
 //            composable(NavScreen.Home.route) { AddScreenActivity(homeScreenViewModel) }

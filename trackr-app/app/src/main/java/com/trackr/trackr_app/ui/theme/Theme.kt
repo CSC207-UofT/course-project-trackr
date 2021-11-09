@@ -23,7 +23,7 @@ private val LightColorPalette = lightColors(
     secondary = DarkBlue,
     onPrimary = DarkBlueVariant,
     background = LightBackground,
-    onBackground = LightBlue
+    onBackground = DarkBlue
 
 
     /* Other default colors to override
