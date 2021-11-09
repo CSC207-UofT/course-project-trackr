@@ -4,9 +4,11 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -64,7 +66,9 @@ fun Calendar(
                 Icons.Filled.NavigateBefore,
                 "Previous Month",
                 tint = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(horizontal = 5.dp, vertical = 10.dp)
+                modifier = Modifier
+                    .padding(horizontal = 5.dp, vertical = 10.dp)
+                    .clickable { onSwipe(-1) }
             )
             Text(
                 selectedDate
@@ -82,7 +86,9 @@ fun Calendar(
                 Icons.Filled.NavigateNext,
                 "Next Month",
                 tint = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(horizontal = 5.dp, vertical = 10.dp)
+                modifier = Modifier
+                    .padding(horizontal = 5.dp, vertical = 10.dp)
+                    .clickable { onSwipe(1) }
             )
         }
         CalendarHeader()
@@ -142,9 +148,22 @@ fun CalendarGridContainer(
     isSelected: Boolean = false,
     onSelect: (Int) -> Unit = {},
 ) {
+    var modifier = Modifier.size(30.dp, 30.dp)
+
+    if (isSelected) {
+        modifier = modifier.border(
+        2.dp,
+        MaterialTheme.colors.onPrimary,
+        CircleShape)
+    }
+
+    if (gridText.isNotEmpty()) {
+        modifier = modifier.clickable { onSelect(gridText.toInt()) }
+    }
+
     Box(
-        Modifier.size(30.dp, 30.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
+        modifier = modifier
     ) {
         Text(
             text = gridText,
@@ -152,11 +171,6 @@ fun CalendarGridContainer(
             fontFamily = Rubik,
             fontSize = 12.sp,
             color = MaterialTheme.colors.onPrimary,
-            modifier = if (gridText.isEmpty()) {
-                Modifier.clickable { onSelect(gridText.toInt()) }
-            } else {
-                Modifier
-            }
         )
     }
 }
