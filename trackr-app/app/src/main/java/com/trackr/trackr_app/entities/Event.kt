@@ -7,5 +7,6 @@ data class Event constructor(
     val person: UUID,
     val date: LocalDate,
     val daysBeforeRemind: Int,
-    val eventRepeaterStrategy: String,
+    val eventRepeaterStrategy: Int,
+    val eventType: Int,
 )

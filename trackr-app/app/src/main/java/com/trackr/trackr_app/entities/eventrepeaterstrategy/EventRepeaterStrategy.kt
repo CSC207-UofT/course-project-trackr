@@ -15,10 +15,14 @@ abstract class EventRepeaterStrategy(name: String) {
     }
 
     companion object {
-        var EVENT_REPEATERS: MutableCollection<String> = mutableListOf()
+        private var EVENT_REPEATERS: MutableMap<Int, String> = mutableMapOf()
 
         fun registerRepeater(name: String) {
-            EVENT_REPEATERS.add(name)
+            EVENT_REPEATERS.put(name.hashCode(), name)
+        }
+
+        fun getStrategyNames(): MutableCollection<String> {
+            return EVENT_REPEATERS.values
         }
     }
 }
