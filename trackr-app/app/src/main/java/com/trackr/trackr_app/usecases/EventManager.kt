@@ -3,8 +3,6 @@ package usecases
 import database.DatabaseAccessInterface
 import input_output_interfaces.EventInOut
 import usecases.EventOutputData.EventTypes
-import com.trackr.trackr_app.entities.Birthday
-import com.trackr.trackr_app.entities.Anniversary
 import com.trackr.trackr_app.entities.Event
 import com.trackr.trackr_app.entities.Person
 import com.trackr.trackr_app.usecases.PersonManager
