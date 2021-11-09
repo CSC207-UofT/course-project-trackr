@@ -80,7 +80,7 @@ fun Calendar(
                     .getDisplayName(TextStyle.FULL, Locale.getDefault()) +
                         " ${selectedDate.year}",
                 fontFamily = Rubik,
-                fontSize = 20.sp,
+                fontSize = 25.sp,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
@@ -167,7 +167,7 @@ fun CalendarGridContainer(
     isSelected: Boolean = false,
     onSelect: (Int) -> Unit = {},
 ) {
-    var modifier = Modifier.size(40.dp, 40.dp)
+    var modifier = Modifier.size(45.dp, 45.dp)
 
     if (isSelected) {
         modifier = modifier.border(
@@ -188,7 +188,7 @@ fun CalendarGridContainer(
             text = gridText,
             textAlign = TextAlign.Center,
             fontFamily = Rubik,
-            fontSize = 15.sp,
+            fontSize = 18.sp,
             color = MaterialTheme.colors.onPrimary,
         )
     }
