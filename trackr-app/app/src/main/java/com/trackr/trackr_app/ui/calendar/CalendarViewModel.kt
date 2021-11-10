@@ -1,4 +1,4 @@
-package com.trackr.trackr_app.calendar
+package com.trackr.trackr_app.ui.calendar
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
