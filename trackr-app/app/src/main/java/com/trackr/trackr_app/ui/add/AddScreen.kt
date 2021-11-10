@@ -20,15 +20,25 @@ import com.trackr.trackr_app.ui.home.HomeScreenViewModel
 
 
 @Composable
-fun AddScreenActivity(viewModel: HomeScreenViewModel, nav: NavHostController) {
+fun AddScreenActivity(
+    viewModel: HomeScreenViewModel,
+    nav: NavHostController
+) {
     val events: List<List<Any>> by viewModel.events.observeAsState(listOf())
     AddScreen(onAddItem = {viewModel.addEvent(it)}, nav = nav)
 }
 
 @Composable
-fun InputWidget(title: String, widgets: List<@Composable() () -> Unit>) {
+fun InputWidget(
+    title: String,
+    widgets: List<@Composable() () -> Unit>
+) {
     Column() {
-        Text(text = title, Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+        Text(
+            text = title,
+            Modifier.padding(bottom = 5.dp),
+            fontWeight = FontWeight.Bold
+        )
         Row() {
             for (widget in widgets) {
                 Box(
@@ -56,7 +66,11 @@ fun InputWidget(title: String, widget: @Composable() () -> Unit) {
 }
 
 @Composable
-fun <T>InteractiveDropdown(setter: (T) -> Unit, getter: () -> T, options: List<T>) {
+fun <T>InteractiveDropdown(
+    setter: (T) -> Unit,
+    getter: () -> T,
+    options: List<T>
+) {
     var expanded by remember { mutableStateOf(false) }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -91,7 +105,7 @@ fun AddScreen(
     var chosenDay by remember { mutableStateOf(1) }
     var chosenReminder by remember { mutableStateOf("1 day before") }
 
-    val months = listOf<String>(
+    val months = listOf(
         "Jan",
         "Feb",
         "Mar",
@@ -122,47 +136,47 @@ fun AddScreen(
                 )
             }
             InputWidget(title = "Date", widgets = listOf(
-                {InteractiveDropdown(
+                {
+                    InteractiveDropdown(
                     setter = {month: String -> chosenMonth = month},
                     getter = {chosenMonth},
-                    options = months)
+                    options = months
+                    )
                 },
-                {InteractiveDropdown(
+                {
+                    InteractiveDropdown(
                     setter = {day: Int -> chosenDay = day},
                     getter = {chosenDay},
                     options = (1..32).map{it}
-                )
+                    )
                 }
-            ))
+            )
+            )
             InputWidget(title = "Remind Me") {
                 InteractiveDropdown(
                     setter = {reminder: String -> chosenReminder = reminder},
                     getter = {chosenReminder},
-                    options = listOf<String>(
+                    options = listOf(
                         "1 day before", "3 days before",
                         "1 week before", "2 weeks before", "1 month before"
-                    ))
+                    )
+                )
             }
-            Button(onClick = { onAddItem(listOf<Any>(eventName, chosenMonth, chosenDay, chosenReminder)); nav.navigate("Home")}, Modifier.padding(top = 20.dp), ) {
+            Button(
+                onClick = {
+                    onAddItem(listOf<Any>(eventName, chosenMonth, chosenDay, chosenReminder))
+                    nav.navigate("Home")
+                          },
+                Modifier.padding(top = 20.dp),
+            ) {
                 Text("Save Event")
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Icon(
                     Icons.Filled.Check,
-                    contentDescription = null,
+                    contentDescription = "Create Event",
                     modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
             }
         }
-    }
-}
-
-
-
-
-@Composable
-fun BottomAppBar() {
-    BottomNavigation(
-        backgroundColor = MaterialTheme.colors.primary,
-    ) {
     }
 }
