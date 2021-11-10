@@ -8,7 +8,6 @@ import com.trackr.trackr_app.model.Event
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.User
 
-// TODO: add Person::class, Event::class once implemented
 
 @Database(entities = [User::class, Person::class, Event::class], version = 1, exportSchema = false)
 abstract class TrackrDatabase : RoomDatabase() {
