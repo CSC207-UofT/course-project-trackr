@@ -86,6 +86,7 @@ fun HomeScreen(
                     navController.navigate("Add")
                 },
                 backgroundColor = MaterialTheme.colors.onBackground,
+                contentColor = MaterialTheme.colors.background,
             ) {
                 Icon(Icons.Filled.Add, "Add event")
             }
@@ -171,7 +172,6 @@ fun EventList(
             val event = events[index]
             Surface(
                 modifier = Modifier
-                    .padding(vertical = 5.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(20),
             ) {
