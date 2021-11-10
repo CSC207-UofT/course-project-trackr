@@ -1,7 +1,7 @@
 package com.trackr.trackr_app.interface_adapters
 
 import androidx.lifecycle.*
-import com.trackr.trackr_app.database.UserRepository
+import com.trackr.trackr_app.usecases.UserRepository
 import com.trackr.trackr_app.entities.User
 import kotlinx.coroutines.launch
 
@@ -10,6 +10,14 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun insert(user: User) = viewModelScope.launch {
         repository.insert(user)
+    }
+
+    fun updateUsername(new_username: String, user: User) = viewModelScope.launch {
+        repository.updateUsername(new_username, user)
+    }
+
+    fun deleteAll() = viewModelScope.launch {
+        repository.deleteAll()
     }
 }
 

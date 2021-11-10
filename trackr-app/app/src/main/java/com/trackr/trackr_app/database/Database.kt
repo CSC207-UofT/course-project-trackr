@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.trackr.trackr_app.database.UserDao
-import com.trackr.trackr_app.entities.Event
-import com.trackr.trackr_app.entities.Person
+import com.trackr.trackr_app.usecases.UserDao
 import com.trackr.trackr_app.entities.User
 
 // TODO: add Person::class, Event::class once implemented

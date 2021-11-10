@@ -1,4 +1,4 @@
-package com.trackr.trackr_app.database
+package com.trackr.trackr_app.usecases
 
 import androidx.room.*
 import com.trackr.trackr_app.entities.User
@@ -14,8 +14,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: User)
 
-    @Query("UPDATE `user-table` SET username = :new_username WHERE id = :userid")
-    suspend fun updateUsername(userid:UUID, new_username:String)
+    @Query("UPDATE `user-table` SET username = :new_username WHERE id = :user_id")
+    suspend fun updateUsername(new_username:String, user_id: UUID)
 
     @Query("DELETE FROM `user-table`")
     suspend fun deleteAll()
