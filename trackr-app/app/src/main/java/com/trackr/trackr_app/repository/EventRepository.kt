@@ -1,8 +1,9 @@
-package com.trackr.trackr_app.usecases
+package com.trackr.trackr_app.repository
 
 import androidx.annotation.WorkerThread
-import com.trackr.trackr_app.entities.Event
-import com.trackr.trackr_app.entities.Person
+import com.trackr.trackr_app.database.EventDao
+import com.trackr.trackr_app.model.Event
+import com.trackr.trackr_app.model.Person
 import kotlinx.coroutines.flow.Flow
 import java.sql.Date
 import java.time.LocalDate

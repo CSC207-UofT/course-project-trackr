@@ -1,7 +1,8 @@
-package com.trackr.trackr_app.usecases
+package com.trackr.trackr_app.repository
 
 import androidx.annotation.WorkerThread
-import com.trackr.trackr_app.entities.User
+import com.trackr.trackr_app.database.UserDao
+import com.trackr.trackr_app.model.User
 import kotlinx.coroutines.flow.Flow
 
 
