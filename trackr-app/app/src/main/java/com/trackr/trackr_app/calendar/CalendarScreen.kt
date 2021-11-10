@@ -16,7 +16,7 @@ fun CalendarScreenActivity(
 ) {
     val selectedDate = rememberSaveable { calendarViewModel.selectedDate }
     Column(
-        modifier = Modifier.padding(20.dp)
+        modifier = Modifier.padding(0.dp)
     ) {
         Calendar(
             selectedDate = selectedDate.value,
