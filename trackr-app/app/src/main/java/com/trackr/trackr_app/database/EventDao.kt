@@ -1,9 +1,9 @@
-package com.trackr.trackr_app.usecases
+package com.trackr.trackr_app.database
 
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.trackr.trackr_app.entities.Event
+import com.trackr.trackr_app.model.Event
 import java.util.UUID
 import java.sql.Date
 

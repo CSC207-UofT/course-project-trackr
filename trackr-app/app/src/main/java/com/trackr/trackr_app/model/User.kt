@@ -1,4 +1,4 @@
-package com.trackr.trackr_app.entities
+package com.trackr.trackr_app.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

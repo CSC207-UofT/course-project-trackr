@@ -1,7 +1,8 @@
-package com.trackr.trackr_app.usecases
+package com.trackr.trackr_app.repository
 
 import androidx.annotation.WorkerThread
-import com.trackr.trackr_app.entities.Person
+import com.trackr.trackr_app.database.PersonDao
+import com.trackr.trackr_app.model.Person
 import kotlinx.coroutines.flow.Flow
 
 class PersonRepository(private val personDao: PersonDao) {

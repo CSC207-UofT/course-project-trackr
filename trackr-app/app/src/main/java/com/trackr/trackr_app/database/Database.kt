@@ -4,13 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.trackr.trackr_app.usecases.UserDao
-import com.trackr.trackr_app.entities.User
+import com.trackr.trackr_app.model.User
 
 // TODO: add Person::class, Event::class once implemented
 
 @Database(entities = [User::class,], version = 1, exportSchema = false)
-public abstract class TrackrDatabase : RoomDatabase() {
+abstract class TrackrDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
 

@@ -1,8 +1,8 @@
-package com.trackr.trackr_app.interface_adapters
+package com.trackr.trackr_app.viewmodels
 
 import androidx.lifecycle.*
-import com.trackr.trackr_app.usecases.PersonRepository
-import com.trackr.trackr_app.entities.Person
+import com.trackr.trackr_app.repository.PersonRepository
+import com.trackr.trackr_app.model.Person
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
