@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import java.time.LocalDate
@@ -71,7 +72,7 @@ fun Calendar(
                 "Previous Month",
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
-                    .padding(horizontal = 5.dp, vertical = 10.dp)
+                    .padding(horizontal = 5.dp, vertical = 12.dp)
                     .clickable { onSwipe(-1) }
             )
             Text(
@@ -91,7 +92,7 @@ fun Calendar(
                 "Next Month",
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
-                    .padding(horizontal = 5.dp, vertical = 10.dp)
+                    .padding(horizontal = 5.dp, vertical = 12.dp)
                     .clickable { onSwipe(1) }
             )
         }
@@ -145,13 +146,13 @@ fun CalendarMonth(
 @Composable
 fun CalendarHeader() {
     Row() {
-        CalendarGridContainer(gridText = "Su")
-        CalendarGridContainer(gridText = "Mo")
-        CalendarGridContainer(gridText = "Tu")
-        CalendarGridContainer(gridText = "We")
-        CalendarGridContainer(gridText = "Th")
-        CalendarGridContainer(gridText = "Fr")
-        CalendarGridContainer(gridText = "Sa")
+        CalendarGridContainer("Su")
+        CalendarGridContainer("Mo")
+        CalendarGridContainer("Tu")
+        CalendarGridContainer("We")
+        CalendarGridContainer("Th")
+        CalendarGridContainer("Fr")
+        CalendarGridContainer("Sa")
     }
 }
 
@@ -177,7 +178,11 @@ fun CalendarGridContainer(
     }
 
     if (gridText.isNotEmpty()) {
-        modifier = modifier.clickable { onSelect(gridText.toInt()) }
+        modifier = modifier.clickable {
+            onSelect(
+                if (gridText.isDigitsOnly()) gridText.toInt() else 0
+            )
+        }
     }
 
     Box(
