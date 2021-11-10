@@ -1,4 +1,4 @@
-package com.trackr.trackr_app.usecases
+package com.trackr.trackr_app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
