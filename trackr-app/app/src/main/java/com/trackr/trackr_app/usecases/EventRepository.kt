@@ -1,0 +1,60 @@
+package com.trackr.trackr_app.usecases
+
+import androidx.annotation.WorkerThread
+import com.trackr.trackr_app.entities.Event
+import com.trackr.trackr_app.entities.Person
+import kotlinx.coroutines.flow.Flow
+import java.sql.Date
+import java.time.LocalDate
+
+class EventRepository(private val eventDao: EventDao) {
+    val allEvents: Flow<List<Event>> = eventDao.listAll()
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun listFromRange(start_date: LocalDate, end_date: LocalDate): Flow<List<Event>> {
+        return eventDao.listFromRange(Date.valueOf(start_date.toString()), Date.valueOf(end_date.toString()))
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insert(event: Event) {
+        eventDao.insert(event)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun delete(event: Event) {
+        eventDao.delete(event.id, event.person_id)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun editPerson(new_person: Person, event: Event) {
+        eventDao.editPerson(new_person.id, event.id, event.person_id)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun editType(new_type: Int, event: Event) {
+        eventDao.editType(new_type, event.id, event.person_id)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun editDate(new_date: LocalDate, event: Event) {
+        eventDao.editDate(Date.valueOf(new_date.toString()), event.id, event.person_id)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun editInterval(new_interval: Int, event: Event) {
+        eventDao.editInterval(new_interval, event.id, event.person_id)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteAll() {
+        eventDao.deleteAll()
+    }
+}

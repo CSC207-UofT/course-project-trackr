@@ -4,7 +4,6 @@ import com.trackr.trackr_app.entities.Event
 import usecases.EventOutputData.EventTypes
 import com.trackr.trackr_app.entities.Anniversary
 import com.trackr.trackr_app.entities.Birthday
-import database.Database
 import database.DatabaseAccessInterface
 
 /**
