@@ -1,8 +1,8 @@
-package com.trackr.trackr_app.interface_adapters
+package com.trackr.trackr_app.viewmodels
 
 import androidx.lifecycle.*
-import com.trackr.trackr_app.usecases.UserRepository
-import com.trackr.trackr_app.entities.User
+import com.trackr.trackr_app.repository.UserRepository
+import com.trackr.trackr_app.model.User
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val repository: UserRepository) : ViewModel() {

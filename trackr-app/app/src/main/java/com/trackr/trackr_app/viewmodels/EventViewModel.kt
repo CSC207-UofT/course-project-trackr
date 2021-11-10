@@ -1,16 +1,13 @@
-package com.trackr.trackr_app.interface_adapters
+package com.trackr.trackr_app.viewmodels
 
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.trackr.trackr_app.entities.Event
-import com.trackr.trackr_app.entities.Person
-import com.trackr.trackr_app.usecases.EventRepository
-import kotlinx.coroutines.flow.Flow
+import com.trackr.trackr_app.model.Event
+import com.trackr.trackr_app.model.Person
+import com.trackr.trackr_app.repository.EventRepository
 import kotlinx.coroutines.launch
-import java.sql.Date
 import java.time.LocalDate
 
 class EventViewModel(private val repository: EventRepository) : ViewModel() {

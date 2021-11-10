@@ -1,7 +1,7 @@
-package com.trackr.trackr_app.usecases
+package com.trackr.trackr_app.database
 
 import androidx.room.*
-import com.trackr.trackr_app.entities.User
+import com.trackr.trackr_app.model.User
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

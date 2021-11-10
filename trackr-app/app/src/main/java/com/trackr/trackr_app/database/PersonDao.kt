@@ -1,10 +1,10 @@
-package com.trackr.trackr_app.usecases
+package com.trackr.trackr_app.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.trackr.trackr_app.entities.Person
+import com.trackr.trackr_app.model.Person
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
