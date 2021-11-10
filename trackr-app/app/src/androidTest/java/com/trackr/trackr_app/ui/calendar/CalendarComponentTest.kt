@@ -1,9 +1,9 @@
 package com.trackr.trackr_app.ui.calendar
 
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.trackr.trackr_app.MainActivity
-import com.trackr.trackr_app.calendar.Calendar
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -20,6 +20,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
             )
@@ -35,6 +36,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
             )
@@ -50,6 +52,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
             )
@@ -66,6 +69,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
             )
@@ -81,6 +85,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
             )
