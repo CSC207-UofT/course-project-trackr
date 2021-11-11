@@ -11,7 +11,7 @@ import java.time.LocalDate
                     parentColumns = ["id"],
                     childColumns = ["person_id"],
                     onDelete = ForeignKey.CASCADE)])
-class Event(
+class TrackrEvent (
 
         @PrimaryKey
         @ColumnInfo(name = "id")

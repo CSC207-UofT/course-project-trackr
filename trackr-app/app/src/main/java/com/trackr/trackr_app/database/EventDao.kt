@@ -3,7 +3,7 @@ package com.trackr.trackr_app.database
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.trackr.trackr_app.model.Event
+import com.trackr.trackr_app.model.TrackrEvent
 import java.sql.Date
 
 import kotlinx.coroutines.flow.Flow
@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.Flow
 interface EventDao {
 
     @Query("SELECT * FROM `event-table` ORDER BY date DESC")
-    fun listAll(): Flow<List<Event>>
+    fun listAll(): Flow<List<TrackrEvent>>
 
     @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date ORDER BY date DESC")
-    fun listFromRange(start_date: Date, end_date: Date): Flow<List<Event>>
+    fun listFromRange(start_date: Date, end_date: Date): Flow<List<TrackrEvent>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(event: Event)
+    suspend fun insert(trackrEvent: TrackrEvent)
 
     @Query("DELETE FROM `event-table` WHERE id = :id AND person_id = :person_id")
     suspend fun delete(id: String, person_id: String)
