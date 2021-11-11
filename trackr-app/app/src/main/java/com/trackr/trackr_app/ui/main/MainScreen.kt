@@ -18,14 +18,14 @@ import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
-import com.trackr.trackr_app.ui.home.HomeScreenViewModel
+import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
 
 @Composable
 fun MainScreen() {
     val homeScreenViewModel: HomeScreenViewModel = viewModel()
     val navController = rememberNavController()
-    //val eventList = ArrayList<String>()
+
     Scaffold(
         topBar = {
             TopAppBar(
