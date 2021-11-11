@@ -26,6 +26,8 @@ import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
+import java.time.Instant
+import java.time.ZoneId
 import java.util.*
 
 
@@ -35,10 +37,10 @@ fun SelectScreenActivity(viewModel: SelectScreenViewModel, nav: NavHostControlle
     SelectScreen(
         // TODO: figure out how to move this to the viewModel
         eventList = events.map {
-            val calDate = Calendar.getInstance()
-            calDate.time = it.date
-            listOf(it.id, calDate.get(Calendar.MONTH), calDate.get(Calendar.DAY_OF_MONTH), it.reminder_interval)
-                               },
+            val dateTime = java.time.LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(it.date.toLong()), java.time.ZoneId.of(
+                    ZoneId.SHORT_IDS.get("EST")))
+            listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval)},
         nav = nav)
 }
 

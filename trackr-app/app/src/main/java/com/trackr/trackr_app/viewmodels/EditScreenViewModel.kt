@@ -15,7 +15,7 @@ class EditScreenViewModel(private val eventRepository: EventRepository): ViewMod
         val calDate = Calendar.getInstance()
         calDate.set(data[1] as Int, data[2] as Int)
         eventRepository.insert(TrackrEvent("SomeID", "Some Person", 0,
-            calDate.time as Date, data[3] as Int, 0))
+            calDate.timeInMillis.toInt(), data[3] as Int, 0))
     }
 }
 

@@ -18,21 +18,13 @@ import androidx.room.ForeignKey.CASCADE
 class Person(
 
         @PrimaryKey
-        @ColumnInfo(name = "id")
         val id: String,
 
-        @Relation(
-                parentColumn = "id",
-                entityColumn = "user_id"
-        )
-        @ColumnInfo(name = "user_id")
         val user_id: String,
 
-        @ColumnInfo(name = "first_name")
-        var firstName: String,
+        var first_name: String,
 
-        @ColumnInfo(name = "last_name")
-        var lastName: String = "",
+        var last_name: String = "",
 
 //        private val tags: HashSet<String> = HashSet()
 ) {

@@ -15,7 +15,7 @@ class EventRepository(private val eventDao: EventDao) {
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun listFromRange(start_date: LocalDate, end_date: LocalDate): Flow<List<TrackrEvent>> {
-        return eventDao.listFromRange(Date.valueOf(start_date.toString()), Date.valueOf(end_date.toString()))
+        return eventDao.listFromRange(start_date.toEpochDay().toInt(), end_date.toEpochDay().toInt())
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -44,8 +44,8 @@ class EventRepository(private val eventDao: EventDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun editDate(new_date: LocalDate, trackrEvent: TrackrEvent) {
-        eventDao.editDate(Date.valueOf(new_date.toString()), trackrEvent.id, trackrEvent.person_id)
+    suspend fun editDate(new_date: LocalDate, event: TrackrEvent) {
+        eventDao.editDate(new_date.toEpochDay().toInt(), event.id, event.person_id)
     }
 
     @Suppress("RedundantSuspendModifier")
