@@ -188,7 +188,10 @@ fun EventList(
             val event = events[index]
             Surface(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable {
+                        navController.navigate("Edit/${events.indexOf(event)}")
+                    },
                 shape = RoundedCornerShape(20),
             ) {
                 Row(
@@ -199,9 +202,7 @@ fun EventList(
                             )
                         )
                         .padding(20.dp)
-                        .clickable {
-                            navController.navigate("Edit/${events.indexOf(event)}")
-                        }
+
                 ) {
                     Column() {
                         Text(event.toString())

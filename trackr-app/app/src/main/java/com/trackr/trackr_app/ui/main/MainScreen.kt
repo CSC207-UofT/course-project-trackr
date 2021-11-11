@@ -17,6 +17,7 @@ import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.ui.add.AddScreenActivity
+import com.trackr.trackr_app.ui.calendar.CalendarViewModel
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
@@ -54,13 +55,11 @@ fun MainScreen() {
             }
             composable("Edit/{userId}") { backStackEntry ->
                 backStackEntry.arguments!!.getString("userId")?.let { it ->
-                    EditScreenActivity(homeScreenViewModel, navController,
-                        it
-                    )
+                    EditScreenActivity(homeScreenViewModel, navController, it)
                 }
             }
             composable("Calendar") {
-                CalendarScreenActivity(navController = navController)
+                CalendarScreenActivity(CalendarViewModel(), navController)
             }
         }
     }
