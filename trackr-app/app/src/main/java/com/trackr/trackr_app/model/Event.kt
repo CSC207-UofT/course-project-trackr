@@ -1,8 +1,8 @@
 package com.trackr.trackr_app.model
 
 import androidx.room.*
+import java.sql.Date
 import java.time.LocalDate
-import java.util.*
 
 @Entity(tableName = "event-table",
         // Establish foreign key relation
@@ -15,7 +15,7 @@ class Event(
 
         @PrimaryKey
         @ColumnInfo(name = "id")
-        val id: UUID,
+        val id: String,
 
         // Establish foreign key relation
         @Relation(
@@ -23,13 +23,13 @@ class Event(
                 entityColumn = "person_id"
         )
         @ColumnInfo(name = "person_id")
-        var person_id: UUID,
+        var person_id: String,
 
         @ColumnInfo(name = "type")
         var type: Int,
 
         @ColumnInfo(name = "date")
-        val date: LocalDate,
+        val date: Date,
 
         @ColumnInfo(name = "reminder_interval")
         val reminder_interval: Int,
