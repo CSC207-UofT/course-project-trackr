@@ -39,7 +39,11 @@ class MainActivity : ComponentActivity() {
             SelectScreenViewModelFactory((application as TrackrApp).eventRepository)
         }
         val editScreenViewModel: EditScreenViewModel by viewModels {
-            EditScreenViewModelFactory((application as TrackrApp).eventRepository)
+            EditScreenViewModelFactory(
+                (application as TrackrApp).eventRepository,
+                (application as TrackrApp).personRepository,
+                (application as TrackrApp).userRepository
+            )
         }
 
         setContent {

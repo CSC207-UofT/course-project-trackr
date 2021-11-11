@@ -9,10 +9,26 @@ import java.util.*
 
 class AddScreenViewModel(private val eventRepository: EventRepository): ViewModel() {
     fun addEvent(data: List<Any>) = viewModelScope.launch {
+        val months = listOf(
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        )
+
+        // TODO un-hard-code these properties
         val calDate = Calendar.getInstance()
-        calDate.set(data[1] as Int, data[2] as Int)
+        calDate.set(2020, 1, 1)
         eventRepository.insert(TrackrEvent("SomeID", "Some Person", 0,
-            calDate.timeInMillis.toInt(), data[3] as Int, 0))
+            calDate.timeInMillis.toInt(), 7, 0))
     }
 }
 
