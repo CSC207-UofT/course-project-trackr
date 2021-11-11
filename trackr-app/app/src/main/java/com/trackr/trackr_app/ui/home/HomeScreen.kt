@@ -41,6 +41,7 @@ import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import com.trackr.trackr_app.ui.theme.allGradients
 import com.trackr.trackr_app.ui.theme.blueGradient
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
+import java.util.*
 
 
 val temp_data = listOf(1,2,3,4,5)
@@ -61,7 +62,11 @@ fun HomeScreenActivity(
 ) {
     val events: List<TrackrEvent> by viewModel.allEvents.observeAsState(listOf())
     HomeScreen(
-        eventList = events,
+        // TODO: figure out how to move this to the viewModel
+        eventList = events.map {
+            val calDate = Calendar.getInstance()
+            calDate.time = it.date
+            listOf(it.id, calDate.get(Calendar.MONTH), calDate.get(Calendar.DAY_OF_MONTH), it.reminder_interval) },
         viewModel = viewModel,
         navController = navController)
 }
