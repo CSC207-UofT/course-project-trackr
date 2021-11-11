@@ -21,10 +21,6 @@ class Person(
         @ColumnInfo(name = "id")
         val id: String,
 
-        @Relation(
-                parentColumn = "id",
-                entityColumn = "user_id"
-        )
         @ColumnInfo(name = "user_id")
         val user_id: String,
 

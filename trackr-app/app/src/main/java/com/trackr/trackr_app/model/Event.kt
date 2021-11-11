@@ -17,11 +17,6 @@ class Event(
         @ColumnInfo(name = "id")
         val id: String,
 
-        // Establish foreign key relation
-        @Relation(
-                parentColumn = "id",
-                entityColumn = "person_id"
-        )
         @ColumnInfo(name = "person_id")
         var person_id: String,
 
