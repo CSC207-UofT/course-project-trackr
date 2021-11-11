@@ -14,22 +14,16 @@ import java.time.LocalDate
 class Event(
 
         @PrimaryKey
-        @ColumnInfo(name = "id")
         val id: String,
 
-        @ColumnInfo(name = "person_id")
         var person_id: String,
 
-        @ColumnInfo(name = "type")
         var type: Int,
 
-        @ColumnInfo(name = "date")
         val date: Date,
 
-        @ColumnInfo(name = "reminder_interval")
         val reminder_interval: Int,
 
-        @ColumnInfo(name = "repeat_strategy")
         val repeat_strategy: Int,
 ) {
 
