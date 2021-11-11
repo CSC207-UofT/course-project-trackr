@@ -1,10 +1,12 @@
 package com.trackr.trackr_app.ui.calendar
 
+import android.widget.CalendarView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -23,15 +25,15 @@ import java.util.*
 @Preview
 @Composable
 fun CalendarScreenActivity(
-    calendarViewModel: CalendarViewModel = CalendarViewModel(),
+    calendarViewModel: CalendarViewModel,
     navController: NavHostController,
 ) {
-    val selectedDate = rememberSaveable { calendarViewModel.selectedDate }
+    val selectedDate = calendarViewModel.selectedDate
     Column (
         modifier = Modifier.padding(0.dp)
     ) {
         Calendar(
-            selectedDate = selectedDate.value,
+            selectedDate = selectedDate,
             Modifier
                 .fillMaxSize()
                 .weight(1f)
@@ -41,7 +43,7 @@ fun CalendarScreenActivity(
             { calendarViewModel.changeMonth(it) }
         )
         EventOnDateHeader(
-            selectedDate.value,
+            selectedDate,
             Modifier.padding(bottom = 10.dp)
         )
         EventList(

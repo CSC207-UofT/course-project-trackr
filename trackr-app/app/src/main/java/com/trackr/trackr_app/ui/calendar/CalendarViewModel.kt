@@ -1,14 +1,19 @@
 package com.trackr.trackr_app.ui.calendar
 
+import android.util.Log
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.time.LocalDate
 
 
 class CalendarViewModel: ViewModel() {
-    private val _selectedDate = mutableStateOf(LocalDate.now())
-    val selectedDate: State<LocalDate> get() = _selectedDate
+    var selectedDate: LocalDate by mutableStateOf(LocalDate.now())
+        private set
 
     /**
      * Increase the current month by monthOffset months.
@@ -17,7 +22,7 @@ class CalendarViewModel: ViewModel() {
      * @param monthOffset the amount of months to add to the current month
      */
     fun changeMonth(monthOffset: Long) {
-        _selectedDate.value = _selectedDate.value
+        selectedDate = selectedDate
             .plusMonths(monthOffset)
             .withDayOfMonth(1)
     }
@@ -27,6 +32,6 @@ class CalendarViewModel: ViewModel() {
      * @param newDay the new day of the month
      */
     fun changeSelectedDate(newDay: Int) {
-        _selectedDate.value = _selectedDate.value.withDayOfMonth(newDay)
+        selectedDate = selectedDate.withDayOfMonth(newDay)
     }
 }
