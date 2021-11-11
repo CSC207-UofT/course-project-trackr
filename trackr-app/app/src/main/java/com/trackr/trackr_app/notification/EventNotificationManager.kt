@@ -14,24 +14,36 @@ import java.time.ZoneId
  * Class to manage notifications for events
  */
 class EventNotificationManager(private val context: Context) {
-    private val alarmManager: AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-    private var nextNotificationId: Int = 0
+    val alarmManager: AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+
     /**
      * Creates a notification for the given event
      */
-    fun createNotification(name: String, eventType: String, remindDate: LocalDate) {
+    fun createNotification(name: String, eventType: String, remindDate: LocalDate, id: Int) {
         val instant: Instant = remindDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
         val remindDateMillis: Long = instant.toEpochMilli()
 
         val intent = Intent(context, EventBroadcastReceiver::class.java)
         intent.putExtra("contentTitle", "$name $eventType")
         intent.putExtra("contentText", "You have a $eventType for $name soon.")
-        intent.putExtra("notificationId", nextNotificationId)
-        nextNotificationId += 1
+        intent.putExtra("notificationId", id)
 
         val pendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE)
+                PendingIntent.getBroadcast(context, id, intent, FLAG_IMMUTABLE)
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, remindDateMillis, pendingIntent)
+    }
+
+    /**
+     * Removes a notification for the given event
+     */
+    fun removeNotification(id: Int) {
+        val intent = Intent(context, EventBroadcastReceiver::class.java)
+
+        val pendingIntent: PendingIntent =
+                PendingIntent.getBroadcast(context, id, intent, FLAG_IMMUTABLE)
+
+        pendingIntent.cancel()
+        alarmManager.cancel(pendingIntent)
     }
 }

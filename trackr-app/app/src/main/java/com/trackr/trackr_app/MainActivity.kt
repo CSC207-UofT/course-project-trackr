@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         val eventNotificationManager = EventNotificationManager(this)
 
         eventNotificationManager.createNotification(
-                "John", "Birthday", LocalDate.now())
+                "John", "Birthday", LocalDate.now(), 0)
 
         setContent {
             TrackrappTheme {
