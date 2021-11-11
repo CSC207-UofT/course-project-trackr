@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.trackr.trackr_app.ui.home.EventList
 import com.trackr.trackr_app.ui.theme.Rubik
 import java.time.LocalDate
@@ -23,6 +24,7 @@ import java.util.*
 @Composable
 fun CalendarScreenActivity(
     calendarViewModel: CalendarViewModel = CalendarViewModel(),
+    navController: NavHostController,
 ) {
     val selectedDate = rememberSaveable { calendarViewModel.selectedDate }
     Column (
@@ -46,7 +48,8 @@ fun CalendarScreenActivity(
             listOf(1,2,3,4,5),
             Modifier
                 .weight(1f)
-                .padding(horizontal = 30.dp)
+                .padding(horizontal = 30.dp),
+            navController,
         )
     }
 }

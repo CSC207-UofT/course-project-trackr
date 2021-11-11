@@ -43,17 +43,25 @@ fun MainScreen() {
         }
     ) {
         NavHost(navController = navController, startDestination = "Home") {
-            composable("Add") { AddScreenActivity(homeScreenViewModel, navController) }
-            composable("Home") { HomeScreenActivity(homeScreenViewModel, navController) }
-            composable("Select") { SelectScreenActivity(homeScreenViewModel, navController) }
+            composable("Add") {
+                AddScreenActivity(homeScreenViewModel, navController)
+            }
+            composable("Home") {
+                HomeScreenActivity(homeScreenViewModel, navController)
+            }
+            composable("Select") {
+                SelectScreenActivity(homeScreenViewModel, navController)
+            }
             composable("Edit/{userId}") { backStackEntry ->
-                backStackEntry.arguments!!.getString("userId")?.let { it1 ->
+                backStackEntry.arguments!!.getString("userId")?.let { it ->
                     EditScreenActivity(homeScreenViewModel, navController,
-                        it1
+                        it
                     )
                 }
             }
-            composable("Calendar") { CalendarScreenActivity() }
+            composable("Calendar") {
+                CalendarScreenActivity(navController = navController)
+            }
         }
     }
 }
