@@ -7,6 +7,6 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class TrackrApp : Application() {
-    val database by lazy {TrackrDatabase.getDatabase(this)}
-    val eventRepository by lazy {EventRepository(database.eventDao())}
+    val database by lazy { TrackrDatabase.getDatabase(this)}
+    val eventRepository by lazy { EventRepository(database.eventDao()) }
 }

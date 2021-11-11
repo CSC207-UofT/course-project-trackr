@@ -13,11 +13,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.TrackrApp
+import com.trackr.trackr_app.database.TrackrDatabase
+import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
+import com.trackr.trackr_app.ui.navigation.NavScreen
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.AddScreenViewModel
@@ -25,11 +29,12 @@ import com.trackr.trackr_app.viewmodels.EditScreenViewModel
 import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
 
 @Composable
-fun MainScreen() {
-    val homeScreenViewModel: HomeScreenViewModel = viewModel()
-    val addScreenViewModel: AddScreenViewModel = viewModel()
-    val selectScreenViewModel: SelectScreenViewModel = viewModel()
-    val editScreenViewModel: EditScreenViewModel = viewModel()
+fun MainScreen(
+    homeScreenViewModel: HomeScreenViewModel,
+    addScreenViewModel: AddScreenViewModel,
+    selectScreenViewModel: SelectScreenViewModel,
+    editScreenViewModel: EditScreenViewModel,
+) {
     val navController = rememberNavController()
 
     Scaffold(
