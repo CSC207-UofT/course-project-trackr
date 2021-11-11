@@ -116,23 +116,21 @@ fun HomeScreen(
                    .padding(0.dp, 10.dp)
                    .weight(1f),
                stringResource(R.string.todays_events),
-               listOf(),
-               nav
+               listOf()
            )
            HomeFeed(
                Modifier
                    .padding(0.dp, 10.dp)
                    .weight(2f),
                stringResource(R.string.upcoming_events),
-               eventList,
-               nav
+               eventList
            )
        }
     }
 }
 
 @Composable
-fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>, nav: NavHostController) {
+fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>) {
     Column(
         modifier = modifier,
     ) {
@@ -186,7 +184,6 @@ fun EventList(
             ) {
                 Row(
                     modifier = Modifier
-                        .clickable { nav.navigate("Edit/${events.indexOf(event)}") }
                         .background(
                             brush = Brush.horizontalGradient(
                                 colors = allGradients[index % 3]
@@ -206,6 +203,7 @@ fun EventList(
     }
 }
 
+@Composable
 fun BottomAppBar(
     navController: NavHostController,
 ) {
@@ -217,7 +215,10 @@ fun BottomAppBar(
             label = { Text(text = "Edit Event") },
             selected = false,
             onClick = {
-                nav.navigate("Select")
+                navController.navigate("Select")
+                {
+                    launchSingleTop = true
+                }
             }
         )
         BottomNavigationItem(
