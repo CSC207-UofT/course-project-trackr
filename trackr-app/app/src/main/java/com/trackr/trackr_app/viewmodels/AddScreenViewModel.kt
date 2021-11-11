@@ -10,6 +10,7 @@ import com.trackr.trackr_app.repository.UserRepository
 import kotlinx.coroutines.launch
 import java.sql.Date
 import java.util.*
+import java.util.UUID.randomUUID
 
 class AddScreenViewModel(
     private val eventRepository: EventRepository,
@@ -34,13 +35,16 @@ class AddScreenViewModel(
 
 
         //TODO: Unhardcode
-        userRepository.insert(User(id = "1", username = "yourmom"))
+        val randUserID = randomUUID()
+        val randPersonID = randomUUID()
+        val randEventID = randomUUID()
+        userRepository.insert(User(id = randUserID.toString(), username = "yourmom"))
 
-        personRepository.insert(Person(id = "2", user_id = "1", first_name = "My", last_name = "Mom"))
+        personRepository.insert(Person(id = randPersonID.toString(), user_id = randUserID.toString(), first_name = "My", last_name = "Mom"))
 
         val calDate = Calendar.getInstance()
         calDate.set(2020, 1, 1)
-        eventRepository.insert(TrackrEvent("SomeID", "2", 0,
+        eventRepository.insert(TrackrEvent(data[0].toString(), randPersonID.toString(), 0,
             calDate.timeInMillis.toInt(), 7, 0))
     }
 }
