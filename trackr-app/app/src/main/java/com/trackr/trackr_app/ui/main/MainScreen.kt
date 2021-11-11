@@ -1,30 +1,23 @@
 package com.trackr.trackr_app.ui.main
 
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.trackr.trackr_app.R
-import com.trackr.trackr_app.entities.Event
 import com.trackr.trackr_app.ui.add.AddScreenActivity
-import com.trackr.trackr_app.ui.home.HomeScreen
+import com.trackr.trackr_app.ui.select.SelectScreenActivity
+import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenViewModel
-import com.trackr.trackr_app.ui.navigation.NavScreen
 import com.trackr.trackr_app.ui.theme.Rubik
 
 @Composable
@@ -51,9 +44,14 @@ fun MainScreen() {
         NavHost(navController = navController, startDestination = "Home") {
             composable("Add") { AddScreenActivity(homeScreenViewModel, navController) }
             composable("Home") { HomeScreenActivity(homeScreenViewModel, navController) }
+            composable("Select") { SelectScreenActivity(homeScreenViewModel, navController) }
+            composable("Edit/{userId}") { backStackEntry ->
+                backStackEntry.arguments!!.getString("userId")?.let { it1 ->
+                    EditScreenActivity(homeScreenViewModel, navController,
+                        it1
+                    )
+                }
+            }
         }
-//        NavHost(navController = navController, startDestination = NavScreen.Home.route) {
-//            composable(NavScreen.Home.route) { AddScreenActivity(homeScreenViewModel) }
-//        }
     }
 }

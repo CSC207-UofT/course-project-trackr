@@ -3,6 +3,7 @@ package com.trackr.trackr_app.ui.home
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -58,6 +60,12 @@ class HomeScreenViewModel: ViewModel() {
     fun addEvent(event: List<Any>) {
         _events.value = _events.value!! + listOf(event)
     }
+
+    fun editEvent(event: List<Any>, index: Int) {
+        _events.value = _events.value?.subList(0, index)!! + listOf(event) +
+                _events.value?.subList(index + 1, _events.value!!.size)!!
+    }
+
 }
 
 @Composable
@@ -83,7 +91,7 @@ fun HomeScreen(
             }
         },
         backgroundColor = MaterialTheme.colors.background,
-        bottomBar = { BottomAppBar() }
+        bottomBar = { BottomAppBar(nav) }
     ) {
        Column(
            modifier = Modifier
@@ -94,21 +102,23 @@ fun HomeScreen(
                    .padding(0.dp, 10.dp)
                    .weight(1f),
                stringResource(R.string.todays_events),
-               listOf()
+               listOf(),
+               nav
            )
            HomeFeed(
                Modifier
                    .padding(0.dp, 10.dp)
                    .weight(2f),
                stringResource(R.string.upcoming_events),
-               eventList
+               eventList,
+               nav
            )
        }
     }
 }
 
 @Composable
-fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>) {
+fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>, nav: NavHostController) {
     Column(
         modifier = modifier,
     ) {
@@ -135,13 +145,13 @@ fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>) {
                 )
             }
         } else {
-            EventList(events)
+            EventList(events, nav)
         }
     }
 }
 
 @Composable
-fun EventList(events: List<Any>) {
+fun EventList(events: List<Any>, nav: NavHostController) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -155,6 +165,7 @@ fun EventList(events: List<Any>) {
             ) {
                 Row(
                     modifier = Modifier
+                        .clickable { nav.navigate("Edit/${events.indexOf(event)}") }
                         .background(
                             brush = Brush.horizontalGradient(
                                 colors = listOf(
@@ -178,9 +189,17 @@ fun EventList(events: List<Any>) {
 }
 
 @Composable
-fun BottomAppBar() {
+fun BottomAppBar(nav: NavHostController) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
+        BottomNavigationItem(
+            icon = { Icon(Icons.Filled.Edit, "Edit event") },
+            label = { Text(text = "Edit Event") },
+            selected = false,
+            onClick = {
+                nav.navigate("Select")
+            }
+        )
     }
 }
