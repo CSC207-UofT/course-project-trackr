@@ -1,5 +1,6 @@
 package com.trackr.trackr_app.database
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -8,6 +9,7 @@ import java.sql.Date
 
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface EventDao {
 
     @Query("SELECT * FROM `event-table` ORDER BY date DESC")
