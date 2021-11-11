@@ -33,7 +33,10 @@ class MainActivity : ComponentActivity() {
             HomeScreenViewModelFactory((application as TrackrApp).eventRepository)
         }
         val addScreenViewModel: AddScreenViewModel by viewModels {
-            AddScreenViewModelFactory((application as TrackrApp).eventRepository)
+            AddScreenViewModelFactory(
+                (application as TrackrApp).eventRepository,
+                (application as TrackrApp).personRepository,
+                (application as TrackrApp).userRepository)
         }
         val selectScreenViewModel: SelectScreenViewModel by viewModels {
             SelectScreenViewModelFactory((application as TrackrApp).eventRepository)
