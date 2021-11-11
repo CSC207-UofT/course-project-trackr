@@ -1,7 +1,6 @@
 package com.trackr.trackr_app.model
 
 import androidx.room.*
-import java.sql.Date
 import java.time.LocalDate
 
 @Entity(tableName = "event-table",
@@ -20,19 +19,9 @@ class Event(
 
         var type: Int,
 
-        val date: Date,
+        val date: Int,
 
         val reminder_interval: Int,
 
         val repeat_strategy: Int,
-) {
-
-    /**
-     * Check whether the input date matches a reminderDeadline of this object
-     * @param date The date to test for a deadline
-     * @return A boolean value if the input matches a reminder deadline
-     */
-    fun isReminderDeadline(date: LocalDate): Boolean {
-        return date == date.minusDays(reminder_interval.toLong())
-    }
-}
+)

@@ -13,8 +13,8 @@ interface EventDao {
     @Query("SELECT * FROM `event-table` ORDER BY date DESC")
     fun listAll(): Flow<List<Event>>
 
-    @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date ORDER BY date DESC")
-    fun listFromRange(start_date: Date, end_date: Date): Flow<List<Event>>
+    @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date ORDER BY date ASC")
+    fun listFromRange(start_date: Int, end_date: Int): Flow<List<Event>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(event: Event)
@@ -29,7 +29,7 @@ interface EventDao {
     suspend fun editType(new_type: Int, id: String, person_id: String)
 
     @Query("UPDATE `event-table` SET date = :new_date WHERE id = :id AND person_id = :person_id")
-    suspend fun editDate(new_date: Date, id: String, person_id: String)
+    suspend fun editDate(new_date: Int, id: String, person_id: String)
 
     @Query("UPDATE `event-table` SET reminder_interval = :new_interval WHERE id = :id AND person_id = :person_id")
     suspend fun editInterval(new_interval: Int, id: String, person_id: String)
