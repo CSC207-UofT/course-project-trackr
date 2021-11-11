@@ -20,10 +20,12 @@ import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
+import com.trackr.trackr_app.viewmodels.AddScreenViewModel
 
 @Composable
 fun MainScreen() {
     val homeScreenViewModel: HomeScreenViewModel = viewModel()
+    val addScreenViewModel: AddScreenViewModel = viewModel()
     val navController = rememberNavController()
 
     Scaffold(
@@ -43,8 +45,8 @@ fun MainScreen() {
         }
     ) {
         NavHost(navController = navController, startDestination = "Home") {
-            composable("Add") { AddScreenActivity(homeScreenViewModel, navController) }
             composable("Home") { HomeScreenActivity(homeScreenViewModel, navController) }
+            composable("Add") { AddScreenActivity(addScreenViewModel, navController) }
             composable("Select") { SelectScreenActivity(homeScreenViewModel, navController) }
             composable("Edit/{userId}") { backStackEntry ->
                 backStackEntry.arguments!!.getString("userId")?.let { it1 ->

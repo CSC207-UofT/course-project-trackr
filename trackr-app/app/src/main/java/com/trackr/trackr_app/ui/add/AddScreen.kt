@@ -10,16 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.trackr.trackr_app.ui.home.HomeScreenViewModel
 import com.trackr.trackr_app.ui.shared.InputWidget
 import com.trackr.trackr_app.ui.shared.InteractiveDropdownWidget
+import com.trackr.trackr_app.viewmodels.AddScreenViewModel
 
 @Composable
 fun AddScreenActivity(
-    viewModel: HomeScreenViewModel,
+    viewModel: AddScreenViewModel,
     nav: NavHostController
 ) {
-    val events: List<List<Any>> by viewModel.events.observeAsState(listOf())
     AddScreen(onAddItem = {viewModel.addEvent(it)}, nav = nav)
 }
 
