@@ -15,7 +15,10 @@ import com.trackr.trackr_app.ui.shared.InputWidget
 import com.trackr.trackr_app.ui.shared.InteractiveDropdownWidget
 
 @Composable
-fun AddScreenActivity(viewModel: HomeScreenViewModel, nav: NavHostController) {
+fun AddScreenActivity(
+    viewModel: HomeScreenViewModel,
+    nav: NavHostController
+) {
     val events: List<List<Any>> by viewModel.events.observeAsState(listOf())
     AddScreen(onAddItem = {viewModel.addEvent(it)}, nav = nav)
 }
@@ -29,7 +32,7 @@ fun AddScreen(
     var chosenDay by remember { mutableStateOf(1) }
     var chosenReminder by remember { mutableStateOf("1 day before") }
 
-    val months = listOf<String>(
+    val months = listOf(
         "Jan",
         "Feb",
         "Mar",
@@ -61,46 +64,45 @@ fun AddScreen(
             }
             InputWidget(title = "Date", widgets = listOf(
                 {InteractiveDropdownWidget(
+
                     setter = {month: String -> chosenMonth = month},
                     getter = {chosenMonth},
-                    options = months)
+                    options = months
+                    )
                 },
                 {InteractiveDropdownWidget(
                     setter = {day: Int -> chosenDay = day},
                     getter = {chosenDay},
                     options = (1..32).map{it}
-                )
+                    )
                 }
-            ))
+            )
+            )
             InputWidget(title = "Remind Me") {
                 InteractiveDropdownWidget(
                     setter = {reminder: String -> chosenReminder = reminder},
                     getter = {chosenReminder},
-                    options = listOf<String>(
+                    options = listOf(
                         "1 day before", "3 days before",
                         "1 week before", "2 weeks before", "1 month before"
-                    ))
+                    )
+                )
             }
-            Button(onClick = { onAddItem(listOf<Any>(eventName, chosenMonth, chosenDay, chosenReminder)); nav.navigate("Home")}, Modifier.padding(top = 20.dp), ) {
+            Button(
+                onClick = {
+                    onAddItem(listOf<Any>(eventName, chosenMonth, chosenDay, chosenReminder))
+                    nav.navigate("Home")
+                          },
+                Modifier.padding(top = 20.dp),
+            ) {
                 Text("Save Event")
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Icon(
                     Icons.Filled.Check,
-                    contentDescription = null,
+                    contentDescription = "Create Event",
                     modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
             }
         }
-    }
-}
-
-
-
-
-@Composable
-fun BottomAppBar() {
-    BottomNavigation(
-        backgroundColor = MaterialTheme.colors.primary,
-    ) {
     }
 }

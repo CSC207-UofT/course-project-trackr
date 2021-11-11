@@ -13,9 +13,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.trackr.trackr_app.R
-import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
+import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
+import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
@@ -52,6 +53,7 @@ fun MainScreen() {
                     )
                 }
             }
+            composable("Calendar") { CalendarScreenActivity() }
         }
     }
 }

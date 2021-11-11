@@ -1,34 +1,35 @@
-package database
+package com.trackr.trackr_app.database
 
-import com.trackr.trackr_app.entities.Event
-import java.util.HashSet
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.trackr.trackr_app.model.User
 
-class Database {
-    private val EventData: MutableSet<Event> = HashSet<Event>()
+// TODO: add Person::class, Event::class once implemented
 
-    /**
-     * Add a new Event to this Database. Return a boolean representing if the event was successfully added or not.
-     * @param event the Event to add to this Database
-     * @return a boolean representing if the event was successfully added or not.
-     */
-    fun addEvent(event: Event): Boolean {
-        return EventData.add(event)
-    }
+@Database(entities = [User::class,], version = 1, exportSchema = false)
+abstract class TrackrDatabase : RoomDatabase() {
 
-    /**
-     * Remove an Event from this Database. Return boolean representing if the operation was successful.
-     * @param event the Event to remove from the Database
-     * @return a boolean representing if the Event was successfully removed from this Database
-     */
-    fun removeEvent(event: Event): Boolean {
-        return EventData.remove(event)
-    }
+    abstract fun userDao(): UserDao
 
-    /**
-     * Return a List of ALL Events in this Database
-     * @return a List of ALL events in this Database
-     */
-    fun getEventData(): Set<Event> {
-        return EventData
+    companion object {
+        @Volatile
+        private var INSTANCE: TrackrDatabase? = null
+
+        fun getDatabase(context: Context): TrackrDatabase {
+            // if the INSTANCE is not null, then return it,
+            // if it is, then create the database
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        TrackrDatabase::class.java,
+                        "trackr_database"
+                ).build()
+                INSTANCE = instance
+                // return instance
+                instance
+            }
+        }
     }
 }

@@ -1,7 +1,5 @@
 package com.trackr.trackr_app.ui.calendar
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,10 +14,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import java.time.LocalDate
@@ -39,6 +39,7 @@ fun Preview() {
         var selectedDate by rememberSaveable { mutableStateOf(LocalDate.now()) }
         Calendar(
             selectedDate,
+            Modifier.padding(10.dp),
             { selectedDate = selectedDate.withDayOfMonth(it)} ,
             { selectedDate = selectedDate.plusMonths(it) }
         )
@@ -57,13 +58,12 @@ fun Preview() {
 @Composable
 fun Calendar(
     selectedDate: LocalDate,
+    modifier: Modifier = Modifier,
     onSelect: (Int) -> Unit = {},
-    onSwipe: (Long) -> Unit = {}
+    onSwipe: (Long) -> Unit = {},
 ) {
     Column(
-        modifier = Modifier
-            .padding(10.dp)
-            .background(MaterialTheme.colors.primary),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row {
@@ -72,7 +72,7 @@ fun Calendar(
                 "Previous Month",
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
-                    .padding(horizontal = 5.dp, vertical = 10.dp)
+                    .padding(horizontal = 5.dp, vertical = 12.dp)
                     .clickable { onSwipe(-1) }
             )
             Text(
@@ -81,7 +81,8 @@ fun Calendar(
                     .getDisplayName(TextStyle.FULL, Locale.getDefault()) +
                         " ${selectedDate.year}",
                 fontFamily = Rubik,
-                fontSize = 20.sp,
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
@@ -92,13 +93,13 @@ fun Calendar(
                 "Next Month",
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
-                    .padding(horizontal = 5.dp, vertical = 10.dp)
+                    .padding(horizontal = 5.dp, vertical = 12.dp)
                     .clickable { onSwipe(1) }
             )
         }
         CalendarHeader()
         CalendarMonth(
-            selectedDate
+            selectedDate,
         ) { onSelect(it) }
     }
 }
@@ -146,13 +147,13 @@ fun CalendarMonth(
 @Composable
 fun CalendarHeader() {
     Row() {
-        CalendarGridContainer(gridText = "Su")
-        CalendarGridContainer(gridText = "Mo")
-        CalendarGridContainer(gridText = "Tu")
-        CalendarGridContainer(gridText = "We")
-        CalendarGridContainer(gridText = "Th")
-        CalendarGridContainer(gridText = "Fr")
-        CalendarGridContainer(gridText = "Sa")
+        CalendarGridContainer("Su")
+        CalendarGridContainer("Mo")
+        CalendarGridContainer("Tu")
+        CalendarGridContainer("We")
+        CalendarGridContainer("Th")
+        CalendarGridContainer("Fr")
+        CalendarGridContainer("Sa")
     }
 }
 
@@ -168,7 +169,7 @@ fun CalendarGridContainer(
     isSelected: Boolean = false,
     onSelect: (Int) -> Unit = {},
 ) {
-    var modifier = Modifier.size(30.dp, 30.dp)
+    var modifier = Modifier.size(45.dp, 45.dp)
 
     if (isSelected) {
         modifier = modifier.border(
@@ -178,7 +179,11 @@ fun CalendarGridContainer(
     }
 
     if (gridText.isNotEmpty()) {
-        modifier = modifier.clickable { onSelect(gridText.toInt()) }
+        modifier = modifier.clickable {
+            onSelect(
+                if (gridText.isDigitsOnly()) gridText.toInt() else 0
+            )
+        }
     }
 
     Box(
@@ -189,7 +194,7 @@ fun CalendarGridContainer(
             text = gridText,
             textAlign = TextAlign.Center,
             fontFamily = Rubik,
-            fontSize = 12.sp,
+            fontSize = 18.sp,
             color = MaterialTheme.colors.onPrimary,
         )
     }
