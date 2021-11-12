@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -21,22 +22,17 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 
-
-@Preview
 @Composable
 fun CalendarScreenActivity(
     calendarViewModel: CalendarViewModel,
     navController: NavHostController,
 ) {
-    val selectedDate = calendarViewModel.selectedDate
-    Column (
-        modifier = Modifier.padding(0.dp)
-    ) {
+    val selectedDate by calendarViewModel.selectedDate
+    Column {
         Calendar(
             selectedDate = selectedDate,
             Modifier
-                .fillMaxSize()
-                .weight(1f)
+                .fillMaxWidth()
                 .padding(bottom = 10.dp)
                 .background(MaterialTheme.colors.primaryVariant),
             { calendarViewModel.changeSelectedDate(it) },
@@ -49,7 +45,6 @@ fun CalendarScreenActivity(
         EventList(
             listOf(1,2,3,4,5),
             Modifier
-                .weight(1f)
                 .padding(horizontal = 30.dp),
             navController,
         )

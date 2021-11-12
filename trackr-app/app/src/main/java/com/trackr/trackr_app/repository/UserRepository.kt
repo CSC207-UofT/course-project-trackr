@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 class UserRepository(private val userDao: UserDao) {
-    val allUsers: Flow<List<User>> = userDao.listUsernames()
+    val allUsers: Flow<List<User>> = userDao.listUsers()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
