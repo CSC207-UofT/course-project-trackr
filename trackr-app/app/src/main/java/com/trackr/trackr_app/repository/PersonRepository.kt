@@ -6,7 +6,7 @@ import com.trackr.trackr_app.model.Person
 import kotlinx.coroutines.flow.Flow
 
 class PersonRepository(private val personDao: PersonDao) {
-    val allPersons: Flow<List<Person>> = personDao.listpersons()
+    val allPersons: Flow<List<Person>> = personDao.listPersons()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

@@ -15,7 +15,8 @@ interface EventDao {
     @Query("SELECT * FROM `event-table` ORDER BY date DESC")
     fun listAll(): Flow<List<TrackrEvent>>
 
-    @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date ORDER BY date ASC")
+    // range is inclusive.
+    @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date ORDER BY date DESC")
     fun listFromRange(start_date: Int, end_date: Int): Flow<List<TrackrEvent>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
