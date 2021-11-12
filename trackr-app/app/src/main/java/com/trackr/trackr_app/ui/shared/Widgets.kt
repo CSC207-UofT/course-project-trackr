@@ -66,8 +66,10 @@ fun <T>InteractiveDropdownWidget(setter: (T) -> Unit, getter: () -> T, options: 
     ) {
         for (option in options) {
             DropdownMenuItem(onClick = {
-                setter(option); expanded = false
-            }) {
+                setter(option)
+                expanded = false
+            }
+            ) {
                 Text(option.toString())
             }
         }
