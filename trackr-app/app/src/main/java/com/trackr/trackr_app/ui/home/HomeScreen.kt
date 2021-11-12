@@ -110,21 +110,28 @@ fun HomeScreen(
                    .padding(0.dp, 10.dp)
                    .weight(1f),
                stringResource(R.string.todays_events),
-               listOf()
+               listOf(),
+               navController
            )
            HomeFeed(
                Modifier
                    .padding(0.dp, 10.dp)
                    .weight(2f),
                stringResource(R.string.upcoming_events),
-               eventList
+               eventList,
+               navController
            )
        }
     }
 }
 
 @Composable
-fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>) {
+fun HomeFeed(
+    modifier: Modifier,
+    title: String,
+    events: List<List<Any>>,
+    navController: NavHostController,
+) {
     Column(
         modifier = modifier,
     ) {
@@ -153,7 +160,8 @@ fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>) {
         } else {
             EventList(
                 events,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                navController,
             )
         }
     }
@@ -163,7 +171,8 @@ fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>) {
 @Composable
 fun EventList(
     events: List<Any>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -173,7 +182,10 @@ fun EventList(
             val event = events[index]
             Surface(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable {
+                        navController.navigate("Edit/${events.indexOf(event)}")
+                    },
                 shape = RoundedCornerShape(20),
             ) {
                 Row(
@@ -184,6 +196,7 @@ fun EventList(
                             )
                         )
                         .padding(20.dp)
+
                 ) {
                     Column() {
                         Text(event.toString())
@@ -204,24 +217,13 @@ fun BottomAppBar(
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
-        BottomNavigationItem(
-            icon = { Icon(Icons.Filled.Edit, "Edit event") },
-            label = { Text(text = "Edit Event") },
-            selected = false,
-            onClick = {
-                navController.navigate("Select")
-                {
-                    launchSingleTop = true
-                }
-            }
-        )
+
         BottomNavigationItem(
             selected = false,
             icon = { Icon(
                 Icons.Filled.Event,
                 "Calendar View",
-                Modifier,
-                MaterialTheme.colors.onBackground
+                tint = MaterialTheme.colors.onBackground
             )},
             label = {Text("View Calendar", fontFamily = Rubik)},
             onClick = {
@@ -232,15 +234,21 @@ fun BottomAppBar(
             }
         )
         BottomNavigationItem(
+            icon = {
+                Icon(
+                    Icons.Filled.Edit,
+                    "Edit event",
+                    tint = MaterialTheme.colors.onBackground,
+                )
+                   },
+            label = { Text(text = "Edit Events") },
             selected = false,
-            icon = { Icon(
-                Icons.Filled.Edit,
-                "Edit Events",
-                Modifier,
-                MaterialTheme.colors.onBackground
-            )},
-            label = {Text("View Calendar", fontFamily = Rubik)},
-            onClick = {}  // add navigation
+            onClick = {
+                navController.navigate("Select")
+                {
+                    launchSingleTop = true
+                }
+            }
         )
     }
 }

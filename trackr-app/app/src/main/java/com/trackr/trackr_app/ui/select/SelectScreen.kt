@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.model.TrackrEvent
+import com.trackr.trackr_app.ui.home.EventList
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
@@ -68,8 +69,10 @@ fun SelectScreen(
 }
 
 @Composable
-fun SelectFeed(modifier: Modifier, title: String, events: List<List<Any>>, nav: NavHostController) {
-    val context = LocalContext.current
+fun SelectFeed(modifier: Modifier,
+               title: String,
+               events: List<List<Any>>,
+               nav: NavHostController) {
     Column(
         modifier = modifier,
     ) {
@@ -96,46 +99,13 @@ fun SelectFeed(modifier: Modifier, title: String, events: List<List<Any>>, nav: 
                 )
             }
         } else {
-            SelectList(events, nav)
+            EventList(
+                events,
+                Modifier.fillMaxWidth(),
+                nav,
+            )
         }
     }
 }
 
-@Composable
-fun SelectList(events: List<Any>, nav: NavHostController) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        items(events) { event ->
-            Surface(
-                modifier = Modifier
-                    .padding(vertical = 5.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(20),
-            ) {
-                Row(
-                    modifier = Modifier
-                        .clickable { nav.navigate("Edit/${events.indexOf(event)}") }
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(
-                                    Color(0xFF3E69FF),
-                                    Color(0xFF6CCFF8)
-                                )
-                            )
-                        )
-                        .padding(20.dp)
-                ) {
-                    Column() {
-                        Text(event.toString())
-                    }
-                    Column() {
-
-                    }
-                }
-            }
-        }
-    }
-}
 

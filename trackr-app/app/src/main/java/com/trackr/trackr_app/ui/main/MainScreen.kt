@@ -20,6 +20,7 @@ import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.ui.add.AddScreenActivity
+import com.trackr.trackr_app.ui.calendar.CalendarViewModel
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.ui.navigation.NavScreen
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
@@ -64,7 +65,9 @@ fun MainScreen(
                     )
                 }
             }
-            composable("Calendar") { CalendarScreenActivity() }
+            composable("Calendar") {
+                CalendarScreenActivity(CalendarViewModel(), navController)
+            }
         }
     }
 }
