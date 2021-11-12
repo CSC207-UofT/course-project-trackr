@@ -44,7 +44,8 @@ class AddScreenViewModel(
 
         val calDate = Calendar.getInstance()
         calDate.set(2020, 1, 1)
-        eventRepository.insert(TrackrEvent(data[0].toString(), randPersonID.toString(), 0,
+        val eventType = if (data[4].toString() == "Birthday") 0 else 1
+        eventRepository.insert(TrackrEvent(data[0].toString(), randPersonID.toString(), eventType,
             calDate.timeInMillis.toInt(), 7, 0))
     }
 }

@@ -1,6 +1,7 @@
 package com.trackr.trackr_app.ui.add
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -8,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.ui.shared.InputWidget
@@ -30,7 +32,7 @@ fun AddScreen(
     var chosenMonth by remember { mutableStateOf("Jan") }
     var chosenDay by remember { mutableStateOf(1) }
     var chosenReminder by remember { mutableStateOf("1 day before") }
-
+    var eventType by remember { mutableStateOf("Birthday") }
     val months = listOf(
         "Jan",
         "Feb",
@@ -51,7 +53,20 @@ fun AddScreen(
         Column(
             Modifier.padding(20.dp)
         ) {
-            InputWidget(title = "Whose birthday is it again?") {
+            Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+            Row(Modifier.selectableGroup().padding(top = 5.dp, bottom = 20.dp)) {
+                RadioButton(
+                    selected = eventType == "Birthday",
+                    onClick = { eventType = "Birthday" }
+                )
+                Text(text = "Birthday", Modifier.padding(start = 5.dp, end = 20.dp))
+                RadioButton(
+                    selected = eventType != "Birthday",
+                    onClick = { eventType = "Anniversary" }
+                )
+                Text(text = "Anniversary", Modifier.padding(start = 5.dp))
+            }
+            InputWidget(title = "Whose birthday/anniversary is it?") {
                 TextField(
                     value = eventName,
                     onValueChange = { eventName = it },
@@ -89,7 +104,7 @@ fun AddScreen(
             }
             Button(
                 onClick = {
-                    onAddItem(listOf<Any>(eventName, chosenMonth, chosenDay, chosenReminder))
+                    onAddItem(listOf<Any>(eventName, chosenMonth, chosenDay, chosenReminder, eventType))
                     nav.navigate("Home")
                           },
                 Modifier.padding(top = 20.dp),
