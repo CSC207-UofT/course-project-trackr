@@ -1,12 +1,18 @@
 package com.trackr.trackr_app.ui.main
 
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIos
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -37,20 +43,40 @@ fun MainScreen(
     editScreenViewModel: EditScreenViewModel,
 ) {
     val navController = rememberNavController()
+    var canGoBack by remember { mutableStateOf(false) }
+    navController.addOnDestinationChangedListener { controller, _, _, ->
+        canGoBack = controller.previousBackStackEntry != null
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                backgroundColor = MaterialTheme.colors.primary
+                backgroundColor = MaterialTheme.colors.primary,
             ) {
-                Text(
-                    stringResource(R.string.app_name),
-                    fontFamily = Rubik,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Box(
+                    Modifier.padding(10.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.app_name),
+                        fontFamily = Rubik,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    if (canGoBack) {
+                        Icon(
+                            Icons.Filled.ArrowBackIos,
+                            "Back",
+                            Modifier
+                                .fillMaxHeight()
+                                .clickable {
+                                    navController.popBackStack()
+                                },
+                            MaterialTheme.colors.onBackground
+                        )
+                    }
+                }
             }
         }
     ) {
