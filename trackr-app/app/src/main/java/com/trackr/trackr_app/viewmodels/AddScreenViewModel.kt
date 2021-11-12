@@ -52,10 +52,10 @@ class AddScreenViewModel(
 
         val calDate = Calendar.getInstance()
         calDate.clear()
-        calDate.set(2021, months.indexOf(data[1].toString()) + 1, data[2].toString().toInt(), 0, 0, 0)
+        calDate.set(2021, months.indexOf(data[1].toString()), data[2].toString().toInt())
         val eventType = if (data[4].toString() == "Birthday") 0 else 1
         eventRepository.insert(TrackrEvent(data[0].toString(), personId.toString(), eventType,
-            calDate.timeInMillis.toInt(), reminderInterval, 0))
+            (calDate.timeInMillis/1000).toInt(), reminderInterval, 0))
     }
 }
 
