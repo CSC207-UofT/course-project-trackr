@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.main.MainScreen
 import com.trackr.trackr_app.ui.navigation.NavScreen
@@ -39,6 +40,10 @@ import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import com.trackr.trackr_app.ui.theme.allGradients
 import com.trackr.trackr_app.ui.theme.blueGradient
+import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
+import java.time.Instant
+import java.time.ZoneId
+import java.util.*
 
 
 val temp_data = listOf(1,2,3,4,5)
@@ -52,30 +57,19 @@ val temp_data = listOf(1,2,3,4,5)
 //    }
 //}
 
-class HomeScreenViewModel: ViewModel() {
-    //NOTE: This design is inspired by documentation from Google:
-    //https://developer.android.com/codelabs/jetpack-compose-state#3
-    private var _events = MutableLiveData(listOf<List<Any>>())
-    val events: LiveData<List<List<Any>>> = _events
-    fun addEvent(event: List<Any>) {
-        _events.value = _events.value!! + listOf(event)
-    }
-
-    fun editEvent(event: List<Any>, index: Int) {
-        _events.value = _events.value?.subList(0, index)!! + listOf(event) +
-                _events.value?.subList(index + 1, _events.value!!.size)!!
-    }
-
-}
-
 @Composable
 fun HomeScreenActivity(
     viewModel: HomeScreenViewModel,
     navController: NavHostController
 ) {
-    val events: List<List<Any>> by viewModel.events.observeAsState(listOf())
+    val events: List<TrackrEvent> by viewModel.allEvents.observeAsState(listOf())
     HomeScreen(
-        eventList = events,
+        // TODO: figure out how to move this to the viewModel
+        eventList = events.map {
+            val dateTime = java.time.LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(it.date.toLong()), java.time.ZoneId.of(
+                    ZoneId.SHORT_IDS.get("EST")))
+            listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval) },
         viewModel = viewModel,
         navController = navController)
 }
@@ -117,7 +111,7 @@ fun HomeScreen(
                    .weight(1f),
                stringResource(R.string.todays_events),
                listOf(),
-               nav
+               navController
            )
            HomeFeed(
                Modifier
@@ -125,14 +119,19 @@ fun HomeScreen(
                    .weight(2f),
                stringResource(R.string.upcoming_events),
                eventList,
-               nav
+               navController
            )
        }
     }
 }
 
 @Composable
-fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>, nav: NavHostController) {
+fun HomeFeed(
+    modifier: Modifier,
+    title: String,
+    events: List<List<Any>>,
+    navController: NavHostController,
+) {
     Column(
         modifier = modifier,
     ) {
@@ -161,7 +160,8 @@ fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>, nav: Na
         } else {
             EventList(
                 events,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                navController,
             )
         }
     }
@@ -171,7 +171,8 @@ fun HomeFeed(modifier: Modifier, title: String, events: List<List<Any>>, nav: Na
 @Composable
 fun EventList(
     events: List<Any>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -181,18 +182,21 @@ fun EventList(
             val event = events[index]
             Surface(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable {
+                        navController.navigate("Edit/${events.indexOf(event)}")
+                    },
                 shape = RoundedCornerShape(20),
             ) {
                 Row(
                     modifier = Modifier
-                        .clickable { nav.navigate("Edit/${events.indexOf(event)}") }
                         .background(
                             brush = Brush.horizontalGradient(
                                 colors = allGradients[index % 3]
                             )
                         )
                         .padding(20.dp)
+
                 ) {
                     Column() {
                         Text(event.toString())
@@ -206,27 +210,20 @@ fun EventList(
     }
 }
 
+@Composable
 fun BottomAppBar(
     navController: NavHostController,
 ) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
-        BottomNavigationItem(
-            icon = { Icon(Icons.Filled.Edit, "Edit event") },
-            label = { Text(text = "Edit Event") },
-            selected = false,
-            onClick = {
-                nav.navigate("Select")
-            }
-        )
+
         BottomNavigationItem(
             selected = false,
             icon = { Icon(
                 Icons.Filled.Event,
                 "Calendar View",
-                Modifier,
-                MaterialTheme.colors.onBackground
+                tint = MaterialTheme.colors.onBackground
             )},
             label = {Text("View Calendar", fontFamily = Rubik)},
             onClick = {
@@ -237,15 +234,21 @@ fun BottomAppBar(
             }
         )
         BottomNavigationItem(
+            icon = {
+                Icon(
+                    Icons.Filled.Edit,
+                    "Edit event",
+                    tint = MaterialTheme.colors.onBackground,
+                )
+                   },
+            label = { Text(text = "Edit Events") },
             selected = false,
-            icon = { Icon(
-                Icons.Filled.Edit,
-                "Edit Events",
-                Modifier,
-                MaterialTheme.colors.onBackground
-            )},
-            label = {Text("View Calendar", fontFamily = Rubik)},
-            onClick = {}  // add navigation
+            onClick = {
+                navController.navigate("Select")
+                {
+                    launchSingleTop = true
+                }
+            }
         )
     }
 }
