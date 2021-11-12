@@ -33,20 +33,29 @@ class AddScreenViewModel(
             "Dec"
         )
 
+        val personId = data[0]
+        userRepository.insert(User(id = "1", username = "DefaultUser"))
+        var reminderInterval = 1
+        if (data[3] == "1 day before") {
+            reminderInterval = 1
+        } else if (data[3] == "3 days before") {
+            reminderInterval = 3
+        } else if (data[3] == "1 week before") {
+            reminderInterval = 7
+        } else if (data[3] == "2 weeks before") {
+            reminderInterval = 14
+        } else {
+            reminderInterval = 30
+        }
 
-        //TODO: Unhardcode
-        val randUserID = randomUUID()
-        val randPersonID = randomUUID()
-        val randEventID = randomUUID()
-        userRepository.insert(User(id = randUserID.toString(), username = "yourmom"))
-
-        personRepository.insert(Person(id = randPersonID.toString(), user_id = randUserID.toString(), first_name = "My", last_name = "Mom"))
+        personRepository.insert(Person(id = personId.toString(), user_id = "1", first_name = personId.toString(), last_name = personId.toString()))
 
         val calDate = Calendar.getInstance()
-        calDate.set(2020, 1, 1)
+        calDate.clear()
+        calDate.set(2021, months.indexOf(data[1].toString()) + 1, data[2].toString().toInt(), 0, 0, 0)
         val eventType = if (data[4].toString() == "Birthday") 0 else 1
-        eventRepository.insert(TrackrEvent(data[0].toString(), randPersonID.toString(), eventType,
-            calDate.timeInMillis.toInt(), 7, 0))
+        eventRepository.insert(TrackrEvent(data[0].toString(), personId.toString(), eventType,
+            calDate.timeInMillis.toInt(), reminderInterval, 0))
     }
 }
 
