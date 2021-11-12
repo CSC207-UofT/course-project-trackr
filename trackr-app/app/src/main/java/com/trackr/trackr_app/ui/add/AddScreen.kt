@@ -72,7 +72,7 @@ fun AddScreen(
                     onValueChange = { eventName = it },
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = Color.Transparent,
-                        textColor = Color.Black
+                        textColor = MaterialTheme.colors.onBackground
                     )
                 )
             }
