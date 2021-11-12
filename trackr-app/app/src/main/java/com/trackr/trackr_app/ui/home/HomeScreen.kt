@@ -67,7 +67,8 @@ fun HomeScreenActivity(
         // TODO: figure out how to move this to the viewModel
         eventList = events.map {
             val dateTime = java.time.LocalDateTime.ofInstant(
-                Instant.ofEpochSecond(it.date.toLong()), ZoneId.systemDefault())
+                Instant.ofEpochSecond(it.date.toLong()), java.time.ZoneId.of(
+                    ZoneId.SHORT_IDS.get("EST")))
             listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval) },
         viewModel = viewModel,
         navController = navController)
