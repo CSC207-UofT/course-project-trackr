@@ -22,15 +22,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.ui.home.EventList
-import com.trackr.trackr_app.ui.home.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
+import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
+import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
+import java.time.Instant
+import java.time.ZoneId
+import java.util.*
 
 
 @Composable
-fun SelectScreenActivity(viewModel: HomeScreenViewModel, nav: NavHostController) {
-    val events: List<List<Any>> by viewModel.events.observeAsState(listOf())
-    SelectScreen(eventList = events, nav = nav)
+fun SelectScreenActivity(viewModel: SelectScreenViewModel, nav: NavHostController) {
+    val events: List<TrackrEvent> by viewModel.allEvents.observeAsState(listOf())
+    SelectScreen(
+        // TODO: figure out how to move this to the viewModel
+        eventList = events.map {
+            val dateTime = java.time.LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(it.date.toLong()), java.time.ZoneId.of(
+                    ZoneId.SHORT_IDS.get("EST")))
+            listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval)},
+        nav = nav)
 }
 
 @Composable

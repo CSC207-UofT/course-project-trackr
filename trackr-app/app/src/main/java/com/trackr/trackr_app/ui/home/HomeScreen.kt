@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.main.MainScreen
 import com.trackr.trackr_app.ui.navigation.NavScreen
@@ -39,6 +40,10 @@ import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import com.trackr.trackr_app.ui.theme.allGradients
 import com.trackr.trackr_app.ui.theme.blueGradient
+import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
+import java.time.Instant
+import java.time.ZoneId
+import java.util.*
 
 
 val temp_data = listOf(1,2,3,4,5)
@@ -52,30 +57,19 @@ val temp_data = listOf(1,2,3,4,5)
 //    }
 //}
 
-class HomeScreenViewModel: ViewModel() {
-    //NOTE: This design is inspired by documentation from Google:
-    //https://developer.android.com/codelabs/jetpack-compose-state#3
-    private var _events = MutableLiveData(listOf<List<Any>>())
-    val events: LiveData<List<List<Any>>> = _events
-    fun addEvent(event: List<Any>) {
-        _events.value = _events.value!! + listOf(event)
-    }
-
-    fun editEvent(event: List<Any>, index: Int) {
-        _events.value = _events.value?.subList(0, index)!! + listOf(event) +
-                _events.value?.subList(index + 1, _events.value!!.size)!!
-    }
-
-}
-
 @Composable
 fun HomeScreenActivity(
     viewModel: HomeScreenViewModel,
     navController: NavHostController
 ) {
-    val events: List<List<Any>> by viewModel.events.observeAsState(listOf())
+    val events: List<TrackrEvent> by viewModel.allEvents.observeAsState(listOf())
     HomeScreen(
-        eventList = events,
+        // TODO: figure out how to move this to the viewModel
+        eventList = events.map {
+            val dateTime = java.time.LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(it.date.toLong()), java.time.ZoneId.of(
+                    ZoneId.SHORT_IDS.get("EST")))
+            listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval) },
         viewModel = viewModel,
         navController = navController)
 }

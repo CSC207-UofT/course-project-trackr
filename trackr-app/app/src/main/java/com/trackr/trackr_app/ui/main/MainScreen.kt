@@ -13,20 +13,31 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.TrackrApp
+import com.trackr.trackr_app.database.TrackrDatabase
+import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarViewModel
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
-import com.trackr.trackr_app.ui.home.HomeScreenViewModel
+import com.trackr.trackr_app.ui.navigation.NavScreen
+import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
+import com.trackr.trackr_app.viewmodels.AddScreenViewModel
+import com.trackr.trackr_app.viewmodels.EditScreenViewModel
+import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
 
 @Composable
-fun MainScreen() {
-    val homeScreenViewModel: HomeScreenViewModel = viewModel()
+fun MainScreen(
+    homeScreenViewModel: HomeScreenViewModel,
+    addScreenViewModel: AddScreenViewModel,
+    selectScreenViewModel: SelectScreenViewModel,
+    editScreenViewModel: EditScreenViewModel,
+) {
     val navController = rememberNavController()
-    //val eventList = ArrayList<String>()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -44,18 +55,14 @@ fun MainScreen() {
         }
     ) {
         NavHost(navController = navController, startDestination = "Home") {
-            composable("Add") {
-                AddScreenActivity(homeScreenViewModel, navController)
-            }
-            composable("Home") {
-                HomeScreenActivity(homeScreenViewModel, navController)
-            }
-            composable("Select") {
-                SelectScreenActivity(homeScreenViewModel, navController)
-            }
+            composable("Home") { HomeScreenActivity(homeScreenViewModel, navController) }
+            composable("Add") { AddScreenActivity(addScreenViewModel, navController) }
+            composable("Select") { SelectScreenActivity(selectScreenViewModel, navController) }
             composable("Edit/{userId}") { backStackEntry ->
-                backStackEntry.arguments!!.getString("userId")?.let { it ->
-                    EditScreenActivity(homeScreenViewModel, navController, it)
+                backStackEntry.arguments!!.getString("userId")?.let { it1 ->
+                    EditScreenActivity(editScreenViewModel, navController,
+                        it1
+                    )
                 }
             }
             composable("Calendar") {

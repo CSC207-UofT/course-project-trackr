@@ -10,7 +10,7 @@ import java.time.LocalDate
                     parentColumns = ["id"],
                     childColumns = ["person_id"],
                     onDelete = ForeignKey.CASCADE)])
-class Event(
+class TrackrEvent (
 
         @PrimaryKey
         val id: String,
