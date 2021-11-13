@@ -16,15 +16,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         // Create notification channel
         val notifChannelCreator = NotificationChannelCreator(this)
         notifChannelCreator.createNotificationChannel()
-
-        // Create EventNotificationManager FOR TESTING PURPOSES
-        val eventNotificationManager = EventNotificationManager(this)
-
-        eventNotificationManager.createNotification(
-                "John", "Birthday", LocalDate.now())
 
         setContent {
             TrackrappTheme {

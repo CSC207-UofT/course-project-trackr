@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
+import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import com.trackr.trackr_app.repository.UserRepository
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class AddScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val eventNotificationManager: EventNotificationManager
 ): ViewModel() {
 
     private val _firstName = mutableStateOf("")
@@ -114,9 +116,8 @@ class AddScreenViewModel @Inject constructor(
             "2 weeks before" to 14,
             "1 month before" to 30
         )[chosenReminder.value]!!
-      
-        eventRepository.insert(
-            TrackrEvent(
+
+        val newEvent = TrackrEvent(
                 newPerson.id,
                 eventType,
                 eventDate.value.withYear(1970)
@@ -124,6 +125,16 @@ class AddScreenViewModel @Inject constructor(
                 eventDate.value.year,
                 reminderInt,
                 0)
+
+        eventRepository.insert(newEvent)
+
+        //Add notification
+        eventNotificationManager.createNotification(
+                "${firstName.value} ${lastName.value}",
+                eventName.value,
+                eventDate.value,
+                eventDate.value.minusDays(reminderInt.toLong()),
+                newEvent.id.hashCode()
         )
     }
 }
