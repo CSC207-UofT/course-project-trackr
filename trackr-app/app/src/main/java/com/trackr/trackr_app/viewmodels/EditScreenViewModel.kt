@@ -92,18 +92,18 @@ class EditScreenViewModel @Inject constructor(
      */
     fun editEvent(id: String) = viewModelScope.launch {
         val event = eventRepository.getById(id)
+        val reminderInt: Int? = mapOf("1 day before" to 1, "3 days before" to 3,
+                "1 week before" to 7, "2 weeks before" to 14,
+                "1 month before" to 30)[chosenReminder.value]
+        eventRepository.editInterval(reminderInt ?: 1, event)
+        eventRepository.editDate(eventDate.value.withYear(1970), event)
 
-        if (delete.value == "Yes") {
-            eventRepository.delete(event)
-        } else {
-            val reminderInt: Int? = mapOf("1 day before" to 1, "3 days before" to 3,
-                    "1 week before" to 7, "2 weeks before" to 14,
-                    "1 month before" to 30)[chosenReminder.value]
-            eventRepository.editInterval(reminderInt ?: 1, event)
-            eventRepository.editDate(eventDate.value.withYear(1970), event)
+        eventRepository.editType(eventType, event)
+    }
 
-            eventRepository.editType(eventType, event)
-        }
+    fun deleteEvent(id: String) = viewModelScope.launch {
+        val event = eventRepository.getById(id)
+        eventRepository.delete(event)
     }
 }
 
