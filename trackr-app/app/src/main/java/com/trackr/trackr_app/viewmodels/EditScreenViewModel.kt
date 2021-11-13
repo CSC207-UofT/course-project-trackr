@@ -16,6 +16,8 @@ class EditScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
     state: SavedStateHandle
+    private val eventNotificationManager: EventNotificationManager
+
 ) : ViewModel() {
 
     private val eventID: String = state.get<String>("eventId")!!
@@ -105,14 +107,27 @@ class EditScreenViewModel @Inject constructor(
     /**
      * Edits/deletes an event using EventRepository
      */
+
     fun editEvent() = viewModelScope.launch {
         val event = eventRepository.getById(eventID)
         val reminderInt: Int? = getReminderMap()[chosenReminder.value]
-
+      
         eventRepository.editInterval(reminderInt ?: 1, event)
+        
+        eventRepository.editInterval(reminderInt, event)
+        
         eventRepository.editDate(eventDate.value.withYear(1970), event)
 
         eventRepository.editType(eventType, event)
+
+        //Edit notification
+        eventNotificationManager.editNotification(
+                "${personName}",
+                eventName.value,
+                eventDate.value,
+                eventDate.value.minusDays(reminderInt.toLong()),
+                event.id.hashCode()
+        )
     }
 
     /**
@@ -121,6 +136,9 @@ class EditScreenViewModel @Inject constructor(
     fun deleteEvent() = viewModelScope.launch {
         val event = eventRepository.getById(eventID)
         eventRepository.delete(event)
+
+        //Delete notification
+        eventNotificationManager.removeNotification(event.id.hashCode())
     }
 }
 
