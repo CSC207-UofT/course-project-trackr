@@ -9,18 +9,24 @@ import android.content.Intent
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Class to manage notifications for events
  */
-class EventNotificationManager(private val context: Context) {
-    val alarmManager: AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+@Singleton
+class EventNotificationManager @Inject constructor(private val context: Context) {
+    private val alarmManager: AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
     /**
      * Creates a notification for the given event
      */
     fun createNotification(name: String, eventType: String, remindDate: LocalDate, id: Int) {
-        val instant: Instant = remindDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
+        var whichYear = LocalDate.now().year
+        if (remindDate.withYear(whichYear).isBefore(LocalDate.now())) {whichYear ++}
+        val instant: Instant = remindDate.withYear(whichYear)
+                .atStartOfDay(ZoneId.systemDefault()).toInstant()
         val remindDateMillis: Long = instant.toEpochMilli()
 
         val intent = Intent(context, EventBroadcastReceiver::class.java)
@@ -45,5 +51,13 @@ class EventNotificationManager(private val context: Context) {
 
         pendingIntent.cancel()
         alarmManager.cancel(pendingIntent)
+    }
+
+    /**
+     * Edits a notification for the given event
+     */
+    fun editNotification(name: String, eventType: String, remindDate: LocalDate, id: Int) {
+        removeNotification(id)
+        createNotification(name, eventType, remindDate, id)
     }
 }

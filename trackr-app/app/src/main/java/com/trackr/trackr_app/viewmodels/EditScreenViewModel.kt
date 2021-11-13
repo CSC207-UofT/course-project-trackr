@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
+import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import com.trackr.trackr_app.repository.UserRepository
@@ -21,7 +22,16 @@ import javax.inject.Inject
 @HiltViewModel
 class EditScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
+    private val personRepository: PersonRepository,
+    private val userRepository: UserRepository,
+    private val eventNotificationManager: EventNotificationManager
 ) : ViewModel() {
+
+//    private val _firstName = mutableStateOf("")
+//    val firstName: State<String> get() = _firstName
+//
+//    private val _lastName = mutableStateOf("")
+//    val lastName: State<String> get() = _lastName
 
     private val _delete = mutableStateOf("No")
     val delete: State<String> get() = _delete
@@ -40,6 +50,14 @@ class EditScreenViewModel @Inject constructor(
     fun editDelete(newResult: String) {
         _delete.value = newResult
     }
+
+//    fun editFirstName(newFirstName: String) {
+//        _firstName.value = newFirstName
+//    }
+//
+//    fun editLastName(newLastName: String) {
+//        _lastName.value = newLastName
+//    }
 
     fun editEventName(newEventName: String) {
         _eventName.value = newEventName
@@ -92,10 +110,22 @@ class EditScreenViewModel @Inject constructor(
      */
     fun editEvent(id: String) = viewModelScope.launch {
         val event = eventRepository.getById(id)
+        val person = personRepository.getPersonById(event.person_id)
 
         if (delete.value == "Yes") {
             eventRepository.delete(event)
         } else {
+//            val defaultUser = User("Default User")
+//            userRepository.insert(defaultUser)
+//
+//            val newPerson = Person(
+//                    user_id = defaultUser.id,
+//                    first_name = firstName.value,
+//                    last_name = lastName.value)
+//
+//            personRepository.insert(newPerson)
+//            eventRepository.editPerson(newPerson, event)
+
             val reminderInt: Int? = mapOf("1 day before" to 1, "3 days before" to 3,
                     "1 week before" to 7, "2 weeks before" to 14,
                     "1 month before" to 30)[chosenReminder.value]
@@ -104,6 +134,14 @@ class EditScreenViewModel @Inject constructor(
 
             eventRepository.editType(eventType, event)
         }
+
+        // Edit Notification
+        eventNotificationManager.editNotification(
+                "${person.first_name} ${person.last_name}",
+                eventName.value,
+                eventDate.value,
+                event.id.hashCode()
+        )
     }
 }
 
