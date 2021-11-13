@@ -96,10 +96,10 @@ class EditScreenViewModel @Inject constructor(
     fun editEvent(id: String) = viewModelScope.launch {
         val event = eventRepository.getById(id)
         val person = personRepository.getPersonById(event.person_id)
-        val reminderInt: Int? = mapOf("1 day before" to 1, "3 days before" to 3,
+        val reminderInt: Int = mapOf("1 day before" to 1, "3 days before" to 3,
                 "1 week before" to 7, "2 weeks before" to 14,
-                "1 month before" to 30)[chosenReminder.value]
-        eventRepository.editInterval(reminderInt ?: 1, event)
+                "1 month before" to 30)[chosenReminder.value]!!
+        eventRepository.editInterval(reminderInt, event)
         eventRepository.editDate(eventDate.value.withYear(1970), event)
 
         eventRepository.editType(eventType, event)
@@ -109,6 +109,7 @@ class EditScreenViewModel @Inject constructor(
                 "${person.first_name} ${person.last_name}",
                 eventName.value,
                 eventDate.value,
+                eventDate.value.minusDays(reminderInt.toLong()),
                 event.id.hashCode()
         )
     }

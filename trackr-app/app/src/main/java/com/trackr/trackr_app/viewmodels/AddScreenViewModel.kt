@@ -128,6 +128,7 @@ class AddScreenViewModel @Inject constructor(
                 "${firstName.value} ${lastName.value}",
                 eventName.value,
                 eventDate.value,
+                eventDate.value.minusDays(reminderInt.toLong()),
                 newEvent.id.hashCode()
         )
     }

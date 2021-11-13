@@ -22,16 +22,18 @@ class EventNotificationManager @Inject constructor(private val context: Context)
     /**
      * Creates a notification for the given event
      */
-    fun createNotification(name: String, eventType: String, remindDate: LocalDate, id: Int) {
+    fun createNotification(name: String, eventType: String, eventDate: LocalDate,
+                           remindDate: LocalDate, id: Int) {
         var whichYear = LocalDate.now().year
-        if (remindDate.withYear(whichYear).isBefore(LocalDate.now())) {whichYear ++}
+        if (eventDate.withYear(whichYear).isBefore(LocalDate.now())) {whichYear ++}
         val instant: Instant = remindDate.withYear(whichYear)
                 .atStartOfDay(ZoneId.systemDefault()).toInstant()
         val remindDateMillis: Long = instant.toEpochMilli()
 
         val intent = Intent(context, EventBroadcastReceiver::class.java)
         intent.putExtra("contentTitle", "$name $eventType")
-        intent.putExtra("contentText", "You have a $eventType for $name soon.")
+        intent.putExtra("contentText", "You have a $eventType for $name on" +
+                " $eventDate.")
         intent.putExtra("notificationId", id)
 
         val pendingIntent: PendingIntent =
@@ -56,8 +58,9 @@ class EventNotificationManager @Inject constructor(private val context: Context)
     /**
      * Edits a notification for the given event
      */
-    fun editNotification(name: String, eventType: String, remindDate: LocalDate, id: Int) {
+    fun editNotification(name: String, eventType: String, eventDate: LocalDate,
+                         remindDate: LocalDate, id: Int) {
         removeNotification(id)
-        createNotification(name, eventType, remindDate, id)
+        createNotification(name, eventType, eventDate, remindDate, id)
     }
 }
