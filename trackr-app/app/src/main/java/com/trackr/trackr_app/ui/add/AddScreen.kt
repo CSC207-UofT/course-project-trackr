@@ -19,26 +19,6 @@ import java.time.format.TextStyle
 import java.util.*
 
 
-val MONTHS = listOf(
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-)
-
-val REMINDER_INTERVALS = listOf(
-    "1 day before", "3 days before",
-    "1 week before", "2 weeks before", "1 month before"
-)
-
 @Composable
 fun AddScreenActivity(
     viewModel: AddScreenViewModel,
@@ -82,7 +62,7 @@ fun AddScreenActivity(
                 {InteractiveDropdownWidget(
                     setter = {month: String -> viewModel.changeMonth(month)},
                     getter = {eventDate.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())},
-                    options = MONTHS
+                    options = viewModel.getMonths()
                 )
                 },
                 {InteractiveDropdownWidget(
@@ -97,7 +77,7 @@ fun AddScreenActivity(
                 InteractiveDropdownWidget(
                     setter = {reminder: String -> viewModel.changeReminderInterval(reminder)},
                     getter = {chosenReminder},
-                    options = REMINDER_INTERVALS
+                    options = viewModel.getReminderIntervals()
                 )
             }
             Button(
