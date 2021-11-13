@@ -1,6 +1,5 @@
 package com.trackr.trackr_app.ui.edit
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
@@ -23,7 +22,6 @@ import java.util.*
 fun EditScreenActivity(
     viewModel: EditScreenViewModel,
     nav: NavHostController,
-    eventID: String,
 ) {
     val eventDate by viewModel.eventDate
     val chosenReminder by viewModel.chosenReminder
@@ -74,7 +72,7 @@ fun EditScreenActivity(
             }
             Button(
                     onClick = {
-                        viewModel.editEvent(eventID)
+                        viewModel.editEvent()
                         nav.popBackStack()
                     },
                     Modifier.padding(top = 20.dp),
@@ -89,7 +87,7 @@ fun EditScreenActivity(
             }
             Button(
                 onClick = {
-                    viewModel.deleteEvent(eventID)
+                    viewModel.deleteEvent()
                     nav.popBackStack()
                 },
                 modifier = Modifier.padding(top = 10.dp),
