@@ -87,7 +87,6 @@ class AddScreenViewModel @Inject constructor(
     }
 
     fun addEvent() = viewModelScope.launch {
-        //TODO: Unhardcode
         val randUserID = randomUUID()
         val randPersonID = randomUUID()
         val randEventID = randomUUID()
@@ -96,21 +95,30 @@ class AddScreenViewModel @Inject constructor(
                 username = "yourmom")
         )
 
+        val fullName = personName.value.split("\\s".toRegex(), 2)
+        val lastName: String = if (fullName.size > 1) {
+            fullName[1]
+        } else {
+            ""
+        }
         personRepository.insert(
             Person(id = randPersonID.toString(),
                 user_id = randUserID.toString(),
-                first_name = "My",
-                last_name = "Mom")
+                first_name = fullName[0],
+                last_name = lastName)
         )
 
+        val reminderInt: Int? = mapOf("1 day before" to 1, "3 days before" to 3,
+                "1 week before" to 7, "2 weeks before" to 14,
+                "1 month before" to 30)[chosenReminder.value]
         eventRepository.insert(
             TrackrEvent(
-                personName.value,  // randEventID.toString(),
+                randEventID.toString(),
                 randPersonID.toString(),
                 eventType,
                 eventDate.value
                     .toEpochDay(),
-                7,
+                    reminderInt ?:1,
                 0))
     }
 }

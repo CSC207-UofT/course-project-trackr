@@ -19,6 +19,9 @@ interface EventDao {
     @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date ORDER BY date DESC")
     fun listFromRange(start_date: Long, end_date: Long): Flow<List<TrackrEvent>>
 
+    @Query("SELECT * FROM `event-table` WHERE id = :id")
+    suspend fun getById(id: String): TrackrEvent
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(trackrEvent: TrackrEvent)
 
