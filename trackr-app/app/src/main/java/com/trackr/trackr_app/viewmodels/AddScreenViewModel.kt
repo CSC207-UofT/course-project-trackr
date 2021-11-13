@@ -66,6 +66,10 @@ class AddScreenViewModel @Inject constructor(
         _eventDate.value = _eventDate.value.withDayOfMonth(newDay)
     }
 
+    fun changeYear(newYear: Int) {
+        _eventDate.value = _eventDate.value.withYear(newYear)
+    }
+
     fun changeReminderInterval(newInterval: String) {
         _chosenReminder.value = newInterval
     }
@@ -116,8 +120,9 @@ class AddScreenViewModel @Inject constructor(
         val newEvent = TrackrEvent(
                 newPerson.id,
                 eventType,
-                eventDate.value
-                        .toEpochDay(),
+                eventDate.value.withYear(1970)
+                    .toEpochDay(),
+                eventDate.value.year,
                 reminderInt,
                 0)
 

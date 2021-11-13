@@ -7,6 +7,7 @@ import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,7 +24,8 @@ class SelectScreenViewModel @Inject constructor(
                 for (event in it) {
                     eventList.add(
                         TrackrEventOutput(event,
-                        personRepository.getPersonById(event.person_id)
+                        personRepository.getPersonById(event.person_id),
+                            Calendar.getInstance().get(Calendar.YEAR)
                         )
                     )
                 }

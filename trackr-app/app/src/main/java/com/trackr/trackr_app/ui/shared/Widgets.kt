@@ -1,10 +1,9 @@
 package com.trackr.trackr_app.ui.shared
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,6 +15,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.trackr.trackr_app.ui.theme.Rubik
+import com.trackr.trackr_app.ui.theme.allGradients
+import com.trackr.trackr_app.viewmodels.TrackrEventOutput
+import java.time.format.TextStyle
+import java.util.*
 
 @Composable
 fun InputWidget(
@@ -74,6 +80,71 @@ fun <T>InteractiveDropdownWidget(setter: (T) -> Unit, getter: () -> T, options: 
                 setter(option); expanded = false
             }) {
                 Text(option.toString())
+            }
+        }
+    }
+}
+
+@Composable
+fun EventCard(navController: NavHostController, index: Int, event: TrackrEventOutput) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                navController.navigate("Edit/${event.id}")
+            },
+        shape = RoundedCornerShape(20),
+    ) {
+        Row(
+            Modifier
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = allGradients[index % 3]
+                    )
+                )
+                .padding(20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text("${event.firstName} ${event.lastName}'s ",
+                    fontFamily = Rubik,
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Text(
+                    event.date.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) +
+                            " ${event.date.dayOfMonth}",
+                    color = Color.White,
+                    fontSize = 13.sp
+                )
+            }
+            Column(
+                horizontalAlignment = Alignment.End
+            ) {
+                Text(
+                    event.eventAge.toString() +
+                            if (event.eventAge.toString().endsWith("11") ||
+                                event.eventAge.toString().endsWith("12") ||
+                                event.eventAge.toString().endsWith("13"))
+                                "th"
+                            else if (event.eventAge.toString().endsWith("1"))
+                                "st"
+                            else if (event.eventAge.toString().endsWith("2"))
+                                "nd"
+                            else if (event.eventAge.toString().endsWith("3"))
+                                "rd"
+                            else "th",
+                    color = Color.White,
+                    fontWeight = FontWeight.Black,
+                    fontSize = 24.sp
+                )
+                Text(if (event.type == 0) "Birthday" else "Anniversary",
+                    fontFamily = Rubik,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White)
             }
         }
     }
