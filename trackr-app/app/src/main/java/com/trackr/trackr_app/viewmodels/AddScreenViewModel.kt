@@ -33,7 +33,7 @@ class AddScreenViewModel @Inject constructor(
 
     private var eventType: Int = 0
 
-    private val _eventDate = mutableStateOf(LocalDate.of(2020, 1, 1))
+    private val _eventDate = mutableStateOf(LocalDate.of(1970, 1, 1))
     val eventDate: State<LocalDate> get() = _eventDate
 
     private val _chosenReminder = mutableStateOf("1 day before reminder")
@@ -109,7 +109,6 @@ class AddScreenViewModel @Inject constructor(
                 randPersonID.toString(),
                 eventType,
                 eventDate.value
-                    .withYear(1970)
                     .toEpochDay(),
                 7,
                 0))
