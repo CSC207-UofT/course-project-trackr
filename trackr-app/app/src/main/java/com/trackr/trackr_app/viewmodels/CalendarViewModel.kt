@@ -23,10 +23,6 @@ class CalendarViewModel @Inject constructor(
     private var _selectedEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
     val selectedEvents: LiveData<List<TrackrEventOutput>> get() = _selectedEvents
 
-    init {
-        updateSelectedEvents()
-    }
-
     private val eventsThisMonth get() = eventRepository
         .listFromRange(
             _selectedDate.value.withYear(1970).withDayOfMonth(1),
@@ -36,10 +32,12 @@ class CalendarViewModel @Inject constructor(
     private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
     val eventDates: LiveData<Set<LocalDate>> get() = _eventDates
 
+    
     init {
+        updateSelectedEvents()
         updateEventDates()
     }
-
+    
     /**
      * Increase the current month by monthOffset months.
      * If monthOffset is negative go back months, otherwise
@@ -61,7 +59,7 @@ class CalendarViewModel @Inject constructor(
     fun changeSelectedDate(newDay: Int) {
         if (_selectedDate.value.dayOfMonth != newDay) {
             _selectedDate.value = _selectedDate.value.withDayOfMonth(newDay)
-            updateEventDates()
+            updateSelectedEvents()
         }
     }
 
