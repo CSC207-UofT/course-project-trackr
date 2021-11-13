@@ -45,7 +45,7 @@ class EditScreenViewModel @Inject constructor(
         personRepository.insert(Person(id = "2", user_id = "1", first_name = "My", last_name = "Mom"))
 
         val date = LocalDate.of(2020, 1, 1)
-        eventRepository.insert(TrackrEvent("SomeID", "2", 0,
+        eventRepository.insert(TrackrEvent("2", 0,
             date.toEpochDay(), 7, 0))
     }
 }

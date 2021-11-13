@@ -24,9 +24,11 @@ class AddScreenViewModel @Inject constructor(
     private val userRepository: UserRepository
 ): ViewModel() {
 
-    private val _personName = mutableStateOf("")
-    val personName: State<String>
-        get() = _personName
+    private val _firstName = mutableStateOf("")
+    val firstName: State<String> get() = _firstName
+
+    private val _lastName = mutableStateOf("")
+    val lastName: State<String> get() = _lastName
 
     private val _eventName = mutableStateOf("Birthday")
     val eventName: State<String> get() = _eventName
@@ -39,8 +41,12 @@ class AddScreenViewModel @Inject constructor(
     private val _chosenReminder = mutableStateOf("1 day before reminder")
     val chosenReminder: State<String> get() = _chosenReminder
 
-    fun editName(newName: String) {
-        _personName.value = newName
+    fun editFirstName(newFirstName: String) {
+        _firstName.value = newFirstName
+    }
+
+    fun editLastName(newLastName: String) {
+        _lastName.value = newLastName
     }
 
     fun editEventName(newEventName: String) {
@@ -87,29 +93,24 @@ class AddScreenViewModel @Inject constructor(
     }
 
     fun addEvent() = viewModelScope.launch {
-        //TODO: Unhardcode
-        val randUserID = randomUUID()
-        val randPersonID = randomUUID()
-        val randEventID = randomUUID()
-        userRepository.insert(
-            User(id = randUserID.toString(),
-                username = "yourmom")
-        )
+        val defaultUser = User("Default User")
+        userRepository.insert(defaultUser)
 
-        personRepository.insert(
-            Person(id = randPersonID.toString(),
-                user_id = randUserID.toString(),
-                first_name = "My",
-                last_name = "Mom")
-        )
+        val newPerson = Person(
+            user_id = defaultUser.id,
+            first_name = firstName.value,
+            last_name = lastName.value)
+
+        personRepository.insert(newPerson)
 
         eventRepository.insert(
             TrackrEvent(
-                personName.value,  // randEventID.toString(),
+                newPerson.id,
                 eventType,
                 eventDate.value
                     .toEpochDay(),
                 7,
-                0))
+                0)
+        )
     }
 }

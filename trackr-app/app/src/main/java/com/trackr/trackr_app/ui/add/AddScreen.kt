@@ -24,7 +24,8 @@ fun AddScreenActivity(
     viewModel: AddScreenViewModel,
     nav: NavHostController
 ) {
-    val personName by viewModel.personName
+    val firstName by viewModel.firstName
+    val lastName by viewModel.lastName
     val eventDate by viewModel.eventDate
     val chosenReminder by viewModel.chosenReminder
     val eventName by viewModel.eventName
@@ -48,15 +49,26 @@ fun AddScreenActivity(
                 Text(text = "Anniversary", Modifier.padding(start = 5.dp))
             }
             InputWidget(title = "Whose birthday/anniversary is it?") {
-                TextField(
-                    value = personName,
-                    onValueChange = { viewModel.editName(it) },
-                    colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = Color.Transparent,
-                        textColor = MaterialTheme.colors.onBackground,
-                    ),
-                    placeholder = { Text("Name", fontFamily = Rubik) }
-                )
+                Row {
+                    TextField(
+                        value = firstName,
+                        onValueChange = { viewModel.editFirstName(it) },
+                        colors = TextFieldDefaults.textFieldColors(
+                            backgroundColor = Color.Transparent,
+                            textColor = MaterialTheme.colors.onBackground,
+                        ),
+                        placeholder = { Text("First Name", fontFamily = Rubik) }
+                    )
+                    TextField(
+                        value = lastName,
+                        onValueChange = { viewModel.editLastName(it) },
+                        colors = TextFieldDefaults.textFieldColors(
+                            backgroundColor = Color.Transparent,
+                            textColor = MaterialTheme.colors.onBackground,
+                        ),
+                        placeholder = { Text("Last Name", fontFamily = Rubik) }
+                    )
+                }
             }
             InputWidget(title = "Date", widgets = listOf(
                 {InteractiveDropdownWidget(
