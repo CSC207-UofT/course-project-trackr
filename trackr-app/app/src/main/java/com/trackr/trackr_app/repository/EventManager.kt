@@ -6,9 +6,8 @@ import java.util.UUID
 
 class EventManager {
 }
-fun createEvent(person_id: String, type: Int, date: Int, reminder_interval: Int, repeat_strategy: Int): TrackrEvent {
+fun createEvent(person_id: String, type: Int, date: Long, reminder_interval: Int, repeat_strategy: Int): TrackrEvent {
     return TrackrEvent(
-        UUID.randomUUID().toString(),
         person_id,
         type,
         date,

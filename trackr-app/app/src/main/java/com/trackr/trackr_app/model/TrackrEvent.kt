@@ -1,7 +1,7 @@
 package com.trackr.trackr_app.model
 
 import androidx.room.*
-import java.time.LocalDate
+import java.util.*
 
 @Entity(tableName = "event-table",
         // Establish foreign key relation
@@ -12,16 +12,16 @@ import java.time.LocalDate
                     onDelete = ForeignKey.CASCADE)])
 class TrackrEvent (
 
-        @PrimaryKey
-        val id: String,
-
         var person_id: String,
 
         var type: Int,
 
-        val date: Int,
+        val date: Long,
 
         val reminder_interval: Int,
 
         val repeat_strategy: Int,
+
+        @PrimaryKey
+        val id: String = UUID.randomUUID().toString(),
 )

@@ -3,18 +3,32 @@ package com.trackr.trackr_app.viewmodels
 import androidx.lifecycle.*
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.repository.EventRepository
+import com.trackr.trackr_app.repository.PersonRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SelectScreenViewModel(private val eventRepository: EventRepository): ViewModel() {
-    val allEvents: LiveData<List<TrackrEvent>> = eventRepository.allEvents.asLiveData()
-}
+@HiltViewModel
+class SelectScreenViewModel @Inject constructor(
+    private val eventRepository: EventRepository,
+    private val personRepository: PersonRepository
+    ): ViewModel() {
+    val allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
 
-class SelectScreenViewModelFactory(private val repository: EventRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SelectScreenViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return SelectScreenViewModel(repository) as T
+    init {
+        viewModelScope.launch {
+            eventRepository.allEvents.collect {
+                val eventList = mutableListOf<TrackrEventOutput>()
+                for (event in it) {
+                    eventList.add(
+                        TrackrEventOutput(event,
+                        personRepository.getPersonById(event.person_id)
+                        )
+                    )
+                }
+                allEvents.value = eventList
+            }
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

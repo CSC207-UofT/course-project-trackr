@@ -8,53 +8,52 @@ import com.trackr.trackr_app.model.Person
 import kotlinx.coroutines.flow.Flow
 import java.sql.Date
 import java.time.LocalDate
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class EventRepository(private val eventDao: EventDao) {
+@Singleton
+class EventRepository @Inject constructor(private val eventDao: EventDao) {
     val allEvents: Flow<List<TrackrEvent>> = eventDao.listAll()
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun listFromRange(start_date: LocalDate, end_date: LocalDate): Flow<List<TrackrEvent>> {
-        return eventDao.listFromRange(start_date.toEpochDay().toInt(), end_date.toEpochDay().toInt())
+    fun listFromRange(start_date: LocalDate, end_date: LocalDate): Flow<List<TrackrEvent>> {
+        return eventDao.listFromRange(start_date.toEpochDay(), end_date.toEpochDay())
     }
 
-    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getById(id: String): TrackrEvent {
+        return eventDao.getById(id)
+    }
+
     @WorkerThread
     suspend fun insert(trackrEvent: TrackrEvent) {
         eventDao.insert(trackrEvent)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun delete(trackrEvent: TrackrEvent) {
         eventDao.delete(trackrEvent.id, trackrEvent.person_id)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun editPerson(new_person: Person, trackrEvent: TrackrEvent) {
         eventDao.editPerson(new_person.id, trackrEvent.id, trackrEvent.person_id)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun editType(new_type: Int, trackrEvent: TrackrEvent) {
         eventDao.editType(new_type, trackrEvent.id, trackrEvent.person_id)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun editDate(new_date: LocalDate, event: TrackrEvent) {
-        eventDao.editDate(new_date.toEpochDay().toInt(), event.id, event.person_id)
+        eventDao.editDate(new_date.toEpochDay(), event.id, event.person_id)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun editInterval(new_interval: Int, trackrEvent: TrackrEvent) {
         eventDao.editInterval(new_interval, trackrEvent.id, trackrEvent.person_id)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteAll() {
         eventDao.deleteAll()

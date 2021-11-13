@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Query("SELECT * FROM `user-table` ORDER BY username ASC")
-    fun listUsernames(): Flow<List<User>>
+    fun listUsers(): Flow<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: User)

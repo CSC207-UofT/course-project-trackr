@@ -7,10 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.repository.EventRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-
-class EventViewModel(private val repository: EventRepository) : ViewModel() {
+import javax.inject.Inject
+class EventViewModel constructor(
+    private val repository: EventRepository
+    ) : ViewModel() {
     val allEvents: LiveData<List<TrackrEvent>> = repository.allEvents.asLiveData()
 
     fun listFromRange(start_date: LocalDate, end_date: LocalDate) = viewModelScope.launch {
