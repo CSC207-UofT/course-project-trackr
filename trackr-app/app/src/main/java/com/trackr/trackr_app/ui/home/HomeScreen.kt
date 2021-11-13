@@ -140,7 +140,7 @@ fun EventList(
                         modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    navController.navigate("Edit/${event[0]}")
+                                    navController.navigate("Edit/${event.id}")
                                 },
                         shape = RoundedCornerShape(20),
                 ) {

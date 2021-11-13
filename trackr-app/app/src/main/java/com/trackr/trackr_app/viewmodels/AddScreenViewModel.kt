@@ -103,9 +103,13 @@ class AddScreenViewModel @Inject constructor(
 
         personRepository.insert(newPerson)
 
-        val reminderInt: Int? = mapOf("1 day before" to 1, "3 days before" to 3,
-                "1 week before" to 7, "2 weeks before" to 14,
-                "1 month before" to 30)[chosenReminder.value]
+        val reminderInt: Int = mapOf(
+            "1 day before" to 1,
+            "3 days before" to 3,
+            "1 week before" to 7,
+            "2 weeks before" to 14,
+            "1 month before" to 30
+        )[chosenReminder.value]!!
       
         eventRepository.insert(
             TrackrEvent(
@@ -113,7 +117,7 @@ class AddScreenViewModel @Inject constructor(
                 eventType,
                 eventDate.value
                     .toEpochDay(),
-                rminderInt ?: 1,
+                reminderInt,
                 0)
         )
     }

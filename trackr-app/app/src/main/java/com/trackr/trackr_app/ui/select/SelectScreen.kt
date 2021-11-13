@@ -17,10 +17,7 @@ import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.home.EventList
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.util.*
+import com.trackr.trackr_app.viewmodels.TrackrEventOutput
 
 
 @Composable
