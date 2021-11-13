@@ -1,5 +1,6 @@
 package com.trackr.trackr_app.notification
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -14,6 +15,7 @@ class EventBroadcastReceiver : BroadcastReceiver() {
     /**
      * Creates and sends the notifications when receiving a broadcast.
      */
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
         val builder = NotificationCompat.Builder(context, NotificationConstants.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)

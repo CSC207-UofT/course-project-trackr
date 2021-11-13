@@ -20,6 +20,11 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
     }
 
     @WorkerThread
+    suspend fun getById(id: String): TrackrEvent {
+        return eventDao.getById(id)
+    }
+
+    @WorkerThread
     suspend fun insert(trackrEvent: TrackrEvent) {
         eventDao.insert(trackrEvent)
     }

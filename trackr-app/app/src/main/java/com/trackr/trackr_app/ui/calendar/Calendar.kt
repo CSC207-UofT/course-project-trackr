@@ -8,21 +8,15 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.isDigitsOnly
 import com.trackr.trackr_app.ui.theme.Rubik
-import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.time.temporal.WeekFields
@@ -185,7 +179,7 @@ fun CalendarGridContainer(
             textAlign = TextAlign.Center,
             fontFamily = Rubik,
             fontSize = 18.sp,
-            color = if (isInEventDates) Color.Companion.Magenta else MaterialTheme.colors.onPrimary,
+            color = if (isInEventDates) Color.Red else MaterialTheme.colors.onPrimary,
             fontWeight = if (isInEventDates) FontWeight.Black else FontWeight.Normal,
         )
     }

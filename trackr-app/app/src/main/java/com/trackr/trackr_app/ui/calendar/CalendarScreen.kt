@@ -44,7 +44,7 @@ fun CalendarScreenActivity(
             Modifier.padding(bottom = 10.dp)
         )
         EventList(
-            events,
+            events = events,
             Modifier
                 .padding(horizontal = 30.dp),
             navController,
@@ -59,7 +59,6 @@ fun EventOnDateHeader(
 ) {
    Text(
        "Events on " +
-//               "${date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())}, " +
                date.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) +
                " ${date.dayOfMonth}, " +
                date.year,

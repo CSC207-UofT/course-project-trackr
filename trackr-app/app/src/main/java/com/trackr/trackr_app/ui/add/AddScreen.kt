@@ -24,7 +24,8 @@ fun AddScreenActivity(
     viewModel: AddScreenViewModel,
     nav: NavHostController
 ) {
-    val personName by viewModel.personName
+    val firstName by viewModel.firstName
+    val lastName by viewModel.lastName
     val eventDate by viewModel.eventDate
     val chosenReminder by viewModel.chosenReminder
     val eventName by viewModel.eventName
@@ -35,7 +36,10 @@ fun AddScreenActivity(
             Modifier.padding(20.dp)
         ) {
             Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
-            Row(Modifier.selectableGroup().padding(top = 5.dp, bottom = 20.dp)) {
+            Row(
+                Modifier
+                    .selectableGroup()
+                    .padding(top = 5.dp, bottom = 20.dp)) {
                 RadioButton(
                     selected = eventName == "Birthday",
                     onClick = { viewModel.editEventName("Birthday") }
@@ -47,17 +51,34 @@ fun AddScreenActivity(
                 )
                 Text(text = "Anniversary", Modifier.padding(start = 5.dp))
             }
-            InputWidget(title = "Whose birthday/anniversary is it?") {
-                TextField(
-                    value = personName,
-                    onValueChange = { viewModel.editName(it) },
-                    colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = Color.Transparent,
-                        textColor = MaterialTheme.colors.onBackground,
-                    ),
-                    placeholder = { Text("Name", fontFamily = Rubik) }
-                )
-            }
+            InputWidget(
+                title = "Whose birthday/anniversary is it?",
+                widgets = listOf(
+                    {
+                        TextField(
+                            value = firstName,
+                            onValueChange = { viewModel.editFirstName(it) },
+                            colors = TextFieldDefaults.textFieldColors(
+                                backgroundColor = Color.Transparent,
+                                textColor = MaterialTheme.colors.onBackground,
+                            ),
+                            placeholder = { Text("First Name", fontFamily = Rubik) }
+                        )
+                    },
+                    {
+                        TextField(
+                            value = lastName,
+                            onValueChange = { viewModel.editLastName(it) },
+                            colors = TextFieldDefaults.textFieldColors(
+                                backgroundColor = Color.Transparent,
+                                textColor = MaterialTheme.colors.onBackground,
+                            ),
+                            placeholder = { Text("Last Name", fontFamily = Rubik) }
+                        )
+                    }
+                ),
+                Modifier.weight(1/2f)
+            )
             InputWidget(title = "Date", widgets = listOf(
                 {InteractiveDropdownWidget(
                     setter = {month: String -> viewModel.changeMonth(month)},

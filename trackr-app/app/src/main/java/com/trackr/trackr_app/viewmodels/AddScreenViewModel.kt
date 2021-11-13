@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
+import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import com.trackr.trackr_app.repository.UserRepository
@@ -21,12 +22,15 @@ import javax.inject.Inject
 class AddScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val eventNotificationManager: EventNotificationManager
 ): ViewModel() {
 
-    private val _personName = mutableStateOf("")
-    val personName: State<String>
-        get() = _personName
+    private val _firstName = mutableStateOf("")
+    val firstName: State<String> get() = _firstName
+
+    private val _lastName = mutableStateOf("")
+    val lastName: State<String> get() = _lastName
 
     private val _eventName = mutableStateOf("Birthday")
     val eventName: State<String> get() = _eventName
@@ -36,11 +40,15 @@ class AddScreenViewModel @Inject constructor(
     private val _eventDate = mutableStateOf(LocalDate.of(1970, 1, 1))
     val eventDate: State<LocalDate> get() = _eventDate
 
-    private val _chosenReminder = mutableStateOf("1 day before reminder")
+    private val _chosenReminder = mutableStateOf("1 day before")
     val chosenReminder: State<String> get() = _chosenReminder
 
-    fun editName(newName: String) {
-        _personName.value = newName
+    fun editFirstName(newFirstName: String) {
+        _firstName.value = newFirstName
+    }
+
+    fun editLastName(newLastName: String) {
+        _lastName.value = newLastName
     }
 
     fun editEventName(newEventName: String) {
@@ -87,30 +95,41 @@ class AddScreenViewModel @Inject constructor(
     }
 
     fun addEvent() = viewModelScope.launch {
-        //TODO: Unhardcode
-        val randUserID = randomUUID()
-        val randPersonID = randomUUID()
-        val randEventID = randomUUID()
-        userRepository.insert(
-            User(id = randUserID.toString(),
-                username = "yourmom")
-        )
+        val defaultUser = User("Default User")
+        userRepository.insert(defaultUser)
 
-        personRepository.insert(
-            Person(id = randPersonID.toString(),
-                user_id = randUserID.toString(),
-                first_name = "My",
-                last_name = "Mom")
-        )
+        val newPerson = Person(
+            user_id = defaultUser.id,
+            first_name = firstName.value,
+            last_name = lastName.value)
 
-        eventRepository.insert(
-            TrackrEvent(
-                personName.value,  // randEventID.toString(),
-                randPersonID.toString(),
+        personRepository.insert(newPerson)
+
+        val reminderInt: Int = mapOf(
+            "1 day before" to 1,
+            "3 days before" to 3,
+            "1 week before" to 7,
+            "2 weeks before" to 14,
+            "1 month before" to 30
+        )[chosenReminder.value]!!
+
+        val newEvent = TrackrEvent(
+                newPerson.id,
                 eventType,
                 eventDate.value
-                    .toEpochDay(),
-                7,
-                0))
+                        .toEpochDay(),
+                reminderInt,
+                0)
+
+        eventRepository.insert(newEvent)
+
+        //Add notification
+        eventNotificationManager.createNotification(
+                "${firstName.value} ${lastName.value}",
+                eventName.value,
+                eventDate.value,
+                eventDate.value.minusDays(reminderInt.toLong()),
+                newEvent.id.hashCode()
+        )
     }
 }

@@ -1,110 +1,103 @@
 package com.trackr.trackr_app.ui.edit
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.shared.InputWidget
 import com.trackr.trackr_app.ui.shared.InteractiveDropdownWidget
 import com.trackr.trackr_app.viewmodels.EditScreenViewModel
-import java.time.Instant
-import java.time.ZoneId.SHORT_IDS
+import java.time.format.TextStyle
 import java.util.*
 
 
 @Composable
-fun EditScreenActivity(viewModel: EditScreenViewModel, nav: NavHostController, backStackEntry: String) {
-    EditScreen(onEditItem = {viewModel.editEvent(it, backStackEntry.toInt())}, nav = nav, entry = backStackEntry, viewModel)
-}
-
-@Composable
-fun EditScreen(
-    onEditItem: (List<Any>) -> Unit, nav: NavHostController, entry: String, viewModel: EditScreenViewModel
+fun EditScreenActivity(
+    viewModel: EditScreenViewModel,
+    nav: NavHostController,
+    eventID: String,
 ) {
-    val events by viewModel.allEvents.observeAsState(listOf())
-
-    val eventList = events.map {
-        val dateTime = java.time.LocalDateTime.ofInstant(Instant.ofEpochMilli(it.date.toLong()), java.time.ZoneId.of(SHORT_IDS.get("EST")))
-        listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval) }
-
-    val event = events!![entry.toInt()]
-
-    var eventName by remember { mutableStateOf(eventList[0].toString()) }
-    var chosenMonth by remember { mutableStateOf(eventList[1].toString()) }
-    var chosenDay by remember { mutableStateOf(eventList[2].toString().toInt()) }
-    var chosenReminder by remember { mutableStateOf(eventList[3].toString()) }
-
-    val months = listOf<String>(
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    )
+    val eventDate by viewModel.eventDate
+    val chosenReminder by viewModel.chosenReminder
+    val eventName by viewModel.eventName
 
     Scaffold(
     ) {
         Column(
-            Modifier.padding(20.dp)
+                Modifier.padding(20.dp)
         ) {
-            Text(
-                "Edit and Save Changes",
-                fontFamily = Rubik,
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp,
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(bottom = 25.dp),
-            )
-            InputWidget(title = "Event Name (i think)") {
-                TextField(
-                    value = eventName,
-                    onValueChange = { eventName = it },
-                    colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = Color.Transparent,
-                        textColor = Color.Black
-                    )
+            Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+            Row(
+                Modifier
+                    .selectableGroup()
+                    .padding(top = 5.dp, bottom = 20.dp)) {
+                RadioButton(
+                        selected = eventName == "Birthday",
+                        onClick = { viewModel.editEventName("Birthday") }
                 )
+                Text(text = "Birthday", Modifier.padding(start = 5.dp, end = 20.dp))
+                RadioButton(
+                        selected = eventName == "Anniversary",
+                        onClick = { viewModel.editEventName("Anniversary") }
+                )
+                Text(text = "Anniversary", Modifier.padding(start = 5.dp))
             }
             InputWidget(title = "Date", widgets = listOf(
-                {
-                    InteractiveDropdownWidget(
-                        setter = {month: String -> chosenMonth = month},
-                        getter = {chosenMonth},
-                        options = months)
-                },
-                {
-                    InteractiveDropdownWidget(
-                        setter = {day: Int -> chosenDay = day},
-                        getter = {chosenDay},
-                        options = (1..32).map{it}
+                    {InteractiveDropdownWidget(
+                            setter = {month: String -> viewModel.changeMonth(month)},
+                            getter = {eventDate.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())},
+                            options = viewModel.getMonths()
                     )
-                }
-            ))
+                    },
+                    {InteractiveDropdownWidget(
+                            setter = {day: Int -> viewModel.changeDay(day)},
+                            getter = {eventDate.dayOfMonth},
+                            options = (1..eventDate.lengthOfMonth()).map{it}
+                    )
+                    }
+            )
+            )
             InputWidget(title = "Remind Me") {
                 InteractiveDropdownWidget(
-                    setter = {reminder: String -> chosenReminder = reminder},
-                    getter = {chosenReminder},
-                    options = listOf<String>(
-                        "1 day before", "3 days before",
-                        "1 week before", "2 weeks before", "1 month before"
-                    ))
+                        setter = {reminder: String -> viewModel.changeReminderInterval(reminder)},
+                        getter = {chosenReminder},
+                        options = viewModel.getReminderIntervals()
+                )
             }
-            Button(onClick = {
-                onEditItem(listOf<Any>(eventName, chosenMonth, chosenDay, chosenReminder))
-                nav.navigate("Home")
-                             }, Modifier.padding(top = 20.dp), ) {
+            Button(
+                    onClick = {
+                        viewModel.editEvent(eventID)
+                        nav.popBackStack()
+                    },
+                    Modifier.padding(top = 20.dp),
+            ) {
                 Text("Save Changes")
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Icon(
-                    Icons.Filled.Check,
-                    contentDescription = null,
-                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                        Icons.Filled.Check,
+                        contentDescription = "Edit Event",
+                        modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
+            }
+            Button(
+                onClick = {
+                    viewModel.deleteEvent(eventID)
+                    nav.popBackStack()
+                },
+                modifier = Modifier.padding(top = 10.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+            ) {
+                Text(text = "DELETE event",
+                    Modifier.padding(bottom = 5.dp),
+                    fontWeight = FontWeight.Bold,
                 )
             }
         }
