@@ -27,6 +27,19 @@ class CalendarViewModel @Inject constructor(
         updateSelectedEvents()
     }
 
+    private val eventsThisMonth get() = eventRepository
+        .listFromRange(
+            _selectedDate.value.withYear(1970).withDayOfMonth(1),
+            _selectedDate.value.withYear(1970).withDayOfMonth(_selectedDate.value.lengthOfMonth())
+        )
+
+    private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
+    val eventDates: LiveData<Set<LocalDate>> get() = _eventDates
+
+    init {
+        updateEventDates()
+    }
+
     /**
      * Increase the current month by monthOffset months.
      * If monthOffset is negative go back months, otherwise
@@ -38,7 +51,7 @@ class CalendarViewModel @Inject constructor(
             .plusMonths(monthOffset)
             .withDayOfMonth(1)
         updateSelectedEvents()
-
+        updateEventDates()
     }
 
     /**
@@ -46,9 +59,10 @@ class CalendarViewModel @Inject constructor(
      * @param newDay the new day of the month
      */
     fun changeSelectedDate(newDay: Int) {
-        _selectedDate.value = _selectedDate.value.withDayOfMonth(newDay)
-        updateSelectedEvents()
-
+        if (_selectedDate.value.dayOfMonth != newDay) {
+            _selectedDate.value = _selectedDate.value.withDayOfMonth(newDay)
+            updateEventDates()
+        }
     }
 
     private fun updateSelectedEvents() {
@@ -68,6 +82,18 @@ class CalendarViewModel @Inject constructor(
                     }
                     _selectedEvents.value = eventsOnSelectedDate
                 }
+        }
+    }
+
+    private fun updateEventDates() {
+        viewModelScope.launch {
+            eventsThisMonth.collect {
+                val dates = HashSet<LocalDate>()
+                for (event in it) {
+                    dates.add(LocalDate.ofEpochDay(event.date))
+                }
+                _eventDates.value = dates
+            }
         }
     }
 }
