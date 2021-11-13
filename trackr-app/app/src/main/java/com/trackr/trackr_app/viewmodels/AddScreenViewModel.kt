@@ -110,9 +110,7 @@ class AddScreenViewModel @Inject constructor(
                 eventType,
                 eventDate.value
                     .withYear(1970)
-                    .atStartOfDay(ZoneId.systemDefault())
-                    .toEpochSecond()
-                    .toInt(),
+                    .toEpochDay(),
                 7,
                 0))
     }
