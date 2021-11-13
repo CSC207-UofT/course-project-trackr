@@ -37,7 +37,7 @@ class AddScreenViewModel @Inject constructor(
 
     private var eventType: Int = 0
 
-    private val _eventDate = mutableStateOf(LocalDate.of(1970, 1, 1))
+    private val _eventDate = mutableStateOf(LocalDate.now())
     val eventDate: State<LocalDate> get() = _eventDate
 
     private val _chosenReminder = mutableStateOf("1 day before")
