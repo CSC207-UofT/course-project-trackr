@@ -60,87 +60,87 @@ val temp_data = listOf(1,2,3,4,5)
 
 @Composable
 fun HomeScreenActivity(
-    viewModel: HomeScreenViewModel,
-    navController: NavHostController
+        viewModel: HomeScreenViewModel,
+        navController: NavHostController
 ) {
     val events: List<TrackrEvent> by viewModel.allEvents.observeAsState(listOf())
     HomeScreen(
-        // TODO: figure out how to move this to the viewModel
-        eventList = events.map {
-            val dateTime = LocalDate.ofEpochDay(it.date)
-            listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval) },
-        viewModel = viewModel,
-        navController = navController)
+            // TODO: figure out how to move this to the viewModel
+            eventList = events.map {
+                val dateTime = LocalDate.ofEpochDay(it.date)
+                listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval) },
+            viewModel = viewModel,
+            navController = navController)
 }
 
 @Composable
 fun HomeScreen(
-    eventList: List<List<Any>>,
-    viewModel: HomeScreenViewModel,
-    navController: NavHostController
+        eventList: List<List<Any>>,
+        viewModel: HomeScreenViewModel,
+        navController: NavHostController
 ) {
     Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    navController.navigate("Add")
-                },
-                backgroundColor = MaterialTheme.colors.onBackground,
-                contentColor = MaterialTheme.colors.background,
-            ) {
-                Icon(Icons.Filled.Add, "Add event")
+            floatingActionButton = {
+                FloatingActionButton(
+                        onClick = {
+                            navController.navigate("Add")
+                        },
+                        backgroundColor = MaterialTheme.colors.onBackground,
+                        contentColor = MaterialTheme.colors.background,
+                ) {
+                    Icon(Icons.Filled.Add, "Add event")
+                }
+            },
+            isFloatingActionButtonDocked = true,
+            floatingActionButtonPosition = FabPosition.Center,
+            backgroundColor = MaterialTheme.colors.background,
+            bottomBar = {
+                BottomAppBar(
+                        navController,
+                )
             }
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center,
-        backgroundColor = MaterialTheme.colors.background,
-        bottomBar = {
-            BottomAppBar(
-                navController,
+    ) {
+        Column(
+                modifier = Modifier
+                        .padding(20.dp)
+        ) {
+            HomeFeed(
+                    Modifier
+                            .padding(0.dp, 10.dp)
+                            .weight(1f),
+                    stringResource(R.string.todays_events),
+                    listOf(),
+                    navController
+            )
+            HomeFeed(
+                    Modifier
+                            .padding(0.dp, 10.dp)
+                            .weight(2f),
+                    stringResource(R.string.upcoming_events),
+                    eventList,
+                    navController
             )
         }
-    ) {
-       Column(
-           modifier = Modifier
-               .padding(20.dp)
-       ) {
-           HomeFeed(
-               Modifier
-                   .padding(0.dp, 10.dp)
-                   .weight(1f),
-               stringResource(R.string.todays_events),
-               listOf(),
-               navController
-           )
-           HomeFeed(
-               Modifier
-                   .padding(0.dp, 10.dp)
-                   .weight(2f),
-               stringResource(R.string.upcoming_events),
-               eventList,
-               navController
-           )
-       }
     }
 }
 
 @Composable
 fun HomeFeed(
-    modifier: Modifier,
-    title: String,
-    events: List<List<Any>>,
-    navController: NavHostController,
+        modifier: Modifier,
+        title: String,
+        events: List<List<Any>>,
+        navController: NavHostController,
 ) {
     Column(
-        modifier = modifier,
+            modifier = modifier,
     ) {
         Text(
-            title,
-            fontFamily = Rubik,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            color = MaterialTheme.colors.onPrimary,
-            modifier = Modifier.padding(bottom = 5.dp),
+                title,
+                fontFamily = Rubik,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                color = MaterialTheme.colors.onPrimary,
+                modifier = Modifier.padding(bottom = 5.dp),
         )
         EventList(
                 events,
@@ -153,64 +153,47 @@ fun HomeFeed(
 
 @Composable
 fun EventList(
-    events: List<List<Any>>,
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
+        events: List<List<Any>>,
+        modifier: Modifier = Modifier,
+        navController: NavHostController,
 ) {
-
-    LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        items(events.count()) { index ->
-            val event = events[index]
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        navController.navigate("Edit/${event[0]}")
-                    },
-                shape = RoundedCornerShape(20),
-            ) {
-                Row(
-
     if (events.isEmpty()) {
         Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
         ) {
             Text(
-                stringResource(R.string.no_events),
-                fontFamily = Rubik,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onBackground,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
+                    stringResource(R.string.no_events),
+                    fontFamily = Rubik,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
             )
         }
     } else {
         LazyColumn(
-            modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = modifier,
+                verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             items(events.count()) { index ->
                 val event = events[index]
                 Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            navController.navigate("Edit/${events.indexOf(event)}")
-                        },
-                    shape = RoundedCornerShape(20),
+                        modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    navController.navigate("Edit/${event[0]}")
+                                },
+                        shape = RoundedCornerShape(20),
                 ) {
                     Row(
-                        modifier = Modifier
-                            .background(
-                                brush = Brush.horizontalGradient(
-                                    colors = allGradients[index % 3]
-                                )
-                            )
-                            .padding(20.dp)
+                            modifier = Modifier
+                                    .background(
+                                            brush = Brush.horizontalGradient(
+                                                    colors = allGradients[index % 3]
+                                            )
+                                    )
+                                    .padding(20.dp)
 
                     ) {
                         Column() {
@@ -228,43 +211,43 @@ fun EventList(
 
 @Composable
 fun BottomAppBar(
-    navController: NavHostController,
+        navController: NavHostController,
 ) {
     BottomNavigation(
-        backgroundColor = MaterialTheme.colors.primary,
+            backgroundColor = MaterialTheme.colors.primary,
     ) {
 
         BottomNavigationItem(
-            selected = false,
-            icon = { Icon(
-                Icons.Filled.Event,
-                "Calendar View",
-                tint = MaterialTheme.colors.onBackground
-            )},
-            label = {Text("View Calendar", fontFamily = Rubik)},
-            onClick = {
-                navController.navigate("Calendar")
-                {
-                    launchSingleTop = true
+                selected = false,
+                icon = { Icon(
+                        Icons.Filled.Event,
+                        "Calendar View",
+                        tint = MaterialTheme.colors.onBackground
+                )},
+                label = {Text("View Calendar", fontFamily = Rubik)},
+                onClick = {
+                    navController.navigate("Calendar")
+                    {
+                        launchSingleTop = true
+                    }
                 }
-            }
         )
         BottomNavigationItem(
-            icon = {
-                Icon(
-                    Icons.Filled.Edit,
-                    "Edit event",
-                    tint = MaterialTheme.colors.onBackground,
-                )
-                   },
-            label = { Text(text = "Edit Events") },
-            selected = false,
-            onClick = {
-                navController.navigate("Select")
-                {
-                    launchSingleTop = true
+                icon = {
+                    Icon(
+                            Icons.Filled.Edit,
+                            "Edit event",
+                            tint = MaterialTheme.colors.onBackground,
+                    )
+                },
+                label = { Text(text = "Edit Events") },
+                selected = false,
+                onClick = {
+                    navController.navigate("Select")
+                    {
+                        launchSingleTop = true
+                    }
                 }
-            }
         )
     }
 }
