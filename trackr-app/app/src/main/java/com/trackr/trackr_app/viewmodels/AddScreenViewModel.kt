@@ -85,6 +85,7 @@ class AddScreenViewModel @Inject constructor(
                 randPersonID.toString(),
                 eventType,
                 eventDate.value
+                    .withYear(1970)
                     .atStartOfDay(ZoneId.systemDefault())
                     .toEpochSecond()
                     .toInt(),

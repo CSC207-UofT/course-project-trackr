@@ -21,7 +21,10 @@ class CalendarViewModel @Inject constructor(
 
     val selectedEvents get() = _selectedEvents
     private var _selectedEvents: LiveData<List<TrackrEvent>> = eventRepository
-        .listFromRange(_selectedDate.value, _selectedDate.value)
+        .listFromRange(
+            _selectedDate.value.withYear(1970),
+            _selectedDate.value.withYear(1970)
+        )
         .asLiveData()
 
     /**
