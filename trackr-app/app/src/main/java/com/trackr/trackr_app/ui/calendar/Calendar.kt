@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,36 +29,18 @@ import java.time.temporal.WeekFields
 import java.util.*
 
 /**
- * A Preview for the calendar component
- */
-@Preview(
-//    uiMode = UI_MODE_NIGHT_YES,  // enables dark mode in preview]
-)
-@Composable
-fun Preview() {
-    TrackrappTheme() {
-        var selectedDate by rememberSaveable { mutableStateOf(LocalDate.now()) }
-        Calendar(
-            selectedDate,
-            Modifier.padding(10.dp),
-            { selectedDate = selectedDate.withDayOfMonth(it)} ,
-            { selectedDate = selectedDate.plusMonths(it) }
-        )
-    }
-}
-
-
-/**
  * The Calendar Component - Displays a responsive kCalendar
  * @param selectedDate the selected date in the calendar
  * @param onSelect the function to invoke when a new date is selected. This function takes an int
  * as an argument, which represents the new selected date
+ * @param eventDates the dates of all the events in the selected month
  * @param onSwipe the function to invoke when the previous month and next month buttons are clicked.
  * This function takes in an integer (1 or -1) to represent the next month or previous month.
  */
 @Composable
 fun Calendar(
     selectedDate: LocalDate,
+    eventDates: Set<LocalDate>,
     modifier: Modifier = Modifier,
     onSelect: (Int) -> Unit = {},
     onSwipe: (Long) -> Unit = {},
@@ -100,6 +83,7 @@ fun Calendar(
         CalendarHeader()
         CalendarMonth(
             selectedDate,
+            eventDates,
         ) { onSelect(it) }
     }
 }
@@ -108,11 +92,13 @@ fun Calendar(
  * A body of the Calendar. This component displays all the calendar days and the names of the
  * weekdays.
  * @param selectedDate the date selected
+ * @param eventDates the dates of all the events in the selected month
  * @param onSelect the function to invoke when a new date is selected
  */
 @Composable
 fun CalendarMonth(
     selectedDate: LocalDate,
+    eventDates: Set<LocalDate>,
     onSelect: (Int) -> Unit = {},
 ) {
     val startOffset = selectedDate.withDayOfMonth(1).dayOfWeek.value % 7
@@ -133,6 +119,9 @@ fun CalendarMonth(
                     CalendarGridContainer(
                         dayOfMonth.toString(),
                         selectedDate.dayOfMonth == dayOfMonth,
+                        eventDates.contains(
+                            LocalDate.of(1970,selectedDate.month, dayOfMonth)
+                        ),
                         onSelect
                     )
                 }
@@ -167,6 +156,7 @@ fun CalendarHeader() {
 fun CalendarGridContainer(
     gridText: String,
     isSelected: Boolean = false,
+    isInEventDates: Boolean = false,
     onSelect: (Int) -> Unit = {},
 ) {
     var modifier = Modifier.size(45.dp, 45.dp)
@@ -195,7 +185,8 @@ fun CalendarGridContainer(
             textAlign = TextAlign.Center,
             fontFamily = Rubik,
             fontSize = 18.sp,
-            color = MaterialTheme.colors.onPrimary,
+            color = if (isInEventDates) Color.Companion.Magenta else MaterialTheme.colors.onPrimary,
+            fontWeight = if (isInEventDates) FontWeight.Black else FontWeight.Normal,
         )
     }
 }
