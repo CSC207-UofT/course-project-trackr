@@ -33,7 +33,7 @@ class EventNotificationManager @Inject constructor(private val context: Context)
         val intent = Intent(context, EventBroadcastReceiver::class.java)
         intent.putExtra("contentTitle", "$name $eventType")
         intent.putExtra("contentText", "You have a $eventType for $name on" +
-                " $eventDate.")
+                " ${eventDate.withYear(whichYear)}.")
         intent.putExtra("notificationId", id)
 
         val pendingIntent: PendingIntent =
