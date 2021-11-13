@@ -1,9 +1,7 @@
 package com.trackr.trackr_app.viewmodels
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.*
-import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
