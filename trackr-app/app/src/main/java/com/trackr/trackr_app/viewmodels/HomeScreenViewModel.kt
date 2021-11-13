@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,11 +28,13 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             val allEventsList = mutableListOf<TrackrEventOutput>()
             eventRepository.allEvents.collect {
+                allEventsList.clear()
                 for (event in it) {
                     allEventsList.add(
                         TrackrEventOutput(
                             event,
-                            personRepository.getPersonById(event.person_id)
+                            personRepository.getPersonById(event.person_id),
+                            Calendar.getInstance().get(Calendar.YEAR)
                         )
                     )
                 }
@@ -44,9 +47,11 @@ class HomeScreenViewModel @Inject constructor(
                 LocalDate.now().withYear(1970),
                 LocalDate.now().withYear(1970)
             ).collect {
+                eventsTodayList.clear()
                 for (event in it) {
                     eventsTodayList.add(TrackrEventOutput(event,
-                        personRepository.getPersonById(event.person_id))
+                        personRepository.getPersonById(event.person_id),
+                        Calendar.getInstance().get(Calendar.YEAR))
                     )
                 }
                 _eventsToday.value = eventsTodayList

@@ -8,7 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashSet
 
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
@@ -73,7 +75,8 @@ class CalendarViewModel @Inject constructor(
                     for (event in it) {
                         eventsOnSelectedDate.add(
                             TrackrEventOutput(event,
-                            personRepository.getPersonById(event.person_id))
+                            personRepository.getPersonById(event.person_id),
+                                Calendar.getInstance().get(Calendar.YEAR))
                         )
                     }
                     _selectedEvents.value = eventsOnSelectedDate

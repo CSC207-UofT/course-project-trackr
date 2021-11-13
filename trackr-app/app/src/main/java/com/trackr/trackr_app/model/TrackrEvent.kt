@@ -18,6 +18,8 @@ class TrackrEvent (
 
         val date: Long,
 
+        val firstYear: Int,
+
         val reminder_interval: Int,
 
         val repeat_strategy: Int,
