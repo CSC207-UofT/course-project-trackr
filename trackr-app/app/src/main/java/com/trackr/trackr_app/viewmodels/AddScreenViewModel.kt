@@ -7,12 +7,15 @@ import com.trackr.trackr_app.model.User
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import com.trackr.trackr_app.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.sql.Date
 import java.util.*
 import java.util.UUID.randomUUID
+import javax.inject.Inject
 
-class AddScreenViewModel(
+@HiltViewModel
+class AddScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
     private val userRepository: UserRepository

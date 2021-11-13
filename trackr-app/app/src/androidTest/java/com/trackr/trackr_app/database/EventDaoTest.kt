@@ -8,6 +8,7 @@ import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
 import junit.framework.TestCase.*
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -126,6 +127,37 @@ class EventDaoTest {
                 LocalDate.of(2004, 1, 3).toEpochDay().toInt()).first()
         assertEquals(eventsFromDatabase[0].id, event2.id)
         assertEquals(eventsFromDatabase[1].id, event1.id)
+        assertEquals(eventsFromDatabase.size, 2)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun betweenTwoIdenticalDates() = runBlocking {
+        val user = User("12345678-1234-1234-123456781234", "test")
+        userDao.insert(user)
+        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        personDao.insert(person)
+
+
+        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
+            "01010101-0101-0101-010101010101",
+            0,
+            LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+            7,
+            0)
+        eventDao.insert(event1)
+        val event2 = TrackrEvent("22222222-2222-2222-222222222222",
+            "01010101-0101-0101-010101010101",
+            0,
+            LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+            3,
+            0)
+        eventDao.insert(event2)
+
+        val eventsFromDatabase = eventDao.listFromRange(
+            LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+            LocalDate.of(2004, 1, 1).toEpochDay().toInt())
+            .first()
         assertEquals(eventsFromDatabase.size, 2)
     }
 

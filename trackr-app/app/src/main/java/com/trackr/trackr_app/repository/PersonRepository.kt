@@ -4,8 +4,13 @@ import androidx.annotation.WorkerThread
 import com.trackr.trackr_app.database.PersonDao
 import com.trackr.trackr_app.model.Person
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PersonRepository(private val personDao: PersonDao) {
+@Singleton
+class PersonRepository @Inject constructor(
+    private val personDao: PersonDao
+    ) {
     val allPersons: Flow<List<Person>> = personDao.listPersons()
 
     @Suppress("RedundantSuspendModifier")
