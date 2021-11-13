@@ -30,7 +30,7 @@ class HomeScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             eventRepository.allEvents.collect {
-                allEventsList.clear()
+                val allEventsList = mutableListOf<TrackrEventOutput>()
 
                 for (event in it) {
                     allEventsList.add(
