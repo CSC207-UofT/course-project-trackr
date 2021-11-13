@@ -1,38 +1,30 @@
 package com.trackr.trackr_app.ui.edit
 
-import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LiveData
 import androidx.navigation.NavHostController
-import com.trackr.trackr_app.model.TrackrEvent
-import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.shared.InputWidget
 import com.trackr.trackr_app.ui.shared.InteractiveDropdownWidget
 import com.trackr.trackr_app.viewmodels.EditScreenViewModel
-import java.time.Instant
-import java.time.ZoneId.SHORT_IDS
 import java.time.format.TextStyle
 import java.util.*
 
 
 @Composable
 fun EditScreenActivity(
-        viewModel: EditScreenViewModel,
-        nav: NavHostController,
-        backStackEntry: String
+    viewModel: EditScreenViewModel,
+    nav: NavHostController,
+    eventID: String,
 ) {
-    val delete by viewModel.delete
     val eventDate by viewModel.eventDate
     val chosenReminder by viewModel.chosenReminder
     val eventName by viewModel.eventName
@@ -42,22 +34,11 @@ fun EditScreenActivity(
         Column(
                 Modifier.padding(20.dp)
         ) {
-            Text(text = "DELETE event?:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
-            Row(Modifier.selectableGroup().padding(top = 5.dp, bottom = 20.dp)) {
-                RadioButton(
-                        selected = delete == "No",
-                        onClick = { viewModel.editDelete("No") }
-                )
-                Text(text = "No", Modifier.padding(start = 5.dp, end = 20.dp))
-                RadioButton(
-                        selected = delete == "Yes",
-                        onClick = { viewModel.editDelete("Yes") }
-                )
-                Text(text = "Yes", Modifier.padding(start = 5.dp))
-            }
-            Text(text = "If No:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
             Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
-            Row(Modifier.selectableGroup().padding(top = 5.dp, bottom = 20.dp)) {
+            Row(
+                Modifier
+                    .selectableGroup()
+                    .padding(top = 5.dp, bottom = 20.dp)) {
                 RadioButton(
                         selected = eventName == "Birthday",
                         onClick = { viewModel.editEventName("Birthday") }
@@ -93,7 +74,7 @@ fun EditScreenActivity(
             }
             Button(
                     onClick = {
-                        viewModel.editEvent(backStackEntry)
+                        viewModel.editEvent(eventID)
                         nav.popBackStack()
                     },
                     Modifier.padding(top = 20.dp),
@@ -104,6 +85,19 @@ fun EditScreenActivity(
                         Icons.Filled.Check,
                         contentDescription = "Edit Event",
                         modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
+            }
+            Button(
+                onClick = {
+                    viewModel.deleteEvent(eventID)
+                    nav.popBackStack()
+                },
+                modifier = Modifier.padding(top = 10.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+            ) {
+                Text(text = "DELETE event",
+                    Modifier.padding(bottom = 5.dp),
+                    fontWeight = FontWeight.Bold,
                 )
             }
         }
