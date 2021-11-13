@@ -16,9 +16,7 @@ import androidx.navigation.NavHostController
 import com.trackr.trackr_app.ui.home.EventList
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.CalendarViewModel
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.*
 
@@ -46,10 +44,7 @@ fun CalendarScreenActivity(
             Modifier.padding(bottom = 10.dp)
         )
         EventList(
-            // TODO: figure out how to move this to the viewModel
-            events = events.map {
-                val dateTime = LocalDate.ofEpochDay(it.date)
-                listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval)},
+            events = events,
             Modifier
                 .padding(horizontal = 30.dp),
             navController,
@@ -64,7 +59,6 @@ fun EventOnDateHeader(
 ) {
    Text(
        "Events on " +
-//               "${date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())}, " +
                date.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) +
                " ${date.dayOfMonth}, " +
                date.year,

@@ -13,31 +13,30 @@ class PersonRepository @Inject constructor(
     ) {
     val allPersons: Flow<List<Person>> = personDao.listPersons()
 
-    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getPersonById(id: String): Person {
+        return personDao.getPersonById(id)
+    }
     @WorkerThread
     suspend fun insert(person: Person) {
         personDao.insert(person)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun delete(person: Person) {
         personDao.delete(person.id, person.user_id)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun editFirstName(new_first_name: String, person: Person) {
         personDao.editFirstName(new_first_name, person.id, person.user_id)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun editLastName(new_last_name: String, person: Person) {
         personDao.editLastName(new_last_name, person.id, person.user_id)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteAll() {
         personDao.deleteAll()

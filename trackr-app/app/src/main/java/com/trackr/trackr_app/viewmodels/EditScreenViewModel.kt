@@ -100,7 +100,6 @@ class EditScreenViewModel @Inject constructor(
                     "1 week before" to 7, "2 weeks before" to 14,
                     "1 month before" to 30)[chosenReminder.value]
             eventRepository.editInterval(reminderInt ?: 1, event)
-
             eventRepository.editDate(eventDate.value.withYear(1970), event)
 
             eventRepository.editType(eventType, event)

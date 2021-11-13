@@ -1,10 +1,9 @@
 package com.trackr.trackr_app.viewmodels
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.*
-import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.repository.EventRepository
+import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -14,17 +13,13 @@ import javax.inject.Inject
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
     private val eventRepository: EventRepository,
+    private val personRepository: PersonRepository,
 ): ViewModel() {
     private val _selectedDate: MutableState<LocalDate> = mutableStateOf(LocalDate.now())
     val selectedDate: State<LocalDate> get() = _selectedDate
 
-    val selectedEvents get() = _selectedEvents
-    private var _selectedEvents: LiveData<List<TrackrEvent>> = eventRepository
-        .listFromRange(
-            _selectedDate.value.withYear(1970),
-            _selectedDate.value.withYear(1970)
-        )
-        .asLiveData()
+    private var _selectedEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
+    val selectedEvents: LiveData<List<TrackrEventOutput>> get() = _selectedEvents
 
     private val eventsThisMonth get() = eventRepository
         .listFromRange(
@@ -35,10 +30,12 @@ class CalendarViewModel @Inject constructor(
     private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
     val eventDates: LiveData<Set<LocalDate>> get() = _eventDates
 
+    
     init {
+        updateSelectedEvents()
         updateEventDates()
     }
-
+    
     /**
      * Increase the current month by monthOffset months.
      * If monthOffset is negative go back months, otherwise
@@ -49,11 +46,7 @@ class CalendarViewModel @Inject constructor(
         _selectedDate.value = _selectedDate.value
             .plusMonths(monthOffset)
             .withDayOfMonth(1)
-        _selectedEvents = eventRepository
-            .listFromRange(
-                _selectedDate.value.withYear(1970),
-                _selectedDate.value.withYear(1970)
-            ).asLiveData()
+        updateSelectedEvents()
         updateEventDates()
     }
 
@@ -64,12 +57,27 @@ class CalendarViewModel @Inject constructor(
     fun changeSelectedDate(newDay: Int) {
         if (_selectedDate.value.dayOfMonth != newDay) {
             _selectedDate.value = _selectedDate.value.withDayOfMonth(newDay)
-            _selectedEvents = eventRepository
+            updateSelectedEvents()
+        }
+    }
+
+    private fun updateSelectedEvents() {
+        viewModelScope.launch {
+            eventRepository
                 .listFromRange(
                     _selectedDate.value.withYear(1970),
                     _selectedDate.value.withYear(1970)
-                ).asLiveData()
-            updateEventDates()
+                )
+                .collect {
+                    val eventsOnSelectedDate = mutableListOf<TrackrEventOutput>()
+                    for (event in it) {
+                        eventsOnSelectedDate.add(
+                            TrackrEventOutput(event,
+                            personRepository.getPersonById(event.person_id))
+                        )
+                    }
+                    _selectedEvents.value = eventsOnSelectedDate
+                }
         }
     }
 

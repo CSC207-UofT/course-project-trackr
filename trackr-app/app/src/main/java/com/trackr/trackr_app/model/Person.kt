@@ -2,6 +2,7 @@ package com.trackr.trackr_app.model
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
+import java.util.*
 
 /**
  * A Person who is the target for an Event.
@@ -16,15 +17,13 @@ import androidx.room.ForeignKey.CASCADE
                         childColumns = ["user_id"],
                         onDelete = CASCADE)])
 class Person(
-
-        @PrimaryKey
-        val id: String,
-
         val user_id: String,
 
         var first_name: String,
 
         var last_name: String = "",
 
+        @PrimaryKey
+        val id: String = UUID.randomUUID().toString(),
 //        private val tags: HashSet<String> = HashSet()
 )
