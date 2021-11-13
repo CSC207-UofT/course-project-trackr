@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.trackr.trackr_app.repository.EventRepository
+import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EditScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
+    private val personRepository: PersonRepository,
     state: SavedStateHandle
 ) : ViewModel() {
 
@@ -29,6 +31,9 @@ class EditScreenViewModel @Inject constructor(
     private val _chosenReminder = mutableStateOf("1 day before")
     val chosenReminder: State<String> get() = _chosenReminder
 
+    private val _personName = mutableStateOf("")
+    val personName: State<String> get() = _personName
+
     init {
         viewModelScope.launch {
             val event = eventRepository.getById(eventID)
@@ -36,6 +41,9 @@ class EditScreenViewModel @Inject constructor(
             _eventDate.value = LocalDate.ofEpochDay(event.date)
             _chosenReminder.value = getReminderMap()
                 .entries.associate { (s, i) -> i to s }[event.reminder_interval]!!
+
+            val associatedPerson = personRepository.getPersonById(event.person_id)
+            _personName.value = associatedPerson.first_name + " " + associatedPerson.last_name
         }
     }
 
