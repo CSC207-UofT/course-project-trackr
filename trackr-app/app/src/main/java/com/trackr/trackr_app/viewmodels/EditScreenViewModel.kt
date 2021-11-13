@@ -3,6 +3,7 @@ package com.trackr.trackr_app.viewmodels
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class EditScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
-    state: SavedStateHandle
+    state: SavedStateHandle,
     private val eventNotificationManager: EventNotificationManager
 
 ) : ViewModel() {
@@ -110,7 +111,7 @@ class EditScreenViewModel @Inject constructor(
 
     fun editEvent() = viewModelScope.launch {
         val event = eventRepository.getById(eventID)
-        val reminderInt: Int? = getReminderMap()[chosenReminder.value]
+        val reminderInt: Int = getReminderMap()[chosenReminder.value]!!
       
         eventRepository.editInterval(reminderInt ?: 1, event)
         
@@ -122,7 +123,7 @@ class EditScreenViewModel @Inject constructor(
 
         //Edit notification
         eventNotificationManager.editNotification(
-                "${personName}",
+                personName.value,
                 eventName.value,
                 eventDate.value,
                 eventDate.value.minusDays(reminderInt.toLong()),
