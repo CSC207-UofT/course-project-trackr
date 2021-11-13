@@ -22,104 +22,83 @@ import com.trackr.trackr_app.ui.shared.InteractiveDropdownWidget
 import com.trackr.trackr_app.viewmodels.EditScreenViewModel
 import java.time.Instant
 import java.time.ZoneId.SHORT_IDS
+import java.time.format.TextStyle
 import java.util.*
 
 
 @Composable
-fun EditScreenActivity(viewModel: EditScreenViewModel, nav: NavHostController, backStackEntry: String) {
-    EditScreen(onEditItem = {viewModel.editEvent(it, backStackEntry)}, nav = nav)
-}
-
-@Composable
-fun EditScreen(
-    onEditItem: (List<Any>) -> Unit, nav: NavHostController
+fun EditScreenActivity(
+        viewModel: EditScreenViewModel,
+        nav: NavHostController,
+        backStackEntry: String
 ) {
-    var toDelete by remember { mutableStateOf("No") }
-    var chosenMonth by remember { mutableStateOf("Jan") }
-    var chosenDay by remember { mutableStateOf(1) }
-    var chosenReminder by remember { mutableStateOf("1 day before") }
-    var eventType by remember { mutableStateOf("Birthday") }
-    val months = listOf(
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec"
-    )
+    val delete by viewModel.delete
+    val eventDate by viewModel.eventDate
+    val chosenReminder by viewModel.chosenReminder
+    val eventName by viewModel.eventName
 
     Scaffold(
     ) {
         Column(
                 Modifier.padding(20.dp)
         ) {
-            Text(text = "Do you want to DELETE this event?:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+            Text(text = "DELETE event?:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
             Row(Modifier.selectableGroup().padding(top = 5.dp, bottom = 20.dp)) {
                 RadioButton(
-                        selected = toDelete == "No",
-                        onClick = { toDelete = "No" }
+                        selected = delete == "No",
+                        onClick = { viewModel.editDelete("No") }
                 )
                 Text(text = "No", Modifier.padding(start = 5.dp, end = 20.dp))
                 RadioButton(
-                        selected = toDelete != "No",
-                        onClick = { toDelete = "Yes" }
+                        selected = delete == "Yes",
+                        onClick = { viewModel.editDelete("Yes") }
                 )
                 Text(text = "Yes", Modifier.padding(start = 5.dp))
             }
-            Text(text = "If not:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+            Text(text = "If No:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
             Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
             Row(Modifier.selectableGroup().padding(top = 5.dp, bottom = 20.dp)) {
                 RadioButton(
-                        selected = eventType == "Birthday",
-                        onClick = { eventType = "Birthday" }
+                        selected = eventName == "Birthday",
+                        onClick = { viewModel.editEventName("Birthday") }
                 )
                 Text(text = "Birthday", Modifier.padding(start = 5.dp, end = 20.dp))
                 RadioButton(
-                        selected = eventType != "Birthday",
-                        onClick = { eventType = "Anniversary" }
+                        selected = eventName == "Anniversary",
+                        onClick = { viewModel.editEventName("Anniversary") }
                 )
                 Text(text = "Anniversary", Modifier.padding(start = 5.dp))
             }
             InputWidget(title = "Date", widgets = listOf(
                     {InteractiveDropdownWidget(
-
-                            setter = {month: String -> chosenMonth = month},
-                            getter = {chosenMonth},
-                            options = months
+                            setter = {month: String -> viewModel.changeMonth(month)},
+                            getter = {eventDate.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())},
+                            options = viewModel.getMonths()
                     )
                     },
                     {InteractiveDropdownWidget(
-                            setter = {day: Int -> chosenDay = day},
-                            getter = {chosenDay},
-                            options = (1..32).map{it}
+                            setter = {day: Int -> viewModel.changeDay(day)},
+                            getter = {eventDate.dayOfMonth},
+                            options = (1..eventDate.lengthOfMonth()).map{it}
                     )
                     }
             )
             )
             InputWidget(title = "Remind Me") {
                 InteractiveDropdownWidget(
-                        setter = {reminder: String -> chosenReminder = reminder},
+                        setter = {reminder: String -> viewModel.changeReminderInterval(reminder)},
                         getter = {chosenReminder},
-                        options = listOf(
-                                "1 day before", "3 days before",
-                                "1 week before", "2 weeks before", "1 month before"
-                        )
+                        options = viewModel.getReminderIntervals()
                 )
             }
             Button(
                     onClick = {
-                        onEditItem(listOf<Any>(toDelete, chosenMonth, chosenDay, chosenReminder, eventType))
-                        nav.navigate("Home")
+                        viewModel.editEvent(backStackEntry)
+                        nav.popBackStack()
                     },
                     Modifier.padding(top = 20.dp),
             ) {
-                Text("Confirm Changes")
+                Text("Save Changes")
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Icon(
                         Icons.Filled.Check,

@@ -1,6 +1,8 @@
 package com.trackr.trackr_app.viewmodels
 
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.trackr.trackr_app.model.Person
@@ -19,12 +21,68 @@ import javax.inject.Inject
 @HiltViewModel
 class EditScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
-    private val userRepository: UserRepository
 ) : ViewModel() {
-    val allEvents: LiveData<List<TrackrEvent>> = eventRepository.allEvents.asLiveData()
 
+    private val _delete = mutableStateOf("No")
+    val delete: State<String> get() = _delete
 
+    private val _eventName = mutableStateOf("Birthday")
+    val eventName: State<String> get() = _eventName
+
+    private var eventType: Int = 0
+
+    private val _eventDate = mutableStateOf(LocalDate.of(2020, 1, 1))
+    val eventDate: State<LocalDate> get() = _eventDate
+
+    private val _chosenReminder = mutableStateOf("1 day before reminder")
+    val chosenReminder: State<String> get() = _chosenReminder
+
+    fun editDelete(newResult: String) {
+        _delete.value = newResult
+    }
+
+    fun editEventName(newEventName: String) {
+        _eventName.value = newEventName
+        eventType = if (newEventName == "Birthday") 0 else 1
+    }
+
+    fun changeMonth(newMonth: String) {
+        _eventDate.value = _eventDate.value
+                .withMonth(getMonths().indexOf(newMonth) + 1)
+                .withDayOfMonth(_eventDate.value.dayOfMonth)
+    }
+
+    fun changeDay(newDay: Int) {
+        _eventDate.value = _eventDate.value.withDayOfMonth(newDay)
+    }
+
+    fun changeReminderInterval(newInterval: String) {
+        _chosenReminder.value = newInterval
+    }
+
+    fun getMonths(): List<String> {
+        return listOf(
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+        )
+    }
+
+    fun getReminderIntervals(): List<String> {
+        return listOf(
+                "1 day before", "3 days before",
+                "1 week before", "2 weeks before", "1 month before"
+        )
+    }
     /**
      * Edits/deletes an event using EventRepository
      *
@@ -32,61 +90,21 @@ class EditScreenViewModel @Inject constructor(
      *                                  new_date: String, new_interval: String, new_type: String]
      * @param id id of the event
      */
-    fun editEvent(data: List<Any>, id: String) = viewModelScope.launch {
+    fun editEvent(id: String) = viewModelScope.launch {
         val event = eventRepository.getById(id)
 
-        if (data[0] == "Yes") {
+        if (delete.value == "Yes") {
             eventRepository.delete(event)
         } else {
-            val months = listOf(
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec"
-            )
+            val reminderInt: Int? = mapOf("1 day before" to 1, "3 days before" to 3,
+                    "1 week before" to 7, "2 weeks before" to 14,
+                    "1 month before" to 30)[chosenReminder.value]
+            eventRepository.editInterval(reminderInt ?: 1, event)
 
-            var reminderInterval = 1
-            if (data[3] == "1 day before") {
-                reminderInterval = 1
-            } else if (data[3] == "3 days before") {
-                reminderInterval = 3
-            } else if (data[3] == "1 week before") {
-                reminderInterval = 7
-            } else if (data[3] == "2 weeks before") {
-                reminderInterval = 14
-            } else {
-                reminderInterval = 30
-            }
-            eventRepository.editInterval(reminderInterval, event)
+            eventRepository.editDate(eventDate.value.withYear(1970), event)
 
-            val date = LocalDate.of(2021, months.indexOf(data[1].toString()) + 1, data[2].toString().toInt())
-            eventRepository.editDate(date, event)
-
-            val eventType = if (data[4].toString() == "Birthday") 0 else 1
             eventRepository.editType(eventType, event)
         }
-    }
-}
-
-class EditScreenViewModelFactory(
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
-    private val userRepository: UserRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EditScreenViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return EditScreenViewModel(eventRepository, personRepository, userRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
 
