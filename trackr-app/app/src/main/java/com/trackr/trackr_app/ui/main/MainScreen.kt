@@ -74,8 +74,8 @@ fun MainScreen() {
             composable("Home") { HomeScreenActivity(hiltViewModel(), navController) }
             composable("Add") { AddScreenActivity(hiltViewModel(), navController) }
             composable("Select") { SelectScreenActivity(hiltViewModel(), navController) }
-            composable("Edit/{userId}") { backStackEntry ->
-                backStackEntry.arguments!!.getString("userId")?.let { it1 ->
+            composable("Edit/{eventId}") { backStackEntry ->
+                backStackEntry.arguments!!.getString("eventId")?.let { it1 ->
                     EditScreenActivity(
                         hiltViewModel(),
                         navController,

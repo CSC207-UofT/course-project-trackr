@@ -1,6 +1,8 @@
 package com.trackr.trackr_app.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
@@ -22,30 +24,69 @@ class EditScreenViewModel @Inject constructor(
 ) : ViewModel() {
     val allEvents: LiveData<List<TrackrEvent>> = eventRepository.allEvents.asLiveData()
 
-    // TODO: This doesn't make any sense to me, I've basically just copy-pasted the add method from AddScreenViewModel
-    fun editEvent(data: List<Any>, index: Int) = viewModelScope.launch {
-        val months = listOf(
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec"
-        )
 
-        //TODO: Unhardcode
-        userRepository.insert(User(id = "1", username = "yourmom"))
+    /**
+     * Edits/deletes an event using EventRepository
+     *
+     * @param data  list in the form [delete: String, new_month: String,
+     *                                  new_date: String, new_interval: String, new_type: String]
+     * @param id id of the event
+     */
+    fun editEvent(data: List<Any>, id: String) = viewModelScope.launch {
+        val event = eventRepository.getById(id)
 
-        personRepository.insert(Person(id = "2", user_id = "1", first_name = "My", last_name = "Mom"))
+        if (data[0] == "Yes") {
+            eventRepository.delete(event)
+        } else {
+            val months = listOf(
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec"
+            )
 
-        val date = LocalDate.of(2020, 1, 1)
-        eventRepository.insert(TrackrEvent("SomeID", "2", 0,
-            date.toEpochDay(), 7, 0))
+            var reminderInterval = 1
+            if (data[3] == "1 day before") {
+                reminderInterval = 1
+            } else if (data[3] == "3 days before") {
+                reminderInterval = 3
+            } else if (data[3] == "1 week before") {
+                reminderInterval = 7
+            } else if (data[3] == "2 weeks before") {
+                reminderInterval = 14
+            } else {
+                reminderInterval = 30
+            }
+            eventRepository.editInterval(reminderInterval, event)
+
+            val date = LocalDate.of(2021, months.indexOf(data[1].toString()) + 1, data[2].toString().toInt())
+            eventRepository.editDate(date, event)
+
+            val eventType = if (data[4].toString() == "Birthday") 0 else 1
+            eventRepository.editType(eventType, event)
+        }
     }
 }
+
+class EditScreenViewModelFactory(
+    private val eventRepository: EventRepository,
+    private val personRepository: PersonRepository,
+    private val userRepository: UserRepository
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(EditScreenViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return EditScreenViewModel(eventRepository, personRepository, userRepository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+

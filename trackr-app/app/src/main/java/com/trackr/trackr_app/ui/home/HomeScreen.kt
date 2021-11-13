@@ -169,7 +169,7 @@ fun HomeFeed(
 
 @Composable
 fun EventList(
-    events: List<Any>,
+    events: List<List<Any>>,
     modifier: Modifier = Modifier,
     navController: NavHostController,
 ) {
@@ -183,7 +183,7 @@ fun EventList(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate("Edit/${events.indexOf(event)}")
+                        navController.navigate("Edit/${event[0]}")
                     },
                 shape = RoundedCornerShape(20),
             ) {
