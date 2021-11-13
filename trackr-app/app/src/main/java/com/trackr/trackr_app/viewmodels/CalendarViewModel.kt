@@ -2,13 +2,13 @@ package com.trackr.trackr_app.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.*
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.repository.EventRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.toCollection
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -26,6 +26,20 @@ class CalendarViewModel @Inject constructor(
             _selectedDate.value.withYear(1970)
         )
         .asLiveData()
+
+    private val eventsThisMonth = eventRepository
+        .listFromRange(
+            _selectedDate.value.withYear(1970),
+            _selectedDate.value.withYear(1970)
+        )
+
+    private var eventDays: Set<LocalDate> = HashSet()
+
+    init {
+        viewModelScope.launch {
+
+        }
+    }
 
     /**
      * Increase the current month by monthOffset months.
