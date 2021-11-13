@@ -11,9 +11,11 @@ import com.trackr.trackr_app.ui.main.MainScreen
 import com.trackr.trackr_app.ui.theme.TrackrappTheme
 import com.trackr.trackr_app.notification.NotificationChannelCreator
 import com.trackr.trackr_app.viewmodels.*
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate // FOR TESTING PURPOSES
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,35 +30,9 @@ class MainActivity : ComponentActivity() {
         eventNotificationManager.createNotification(
                 "John", "Birthday", LocalDate.now())
 
-        // There is definitely a better way to do this
-        val homeScreenViewModel: HomeScreenViewModel by viewModels {
-            HomeScreenViewModelFactory((application as TrackrApp).eventRepository)
-        }
-        val addScreenViewModel: AddScreenViewModel by viewModels {
-            AddScreenViewModelFactory(
-                (application as TrackrApp).eventRepository,
-                (application as TrackrApp).personRepository,
-                (application as TrackrApp).userRepository)
-        }
-        val selectScreenViewModel: SelectScreenViewModel by viewModels {
-            SelectScreenViewModelFactory((application as TrackrApp).eventRepository)
-        }
-        val editScreenViewModel: EditScreenViewModel by viewModels {
-            EditScreenViewModelFactory(
-                (application as TrackrApp).eventRepository,
-                (application as TrackrApp).personRepository,
-                (application as TrackrApp).userRepository
-            )
-        }
-
         setContent {
             TrackrappTheme {
-                MainScreen(
-                    homeScreenViewModel,
-                    addScreenViewModel,
-                    selectScreenViewModel,
-                    editScreenViewModel
-                )
+                MainScreen()
             }
         }
 
