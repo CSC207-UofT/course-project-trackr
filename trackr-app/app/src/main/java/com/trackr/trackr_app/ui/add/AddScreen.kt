@@ -6,7 +6,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -14,39 +13,21 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.ui.shared.InputWidget
 import com.trackr.trackr_app.ui.shared.InteractiveDropdownWidget
+import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.AddScreenViewModel
+import java.time.format.TextStyle
+import java.util.*
+
 
 @Composable
 fun AddScreenActivity(
     viewModel: AddScreenViewModel,
     nav: NavHostController
 ) {
-    AddScreen(onAddItem = {viewModel.addEvent(it)}, nav = nav)
-}
-
-@Composable
-fun AddScreen(
-    onAddItem: (List<Any>) -> Unit, nav: NavHostController
-) {
-    var eventName by remember { mutableStateOf("Name") }
-    var chosenMonth by remember { mutableStateOf("Jan") }
-    var chosenDay by remember { mutableStateOf(1) }
-    var chosenReminder by remember { mutableStateOf("1 day before") }
-    var eventType by remember { mutableStateOf("Birthday") }
-    val months = listOf(
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-    )
+    val personName by viewModel.personName
+    val eventDate by viewModel.eventDate
+    val chosenReminder by viewModel.chosenReminder
+    val eventName by viewModel.eventName
 
     Scaffold(
     ) {
@@ -56,57 +37,54 @@ fun AddScreen(
             Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
             Row(Modifier.selectableGroup().padding(top = 5.dp, bottom = 20.dp)) {
                 RadioButton(
-                    selected = eventType == "Birthday",
-                    onClick = { eventType = "Birthday" }
+                    selected = eventName == "Birthday",
+                    onClick = { viewModel.editEventName("Birthday") }
                 )
                 Text(text = "Birthday", Modifier.padding(start = 5.dp, end = 20.dp))
                 RadioButton(
-                    selected = eventType != "Birthday",
-                    onClick = { eventType = "Anniversary" }
+                    selected = eventName == "Anniversary",
+                    onClick = { viewModel.editEventName("Anniversary") }
                 )
                 Text(text = "Anniversary", Modifier.padding(start = 5.dp))
             }
             InputWidget(title = "Whose birthday/anniversary is it?") {
                 TextField(
-                    value = eventName,
-                    onValueChange = { eventName = it },
+                    value = personName,
+                    onValueChange = { viewModel.editName(it) },
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = Color.Transparent,
-                        textColor = MaterialTheme.colors.onBackground
-                    )
+                        textColor = MaterialTheme.colors.onBackground,
+                    ),
+                    placeholder = { Text("Name", fontFamily = Rubik) }
                 )
             }
             InputWidget(title = "Date", widgets = listOf(
                 {InteractiveDropdownWidget(
-
-                    setter = {month: String -> chosenMonth = month},
-                    getter = {chosenMonth},
-                    options = months
-                    )
+                    setter = {month: String -> viewModel.changeMonth(month)},
+                    getter = {eventDate.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())},
+                    options = viewModel.getMonths()
+                )
                 },
                 {InteractiveDropdownWidget(
-                    setter = {day: Int -> chosenDay = day},
-                    getter = {chosenDay},
-                    options = (1..32).map{it}
-                    )
+                    setter = {day: Int -> viewModel.changeDay(day)},
+                    getter = {eventDate.dayOfMonth},
+                    options = (1..eventDate.lengthOfMonth()).map{it}
+                )
                 }
             )
             )
             InputWidget(title = "Remind Me") {
                 InteractiveDropdownWidget(
-                    setter = {reminder: String -> chosenReminder = reminder},
+                    setter = {reminder: String -> viewModel.changeReminderInterval(reminder)},
                     getter = {chosenReminder},
-                    options = listOf(
-                        "1 day before", "3 days before",
-                        "1 week before", "2 weeks before", "1 month before"
-                    )
+                    options = viewModel.getReminderIntervals()
                 )
             }
             Button(
                 onClick = {
-                    onAddItem(listOf<Any>(eventName, chosenMonth, chosenDay, chosenReminder, eventType))
-                    nav.navigate("Home")
-                          },
+                    viewModel.addEvent()
+                    nav.popBackStack()
+                },
                 Modifier.padding(top = 20.dp),
             ) {
                 Text("Save Event")

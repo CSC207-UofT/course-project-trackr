@@ -1,5 +1,7 @@
 package com.trackr.trackr_app.viewmodels
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
@@ -9,10 +11,11 @@ import com.trackr.trackr_app.repository.PersonRepository
 import com.trackr.trackr_app.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.sql.Date
-import java.util.*
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.UUID.randomUUID
 import javax.inject.Inject
+
 
 @HiltViewModel
 class AddScreenViewModel @Inject constructor(
@@ -20,8 +23,47 @@ class AddScreenViewModel @Inject constructor(
     private val personRepository: PersonRepository,
     private val userRepository: UserRepository
 ): ViewModel() {
-    fun addEvent(data: List<Any>) = viewModelScope.launch {
-        val months = listOf(
+
+    private val _personName = mutableStateOf("")
+    val personName: State<String>
+        get() = _personName
+
+    private val _eventName = mutableStateOf("Birthday")
+    val eventName: State<String> get() = _eventName
+
+    private var eventType: Int = 0
+
+    private val _eventDate = mutableStateOf(LocalDate.of(2020, 1, 1))
+    val eventDate: State<LocalDate> get() = _eventDate
+
+    private val _chosenReminder = mutableStateOf("1 day before reminder")
+    val chosenReminder: State<String> get() = _chosenReminder
+
+    fun editName(newName: String) {
+        _personName.value = newName
+    }
+
+    fun editEventName(newEventName: String) {
+        _eventName.value = newEventName
+        eventType = if (newEventName == "Birthday") 0 else 1
+    }
+
+    fun changeMonth(newMonth: String) {
+        _eventDate.value = _eventDate.value
+            .withMonth(getMonths().indexOf(newMonth) + 1)
+            .withDayOfMonth(_eventDate.value.dayOfMonth)
+    }
+
+    fun changeDay(newDay: Int) {
+        _eventDate.value = _eventDate.value.withDayOfMonth(newDay)
+    }
+
+    fun changeReminderInterval(newInterval: String) {
+        _chosenReminder.value = newInterval
+    }
+
+    fun getMonths(): List<String> {
+        return listOf(
             "Jan",
             "Feb",
             "Mar",
@@ -35,43 +77,43 @@ class AddScreenViewModel @Inject constructor(
             "Nov",
             "Dec"
         )
-
-        val personId = data[0]
-        userRepository.insert(User(id = "1", username = "DefaultUser"))
-        var reminderInterval = 1
-        if (data[3] == "1 day before") {
-            reminderInterval = 1
-        } else if (data[3] == "3 days before") {
-            reminderInterval = 3
-        } else if (data[3] == "1 week before") {
-            reminderInterval = 7
-        } else if (data[3] == "2 weeks before") {
-            reminderInterval = 14
-        } else {
-            reminderInterval = 30
-        }
-
-        personRepository.insert(Person(id = personId.toString(), user_id = "1", first_name = personId.toString(), last_name = personId.toString()))
-
-        val calDate = Calendar.getInstance()
-        calDate.clear()
-        calDate.set(2021, months.indexOf(data[1].toString()), data[2].toString().toInt())
-        val eventType = if (data[4].toString() == "Birthday") 0 else 1
-        eventRepository.insert(TrackrEvent(data[0].toString(), personId.toString(), eventType,
-            (calDate.timeInMillis/1000).toInt(), reminderInterval, 0))
     }
-}
 
-class AddScreenViewModelFactory(
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
-    private val userRepository: UserRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AddScreenViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return AddScreenViewModel(eventRepository, personRepository, userRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    fun getReminderIntervals(): List<String> {
+        return listOf(
+            "1 day before", "3 days before",
+            "1 week before", "2 weeks before", "1 month before"
+        )
+    }
+
+    fun addEvent() = viewModelScope.launch {
+        //TODO: Unhardcode
+        val randUserID = randomUUID()
+        val randPersonID = randomUUID()
+        val randEventID = randomUUID()
+        userRepository.insert(
+            User(id = randUserID.toString(),
+                username = "yourmom")
+        )
+
+        personRepository.insert(
+            Person(id = randPersonID.toString(),
+                user_id = randUserID.toString(),
+                first_name = "My",
+                last_name = "Mom")
+        )
+
+        eventRepository.insert(
+            TrackrEvent(
+                personName.value,  // randEventID.toString(),
+                randPersonID.toString(),
+                eventType,
+                eventDate.value
+                    .withYear(1970)
+                    .atStartOfDay(ZoneId.systemDefault())
+                    .toEpochSecond()
+                    .toInt(),
+                7,
+                0))
     }
 }
