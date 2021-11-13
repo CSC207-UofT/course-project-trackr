@@ -38,7 +38,10 @@ class CalendarViewModel @Inject constructor(
             .plusMonths(monthOffset)
             .withDayOfMonth(1)
         _selectedEvents = eventRepository
-            .listFromRange(_selectedDate.value, _selectedDate.value)
+            .listFromRange(
+                _selectedDate.value.withYear(1970),
+                _selectedDate.value.withYear(1970)
+            )
             .asLiveData()
     }
 
@@ -49,7 +52,10 @@ class CalendarViewModel @Inject constructor(
     fun changeSelectedDate(newDay: Int) {
         _selectedDate.value = _selectedDate.value.withDayOfMonth(newDay)
         _selectedEvents = eventRepository
-        .listFromRange(_selectedDate.value, _selectedDate.value)
+        .listFromRange(
+            _selectedDate.value.withYear(1970),
+            _selectedDate.value.withYear(1970)
+        )
             .asLiveData()
     }
 }
