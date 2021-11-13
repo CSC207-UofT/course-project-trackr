@@ -69,14 +69,12 @@ fun HomeScreenActivity(
         eventList = events.map {
             val dateTime = LocalDate.ofEpochDay(it.date)
             listOf(it.id, dateTime.month, dateTime.dayOfMonth, it.reminder_interval) },
-        viewModel = viewModel,
         navController = navController)
 }
 
 @Composable
 fun HomeScreen(
     eventList: List<List<Any>>,
-    viewModel: HomeScreenViewModel,
     navController: NavHostController
 ) {
     Scaffold(
@@ -106,7 +104,7 @@ fun HomeScreen(
        ) {
            HomeFeed(
                Modifier
-                   .padding(0.dp, 10.dp)
+                   .padding(vertical = 10.dp)
                    .weight(1f),
                stringResource(R.string.todays_events),
                listOf(),
@@ -114,7 +112,7 @@ fun HomeScreen(
            )
            HomeFeed(
                Modifier
-                   .padding(0.dp, 10.dp)
+                   .padding(bottom = 40.dp)
                    .weight(2f),
                stringResource(R.string.upcoming_events),
                eventList,
