@@ -106,7 +106,6 @@ class AddScreenViewModel @Inject constructor(
         eventRepository.insert(
             TrackrEvent(
                 personName.value,  // randEventID.toString(),
-                randPersonID.toString(),
                 eventType,
                 eventDate.value
                     .toEpochDay(),

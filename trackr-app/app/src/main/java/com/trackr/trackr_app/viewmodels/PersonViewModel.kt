@@ -3,10 +3,15 @@ package com.trackr.trackr_app.viewmodels
 import androidx.lifecycle.*
 import com.trackr.trackr_app.repository.PersonRepository
 import com.trackr.trackr_app.model.Person
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
+import javax.inject.Inject
 
-class PersonViewModel(private val repository: PersonRepository) : ViewModel() {
+@HiltViewModel
+class PersonSelectViewModel @Inject constructor(
+    private val repository: PersonRepository
+    ) : ViewModel() {
     val allPersons: LiveData<List<Person>> = repository.allPersons.asLiveData()
 
     fun insert(person: Person) = viewModelScope.launch {
@@ -27,15 +32,5 @@ class PersonViewModel(private val repository: PersonRepository) : ViewModel() {
 
     fun deleteAll() = viewModelScope.launch {
         repository.deleteAll()
-    }
-}
-
-class PersonViewModelFactory(private val repository: PersonRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PersonViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return PersonViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
