@@ -9,29 +9,58 @@ import android.content.Intent
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Class to manage notifications for events
  */
-class EventNotificationManager(private val context: Context) {
+@Singleton
+class EventNotificationManager @Inject constructor(private val context: Context) {
     private val alarmManager: AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-    private var nextNotificationId: Int = 0
+
     /**
      * Creates a notification for the given event
      */
-    fun createNotification(name: String, eventType: String, remindDate: LocalDate) {
-        val instant: Instant = remindDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
+    fun createNotification(name: String, eventType: String, eventDate: LocalDate,
+                           remindDate: LocalDate, id: Int) {
+        var whichYear = LocalDate.now().year
+        if (eventDate.withYear(whichYear).isBefore(LocalDate.now())) {whichYear ++}
+        val instant: Instant = remindDate.withYear(whichYear)
+                .atStartOfDay(ZoneId.systemDefault()).toInstant()
         val remindDateMillis: Long = instant.toEpochMilli()
 
         val intent = Intent(context, EventBroadcastReceiver::class.java)
         intent.putExtra("contentTitle", "$name $eventType")
-        intent.putExtra("contentText", "You have a $eventType for $name soon.")
-        intent.putExtra("notificationId", nextNotificationId)
-        nextNotificationId += 1
+        intent.putExtra("contentText", "You have a $eventType for $name on" +
+                " $eventDate.")
+        intent.putExtra("notificationId", id)
 
         val pendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE)
+                PendingIntent.getBroadcast(context, id, intent, FLAG_IMMUTABLE)
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, remindDateMillis, pendingIntent)
+    }
+
+    /**
+     * Removes a notification for the given event
+     */
+    fun removeNotification(id: Int) {
+        val intent = Intent(context, EventBroadcastReceiver::class.java)
+
+        val pendingIntent: PendingIntent =
+                PendingIntent.getBroadcast(context, id, intent, FLAG_IMMUTABLE)
+
+        pendingIntent.cancel()
+        alarmManager.cancel(pendingIntent)
+    }
+
+    /**
+     * Edits a notification for the given event
+     */
+    fun editNotification(name: String, eventType: String, eventDate: LocalDate,
+                         remindDate: LocalDate, id: Int) {
+        removeNotification(id)
+        createNotification(name, eventType, eventDate, remindDate, id)
     }
 }
