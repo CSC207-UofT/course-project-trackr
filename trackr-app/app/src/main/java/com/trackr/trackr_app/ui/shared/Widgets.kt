@@ -18,16 +18,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun InputWidget(title: String, widgets: List<@Composable() () -> Unit>) {
+fun InputWidget(
+    title: String,
+    widgets: List<@Composable() () -> Unit>,
+    modifier: Modifier = Modifier
+) {
     Column() {
         Text(text = title, Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
         Row() {
             for (widget in widgets) {
                 Box(
-                    Modifier
+                    modifier
                         .padding(bottom = 20.dp, end = 5.dp)
                         .border(
-                            width = 3.dp, brush = Brush.horizontalGradient(
+                            width = 3.dp,
+                            brush = Brush.horizontalGradient(
                                 colors = listOf(
                                     Color(0xFF3E69FF),
                                     Color(0xFF6CCFF8)
