@@ -27,47 +27,4 @@ class Person(
         var last_name: String = "",
 
 //        private val tags: HashSet<String> = HashSet()
-) {
-    /**
-     * Return the lastName of this Person
-     * @return the lastName of this Person
-     */
-    /**
-     * Return a description of this person
-     * @return the description of this person
-     */
-    /**
-     * Return the tags that this Person has
-     * @return the tags associated with this Person
-     */
-//    fun getTags(): Set<String> {
-//        return tags
-//    }
-
-    /**
-     * Return whether the person has the given tag
-     * @return a boolean representing whether the person has the given tag or not
-     */
-//    fun hasTag(tag: String): Boolean {
-//        return tags.contains(tag)
-//    }
-
-    /**
-     * Add a tag to this person.
-     * Return true if the tag was successfully added and false if this person already has this tag.
-     * @return false if the person already has this tag, true otherwise
-     */
-//    fun addTag(tag: String): Boolean {
-//        return tags.add(tag)
-//    }
-
-    /**
-     * Remove the tag from this person.
-     * Return true if successfully removed, return false if this person doesn't have that tag
-     * @return false if the Person does not have the tag
-     * otherwise return remove the tag and return true
-     */
-//    fun removeTag(tag: String): Boolean {
-//        return tags.remove(tag)
-//    }
-}
+)
