@@ -57,7 +57,6 @@ fun EventOnDateHeader(
 ) {
    Text(
        "Events on " +
-//               "${date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())}, " +
                date.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) +
                " ${date.dayOfMonth}, " +
                date.year,
