@@ -142,27 +142,11 @@ fun HomeFeed(
             color = MaterialTheme.colors.onPrimary,
             modifier = Modifier.padding(bottom = 5.dp),
         )
-        if (events.isEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    stringResource(R.string.no_events),
-                    fontFamily = Rubik,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                )
-            }
-        } else {
-            EventList(
+        EventList(
                 events,
                 modifier = Modifier.fillMaxWidth(),
                 navController,
-            )
-        }
+        )
     }
 }
 
@@ -173,35 +157,51 @@ fun EventList(
     modifier: Modifier = Modifier,
     navController: NavHostController,
 ) {
-    LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        items(events.count()) { index ->
-            val event = events[index]
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        navController.navigate("Edit/${events.indexOf(event)}")
-                    },
-                shape = RoundedCornerShape(20),
-            ) {
-                Row(
+    if (events.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                stringResource(R.string.no_events),
+                fontFamily = Rubik,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onBackground,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+            )
+        }
+    } else {
+        LazyColumn(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            items(events.count()) { index ->
+                val event = events[index]
+                Surface(
                     modifier = Modifier
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colors = allGradients[index % 3]
-                            )
-                        )
-                        .padding(20.dp)
-
+                        .fillMaxWidth()
+                        .clickable {
+                            navController.navigate("Edit/${events.indexOf(event)}")
+                        },
+                    shape = RoundedCornerShape(20),
                 ) {
-                    Column() {
-                        Text(event.toString())
-                    }
-                    Column() {
+                    Row(
+                        modifier = Modifier
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    colors = allGradients[index % 3]
+                                )
+                            )
+                            .padding(20.dp)
 
+                    ) {
+                        Column() {
+                            Text(event.toString())
+                        }
+                        Column() {
+
+                        }
                     }
                 }
             }
