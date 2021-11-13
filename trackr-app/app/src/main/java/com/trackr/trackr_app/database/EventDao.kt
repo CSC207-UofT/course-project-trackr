@@ -17,7 +17,7 @@ interface EventDao {
 
     // range is inclusive.
     @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date ORDER BY date DESC")
-    fun listFromRange(start_date: Int, end_date: Int): Flow<List<TrackrEvent>>
+    fun listFromRange(start_date: Long, end_date: Long): Flow<List<TrackrEvent>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(trackrEvent: TrackrEvent)
@@ -32,7 +32,7 @@ interface EventDao {
     suspend fun editType(new_type: Int, id: String, person_id: String)
 
     @Query("UPDATE `event-table` SET date = :new_date WHERE id = :id AND person_id = :person_id")
-    suspend fun editDate(new_date: Int, id: String, person_id: String)
+    suspend fun editDate(new_date: Long, id: String, person_id: String)
 
     @Query("UPDATE `event-table` SET reminder_interval = :new_interval WHERE id = :id AND person_id = :person_id")
     suspend fun editInterval(new_interval: Int, id: String, person_id: String)

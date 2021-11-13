@@ -10,6 +10,7 @@ import com.trackr.trackr_app.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.sql.Date
+import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
@@ -43,23 +44,8 @@ class EditScreenViewModel @Inject constructor(
 
         personRepository.insert(Person(id = "2", user_id = "1", first_name = "My", last_name = "Mom"))
 
-        val calDate = Calendar.getInstance()
-        calDate.set(2020, 1, 1)
+        val date = LocalDate.of(2020, 1, 1)
         eventRepository.insert(TrackrEvent("SomeID", "2", 0,
-            calDate.timeInMillis.toInt(), 7, 0))
-    }
-}
-
-class EditScreenViewModelFactory(
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
-    private val userRepository: UserRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EditScreenViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return EditScreenViewModel(eventRepository, personRepository, userRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+            date.toEpochDay(), 7, 0))
     }
 }

@@ -19,7 +19,7 @@ class TrackrEvent (
 
         var type: Int,
 
-        val date: Int,
+        val date: Long,
 
         val reminder_interval: Int,
 

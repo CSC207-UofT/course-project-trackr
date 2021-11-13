@@ -52,7 +52,7 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(1999, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(1999, 1, 1).toEpochDay(),
                 7,
                 0)
         eventDao.insert(event1)
@@ -70,19 +70,19 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(1999, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(1999, 1, 1).toEpochDay(),
                 7,
                 0)
         val event2 = TrackrEvent("22222222-2222-2222-222222222222",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(2004, 1, 1).toEpochDay(),
                 3,
                 0)
         val event3 = TrackrEvent("33333333-3333-3333-333333333333",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(2004, 4, 1).toEpochDay().toInt(),
+                LocalDate.of(2004, 4, 1).toEpochDay(),
                 3,
                 0)
         eventDao.insert(event1)
@@ -105,26 +105,26 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(2004, 1, 1).toEpochDay(),
                 7,
                 0)
         eventDao.insert(event1)
         val event2 = TrackrEvent("22222222-2222-2222-222222222222",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(2004, 1, 2).toEpochDay().toInt(),
+                LocalDate.of(2004, 1, 2).toEpochDay(),
                 3,
                 0)
         eventDao.insert(event2)
         val event3 = TrackrEvent("33333333-3333-3333-333333333333",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(2004, 1, 4).toEpochDay().toInt(),
+                LocalDate.of(2004, 1, 4).toEpochDay(),
                 3,
                 0)
         eventDao.insert(event3)
-        val eventsFromDatabase = eventDao.listFromRange(LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
-                LocalDate.of(2004, 1, 3).toEpochDay().toInt()).first()
+        val eventsFromDatabase = eventDao.listFromRange(LocalDate.of(2004, 1, 1).toEpochDay(),
+                LocalDate.of(2004, 1, 3).toEpochDay()).first()
         assertEquals(eventsFromDatabase[0].id, event2.id)
         assertEquals(eventsFromDatabase[1].id, event1.id)
         assertEquals(eventsFromDatabase.size, 2)
@@ -142,21 +142,21 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
             "01010101-0101-0101-010101010101",
             0,
-            LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+            LocalDate.of(2004, 1, 1).toEpochDay(),
             7,
             0)
         eventDao.insert(event1)
         val event2 = TrackrEvent("22222222-2222-2222-222222222222",
             "01010101-0101-0101-010101010101",
             0,
-            LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+            LocalDate.of(2004, 1, 1).toEpochDay(),
             3,
             0)
         eventDao.insert(event2)
 
         val eventsFromDatabase = eventDao.listFromRange(
-            LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
-            LocalDate.of(2004, 1, 1).toEpochDay().toInt())
+            LocalDate.of(2004, 1, 1).toEpochDay(),
+            LocalDate.of(2004, 1, 1).toEpochDay())
             .first()
         assertEquals(eventsFromDatabase.size, 2)
     }
@@ -171,14 +171,14 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(1999, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(1999, 1, 1).toEpochDay(),
                 7,
                 0)
         eventDao.insert(event1)
         val event2 = TrackrEvent("22222222-2222-2222-222222222222",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(2004, 1, 1).toEpochDay(),
                 3,
                 0)
         eventDao.insert(event2)
@@ -197,13 +197,13 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(1999, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(1999, 1, 1).toEpochDay(),
                 7,
                 0)
         val event2 = TrackrEvent("22222222-2222-2222-222222222222",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(2004, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(2004, 1, 1).toEpochDay(),
                 3,
                 0)
         eventDao.insert(event1)
@@ -224,7 +224,7 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(1999, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(1999, 1, 1).toEpochDay(),
                 7,
                 0)
         eventDao.insert(event1)
@@ -243,7 +243,7 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(1999, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(1999, 1, 1).toEpochDay(),
                 7,
                 0)
         eventDao.insert(event1)
@@ -264,7 +264,7 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(1999, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(1999, 1, 1).toEpochDay(),
                 7,
                 0)
         eventDao.insert(event1)
@@ -283,7 +283,7 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(1999, 1, 1).toEpochDay().toInt(),
+                LocalDate.of(1999, 1, 1).toEpochDay(),
                 7,
                 0)
         eventDao.insert(event1)
@@ -302,7 +302,7 @@ class EventDaoTest {
         val event1 = TrackrEvent("00000000-0000-0000-000000000000",
                 "01010101-0101-0101-010101010101",
                 0,
-                LocalDate.of(2004, 7, 16).toEpochDay().toInt(),
+                LocalDate.of(2004, 7, 16).toEpochDay(),
                 7,
                 0)
         eventDao.insert(event1)
