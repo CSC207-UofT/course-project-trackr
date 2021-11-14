@@ -94,8 +94,7 @@ class AddScreenViewModelTest : TestCase() {
 
     @Test
     fun testAddEvent() = runBlocking {
-        // help
-
+        // TODO help plz
     }
 
 
