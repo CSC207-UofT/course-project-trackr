@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
-import com.trackr.trackr_app.ui.home.EventList
+import com.trackr.trackr_app.ui.shared.EventList
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
 import com.trackr.trackr_app.viewmodels.TrackrEventOutput
