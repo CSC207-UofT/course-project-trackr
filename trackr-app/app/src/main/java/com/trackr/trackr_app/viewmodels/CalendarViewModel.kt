@@ -12,6 +12,9 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.HashSet
 
+/**
+ * A viewmodel that is responsible for managing the state of the calendar screen.
+ */
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
     private val eventRepository: EventRepository,
@@ -62,6 +65,9 @@ class CalendarViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Update the list of selected events to reflect any changes and new events added
+     */
     private fun updateSelectedEvents() {
         viewModelScope.launch {
             eventRepository
@@ -83,6 +89,9 @@ class CalendarViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Update the set of dates of all events this month
+     */
     private fun updateEventDates() {
         viewModelScope.launch {
             eventsThisMonth.collect {
