@@ -28,19 +28,3 @@ jobs:
     - name: Build with Gradle
       working-directory: 'trackr-app'
       run: ./gradlew build
-      
-  android_tests:
-    runs-on: [ macos-latest ]
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Grant execute permission for gradlew
-        working-directory: 'trackr-app'
-        run: chmod +x gradlew
-      
-      - name: Instrumentation Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 26
-          script: ./gradlew connectedCheck --stacktrace
-          working-directory: 'trackr-app'
