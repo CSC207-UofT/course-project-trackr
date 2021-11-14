@@ -20,6 +20,7 @@ class CalendarViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
 ): ViewModel() {
+
     private val _selectedDate: MutableState<LocalDate> = mutableStateOf(LocalDate.now())
     val selectedDate: State<LocalDate> get() = _selectedDate
 
@@ -34,7 +35,10 @@ class CalendarViewModel @Inject constructor(
 
     private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
     val eventDates: LiveData<Set<LocalDate>> get() = _eventDates
-    
+
+    /**
+     * initialize the eventDates and selectedEvents lists to reflect the newest data
+     */
     init {
         updateSelectedEvents()
         updateEventDates()
