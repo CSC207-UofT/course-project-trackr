@@ -21,7 +21,8 @@ class SelectScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository
     ): ViewModel() {
-    val allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
+    private val _allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
+    val allEvents: LiveData<List<TrackrEventOutput>> get() = _allEvents
 
     /**
      * Initialize the allEvents list to display all events.
@@ -38,7 +39,7 @@ class SelectScreenViewModel @Inject constructor(
                         )
                     )
                 }
-                allEvents.value = eventList
+                _allEvents.value = eventList
             }
         }
     }

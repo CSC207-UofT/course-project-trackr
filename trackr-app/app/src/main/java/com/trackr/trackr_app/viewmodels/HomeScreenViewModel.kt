@@ -24,10 +24,10 @@ class HomeScreenViewModel @Inject constructor(
     private val personRepository: PersonRepository,
     ): ViewModel() {
     private val _allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
-    val allEvents get() = _allEvents
+    val allEvents: LiveData<List<TrackrEventOutput>> get() = _allEvents
 
     private val _eventsToday: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
-    val eventsToday get() = _eventsToday
+    val eventsToday: LiveData<List<TrackrEventOutput>> get() = _eventsToday
 
     /**
      * Initialize the homepage so that it can display all events and events today.
