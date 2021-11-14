@@ -78,7 +78,7 @@ fun HomeScreenActivity(
                Modifier
                    .padding(bottom = 40.dp)
                    .weight(2f),
-               stringResource(R.string.upcoming_events),
+               "Events This Year:",
                allEvents,
                navController
            )
