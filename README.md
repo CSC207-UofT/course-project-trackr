@@ -31,7 +31,7 @@ Once the project has been configured, it can be built in two ways:
 ## Running Tests
 
 Once the project has been configured, the simplest way to run all tests is to navigate (in IntelliJ)
-to `trackr/src/test/java`, right click on this folder, and select `run 'All Tests'`.
+to `trackr-app/app/src/androidTest/java/com/trackr/trackr_app`, right click on this folder, and select `run 'All Tests'`.
 
 ## Running the project
 
