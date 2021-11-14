@@ -3,6 +3,7 @@ package com.trackr.trackr_app.database
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.User
 import junit.framework.TestCase
@@ -13,9 +14,13 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import java.io.IOException
 import java.lang.Exception
 
+// Tests were based off of the Android Room DB codelabs repo:
+// https://github.com/googlecodelabs/android-room-with-a-view/blob/kotlin/app/src/androidTest/java/com/example/android/roomwordssample/WordDaoTest.kt
+@RunWith(AndroidJUnit4::class)
 class PersonDaoTest {
     private lateinit var userDao: UserDao
     private lateinit var personDao: PersonDao
@@ -38,9 +43,9 @@ class PersonDaoTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetPerson() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
         val personsFromDatabase = personDao.listPersons().first()
         assertEquals(personsFromDatabase[0].id, person.id)
@@ -49,11 +54,11 @@ class PersonDaoTest {
     @Test
     @Throws(Exception::class)
     fun getAllPersons() = runBlocking {
-        val user1 = User("12345678-1234-1234-123456781234", "test")
-        userDao.insert(user1)
-        val person1 = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob" )
+        val user = User("test")
+        userDao.insert(user)
+        val person1 = Person(user.id, "sponge", "bob")
         personDao.insert(person1)
-        val person2 = Person("10101010-1010-1010-101010101010", "12345678-1234-1234-123456781234", "patrick", "star")
+        val person2 = Person(user.id, "patrick", "star")
         personDao.insert(person2)
         val personsFromDatabase = personDao.listPersons().first()
         // the order changes because listPersons sorts by first name and then last name
@@ -64,11 +69,11 @@ class PersonDaoTest {
     @Test
     @Throws(Exception::class)
     fun editFirstName() = runBlocking {
-        val user1 = User("12345678-1234-1234-123456781234", "test")
-        userDao.insert(user1)
-        val person1 = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob" )
+        val user = User("test")
+        userDao.insert(user)
+        val person1 = Person(user.id, "sponge", "bob")
         personDao.insert(person1)
-        personDao.editFirstName("spongier", person1.id, user1.id)
+        personDao.editFirstName("spongier", person1.id, user.id)
         val personsFromDatabase = personDao.listPersons().first()
         assertEquals(personsFromDatabase[0].first_name, "spongier")
     }
@@ -76,11 +81,11 @@ class PersonDaoTest {
     @Test
     @Throws(Exception::class)
     fun editLastName() = runBlocking {
-        val user1 = User("12345678-1234-1234-123456781234", "test")
-        userDao.insert(user1)
-        val person1 = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob" )
+        val user = User("test")
+        userDao.insert(user)
+        val person1 = Person(user.id, "sponge", "bob")
         personDao.insert(person1)
-        personDao.editLastName("bobert", person1.id, user1.id)
+        personDao.editLastName("bobert", person1.id, user.id)
         val personsFromDatabase = personDao.listPersons().first()
         assertEquals(personsFromDatabase[0].last_name, "bobert")
     }
@@ -88,11 +93,11 @@ class PersonDaoTest {
     @Test
     @Throws(Exception::class)
     fun delete() = runBlocking {
-        val user1 = User("12345678-1234-1234-123456781234", "test")
-        userDao.insert(user1)
-        val person1 = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob" )
+        val user = User("test")
+        userDao.insert(user)
+        val person1 = Person(user.id, "sponge", "bob")
         personDao.insert(person1)
-        val person2 = Person("10101010-1010-1010-101010101010", "12345678-1234-1234-123456781234", "patrick", "star")
+        val person2 = Person(user.id, "patrick", "star")
         personDao.insert(person2)
         personDao.delete(person1.id, person1.user_id)
         val personsFromDatabase = personDao.listPersons().first()
@@ -104,11 +109,11 @@ class PersonDaoTest {
     @Test
     @Throws(Exception::class)
     fun deleteAll() = runBlocking {
-        val user1 = User("12345678-1234-1234-123456781234", "test")
-        userDao.insert(user1)
-        val person1 = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob" )
+        val user = User("test")
+        userDao.insert(user)
+        val person1 = Person(user.id, "sponge", "bob")
         personDao.insert(person1)
-        val person2 = Person("10101010-1010-1010-101010101010", "12345678-1234-1234-123456781234", "patrick", "star")
+        val person2 = Person(user.id, "patrick", "star")
         personDao.insert(person2)
         personDao.deleteAll()
         val personsFromDatabase = personDao.listPersons().first()

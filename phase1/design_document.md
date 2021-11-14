@@ -8,13 +8,33 @@
 
 - A brief description of how your project adheres to Clean Architecture (if you notice a violation and aren't sure how to fix it, talk about that too!)
 
+~section before we talk about the database goes here~
+
+As for serialization, our group opted for a local SQLite Database through the Room persistence library.
+We chose this over other storage options because we felt SQLite was both fast and allows for easier
+migration to a hosted postgres database, which could allow for highly sought-after features, such as
+syncing data across user devices.
+
+Our database structure is represented by the following Entity Relation Diagram (ERD):
+![erd](https://cdn.discordapp.com/attachments/907383386207842314/909549647209582602/Screenshot_from_2021-11-14_16-04-37.png)
+With our data in seperate tables for each entity, we can avoid having duplicate data while having entity-specific access objects,
+which also decreases overall coupling.
+
 ## Consistency with SOLID design principles
 
 - A brief description of how your project is consistent with the SOLID design principles (if you notice a violation and aren't sure how to fix it, talk about that too!)
 
 ## Packaging Strategies
 
-- A brief description of which packaging strategies you considered, which you decided to use, and why
+### Where we were in Phase 0 
+Our Phase 0 submission was based around a much more cut-and-dry clean architecture approach: because we were writing everything from scratch in an ecosystem with less-defined package structures (a console-focused app with basic interactions), we took the liberty to come up with a package structure that worked specifically for us and what we were trying to accomplish. It turns out, in Phase 0, the clean architecture package approach (where each sub-package is a layer in clean architecture) was the most logical; we could easily see when we were violating layer dependencies based off of package imports in our source files, and at the same time were able to easily import the classes we did actually need (without unnecessarily polluting our name space). This clean architecture packaging approach also made it easy to decided where to add new modules, and to visualize the dependency tree: we just had to take note of which packages are module files were in!
+
+### Where we are now
+Phase 1, and our transition to both the Kotlin programming language and the android programming ecosystem, complicated the clean architecture packaging approach. All of a sudden, certain android-specific classes and extensions needed to be places in packages they didn't entirely belong (Where should the Dependency Injection modules be stored, especially if they're being used by a third-party extension), and some packages started accumulating modules that were only related by their layer, and not by any shared properties between them (for example, the database and the UI, under clean architecture, should both be placed in the same "frameworks and drivers" package; they are otherwise completely unrelated). These complications made adding new modules very difficult (especially when trying to import modules for other packages), and made finding modules after we added them unnecessarily complicated.
+
+Our solution to these issues, then, is to group modules based on their functionality; this has the happy side-effect that most functionality groupings will also result in grouping modules of the same layer (but also allowing us to have multiple packages representing different parts of that one layer). For example, all models (previously described as entities) are grouped together in the `model` package: they are grouped by their functionality, and they just happen to all exist on the same layer.
+
+This hybrid approach allows us to reap the benefits of both modules: we get the intuitive module layout of organizing by function (if you want to edit a viewmodel, find the viewmodel folder) and the ease-of-adherence to clean architecture through the examination of module imports.
 
 ## Design Patterns
 
@@ -36,11 +56,21 @@ The observer pattern was used implicitly through the android library through Sta
 
 Pull Requests were used extensively throughout our project [which can be seen here](https://github.com/CSC207-UofT/course-project-trackr/pulls?q=). They allowed us to discuss various changes, as well as allowed others to review any changes and give their own feedback. The pull requests also allowed us to make sure all changes being merged into our main branch was error free.
 
+We also leveraged the Code Review features that are baked into pull requests, including code-block level commenting and the approve-reject system. These features allowed us to specifically identify points in a pull request that we felt weren't up to standard, or points which might require further elaboration and design discussion.
+
+Pull request drafts were also used as a method of showing potential contributors what was currently being worked on, but not yet ready for merging. This use allowed us to avoid the mistake of duplicate work and to share with each other how a future interface might function with respect to the application.
+
 We used Github Issues as a TODO list. This allowed us to keep track of all the features we need to complete and assign tasks to each person. It also allows us to make sure that no two people are working on the same feature independely (unaware of each other), which may have led to code conflicts.
+
+Github actions was recently configured to make sure the project builds, which allows us to make sure the main branch always builds and prevents any errors that prevent the project from building to be merged in.
 
 ## Code Style and Documentation
 
 ## Testing
+
+Our application's data access objects, notification system and calendar view have a robust test suite to ensure proper access and storage of user information.
+Since these serve as our application's primary use cases and interfaces, it is critical that we are sure they are working properly.
+Every method used to read or write to the database has its own test.
 
 ## Refactoring 
 

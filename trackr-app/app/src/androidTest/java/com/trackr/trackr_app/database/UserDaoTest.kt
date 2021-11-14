@@ -16,6 +16,8 @@ import org.junit.runner.RunWith
 import java.io.IOException
 import java.lang.Exception
 
+// Tests were based off of the Android Room DB codelabs repo:
+// https://github.com/googlecodelabs/android-room-with-a-view/blob/kotlin/app/src/androidTest/java/com/example/android/roomwordssample/WordDaoTest.kt
 @RunWith(AndroidJUnit4::class)
 class UserDaoTest {
 
