@@ -13,7 +13,12 @@ import javax.inject.Inject
 import kotlin.collections.HashSet
 
 /**
- * A viewmodel that is responsible for managing the state of the calendar screen.
+ * A viewmodel that is responsible for managing the state and the business logic of the
+ * calendar screen.
+ * @param eventRepository an instance of the EventRepository used to fetch event data from
+ * the database
+ * @param personRepository an instance of the PersonRepository used to fetch person data from
+ * the database.
  */
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
