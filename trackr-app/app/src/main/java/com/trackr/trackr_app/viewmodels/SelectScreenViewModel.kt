@@ -17,6 +17,9 @@ class SelectScreenViewModel @Inject constructor(
     ): ViewModel() {
     val allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
 
+    /**
+     * Initialize the allEvents list to display all events.
+     */
     init {
         viewModelScope.launch {
             eventRepository.allEvents.collect {
