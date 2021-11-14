@@ -32,6 +32,7 @@ import com.trackr.trackr_app.viewmodels.TrackrEventOutput
 import java.time.format.TextStyle
 import java.util.*
 
+
 @Composable
 fun HomeScreenActivity(
         viewModel: HomeScreenViewModel,
