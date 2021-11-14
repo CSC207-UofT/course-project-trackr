@@ -5,6 +5,10 @@ import com.trackr.trackr_app.model.TrackrEvent
 import java.time.LocalDate
 import java.util.*
 
+/**
+ * A wrapper class used by the UI to display data
+ * instead of directly depending on the TrackrEvent entity
+ */
 class TrackrEventOutput(event: TrackrEvent, person: Person, currentYear: Int) {
     val id = event.id
     val personId = event.person_id
