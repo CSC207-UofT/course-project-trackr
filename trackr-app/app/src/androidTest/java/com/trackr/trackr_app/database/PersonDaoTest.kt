@@ -3,6 +3,7 @@ package com.trackr.trackr_app.database
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.User
 import junit.framework.TestCase
@@ -13,9 +14,13 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import java.io.IOException
 import java.lang.Exception
 
+// Tests were based off of the Android Room DB codelabs repo:
+// https://github.com/googlecodelabs/android-room-with-a-view/blob/kotlin/app/src/androidTest/java/com/example/android/roomwordssample/WordDaoTest.kt
+@RunWith(AndroidJUnit4::class)
 class PersonDaoTest {
     private lateinit var userDao: UserDao
     private lateinit var personDao: PersonDao
