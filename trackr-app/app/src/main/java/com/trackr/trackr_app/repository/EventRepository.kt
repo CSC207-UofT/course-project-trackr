@@ -50,6 +50,11 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
     }
 
     @WorkerThread
+    suspend fun editFirstYear(new_year: Int, event: TrackrEvent) {
+        eventDao.editFirstYear(new_year, event.id, event.person_id)
+    }
+
+    @WorkerThread
     suspend fun editInterval(new_interval: Int, trackrEvent: TrackrEvent) {
         eventDao.editInterval(new_interval, trackrEvent.id, trackrEvent.person_id)
     }

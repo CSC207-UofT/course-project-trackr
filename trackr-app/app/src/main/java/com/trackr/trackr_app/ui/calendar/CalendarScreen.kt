@@ -28,6 +28,7 @@ fun CalendarScreenActivity(
     val selectedDate by calendarViewModel.selectedDate
     val events by calendarViewModel.selectedEvents.observeAsState(listOf())
     val eventDates by calendarViewModel.eventDates.observeAsState(setOf())
+
     Column {
         Calendar(
             selectedDate,

@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.trackr.trackr_app.MainActivity
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
@@ -74,14 +75,10 @@ fun MainScreen() {
             composable("Home") { HomeScreenActivity(hiltViewModel(), navController) }
             composable("Add") { AddScreenActivity(hiltViewModel(), navController) }
             composable("Select") { SelectScreenActivity(hiltViewModel(), navController) }
-            composable("Edit/{eventId}") { backStackEntry ->
-                backStackEntry.arguments!!.getString("eventId")?.let { it1 ->
+            composable("Edit/{eventId}") {
                     EditScreenActivity(
                         hiltViewModel(),
-                        navController,
-                        it1
-                    )
-                }
+                        navController)
             }
             composable("Calendar") {
                 CalendarScreenActivity(hiltViewModel(), navController)

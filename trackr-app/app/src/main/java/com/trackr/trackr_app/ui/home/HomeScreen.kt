@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.ui.shared.EventCard
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.allGradients
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
@@ -136,38 +137,7 @@ fun EventList(
         ) {
             items(events.count()) { index ->
                 val event = events[index]
-                Surface(
-                        modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    navController.navigate("Edit/${event.id}")
-                                },
-                        shape = RoundedCornerShape(20),
-                ) {
-                    Row(
-                            modifier = Modifier
-                                    .background(
-                                            brush = Brush.horizontalGradient(
-                                                    colors = allGradients[index % 3]
-                                            )
-                                    )
-                                    .padding(20.dp)
-
-                    ) {
-                        Column {
-                            Text("${event.firstName} ${event.lastName}'s " +
-                                if (event.type == 0) "Birthday" else "Anniversary",
-                                fontFamily = Rubik,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text(
-                                event.date.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) +
-                                        " ${event.date.dayOfMonth}"
-                            )
-                        }
-                    }
-                }
+                EventCard(navController = navController, index = index, event = event)
             }
         }
     }

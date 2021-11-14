@@ -7,8 +7,15 @@ import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
+/**
+ * A viewmodel that manages the state of the event select screen.
+ * This viewmodel is responsible for all the business logic required for the select screen.
+ * @param eventRepository an instance of the EventRepository used to fetch event data
+ * @param personRepository an instance of the PersonRepository used to fetch person data
+ */
 @HiltViewModel
 class SelectScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
@@ -16,6 +23,9 @@ class SelectScreenViewModel @Inject constructor(
     ): ViewModel() {
     val allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
 
+    /**
+     * Initialize the allEvents list to display all events.
+     */
     init {
         viewModelScope.launch {
             eventRepository.allEvents.collect {
@@ -23,7 +33,8 @@ class SelectScreenViewModel @Inject constructor(
                 for (event in it) {
                     eventList.add(
                         TrackrEventOutput(event,
-                        personRepository.getPersonById(event.person_id)
+                        personRepository.getPersonById(event.person_id),
+                            Calendar.getInstance().get(Calendar.YEAR)
                         )
                     )
                 }

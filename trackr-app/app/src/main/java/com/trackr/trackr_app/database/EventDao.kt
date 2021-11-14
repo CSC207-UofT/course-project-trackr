@@ -37,6 +37,9 @@ interface EventDao {
     @Query("UPDATE `event-table` SET date = :new_date WHERE id = :id AND person_id = :person_id")
     suspend fun editDate(new_date: Long, id: String, person_id: String)
 
+    @Query("UPDATE `event-table` SET firstYear = :new_year WHERE id = :id AND person_id = :person_id")
+    suspend fun editFirstYear(new_year: Int, id: String, person_id: String)
+
     @Query("UPDATE `event-table` SET reminder_interval = :new_interval WHERE id = :id AND person_id = :person_id")
     suspend fun editInterval(new_interval: Int, id: String, person_id: String)
 
