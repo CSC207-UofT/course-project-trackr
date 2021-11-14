@@ -1,6 +1,10 @@
 package com.trackr.trackr_app.viewmodels
 
 import android.content.Context
+import android.media.metrics.Event
+import android.util.Log
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.asLiveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -8,6 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.EventDao
 import com.trackr.trackr_app.database.TrackrDatabase
 import com.trackr.trackr_app.di.DatabaseModule
+import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
 import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.notification.EventNotificationManager_Factory
@@ -26,20 +31,28 @@ import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
 class AddScreenViewModelTest : TestCase() {
-
+    private lateinit var db: TrackrDatabase
+    private lateinit var eventRepository: EventRepository
     private lateinit var viewModel: AddScreenViewModel
 
     @Before
     public override fun setUp() {
         super.setUp()
         val context = ApplicationProvider.getApplicationContext<Context>()
-        val db = Room.inMemoryDatabaseBuilder(context, TrackrDatabase::class.java)
+        db = Room.inMemoryDatabaseBuilder(context, TrackrDatabase::class.java)
             .allowMainThreadQueries().build()
-        val userDao = UserRepository(db.userDao())
-        val personDao = PersonRepository(db.personDao())
-        val eventDao = EventRepository(db.eventDao())
+        val userRepository = UserRepository(db.userDao())
+        val personRepository = PersonRepository(db.personDao())
+        eventRepository = EventRepository(db.eventDao())
         val eventNotificationManager = EventNotificationManager(context)
-        viewModel = AddScreenViewModel(eventDao, personDao, userDao, eventNotificationManager)
+        viewModel = AddScreenViewModel(
+                eventRepository, personRepository, userRepository, eventNotificationManager)
+    }
+
+    @After
+    @Throws(IOException::class)
+    fun closeDatabase() {
+        db.close()
     }
 
     @Test
@@ -68,21 +81,21 @@ class AddScreenViewModelTest : TestCase() {
     fun testChangeMonth(){
         viewModel.changeMonth("Feb")
         val result = viewModel.eventDate.value
-        assertEquals(LocalDate.of(2021, 2, 14), result)
+        assertEquals(LocalDate.now().withMonth(2), result)
     }
 
     @Test
     fun testChangeDay(){
         viewModel.changeDay(2)
         val result = viewModel.eventDate.value
-        assertEquals(LocalDate.of(2021, 11, 2), result)
+        assertEquals(LocalDate.now().withDayOfMonth(2), result)
     }
 
     @Test
     fun testChangeYear(){
         viewModel.changeYear(2022)
         val result = viewModel.eventDate.value
-        assertEquals(LocalDate.of(2022, 11, 14), result)
+        assertEquals(LocalDate.now().withYear(2022), result)
     }
 
     @Test
@@ -94,7 +107,9 @@ class AddScreenViewModelTest : TestCase() {
 
     @Test
     fun testAddEvent() = runBlocking {
-        // TODO help plz
+        viewModel.addEvent()
+        val result = eventRepository.allEvents.first()
+        assertNotNull(result[0])
     }
 
 
