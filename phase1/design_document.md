@@ -62,6 +62,8 @@ Pull request drafts were also used as a method of showing potential contributors
 
 We used Github Issues as a TODO list. This allowed us to keep track of all the features we need to complete and assign tasks to each person. It also allows us to make sure that no two people are working on the same feature independely (unaware of each other), which may have led to code conflicts.
 
+Github actions was recently configured to make sure the project builds, which allows us to make sure the main branch always builds and prevents any errors that prevent the project from building to be merged in.
+
 ## Code Style and Documentation
 
 ## Testing
