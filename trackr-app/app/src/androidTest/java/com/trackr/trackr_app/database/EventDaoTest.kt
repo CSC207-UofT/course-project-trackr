@@ -45,16 +45,18 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetEvent() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(1999, 1, 1).toEpochDay(),
-                7,
-                0)
+        val event1 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(1999, 1, 1).toEpochDay(),
+            1999,
+            7,
+                0
+        )
         eventDao.insert(event1)
         val eventsFromDatabase = eventDao.listAll().first()
         assertEquals(event1.id, eventsFromDatabase[0].id)
@@ -63,26 +65,29 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun getAllEvents() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
+        val event1 = TrackrEvent(
+                person.id,
                 0,
                 LocalDate.of(1999, 1, 1).toEpochDay(),
+                1999,
                 7,
                 0)
-        val event2 = TrackrEvent("22222222-2222-2222-222222222222",
-                "01010101-0101-0101-010101010101",
+        val event2 = TrackrEvent(
+                person.id,
                 0,
                 LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
                 3,
                 0)
-        val event3 = TrackrEvent("33333333-3333-3333-333333333333",
-                "01010101-0101-0101-010101010101",
+        val event3 = TrackrEvent(
+                person.id,
                 0,
                 LocalDate.of(2004, 4, 1).toEpochDay(),
+                2004,
                 3,
                 0)
         eventDao.insert(event1)
@@ -98,28 +103,31 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun listFromRange() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
+        val event1 = TrackrEvent(
+                person.id,
                 0,
                 LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
                 7,
                 0)
         eventDao.insert(event1)
-        val event2 = TrackrEvent("22222222-2222-2222-222222222222",
-                "01010101-0101-0101-010101010101",
+        val event2 = TrackrEvent(
+                person.id,
                 0,
                 LocalDate.of(2004, 1, 2).toEpochDay(),
+            2004,
                 3,
                 0)
         eventDao.insert(event2)
-        val event3 = TrackrEvent("33333333-3333-3333-333333333333",
-                "01010101-0101-0101-010101010101",
+        val event3 = TrackrEvent(
+                person.id,
                 0,
                 LocalDate.of(2004, 1, 4).toEpochDay(),
+            2004,
                 3,
                 0)
         eventDao.insert(event3)
@@ -133,23 +141,23 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun betweenTwoIdenticalDates() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-
-
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-            "01010101-0101-0101-010101010101",
+        val event1 = TrackrEvent(
+            person.id,
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
             7,
             0)
         eventDao.insert(event1)
-        val event2 = TrackrEvent("22222222-2222-2222-222222222222",
-            "01010101-0101-0101-010101010101",
+        val event2 = TrackrEvent(
+            person.id,
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
             3,
             0)
         eventDao.insert(event2)
@@ -164,23 +172,25 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun deleteAll() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(1999, 1, 1).toEpochDay(),
-                7,
-                0)
+        val event1 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
+            7,
+            0)
         eventDao.insert(event1)
-        val event2 = TrackrEvent("22222222-2222-2222-222222222222",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(2004, 1, 1).toEpochDay(),
-                3,
-                0)
+        val event2 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(2004, 1, 2).toEpochDay(),
+            2004,
+            3,
+            0)
         eventDao.insert(event2)
         eventDao.deleteAll()
         val eventsFromDatabase = eventDao.listAll().first()
@@ -190,23 +200,25 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun delete() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(1999, 1, 1).toEpochDay(),
-                7,
-                0)
-        val event2 = TrackrEvent("22222222-2222-2222-222222222222",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(2004, 1, 1).toEpochDay(),
-                3,
-                0)
+        val event1 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
+            7,
+            0)
         eventDao.insert(event1)
+        val event2 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(2004, 1, 2).toEpochDay(),
+            2004,
+            3,
+            0)
         eventDao.insert(event2)
         eventDao.delete(event1.id, event1.person_id)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -217,16 +229,17 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun editDate() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(1999, 1, 1).toEpochDay(),
-                7,
-                0)
+        val event1 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
+            7,
+            0)
         eventDao.insert(event1)
         eventDao.editDate(event1.date + 1, event1.id, event1.person_id)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -236,16 +249,17 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun editInterval() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(1999, 1, 1).toEpochDay(),
-                7,
-                0)
+        val event1 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
+            7,
+            0)
         eventDao.insert(event1)
         eventDao.editInterval(14, event1.id, event1.person_id)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -255,16 +269,17 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun editPerson() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
-        personDao.insert(person)
-        val person2 = Person("10101010-1010-1010-101010101010", "12345678-1234-1234-123456781234", "patrick", "star")
+        val person1 = Person(user.id, "sponge", "bob")
+        personDao.insert(person1)
+        val person2 = Person(user.id, "patrick", "star")
         personDao.insert(person2)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
+        val event1 = TrackrEvent(
+                person1.id,
                 0,
                 LocalDate.of(1999, 1, 1).toEpochDay(),
+            1999,
                 7,
                 0)
         eventDao.insert(event1)
@@ -276,16 +291,17 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun editType() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(1999, 1, 1).toEpochDay(),
-                7,
-                0)
+        val event1 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
+            7,
+            0)
         eventDao.insert(event1)
         eventDao.editType(1, event1.id, event1.person_id)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -295,20 +311,21 @@ class EventDaoTest {
     @Test
     @Throws(Exception::class)
     fun confirmDateAccuracy() = runBlocking {
-        val user = User("12345678-1234-1234-123456781234", "test")
+        val user = User("test")
         userDao.insert(user)
-        val person = Person("01010101-0101-0101-010101010101", "12345678-1234-1234-123456781234", "sponge", "bob")
+        val person = Person(user.id, "sponge", "bob")
         personDao.insert(person)
-        val event1 = TrackrEvent("00000000-0000-0000-000000000000",
-                "01010101-0101-0101-010101010101",
-                0,
-                LocalDate.of(2004, 7, 16).toEpochDay(),
-                7,
-                0)
+        val event1 = TrackrEvent(
+            person.id,
+            0,
+            LocalDate.of(2004, 1, 1).toEpochDay(),
+            2004,
+            7,
+            0)
         eventDao.insert(event1)
         val eventsFromDatabase = eventDao.listAll().first()
-        val expected = LocalDate.of(2004, 7, 16)
-        val actual = LocalDate.ofEpochDay(eventsFromDatabase[0].date.toLong())
+        val expected = LocalDate.of(2004, 1, 1)
+        val actual = LocalDate.ofEpochDay(eventsFromDatabase[0].date)
         assertEquals(actual, expected)
     }
 }
