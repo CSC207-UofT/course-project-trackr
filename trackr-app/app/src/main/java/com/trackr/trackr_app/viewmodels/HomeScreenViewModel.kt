@@ -5,6 +5,7 @@ import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
@@ -35,7 +36,7 @@ class HomeScreenViewModel @Inject constructor(
      */
     init {
         viewModelScope.launch {
-            eventRepository.allEvents.collect {
+            eventRepository.allEvents.collectLatest {
                 val allEventsList = mutableListOf<TrackrEventOutput>()
 
                 for (event in it) {
@@ -54,7 +55,7 @@ class HomeScreenViewModel @Inject constructor(
             eventRepository.listFromRange(
                 LocalDate.now().withYear(1970),
                 LocalDate.now().withYear(1970)
-            ).collect {
+            ).collectLatest {
                 val eventsTodayList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
                     eventsTodayList.add(TrackrEventOutput(event,

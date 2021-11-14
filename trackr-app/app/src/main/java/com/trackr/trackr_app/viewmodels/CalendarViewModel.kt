@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
@@ -84,12 +84,12 @@ class CalendarViewModel @Inject constructor(
                     _selectedDate.value.withYear(1970),
                     _selectedDate.value.withYear(1970)
                 )
-                .collect {
+                .collectLatest {
                     val eventsOnSelectedDate = mutableListOf<TrackrEventOutput>()
                     for (event in it) {
                         eventsOnSelectedDate.add(
                             TrackrEventOutput(event,
-                            personRepository.getPersonById(event.person_id),
+                                personRepository.getPersonById(event.person_id),
                                 Calendar.getInstance().get(Calendar.YEAR))
                         )
                     }
@@ -103,7 +103,7 @@ class CalendarViewModel @Inject constructor(
      */
     private fun updateEventDates() {
         viewModelScope.launch {
-            eventsThisMonth.collect {
+            eventsThisMonth.collectLatest {
                 val dates = HashSet<LocalDate>()
                 for (event in it) {
                     dates.add(LocalDate.ofEpochDay(event.date))
