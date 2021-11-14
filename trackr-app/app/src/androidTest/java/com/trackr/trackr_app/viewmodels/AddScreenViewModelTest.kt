@@ -1,21 +1,13 @@
 package com.trackr.trackr_app.viewmodels
 
 import android.content.Context
-import android.media.metrics.Event
 import android.util.Log
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.asLiveData
-import androidx.room.Database
+
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.trackr.trackr_app.database.EventDao
 import com.trackr.trackr_app.database.TrackrDatabase
-import com.trackr.trackr_app.di.DatabaseModule
-import com.trackr.trackr_app.model.TrackrEvent
-import com.trackr.trackr_app.model.User
 import com.trackr.trackr_app.notification.EventNotificationManager
-import com.trackr.trackr_app.notification.EventNotificationManager_Factory
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import com.trackr.trackr_app.repository.UserRepository
@@ -107,10 +99,8 @@ class AddScreenViewModelTest : TestCase() {
 
     @Test
     fun testAddEvent() = runBlocking {
-        viewModel.addEvent()
+        viewModel.addEvent().join()
         val result = eventRepository.allEvents.first()
         assertNotNull(result[0])
     }
-
-
 }
