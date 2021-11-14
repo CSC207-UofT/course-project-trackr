@@ -3,10 +3,8 @@ name: Android CI
 on:
   push:
     branches: [ main ]
-    paths: 'trackr-app/**'
   pull_request:
     branches: [ main ]
-    paths: 'trackr-app/**'
 
 jobs:
   build:
@@ -21,6 +19,9 @@ jobs:
         distribution: 'adopt'
         cache: gradle
 
+    - name: Copy CI gradle.properties
+      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+        
     - name: Grant execute permission for gradlew
       working-directory: 'trackr-app'
       run: chmod +x gradlew
