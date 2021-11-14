@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.trackr.trackr_app.ui.home.EventList
+import com.trackr.trackr_app.ui.shared.EventList
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.CalendarViewModel
 import java.time.LocalDate
