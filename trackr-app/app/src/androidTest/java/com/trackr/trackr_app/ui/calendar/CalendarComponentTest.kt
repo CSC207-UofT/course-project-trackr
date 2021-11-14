@@ -11,6 +11,7 @@ import java.time.LocalDate
 
 
 class CalendarComponentTest {
+
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
@@ -20,6 +21,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                setOf(),
                 Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
@@ -36,6 +38,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                setOf(),
                 Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
@@ -52,6 +55,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                setOf(),
                 Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
@@ -69,6 +73,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                setOf(),
                 Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
@@ -85,6 +90,7 @@ class CalendarComponentTest {
         composeTestRule.setContent {
             Calendar(
                 selectedDate,
+                setOf(),
                 Modifier,
                 {selectedDate = selectedDate.withDayOfMonth(it)},
                 {selectedDate = selectedDate.plusMonths(it)}
