@@ -46,7 +46,7 @@ Pull Requests were used extensively throughout our project [which can be seen he
 
 We also leveraged the Code Review features that are baked into pull requests, including code-block level commenting and the approve-reject system. These features allowed us to specifically identify points in a pull request that we felt weren't up to standard, or points which might require further elaboration and design discussion.
 
-Pull request drafts were also used as a method of showing potential contributers what was currently being worked on, but not yet ready for merging (to avoid the mistake of duplicate work and to share how an interface might function).
+Pull request drafts were also used as a method of showing potential contributors what was currently being worked on, but not yet ready for merging. This use allowed us to avoid the mistake of duplicate work and to share with each other how a future interface might function with respect to the application.
 
 We used Github Issues as a TODO list. This allowed us to keep track of all the features we need to complete and assign tasks to each person. It also allows us to make sure that no two people are working on the same feature independely (unaware of each other), which may have led to code conflicts.
 
