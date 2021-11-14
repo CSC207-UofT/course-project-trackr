@@ -12,6 +12,14 @@ import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * The view model for the EditScreen which manages the data that appears on the EditScreen page
+ * @param eventRepository an instance of the EventRepository class that can be used to store new
+ * events in the data base
+ * @param personRepository an instance of the PersonRepository class that can be used store new
+ * persons in the data base
+ * @param eventNotificationManager used to set a notification upon event creation
+ */
 @HiltViewModel
 class EditScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
@@ -23,6 +31,7 @@ class EditScreenViewModel @Inject constructor(
 
     private val eventID: String = state.get<String>("eventId")!!
 
+    //Define variables for the input fields
     private val _eventName = mutableStateOf("Birthday")
     val eventName: State<String> get() = _eventName
 
@@ -37,11 +46,12 @@ class EditScreenViewModel @Inject constructor(
     private val _personName = mutableStateOf("")
     val personName: State<String> get() = _personName
 
+    //Get the data from the database for the event we are editing
     init {
         viewModelScope.launch {
             val event = eventRepository.getById(eventID)
             _eventName.value = if (event.type == 0) "Birthday" else "Anniversary"
-            _eventDate.value = LocalDate.ofEpochDay(event.date)
+            _eventDate.value = LocalDate.ofEpochDay(event.date).withYear(event.firstYear)
             _chosenReminder.value = getReminderMap()
                 .entries.associate { (s, i) -> i to s }[event.reminder_interval]!!
 
@@ -50,25 +60,52 @@ class EditScreenViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Edit the name/type of the event (either Birthday or Anniversary)
+     * @param newEventName the value given by the radio buttons
+     */
     fun editEventName(newEventName: String) {
         _eventName.value = newEventName
         eventType = if (newEventName == "Birthday") 0 else 1
     }
 
+    /**
+     * Changes the month of the added event
+     * @param newMonth the value given by the month dropdown
+     */
     fun changeMonth(newMonth: String) {
         _eventDate.value = _eventDate.value
                 .withMonth(getMonths().indexOf(newMonth) + 1)
                 .withDayOfMonth(_eventDate.value.dayOfMonth)
     }
 
+    /**
+     * Changes the day of the added event
+     * @param newDay the value given by the day dropdown
+     */
     fun changeDay(newDay: Int) {
         _eventDate.value = _eventDate.value.withDayOfMonth(newDay)
     }
 
+    /**
+     * Changes the year of the added event
+     * @param newYear the value given by the year dropdown
+     */
+    fun changeYear(newYear: Int) {
+        _eventDate.value = _eventDate.value.withYear(newYear)
+    }
+
+    /**
+     * Changes the the time frame in which to remind the user of the added event
+     * @param newInterval the value given by the reminder interval dropdown
+     */
     fun changeReminderInterval(newInterval: String) {
         _chosenReminder.value = newInterval
     }
 
+    /**
+     * Return a list of all months for the month dropdown
+     */
     fun getMonths(): List<String> {
         return listOf(
                 "Jan",
@@ -86,6 +123,9 @@ class EditScreenViewModel @Inject constructor(
         )
     }
 
+    /**
+     * Return a list of all reminder intervals for the reminder dropdown
+     */
     fun getReminderIntervals(): List<String> {
         return listOf(
             "1 day before",
@@ -96,6 +136,7 @@ class EditScreenViewModel @Inject constructor(
         )
     }
 
+    //Convert the reminder interval to an int using the following mapping
     private fun getReminderMap(): Map<String, Int> {
         return mapOf(
                 "1 day before" to 1,
@@ -105,20 +146,21 @@ class EditScreenViewModel @Inject constructor(
                 "1 month before" to 30
         )
     }
-    /**
-     * Edits/deletes an event using EventRepository
-     */
 
+
+    /**
+     * Aggregate the data that has been inputted and then tell the user, person, and event
+     * repositories to update this data in the database
+     */
     fun editEvent() = viewModelScope.launch {
         val event = eventRepository.getById(eventID)
         val reminderInt: Int = getReminderMap()[chosenReminder.value]!!
       
-        eventRepository.editInterval(reminderInt ?: 1, event)
-        
         eventRepository.editInterval(reminderInt, event)
         
         eventRepository.editDate(eventDate.value.withYear(1970), event)
 
+        eventRepository.editFirstYear(eventDate.value.year, event)
         eventRepository.editType(eventType, event)
 
         //Edit notification

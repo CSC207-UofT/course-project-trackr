@@ -12,11 +12,20 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.HashSet
 
+/**
+ * A viewmodel that is responsible for managing the state and the business logic of the
+ * calendar screen.
+ * @param eventRepository an instance of the EventRepository used to fetch event data from
+ * the database
+ * @param personRepository an instance of the PersonRepository used to fetch person data from
+ * the database.
+ */
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
 ): ViewModel() {
+
     private val _selectedDate: MutableState<LocalDate> = mutableStateOf(LocalDate.now())
     val selectedDate: State<LocalDate> get() = _selectedDate
 
@@ -32,7 +41,9 @@ class CalendarViewModel @Inject constructor(
     private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
     val eventDates: LiveData<Set<LocalDate>> get() = _eventDates
 
-    
+    /**
+     * initialize the eventDates and selectedEvents lists to reflect the newest data
+     */
     init {
         updateSelectedEvents()
         updateEventDates()
@@ -63,6 +74,9 @@ class CalendarViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Update the list of selected events to reflect any changes and new events added
+     */
     private fun updateSelectedEvents() {
         viewModelScope.launch {
             eventRepository
@@ -84,6 +98,9 @@ class CalendarViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Update the set of dates of all events this month
+     */
     private fun updateEventDates() {
         viewModelScope.launch {
             eventsThisMonth.collect {
