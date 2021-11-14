@@ -31,7 +31,6 @@ class CalendarViewModel @Inject constructor(
 
     private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
     val eventDates: LiveData<Set<LocalDate>> get() = _eventDates
-
     
     init {
         updateSelectedEvents()

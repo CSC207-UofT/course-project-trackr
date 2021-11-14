@@ -157,8 +157,6 @@ class EditScreenViewModel @Inject constructor(
         val event = eventRepository.getById(eventID)
         val reminderInt: Int = getReminderMap()[chosenReminder.value]!!
       
-        eventRepository.editInterval(reminderInt ?: 1, event)
-        
         eventRepository.editInterval(reminderInt, event)
         
         eventRepository.editDate(eventDate.value.withYear(1970), event)
