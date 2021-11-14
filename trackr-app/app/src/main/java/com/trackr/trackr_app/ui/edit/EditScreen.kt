@@ -79,6 +79,12 @@ fun EditScreenActivity(
                     getter = {eventDate.dayOfMonth},
                     options = (1..eventDate.lengthOfMonth()).map{it}
                 )
+                },
+                {InteractiveDropdownWidget(
+                    setter = {year: Int -> viewModel.changeYear(year)},
+                    getter = {eventDate.year},
+                    options = (1900..2100).map{it}
+                )
                 }
             )
             )
