@@ -10,6 +10,12 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * A viewmodel that manages the state of the event select screen.
+ * This viewmodel is responsible for all the business logic required for the select screen.
+ * @param eventRepository an instance of the EventRepository used to fetch event data
+ * @param personRepository an instance of the PersonRepository used to fetch person data
+ */
 @HiltViewModel
 class SelectScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
