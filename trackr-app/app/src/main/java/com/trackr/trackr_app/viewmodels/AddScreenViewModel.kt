@@ -27,7 +27,6 @@ import javax.inject.Inject
  * users in the data base
  * @param eventNotificationManager used to set a notification upon event creation
  */
-
 @HiltViewModel
 class AddScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,

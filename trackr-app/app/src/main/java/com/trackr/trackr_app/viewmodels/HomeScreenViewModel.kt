@@ -14,6 +14,9 @@ import javax.inject.Inject
  * A viewmodel that manages the state of the home screen view.
  * This viewmodel manages all the data and business logic required for
  * the homescreen to work.
+ * @param eventRepository the EventRepository instance used to fetch events from the database
+ * @param personRepository the PersonRepository instance used to retrieve person data from the
+ * database
  */
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
