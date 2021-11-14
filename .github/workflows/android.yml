@@ -3,8 +3,10 @@ name: Android CI
 on:
   push:
     branches: [ main ]
+    paths: 'trackr-app'
   pull_request:
     branches: [ main ]
+    paths: 'trackr-app'
 
 jobs:
   build:
@@ -35,9 +37,6 @@ jobs:
       - name: Grant execute permission for gradlew
         working-directory: 'trackr-app'
         run: chmod +x gradlew
-        
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
       
       - name: Instrumentation Tests
         uses: reactivecircus/android-emulator-runner@v2
