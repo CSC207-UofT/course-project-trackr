@@ -3,10 +3,10 @@ name: Android CI
 on:
   push:
     branches: [ main ]
-    paths: 'trackr-app'
+    paths: 'trackr-app/**'
   pull_request:
     branches: [ main ]
-    paths: 'trackr-app'
+    paths: 'trackr-app/**'
 
 jobs:
   build:
