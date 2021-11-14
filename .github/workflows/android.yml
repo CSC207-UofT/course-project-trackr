@@ -28,7 +28,6 @@ jobs:
       run: ./gradlew build
       
   android_tests:
-    needs: build
     runs-on: [ macos-latest ]
     steps:
       - uses: actions/checkout@v2
