@@ -34,6 +34,10 @@ The observer pattern was used implicitly through the android library through Sta
 
 ## Use of Github Features
 
+Pull Requests were used extensively throughout our project [which can be seen here](https://github.com/CSC207-UofT/course-project-trackr/pulls?q=). They allowed us to discuss various changes, as well as allow others to review any changes and give their own feedback. The pull requests also allowed us to make sure all changes being merged into our main branch was error free.
+
+We used Github Issues as a TODO list. This allowed us to keep track of all the features we need to complete and assign tasks to each person. It also allows us to make sure that no two people are working on the same feature independely (unaware of each other), which may have led to code conflicts.
+
 ## Code Style and Documentation
 
 ## Testing
