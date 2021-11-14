@@ -16,8 +16,6 @@ class HomeScreenViewModel @Inject constructor(
     eventRepository: EventRepository,
     private val personRepository: PersonRepository,
     ): ViewModel() {
-
-
     private val _allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
     val allEvents get() = _allEvents
 
