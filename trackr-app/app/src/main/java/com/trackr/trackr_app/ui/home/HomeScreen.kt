@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.shared.EventCard
+import com.trackr.trackr_app.ui.shared.EventList
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.allGradients
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
@@ -108,39 +109,6 @@ fun HomeFeed(
                 modifier = Modifier.fillMaxWidth(),
                 navController,
         )
-    }
-}
-
-@Composable
-fun EventList(
-    events: List<TrackrEventOutput>,
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-) {
-    if (events.isEmpty()) {
-        Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-        ) {
-            Text(
-                    stringResource(R.string.no_events),
-                    fontFamily = Rubik,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-            )
-        }
-    } else {
-        LazyColumn(
-                modifier = modifier,
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            items(events.count()) { index ->
-                val event = events[index]
-                EventCard(navController = navController, index = index, event = event)
-            }
-        }
     }
 }
 
