@@ -35,6 +35,10 @@ to `trackr-app/app/src/androidTest/java/com/trackr/trackr_app`, right click on t
 
 ## Running the project
 
+You can download the apk from the [latest release](https://github.com/CSC207-UofT/course-project-trackr/releases) and download the app on any android device with APK level 26+
+
+OR
+
 - Navigate to `trackr/src/main/java/Main.java` and press the play icon next to the class
   declaration or the main function declaration.
 - Here are some sample commands:
