@@ -1,7 +1,6 @@
 package com.trackr.trackr_app.viewmodels
 
 import android.content.Context
-import android.util.Log
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider

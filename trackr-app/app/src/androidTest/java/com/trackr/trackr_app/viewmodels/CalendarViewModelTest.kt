@@ -1,21 +1,21 @@
 package com.trackr.trackr_app.viewmodels
 
 import android.content.Context
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.TrackrDatabase
-import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
-import com.trackr.trackr_app.repository.UserRepository
 import org.junit.Assert.*
 
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import java.time.LocalDate
 
+@RunWith(AndroidJUnit4::class)
 class CalendarViewModelTest {
     private lateinit var db: TrackrDatabase
     private lateinit var viewModel: CalendarViewModel
