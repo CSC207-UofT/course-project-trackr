@@ -30,7 +30,7 @@ This hybrid approach allows us to reap the benefits of both modules: we get the 
 
 ### Dependency Injection 
 
-We used dependency injection extensively throughout our program. We injected our data access object interfaces into the repositories classes which was then injected again into all our viewmodel classes. This was all done with a library called Hilt which makes dependency injection much easier and removes all the boilerplate code required. This resulted in a very loosely coupled classes and substitute the repositories with their subclasses if we wish to create them.
+We used dependency injection extensively throughout our program. We injected our data access object interfaces into the repositories classes which was then injected again into all our viewmodel classes. This was all done with a library called Hilt which makes dependency injection much easier and removes all the boilerplate code required. This resulted in a very loosely coupled classes and allows us to substitute the repositories with their subclasses (if we wish to create them).
 
 ### Singleton Pattern
 
@@ -41,6 +41,10 @@ We used the Singleton pattern to create a Single instance of the database, repos
 The observer pattern was used implicitly through the android library through State and LiveData classes. The LiveData and State classes provided by the android library allow the UI to observe any changes that happen to the data wrapped by a State or LiveData class. This allows all changes that happen to the LiveData and State data through the viewmodels to propogate up to the UI without the viewmodel explicitly depending on the UI (which is against clean architecture). Since the UI is observing this data, it will update itself accordingly instead of having another class explicitly tell it when to update.
 
 ## Use of Github Features
+
+Pull Requests were used extensively throughout our project [which can be seen here](https://github.com/CSC207-UofT/course-project-trackr/pulls?q=). They allowed us to discuss various changes, as well as allowed others to review any changes and give their own feedback. The pull requests also allowed us to make sure all changes being merged into our main branch was error free.
+
+We used Github Issues as a TODO list. This allowed us to keep track of all the features we need to complete and assign tasks to each person. It also allows us to make sure that no two people are working on the same feature independely (unaware of each other), which may have led to code conflicts.
 
 ## Code Style and Documentation
 
