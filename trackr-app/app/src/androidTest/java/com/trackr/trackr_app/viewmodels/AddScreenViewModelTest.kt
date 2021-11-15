@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.TrackrDatabase
+import com.trackr.trackr_app.manager.EventManager
+import com.trackr.trackr_app.manager.PersonManager
 import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
@@ -37,7 +39,9 @@ class AddScreenViewModelTest : TestCase() {
         eventRepository = EventRepository(db.eventDao())
         val eventNotificationManager = EventNotificationManager(context)
         viewModel = AddScreenViewModel(
-                eventRepository, personRepository, userRepository, eventNotificationManager)
+                eventRepository, personRepository, userRepository, eventNotificationManager,
+                EventManager(), PersonManager()
+        )
     }
 
     @After
