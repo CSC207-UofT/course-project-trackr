@@ -171,7 +171,7 @@ class AddScreenViewModel @Inject constructor(
         val newEvent = TrackrEvent(
                 newPerson.id,
                 eventType,
-                eventDate.value.withYear(1970)
+                eventDate.value.withYear(2008)
                     .toEpochDay(),
                 eventDate.value.year,
                 reminderInt,

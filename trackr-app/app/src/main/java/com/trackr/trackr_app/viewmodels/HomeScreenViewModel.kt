@@ -53,8 +53,8 @@ class HomeScreenViewModel @Inject constructor(
         }
         viewModelScope.launch {
             eventRepository.listFromRange(
-                LocalDate.now().withYear(1970),
-                LocalDate.now().withYear(1970)
+                LocalDate.now().withYear(2008),
+                LocalDate.now().withYear(2008)
             ).collectLatest {
                 val eventsTodayList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {

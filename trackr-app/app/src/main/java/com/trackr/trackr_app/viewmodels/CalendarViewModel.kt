@@ -34,8 +34,8 @@ class CalendarViewModel @Inject constructor(
 
     private val eventsThisMonth get() = eventRepository
         .listFromRange(
-            _selectedDate.value.withYear(1970).withDayOfMonth(1),
-            _selectedDate.value.withYear(1970).withDayOfMonth(_selectedDate.value.lengthOfMonth())
+            _selectedDate.value.withYear(2008).withDayOfMonth(1),
+            _selectedDate.value.withYear(2008).withDayOfMonth(_selectedDate.value.lengthOfMonth())
         )
 
     private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
@@ -81,8 +81,8 @@ class CalendarViewModel @Inject constructor(
         viewModelScope.launch {
             eventRepository
                 .listFromRange(
-                    _selectedDate.value.withYear(1970),
-                    _selectedDate.value.withYear(1970)
+                    _selectedDate.value.withYear(2008),
+                    _selectedDate.value.withYear(2008)
                 )
                 .collectLatest {
                     val eventsOnSelectedDate = mutableListOf<TrackrEventOutput>()
