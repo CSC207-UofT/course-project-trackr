@@ -4,6 +4,12 @@
 
 - A description of any major design decisions your group has made (along with brief explanations of why you made them).
 
+### Kotlin
+
+While not necessarily a design change, the largest project change we've made between Phase 0 and Phase 1 is our decision to use the Kotlin programming language instead of Java. We had a few reasons for doing this, but most of them revolved around ecosystem and maintainability: Kotlin is simply nicer to work with in the Android development space. 
+
+Jetpack compose, for example, is the framework we are using to programmatically build our application views: it allows us to only use Kotlin to design and structure our interface layouts, allowing us to avoid learning the android-specific of and then using XML. This means that we could keep our code more organized (a single view file instead of a few) and stick with patterns that we were familiar with (Jetpack follows a similar structure to Flutter, which some of us have experience with). Unfortunately, Jetpack compose is only available for Kotlin, and so forced our hand into the language transition.
+
 ## Adherence to Clean Architecture
 
 - A brief description of how your project adheres to Clean Architecture (if you notice a violation and aren't sure how to fix it, talk about that too!)
