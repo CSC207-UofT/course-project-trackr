@@ -10,6 +10,24 @@ While not necessarily a design change, the largest project change we've made bet
 
 Jetpack compose, for example, is the framework we are using to programmatically build our application views: it allows us to only use Kotlin to design and structure our interface layouts, allowing us to avoid learning the android-specific of and then using XML. This means that we could keep our code more organized (a single view file instead of a few) and stick with patterns that we were familiar with (Jetpack follows a similar structure to Flutter, which some of us have experience with). Unfortunately, Jetpack compose is only available for Kotlin, and so forced our hand into the language transition.
 
+### Model-View-ViewModel (MVVM)
+
+One major design choice was to use the MVVM design pattern. We chose this
+design pattern because it helps are program adhere to clean architecture
+as the components are easily divisible into the clean architecture layers.
+View being in frameworks and drivers, view models in interface adapters, and
+model in use cases/entities. Moreover, a lot of the tools that the android
+library provides works well with this design pattern, such as Android's
+ViewModel objects.
+
+### Multiple ViewModels instead of one
+
+Another design choice was to use multiple view models, one for each screen,
+instead of one view model for all screens. This choice was to prevent any
+bloating code smells because we predicted one view model would get too big.
+That would also be a violation of the single responsibility principle as the
+single view model would be responsible for managing multiple screens.
+
 ## Adherence to Clean Architecture
 
 - A brief description of how your project adheres to Clean Architecture (if you notice a violation and aren't sure how to fix it, talk about that too!)
@@ -36,14 +54,17 @@ Here is a UML diagram for our program.
   - Our team did well adhering to the single responsibility principle. Each class
     has one responsibility. As some examples, our screen classes in the drivers/frameworks 
     layer of clean architecture have the single responsibility of inputting/outputting
-    information to the screen/user. We have repositories that have the single responsibility of giving/getting
+    information to the screen/user for their own respective screen. We have a view model
+    for each screen so there is not one big one responsible for too much. 
+    We have repositories that have the single responsibility of giving/getting
     data from the database. We have an EventNotificationManager who's sole responsibility is 
     setting/removing alarms for a notification.
     The only minor violation to the SRP is that our view models (AddScreenViewModel and EditScreenViewModel) 
     hold 2 responsibilities. One is transforming data into a usable form and the other is telling the other
-    classes what to do with this information. If we had more time, we would split these responsibilities
-    into a class that transforms data to and from the screen, and another that takes this information and tells 
-    the other classes what to do.
+    classes what to do with this information. For example, the EditScreenViewModel tells the eventRepository
+    to perform multiple tasks in a series of steps to edit an event. If we had more time, we would split these 
+    responsibilities into a class that transforms data to and from the screen, and another that takes this 
+    information and tells the other classes what to do.
 - Open/closed principle:  
   - Our program adheres to the open/closed principle as well. For example, instead
     we use Android's ViewModel class as a tool that is closed for modification
