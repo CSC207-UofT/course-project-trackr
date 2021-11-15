@@ -1,8 +1,11 @@
 package com.trackr.trackr_app.viewmodels
 
+import android.os.UserManager
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import com.trackr.trackr_app.manager.EventManager
+import com.trackr.trackr_app.manager.PersonManager
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
@@ -32,7 +35,9 @@ class AddScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
     private val userRepository: UserRepository,
-    private val eventNotificationManager: EventNotificationManager
+    private val eventNotificationManager: EventNotificationManager,
+    private val eventManager: EventManager,
+    private val personManager: PersonManager,
 ): ViewModel() {
 
     //Define variables for the input fields
@@ -152,10 +157,7 @@ class AddScreenViewModel @Inject constructor(
         userRepository.insert(defaultUser)
 
         //Add the person specified by the first and last name fields to the database
-        val newPerson = Person(
-            user_id = defaultUser.id,
-            first_name = firstName.value,
-            last_name = lastName.value)
+        val newPerson = personManager.createPerson(defaultUser.id, firstName.value, lastName.value)
         personRepository.insert(newPerson)
 
         //Convert the reminder interval to an int using the following mapping
@@ -168,14 +170,13 @@ class AddScreenViewModel @Inject constructor(
         )[chosenReminder.value]!!
 
         //Add the new event to the database
-        val newEvent = TrackrEvent(
-                newPerson.id,
-                eventType,
-                eventDate.value.withYear(2008)
-                    .toEpochDay(),
-                eventDate.value.year,
-                reminderInt,
-                0)
+        val newEvent = eventManager.createEvent(
+                            newPerson.id,
+                            eventType,
+                            eventDate.value.withYear(2008)
+                                .toEpochDay(),
+                            eventDate.value.year,
+                            reminderInt, 0)
         eventRepository.insert(newEvent)
 
         //Add notification
