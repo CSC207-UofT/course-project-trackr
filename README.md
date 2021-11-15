@@ -4,7 +4,7 @@
 
 ![our epic trackr logo](https://i.imgur.com/CqHlNde.png)
 
-[![Android CI](https://github.com/CSC207-UofT/course-project-trackr/actions/workflows/android.yml/badge.svg)](https://github.com/CSC207-UofT/course-project-trackr/actions/workflows/android.yml)
+[![Android CI](https://github.com/CSC207-UofT/course-project-trackr/actions/workflows/android.yml/badge.svg)](https://github.com/CSC207-UofT/course-project-trackr/actions/workflows/android.yml) [![GitHub Classroom Workflow](https://github.com/menghaoyu2002/course-project-trackr/actions/workflows/classroom.yml/badge.svg)](https://github.com/menghaoyu2002/course-project-trackr/actions/workflows/classroom.yml)
 
 Event Trackr Android app. Allows users to track birthdays and anniversaries of friends and family. 
 
