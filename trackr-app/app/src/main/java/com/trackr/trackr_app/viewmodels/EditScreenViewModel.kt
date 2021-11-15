@@ -158,7 +158,7 @@ class EditScreenViewModel @Inject constructor(
       
         eventRepository.editInterval(reminderInt, event)
         
-        eventRepository.editDate(eventDate.value.withYear(1970), event)
+        eventRepository.editDate(eventDate.value.withYear(2008), event)
 
         eventRepository.editFirstYear(eventDate.value.year, event)
         eventRepository.editType(eventType, event)
