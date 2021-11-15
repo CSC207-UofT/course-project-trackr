@@ -22,7 +22,9 @@ Menghao Yu:
 - integrated Hilt for dependency injection into the project and created the dependency injection modules
 
 Roman Zupancic:
-
+- Refactored event repeat systems
+- Architected and implemented initial Viewmodel architecture
+- Abstracted away various view components for reuse
 
 Jonathan Ginevro:
 
@@ -49,7 +51,9 @@ Menghao Yu:
 - work on improving the achitecture of the project.
 
 Roman Zupancic:
-
+- Clean up various code around viewmodels and views (specifically identifying duplicate code to be abstracted and then depended upon)
+- Attempt (once again) complex event recurrences
+- Help with setting up a remote database that syncs with the local one
 
 Jonathan Ginevro:
 
