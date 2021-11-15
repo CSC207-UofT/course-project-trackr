@@ -36,7 +36,12 @@ which also decreases overall coupling.
     into a class that transforms data to and from the screen, and another that takes this information and tells 
     the other classes what to do.
 - Open/closed principle:  
-  - TODO
+  - Our program adheres to the open/closed principle as well. For example, instead
+    we use Android's ViewModel class as a tool that is closed for modification
+    but open to extension. We extend the ViewModel class to make specific view 
+    models that are needed for our program. This way, whenever we want to create a new screen that
+    requires a new view model, we do not have to modify any old code, we can just
+    extend the ViewModel class to create as many implementations as we need.
 - Liskov substitution principle:
   - Any time there is inheritance or implementation of an interface, we make sure
     that the derived object only extends the base classes features, not modify or remove anything.
