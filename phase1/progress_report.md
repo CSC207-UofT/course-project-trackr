@@ -1,31 +1,29 @@
 #  Progress Report
 
 ### Open Questions
-- Open questions your group is struggling with  
-  - How should we design the user experience in the future so that we can 
-    allow multiple events to be tied with a certain person? How should the 
-    user be able to choose which person is tied to which event?
-  - Should we allow users to specify their own types of events or keep it
-    only as birthdays and anniversaries? If the former, how should we 
-    represent this (through inheritance or another TrackrEvent field)?
-  - Should we split the certain view models (`AddScreenViewModel` and 
-    `EditScreenViewModel`) into separate classes?
-  - What options can we give to the user to satisfy universal design principles?
-    Dark mode? High contrast text? Font adjusting?
+- How should we design the user experience in the future so that we can 
+  allow multiple events to be tied with a certain person? How should the 
+  user be able to choose which person is tied to which event?
+- Should we allow users to specify their own types of events or keep it
+  only as birthdays and anniversaries? If the former, how should we 
+  represent this (through inheritance or another TrackrEvent field)?
+- Should we split the certain view models (`AddScreenViewModel` and 
+  `EditScreenViewModel`) into separate classes?
+- What options can we give to the user to satisfy universal design principles?
+  Dark mode? High contrast text? Font adjusting?
 
 ### Things That Have Worked Well With Our Design
-- What has worked well so far with your design  
-  - So far using the MVVM design pattern/keeping clean architecture made it 
-    very easy to work on one aspect of the project at a time without necessarily
-    having to rely on someone else to work on the other class first. It also
-    makes testing easier.
-  - Using multiple view models instead of one has made testing and simply working
-    on those view models much simpler. Since each has a specific responsibility,
-    one person can work on one view model while someone else works on a 
-    different one.
-  - Having a data access object/repository for each major entity (eg. one for events, another
-    for people) allows us to do specific operations on each entity. As opposed to
-    our phase 0 which had one data access object, this keeps things modular and convenient.
+- So far using the MVVM design pattern/keeping clean architecture made it 
+  very easy to work on one aspect of the project at a time without necessarily
+  having to rely on someone else to work on the other class first. It also
+  makes testing easier.
+- Using multiple view models instead of one has made testing and simply working
+  on those view models much simpler. Since each has a specific responsibility,
+  one person can work on one view model while someone else works on a 
+  different one.
+- Having a data access object/repository for each major entity (eg. one for events, another
+  for people) allows us to do specific operations on each entity. As opposed to
+  our phase 0 which had one data access object, this keeps things modular and convenient.
 
 ### Work Distribution
 
