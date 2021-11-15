@@ -25,6 +25,7 @@ Our database structure is represented by the following Entity Relation Diagram (
 ![erd](https://cdn.discordapp.com/attachments/907383386207842314/909549647209582602/Screenshot_from_2021-11-14_16-04-37.png)
 With our data in seperate tables for each entity, we can avoid having duplicate data while having entity-specific access objects,
 which also decreases overall coupling.
+![erd](https://discord.com/channels/892174330329448448/892174330329448455/909669023459987477)
 
 ## Consistency with SOLID design principles
 
