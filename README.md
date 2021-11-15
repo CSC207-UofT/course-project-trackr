@@ -34,4 +34,6 @@ to `trackr-app/app/src/androidTest/java/com/trackr/trackr_app`, right click on t
 
 ## Running the project
 
-You can download the apk from the [latest release](https://github.com/CSC207-UofT/course-project-trackr/releases) and download the app on any android device with APK level 26+
+You can download the apk from the [latest release](https://github.com/CSC207-UofT/course-project-trackr/releases) and download the app on any android device with APK level 26+.
+
+You can also run the app through Android Studio Arctic Fox by simply clicking the run button (green triangle).
