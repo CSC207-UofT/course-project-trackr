@@ -4,7 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -27,16 +28,6 @@ fun CalendarScreenActivity(
     val selectedDate by calendarViewModel.selectedDate
     val events by calendarViewModel.selectedEvents.observeAsState(listOf())
     val eventDates by calendarViewModel.eventDates.observeAsState(setOf())
-    var isCalendarScreen by remember { mutableStateOf(true)}
-    navController.addOnDestinationChangedListener { _, destination, _ ->
-        isCalendarScreen = (destination == navController.findDestination("Calendar"))
-    }
-
-    if(isCalendarScreen) {
-        calendarViewModel.updateEventDates()
-        calendarViewModel.updateSelectedEvents()
-    }
-
 
     Column {
         Calendar(
