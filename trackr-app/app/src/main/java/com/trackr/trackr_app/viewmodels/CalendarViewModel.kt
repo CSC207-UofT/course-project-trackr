@@ -41,13 +41,13 @@ class CalendarViewModel @Inject constructor(
     private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
     val eventDates: LiveData<Set<LocalDate>> get() = _eventDates
 
-    /**
-     * initialize the eventDates and selectedEvents lists to reflect the newest data
-     */
-    init {
-        updateSelectedEvents()
-        updateEventDates()
-    }
+//    /**
+//     * initialize the eventDates and selectedEvents lists to reflect the newest data
+//     */
+//    init {
+//        updateSelectedEvents()
+//        updateEventDates()
+//    }
     
     /**
      * Increase the current month by monthOffset months.
@@ -77,8 +77,7 @@ class CalendarViewModel @Inject constructor(
     /**
      * Update the list of selected events to reflect any changes and new events added
      */
-    private fun updateSelectedEvents() {
-        viewModelScope.launch {
+    fun updateSelectedEvents() = viewModelScope.launch {
             eventRepository
                 .listFromRange(
                     _selectedDate.value.withYear(2008),
@@ -96,13 +95,11 @@ class CalendarViewModel @Inject constructor(
                     _selectedEvents.value = eventsOnSelectedDate
                 }
         }
-    }
 
     /**
      * Update the set of dates of all events this month
      */
-    private fun updateEventDates() {
-        viewModelScope.launch {
+    fun updateEventDates() = viewModelScope.launch {
             eventsThisMonth.collectLatest {
                 val dates = HashSet<LocalDate>()
                 for (event in it) {
@@ -111,5 +108,4 @@ class CalendarViewModel @Inject constructor(
                 _eventDates.value = dates
             }
         }
-    }
 }
