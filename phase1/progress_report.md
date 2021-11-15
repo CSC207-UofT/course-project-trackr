@@ -8,6 +8,10 @@
   - Should we allow users to specify their own types of events or keep it
     only as birthdays and anniversaries? If the former, how should we 
     represent this (through inheritance or another TrackrEvent field)?
+  - Should we split the certain view models (`AddScreenViewModel` and 
+    `EditScreenViewModel`) into separate classes?
+  - What options can we give to the user to satisfy universal design principles?
+    Dark mode? High contrast text? Font adjusting?
 
 ### Things That Have Worked Well With Our Design
 - What has worked well so far with your design
