@@ -1,32 +1,126 @@
 package com.trackr.trackr_app.viewmodels
 
-import junit.framework.TestCase
+import android.content.Context
+import androidx.lifecycle.SavedStateHandle
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.trackr.trackr_app.database.TrackrDatabase
+import com.trackr.trackr_app.model.Person
+import com.trackr.trackr_app.model.TrackrEvent
+import com.trackr.trackr_app.model.User
+import com.trackr.trackr_app.notification.EventNotificationManager
+import com.trackr.trackr_app.repository.EventRepository
+import com.trackr.trackr_app.repository.PersonRepository
+import com.trackr.trackr_app.repository.UserRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.*
 
-class EditScreenViewModelTest : TestCase() {
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.time.LocalDate
 
-    fun testGetEventName() {}
+@RunWith(AndroidJUnit4::class)
+class EditScreenViewModelTest {
+    private lateinit var db: TrackrDatabase
+    private lateinit var event: TrackrEvent
+    private lateinit var person: Person
+    private lateinit var eventRepository: EventRepository
+    private lateinit var viewModel: EditScreenViewModel
 
-    fun testGetEventDate() {}
+    @Before
+    fun setUp() = runBlocking {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        db = Room.inMemoryDatabaseBuilder(context, TrackrDatabase::class.java)
+                .allowMainThreadQueries().build()
+        val userRepository = UserRepository(db.userDao())
+        val personRepository = PersonRepository(db.personDao())
+        eventRepository = EventRepository(db.eventDao())
+        val eventNotificationManager = EventNotificationManager(context)
 
-    fun testGetChosenReminder() {}
+        val defaultUser = User("Default User")
+        userRepository.insert(defaultUser)
 
-    fun testGetPersonName() {}
+        person = Person(
+                user_id = defaultUser.id,
+                first_name = "jon",
+                last_name = "d")
+        personRepository.insert(person)
 
-    fun testEditEventName() {}
+        event = TrackrEvent(
+                person.id,
+                0,
+                LocalDate.now().withYear(1970).toEpochDay(),
+                LocalDate.now().year,
+                1,
+                0)
+        eventRepository.insert(event)
 
-    fun testChangeMonth() {}
+        val state = SavedStateHandle()
+        state.set("eventId", event.id)
 
-    fun testChangeDay() {}
+        viewModel = EditScreenViewModel(
+                eventRepository, personRepository, state, eventNotificationManager)
+    }
 
-    fun testChangeYear() {}
+    @Test
+    fun editEventName() {
+        viewModel.editEventName("Anniversary")
+        val result = viewModel.eventName.value
+        assertEquals("Anniversary", result)
+    }
 
-    fun testChangeReminderInterval() {}
+    @Test
+    fun changeMonth() {
+        viewModel.changeMonth("Jun")
+        val result = viewModel.eventDate.value
+        assertEquals(LocalDate.of(1970, 6, 1).month, result.month)
+    }
 
-    fun testGetMonths() {}
+    @Test
+    fun changeDay() {
+        viewModel.changeDay(5)
+        val result = viewModel.eventDate.value
+        assertEquals(5, result.dayOfMonth)
+    }
 
-    fun testGetReminderIntervals() {}
+    @Test
+    fun changeYear() {
+        viewModel.changeYear(2022)
+        val result = viewModel.eventDate.value
+        assertEquals(2022, result.year)
+    }
 
-    fun testEditEvent() {}
+    @Test
+    fun changeReminderInterval() {
+        viewModel.changeReminderInterval("1 week before")
+        val result = viewModel.chosenReminder.value
+        assertEquals("1 week before", result)
+    }
 
-    fun testDeleteEvent() {}
+    @Test
+    fun editEvent() = runBlocking {
+        viewModel.editEventName("Anniversary")
+        viewModel.editEvent().join()
+        val expected = TrackrEvent(
+                person.id,
+                1,
+                LocalDate.now().withYear(1970).toEpochDay(),
+                2020,
+                1,
+                0)
+        val result = eventRepository.getById(event.id)
+        assertNotEquals(event.type, result.type)
+        assertEquals(expected.type, result.type)
+    }
+
+    @Test
+    fun deleteEvent() = runBlocking {
+        viewModel.deleteEvent().join()
+        val expected: List<TrackrEvent> = emptyList()
+        val result = eventRepository.allEvents.first()
+        assertEquals(expected, result)
+    }
 }
