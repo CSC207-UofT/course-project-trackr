@@ -134,3 +134,7 @@ In this pull request, we intentionally avoided a major refactor by instead under
 ## Code Organization
 
 ## Functionality
+
+Use the following link to access a screen recording of the app:
+https://utoronto-my.sharepoint.com/:v:/g/personal/daniel_hocevar_mail_utoronto_ca/EXqjbxZuf6BNlzVZHw4yWwoBBZcJpS1hX5gPQjzEKOtiUg?e=AF2agE
+
