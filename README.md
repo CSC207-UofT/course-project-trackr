@@ -8,7 +8,7 @@
 
 Event Trackr Android app. Allows users to track birthdays and anniversaries of friends and family. 
 
-You need to open this project in Android Studio to get the best development experience.
+You need to open this project in Android Studio Arctic Fox to get the best development experience.
 
 ## Configuring the Project
 
