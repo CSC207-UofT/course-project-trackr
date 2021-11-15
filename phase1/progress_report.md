@@ -8,6 +8,10 @@
   - Should we allow users to specify their own types of events or keep it
     only as birthdays and anniversaries? If the former, how should we 
     represent this (through inheritance or another TrackrEvent field)?
+  - Should we split the certain view models (`AddScreenViewModel` and 
+    `EditScreenViewModel`) into separate classes?
+  - What options can we give to the user to satisfy universal design principles?
+    Dark mode? High contrast text? Font adjusting?
 
 ### Things That Have Worked Well With Our Design
 - What has worked well so far with your design
@@ -39,6 +43,10 @@ Jeremiah Djianto:
 - Worked on tests for `EditScreenViewModel`
 
 Daniel Hocevar:
+- Designed and implemented AddScreen and HomeScreen
+- Worked on view models including the AddScreenViewModel
+- Built EventManager and PersonManager
+- Created codebase architecture diagram/UML diagram
 
 
 ### What We Plan to Work on Next
@@ -70,3 +78,6 @@ Jeremiah Djianto:
   user to the event in the app)
 
 Daniel Hocevar:
+- AddScreenViewModel shouldn't depend on so many other classes (Fix this code smell)
+- Work on remote database
+- Change homescreen to show upcoming events instead of events this year.

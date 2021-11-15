@@ -8,6 +8,8 @@
 
 Event Trackr Android app. Allows users to track birthdays and anniversaries of friends and family. 
 
+You need to open this project in Android Studio to get the best development experience.
+
 ## Configuring the Project
 
 To keep things organized, this project uses the modules feature of IntelliJ. IntelliJ modules separate out the
@@ -16,17 +18,14 @@ phase-specific folders from the source code, and keep the project root from gett
 
 To set this up, you need to import the gradle project:
 
-- Right click on `/trackr/build.gradle`
+- Right click on `/trackr-app/build.gradle`
 - Click `Link Gradle Project`
 
 ## Building the Project
 
-Once the project has been configured, it can be built in two ways:
-
-1. Via `Add Configuration`: Press press `Add new` or `+`, select `Gradle`, and ensure `trackr` is selected as the 'Grade
-   project'
-2. Via interacting with the code: Navigate to `trackr/src/main/java/Main.java` and press the play icon next to the class
-   declaration or the main function declaration (this will create a build and run configuration).
+1. After adding the gradle project, the top-right build menu should be populated with build options. 
+2. Ensure that `trackr-app.app` is selected, and a device of your choosing is available (either an emulator or a physically tethered device).
+3. Click the hammer to build the project, and then the play button to launch the app on your device 
 
 ## Running Tests
 
@@ -36,11 +35,3 @@ to `trackr-app/app/src/androidTest/java/com/trackr/trackr_app`, right click on t
 ## Running the project
 
 You can download the apk from the [latest release](https://github.com/CSC207-UofT/course-project-trackr/releases) and download the app on any android device with APK level 26+
-
-OR
-
-- Navigate to `trackr/src/main/java/Main.java` and press the play icon next to the class
-  declaration or the main function declaration.
-- Here are some sample commands:
-  - `add Birthday 2020/04/05 Jeffry_Bezos 30`; add a birthday associated with Jeffry Bezos
-  - `remove Birthday Jeffry_Bezos`; remove that same birthday event associated with Jeffry Bezos

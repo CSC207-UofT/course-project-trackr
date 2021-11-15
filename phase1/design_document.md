@@ -26,6 +26,9 @@ Our database structure is represented by the following Entity Relation Diagram (
 With our data in seperate tables for each entity, we can avoid having duplicate data while having entity-specific access objects,
 which also decreases overall coupling.
 
+Here is a UML diagram for our program.
+![erd](https://media.discordapp.net/attachments/892174330329448455/909670610689462313/UML_1-3.png?width=1770&height=1269)
+
 ## Consistency with SOLID design principles
 
 - A brief description of how your project is consistent with the SOLID design principles (if you notice a violation and aren't sure how to fix it, talk about that too!)  
