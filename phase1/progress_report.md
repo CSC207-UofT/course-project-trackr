@@ -14,7 +14,8 @@
     Dark mode? High contrast text? Font adjusting?
 
 ### Things That Have Worked Well With Our Design
-- What has worked well so far with your design
+- What has worked well so far with your design  
+  - 
 
 ### Work Distribution
 - A summary of what each group member has been working on  
@@ -31,10 +32,14 @@ Roman Zupancic:
 - Abstracted away various view components for reuse
 
 Jonathan Ginevro:
-
+- Wrote and worked on EditScreen and SelectScreen
+- Wrote and worked on tests for AddScreenViewModel, CalendarScreenViewModel,
+  and EditScreenViewModel
 
 Nathan Hansen:
-
+- Wrote classes and test for database and data access objects
+- Wrote classes for repositories that fetch and store data from the database
+- Made sure database was serializable/could persist through runs
  
 Jeremiah Djianto:
 - Wrote classes and tests to implement a notification functionality
@@ -55,7 +60,7 @@ Daniel Hocevar:
 Menghao Yu:
 - Improve user interface 
 - perhaps add a login screen and user authentication
-- work on improving the achitecture of the project.
+- work on improving the architecture of the project.
 
 Roman Zupancic:
 - Clean up various code around viewmodels and views (specifically identifying duplicate code to be abstracted and then depended upon)
@@ -63,10 +68,15 @@ Roman Zupancic:
 - Help with setting up a remote database that syncs with the local one
 
 Jonathan Ginevro:
+- Work on being able to add comments to events
+- Work on screen(s) to view event details
+- Help refactor old code to reduce/prevent code smells
 
 
 Nathan Hansen:
-
+- Work on expanding to remote database (perhaps Firebase)
+- work on multi-user experience and implementing that functionality
+- Perhaps adding features relevant to universal design principles
 
 Jeremiah Djianto:
 - Improving adherence to SOLID principles (specifically OPC and SRP)

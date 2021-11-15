@@ -32,8 +32,6 @@ single view model would be responsible for managing multiple screens.
 
 - A brief description of how your project adheres to Clean Architecture (if you notice a violation and aren't sure how to fix it, talk about that too!)
 
-~section before we talk about the database goes here~
-
 As for serialization, our group opted for a local SQLite Database through the Room persistence library.
 We chose this over other storage options because we felt SQLite was both fast and allows for easier
 migration to a hosted postgres database, which could allow for highly sought-after features, such as
