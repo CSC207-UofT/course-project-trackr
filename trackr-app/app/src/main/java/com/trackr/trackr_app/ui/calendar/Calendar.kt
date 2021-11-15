@@ -114,7 +114,7 @@ fun CalendarMonth(
                         dayOfMonth.toString(),
                         selectedDate.dayOfMonth == dayOfMonth,
                         eventDates.contains(
-                            LocalDate.of(1970,selectedDate.month, dayOfMonth)
+                            LocalDate.of(2008, selectedDate.month, dayOfMonth)
                         ),
                         onSelect
                     )
