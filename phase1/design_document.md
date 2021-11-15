@@ -2,8 +2,6 @@
 
 ## Major Design Decisions
 
-- A description of any major design decisions your group has made (along with brief explanations of why you made them).
-
 ### Kotlin
 
 While not necessarily a design change, the largest project change we've made between Phase 0 and Phase 1 is our decision to use the Kotlin programming language instead of Java. We had a few reasons for doing this, but most of them revolved around ecosystem and maintainability: Kotlin is simply nicer to work with in the Android development space. 
@@ -30,8 +28,6 @@ single view model would be responsible for managing multiple screens.
 
 ## Adherence to Clean Architecture
 
-- A brief description of how your project adheres to Clean Architecture (if you notice a violation and aren't sure how to fix it, talk about that too!)
-
 As for serialization, our group opted for a local SQLite Database through the Room persistence library.
 We chose this over other storage options because we felt SQLite was both fast and allows for easier
 migration to a hosted postgres database, which could allow for highly sought-after features, such as
@@ -47,7 +43,6 @@ Here is a UML diagram for our program.
 
 ## Consistency with SOLID design principles
 
-- A brief description of how your project is consistent with the SOLID design principles (if you notice a violation and aren't sure how to fix it, talk about that too!)  
 - Single responsibility principle:
   - Our team did well adhering to the single responsibility principle. Each class
     has one responsibility. As some examples, our screen classes in the drivers/frameworks 
@@ -103,8 +98,6 @@ Our solution to these issues, then, is to group modules based on their functiona
 This hybrid approach allows us to reap the benefits of both modules: we get the intuitive module layout of organizing by function (if you want to edit a viewmodel, find the viewmodel folder) and the ease-of-adherence to clean architecture through the examination of module imports.
 
 ## Design Patterns
-
-- A summary of any design patterns your group has implemented (or plans to implement).
 
 ### Dependency Injection 
 
@@ -166,4 +159,3 @@ See packaging strategies, clean architecture, and SOLID.
 ## Functionality
 Our code successfully executes everything that the specification says it should do. One highlight of our program is that it is capable of preserving state between runs of the program by storing user data in a database. Here is a link to a screen recording of the app:
 https://utoronto-my.sharepoint.com/:v:/g/personal/daniel_hocevar_mail_utoronto_ca/EXqjbxZuf6BNlzVZHw4yWwoBBZcJpS1hX5gPQjzEKOtiUg?e=AF2agE
-
