@@ -114,7 +114,7 @@ Kotlin also changes what it means for a unit of code to exist: functions no long
 
 ## Testing
 
-Our application's data access objects, notification system and calendar view have a robust test suite to ensure proper access and storage of user information.
+Our application's data access objects, notification system, calendar view, and view models have a robust test suite to ensure proper access and storage of user information.
 Since these serve as our application's primary use cases and interfaces, it is critical that we are sure they are working properly.
 Every method used to read or write to the database has its own test.
 
