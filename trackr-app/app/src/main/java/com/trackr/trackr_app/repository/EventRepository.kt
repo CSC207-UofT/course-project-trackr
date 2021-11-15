@@ -20,6 +20,11 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
     }
 
     @WorkerThread
+    suspend fun getEventsInRange(start_date: LocalDate, end_date: LocalDate): List<TrackrEvent> {
+        return eventDao.eventsBetweenDate(start_date.toEpochDay(), end_date.toEpochDay())
+    }
+
+    @WorkerThread
     suspend fun getById(id: String): TrackrEvent {
         return eventDao.getById(id)
     }
