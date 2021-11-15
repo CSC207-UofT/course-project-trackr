@@ -22,7 +22,40 @@ which also decreases overall coupling.
 
 ## Consistency with SOLID design principles
 
-- A brief description of how your project is consistent with the SOLID design principles (if you notice a violation and aren't sure how to fix it, talk about that too!)
+- A brief description of how your project is consistent with the SOLID design principles (if you notice a violation and aren't sure how to fix it, talk about that too!)  
+- Single responsibility principle:
+  - Our team did well adhering to the single responsibility principle. Each class
+    has one responsibility. As some examples, our screen classes in the drivers/frameworks 
+    layer of clean architecture have the single responsibility of inputting/outputting
+    information to the screen/user. We have repositories that have the single responsibility of giving/getting
+    data from the database. We have an EventNotificationManager who's sole responsibility is 
+    setting/removing alarms for a notification.
+    The only minor violation to the SRP is that our view models (AddScreenViewModel and EditScreenViewModel) 
+    hold 2 responsibilities. One is transforming data into a usable form and the other is telling the other
+    classes what to do with this information. If we had more time, we would split these responsibilities
+    into a class that transforms data to and from the screen, and another that takes this information and tells 
+    the other classes what to do.
+- Open/closed principle:  
+  - TODO
+- Liskov substitution principle:
+  - Any time there is inheritance or implementation of an interface, we make sure
+    that the derived object only extends the base classes features, not modify or remove anything.
+    For example, our EventBroadcastReceiver class extends Android's BroadcastReceiver
+    object. EventBroadcastReceiver has the same fields and responsibilities as BroadcastReceiver, and it extends its functionality by implementing its abstract method "onReceive". We extend the
+    functionality by allowing it to send a notification upon receiving a specific intent.
+- Interface segregation principle:
+  - For the most part, our group keeps interfaces concise, including only essential
+    methods. However, in a few cases, there are unnecessary methods. 
+    For example, our EventDao interface requires an editPerson method which we 
+    currently are not using. If we had more time, we would definitely implement a person
+    editing functionality in which we would require that method. In that case, it
+    would not have violated the interface segregation principle.
+- Dependency inversion principle:
+  - Our group does a good job implementing the dependency inversion principle
+    into our program. For example, to prevent our repositories such as EventRepository
+    from depending directly on lower level classes such as the Database, we 
+    have the EventRepository depend on the EventDao interface instead. As a result, 
+    the EventRepository does not need to know about how the Database is implemented.
 
 ## Packaging Strategies
 
