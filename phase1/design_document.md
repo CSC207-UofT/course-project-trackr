@@ -133,7 +133,7 @@ In this pull request, we intentionally avoided a major refactor by instead under
 
 ## Code Organization
 
-See packaging strategies.
+See packaging strategies, clean architecture, and SOLID.
 
 ## Functionality
 Our code successfully executes everything that the specification says it should do. One highlight of our program is that it is capable of preserving state between runs of the program by storing user data in a database. Here is a link to a screen recording of the app:
