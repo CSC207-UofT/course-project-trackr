@@ -66,6 +66,14 @@ Github actions was recently configured to make sure the project builds, which al
 
 ## Code Style and Documentation
 
+While both reliant on the JVM, Kotlin and Java require different design decisions when considering discrete implementation steps; these differences largely focus on cleaning away redundant and/or useless syntax and wrapper objects.
+
+One of the main differences between Kotlin and Java in terms of syntax is the ability for multiple scopes to exist within a single class: we can use these scopes to attribute certain functions (perhaps static functions) to a class without worrying about polluting some of that classes namespace. For example, the tracker database utilizes the a `companion object` syntax: within this scope, the functions for getting, storing, and maintaining a singleton database are stored. In Java, these functions might just be a part of the regular database class, or they might exist in their own wrapper class (that would require it's own lifecycle and maintenance); here in Kotlin, these functions are visible to the programmers that need them and might modify them, are separated from the actual database (which, once created, no longer cares about how it was instantiated) without having to engineer entirely separate units of code.
+
+Kotlin's constructor semantics also change the way we might program an application. The ability to have optional constructor arguments, for example, completely eliminates most of the usefulness of a builder class: why instantiate an object in multiple steps when you can just do it in one?
+
+Kotlin also changes what it means for a unit of code to exist: functions no longer need to be tied to classes as methods. This feature we used fairly sparingly: it is often useful to have and manipulate state, and objects are very good at this kind of workflow. However, when state wasn't necessary (like our Views), we could just write the functions to build them without worring about having to maintain boiler-plate class definitions.
+
 ## Testing
 
 Our application's data access objects, notification system and calendar view have a robust test suite to ensure proper access and storage of user information.
