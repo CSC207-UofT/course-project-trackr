@@ -11,12 +11,16 @@ Jetpack compose, for example, is the framework we are using to programmatically 
 ### Model-View-ViewModel (MVVM)
 
 One major design choice was to use the MVVM design pattern. We chose this
-design pattern because it helps are program adhere to clean architecture
-as the components are easily divisible into the clean architecture layers.
-View being in frameworks and drivers, view models in interface adapters, and
-model in use cases/entities. Moreover, a lot of the tools that the android
-library provides works well with this design pattern, such as Android's
-ViewModel objects.
+design pattern because it helps our program adhere to clean architecture:
+the components are easily divisible into the clean architecture layers.
+View being in frameworks and drivers, view models in interface adapters, and model in use
+cases/entities. Moreover, common tools within the Android ecosystem work well with the
+model-view-viewmodel design pattern: the ViewModel class, for example, is built in to the standard
+Android libraries, and facilitates interactions with views as well as setting up it's own lifecycle
+context that asynchronous functions can be called in.
+
+Hilt, our dependency injection library, also works specifically with viewmodels, and injecting
+dependencies within them.
 
 ### Multiple ViewModels instead of one
 
