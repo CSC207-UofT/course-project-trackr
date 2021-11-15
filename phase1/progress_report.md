@@ -28,7 +28,6 @@
     our phase 0 which had one data access object, this keeps things modular and convenient.
 
 ### Work Distribution
-- A summary of what each group member has been working on  
 
 Menghao Yu:
 - Designed HomeScreen and Calendar Screen
@@ -42,7 +41,8 @@ Roman Zupancic:
 - Abstracted away various view components for reuse
 
 Jonathan Ginevro:
-- Wrote and worked on EditScreen and SelectScreen
+- Designed and built EditScreen and SelectScreen
+- Implemented basic functionalities for these screens (such as the ability to edit an Event or select an Event from the HomeScreen and edit that event specifically)
 - Wrote and worked on tests for AddScreenViewModel, CalendarScreenViewModel,
   and EditScreenViewModel
 
@@ -65,7 +65,6 @@ Daniel Hocevar:
 
 
 ### What We Plan to Work on Next
-- A summary of what each group member plans to work on next
 
 Menghao Yu:
 - Improve user interface 
@@ -78,10 +77,9 @@ Roman Zupancic:
 - Help with setting up a remote database that syncs with the local one
 
 Jonathan Ginevro:
-- Work on being able to add comments to events
-- Work on screen(s) to view event details
+- Improve adherence to the 7 Principles of Universal Design (add dark mode, add a "Are you sure you want to delete that event?" pop-up, etc.)
+- Work on being able to add/view comments on events
 - Help refactor old code to reduce/prevent code smells
-
 
 Nathan Hansen:
 - Work on expanding to remote database (perhaps Firebase)
