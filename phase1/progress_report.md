@@ -43,6 +43,10 @@ Jeremiah Djianto:
 - Worked on tests for `EditScreenViewModel`
 
 Daniel Hocevar:
+- Designed and implemented AddScreen and HomeScreen
+- Worked on view models including the AddScreenViewModel
+- Built EventManager and PersonManager
+- Created codebase architecture diagram/UML diagram
 
 
 ### What We Plan to Work on Next
@@ -74,3 +78,6 @@ Jeremiah Djianto:
   user to the event in the app)
 
 Daniel Hocevar:
+- AddScreenViewModel shouldn't depend on so many other classes (Fix this code smell)
+- Work on remote database
+- Change homescreen to show upcoming events instead of events this year.
