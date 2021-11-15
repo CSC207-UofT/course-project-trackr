@@ -2,7 +2,9 @@ package com.trackr.trackr_app.manager
 
 import com.trackr.trackr_app.model.TrackrEvent
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class EventManager @Inject constructor() {
     fun createEvent(id: String, type: Int, date: Long, first_year: Int, reminder_interval: Int,
                     reminder_strategy: Int): TrackrEvent {
