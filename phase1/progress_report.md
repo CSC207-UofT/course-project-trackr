@@ -31,7 +31,10 @@ Nathan Hansen:
 
  
 Jeremiah Djianto:
-
+- Wrote classes and tests to implement a notification functionality
+- Worked on view models (specifically `EditScreenViewModel`) to allow 
+  editing of events
+- Worked on tests for `EditScreenViewModel`
 
 Daniel Hocevar:
 
@@ -44,3 +47,22 @@ Menghao Yu:
 - Improve user interface 
 - perhaps add a login screen and user authentication
 - work on improving the achitecture of the project.
+
+Roman Zupancic:
+
+
+Jonathan Ginevro:
+
+
+Nathan Hansen:
+
+
+Jeremiah Djianto:
+- Improving adherence to SOLID principles (specifically OPC and SRP)
+  perhaps by adding interfaces/extracting classes
+- Work on allowing editing of people and events in relation to the person
+  (may require another person editing screen)
+- Adding functionality to tapping a notification (perhaps brings the
+  user to the event in the app)
+
+Daniel Hocevar:
