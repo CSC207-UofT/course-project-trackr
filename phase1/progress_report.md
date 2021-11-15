@@ -53,7 +53,6 @@ Daniel Hocevar:
 - A summary of what each group member plans to work on next
 
 Menghao Yu:
-- Fix bugs related to the calendar screen, specifically the bugs regarding the events not displaying correctly in the list and the dates not being emphasized correctly after an edit.
 - Improve user interface 
 - perhaps add a login screen and user authentication
 - work on improving the achitecture of the project.

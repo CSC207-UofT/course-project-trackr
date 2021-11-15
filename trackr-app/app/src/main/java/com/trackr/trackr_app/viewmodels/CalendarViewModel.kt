@@ -5,10 +5,8 @@ import androidx.lifecycle.*
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.HashSet
 
@@ -24,31 +22,18 @@ import kotlin.collections.HashSet
 class CalendarViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
-): ViewModel() {
+) : ViewModel() {
 
     private val _selectedDate: MutableState<LocalDate> = mutableStateOf(LocalDate.now())
     val selectedDate: State<LocalDate> get() = _selectedDate
 
-    private var _selectedEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
+    private var _selectedEvents: MutableLiveData<List<TrackrEventOutput>> =
+        MutableLiveData(listOf())
     val selectedEvents: LiveData<List<TrackrEventOutput>> get() = _selectedEvents
-
-    private val eventsThisMonth get() = eventRepository
-        .listFromRange(
-            _selectedDate.value.withYear(2008).withDayOfMonth(1),
-            _selectedDate.value.withYear(2008).withDayOfMonth(_selectedDate.value.lengthOfMonth())
-        )
 
     private var _eventDates: MutableLiveData<Set<LocalDate>> = MutableLiveData(HashSet())
     val eventDates: LiveData<Set<LocalDate>> get() = _eventDates
 
-    /**
-     * initialize the eventDates and selectedEvents lists to reflect the newest data
-     */
-    init {
-        updateSelectedEvents()
-        updateEventDates()
-    }
-    
     /**
      * Increase the current month by monthOffset months.
      * If monthOffset is negative go back months, otherwise
@@ -77,23 +62,18 @@ class CalendarViewModel @Inject constructor(
     /**
      * Update the list of selected events to reflect any changes and new events added
      */
-    private fun updateSelectedEvents() {
+    fun updateSelectedEvents() {
         viewModelScope.launch {
-            eventRepository
-                .listFromRange(
+            _selectedEvents.value = eventRepository
+                .getEventsInRange(
                     _selectedDate.value.withYear(2008),
                     _selectedDate.value.withYear(2008)
-                )
-                .collectLatest {
-                    val eventsOnSelectedDate = mutableListOf<TrackrEventOutput>()
-                    for (event in it) {
-                        eventsOnSelectedDate.add(
-                            TrackrEventOutput(event,
-                                personRepository.getPersonById(event.person_id),
-                                Calendar.getInstance().get(Calendar.YEAR))
-                        )
-                    }
-                    _selectedEvents.value = eventsOnSelectedDate
+                ).map {
+                    TrackrEventOutput(
+                        it,
+                        personRepository.getPersonById(it.person_id),
+                        LocalDate.now().year
+                    )
                 }
         }
     }
@@ -101,15 +81,15 @@ class CalendarViewModel @Inject constructor(
     /**
      * Update the set of dates of all events this month
      */
-    private fun updateEventDates() {
+    fun updateEventDates() {
         viewModelScope.launch {
-            eventsThisMonth.collectLatest {
-                val dates = HashSet<LocalDate>()
-                for (event in it) {
-                    dates.add(LocalDate.ofEpochDay(event.date))
-                }
-                _eventDates.value = dates
-            }
+            _eventDates.value = eventRepository
+                .getEventsInRange(
+                    _selectedDate.value.withYear(2008).withDayOfMonth(1),
+                    _selectedDate.value.withYear(2008).withDayOfMonth(
+                        _selectedDate.value.withYear(2008).lengthOfMonth()
+                    )
+                ).map { LocalDate.ofEpochDay(it.date) }.toSet()
         }
     }
 }
