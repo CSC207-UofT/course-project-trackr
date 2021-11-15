@@ -74,6 +74,17 @@ Every method used to read or write to the database has its own test.
 
 ## Refactoring 
 
+Refactoring our codebase was something we did periodically throughout the development process. Here are a few examples of pull requests that involved refactoring.
+
+### PR - 101
+This refactoring involve making changes to AddScreen.kt and AddScreenViewModel.kt files. Initially, variables representing the state of the AddScreen were stored in the AddScreen function itself. This was a bad design not only because it violated the MVVM architecture, but also because it lead to an awful code smell. Managing the state of the AddScreen in the AddScreen function meant that the AddScreen function was very long and difficult to read. Extracting the state management code into the AddScreenViewModel fixed both of these problems.
+
+### PR - 126 
+This refactoring involved extracting a UI component from the HomeScreen file and placing it in the shared components folder. EventList is a UI component that was used by the HomeScreen, the CalendarScreen and the SelectScreen. Originally EventList was defined inside of the HomeScreen file, but storing this component in this file didn't make sense. The main question we asked ourselves when making this refactor was why should AddScreen depend on something in HomeScreen? If multiple UI views depend on a specific component, that component should be defined in a shared resource folder in order to make the code easier to navigate. This pull request successfully implemented this change.
+
+### PR - 115
+In this pull request, we intentionally avoided a major refactor by instead undertaking a smaller one. One of the main features we wanted to include in our app was the ability to track the current age of an event (i.e. 6th birthday or 10th anniversary). This was one of the last features we added in the app, so when we attempted to add it the majority of the app had already been built. Such a feature depended on storing the first year of the event in the database. One option would have been to store the first year of the event in the date property of the Event entity. However, this would have required a major refactor of the CalendarScreen, since the CalendarScreen depends on a dummy year being stored in the date property. Since the logic controlling the CalendarScreen was quite complex, we instead decided to refactor the TrackrEvent entity class by adding a new property to store the first year of the event. This also meant we had to add new methods to the EventRepository class and EventDao interface which entailed the less than ideal act of "shotgun surgery". Regardless we were able to complete the refactor and implement the desired feature.
+
 ## Code Organization
 
 ## Functionality
