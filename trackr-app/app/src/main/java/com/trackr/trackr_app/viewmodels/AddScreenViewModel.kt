@@ -17,22 +17,12 @@ import javax.inject.Inject
 
 /**
  * The view model for the AddScreen which manages the data that appears on the AddScreen page
- * @param eventRepository an instance of the EventRepository class that can be used to store new
- * events in the data base
- * @param personRepository an instance of the PersonRepository class that can be used store new
- * persons in the data base
- * @param userRepository an instance of the UserRepository class that can be used store new
- * users in the data base
- * @param eventNotificationManager used to set a notification upon event creation
+ * @param eventManager an instance of the EventRepository class that is used to create new events
+ * and add them to the database
  */
 @HiltViewModel
 class AddScreenViewModel @Inject constructor(
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
-    private val userRepository: UserRepository,
-    private val eventNotificationManager: EventNotificationManager,
     private val eventManager: EventManager,
-    private val personManager: PersonManager,
 ): ViewModel() {
 
     //Define variables for the input fields
@@ -148,39 +138,7 @@ class AddScreenViewModel @Inject constructor(
      */
     fun addEvent() = viewModelScope.launch {
         //Add the current user to the database
-        val defaultUser = User("Default User")
-        userRepository.insert(defaultUser)
-
-        //Add the person specified by the first and last name fields to the database
-        val newPerson = personManager.createPerson(defaultUser.id, firstName.value, lastName.value)
-        personRepository.insert(newPerson)
-
-        //Convert the reminder interval to an int using the following mapping
-        val reminderInt: Int = mapOf(
-            "1 day before" to 1,
-            "3 days before" to 3,
-            "1 week before" to 7,
-            "2 weeks before" to 14,
-            "1 month before" to 30
-        )[chosenReminder.value]!!
-
-        //Add the new event to the database
-        val newEvent = eventManager.createEvent(
-                            newPerson.id,
-                            eventType,
-                            eventDate.value.withYear(2008)
-                                .toEpochDay(),
-                            eventDate.value.year,
-                            reminderInt, 0)
-        eventRepository.insert(newEvent)
-
-        //Add notification
-        eventNotificationManager.createNotification(
-                "${firstName.value} ${lastName.value}",
-                eventName.value,
-                eventDate.value,
-                eventDate.value.minusDays(reminderInt.toLong()),
-                newEvent.id.hashCode()
-        )
+        eventManager.addEvent(firstName.value, lastName.value, eventType, chosenReminder.value,
+            eventDate.value)
     }
 }
