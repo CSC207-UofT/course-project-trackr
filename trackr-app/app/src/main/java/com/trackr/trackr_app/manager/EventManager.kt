@@ -76,4 +76,57 @@ class EventManager @Inject constructor(
         )
     }
 
+    /**
+     * Aggregate the data that has been inputted and then tell the user, person, and event
+     * repositories to update this data in the database
+     */
+    suspend fun editEvent(eventID: String, reminderInt: Int, eventDate: LocalDate, eventType: Int,
+                          personName: String, eventName: String) {
+        val event = eventRepository.getById(eventID)
+
+        eventRepository.editInterval(reminderInt, event)
+
+        eventRepository.editDate(eventDate.withYear(2008), event)
+
+        eventRepository.editFirstYear(eventDate.year, event)
+        eventRepository.editType(eventType, event)
+
+        //Edit notification
+        eventNotificationManager.editNotification(
+            personName,
+            eventName,
+            eventDate,
+            eventDate.minusDays(reminderInt.toLong()),
+            event.id.hashCode()
+        )
+    }
+
+    /**
+     * Delete the event from the database
+     */
+    suspend fun deleteEvent(eventID: String) {
+        val event = eventRepository.getById(eventID)
+        eventRepository.delete(event)
+
+        //Delete notification
+        eventNotificationManager.removeNotification(event.id.hashCode())
+    }
+
+    /**
+     * Get event info from the database
+     */
+    suspend fun getEventInfo(eventID: String): List<Any> {
+        val event = eventRepository.getById(eventID)
+        val associatedPerson = personRepository.getPersonById(event.person_id)
+
+        return listOf<Any>(
+            if (event.type == 0) "Birthday" else "Anniversary",
+            event.date,
+            event.firstYear,
+            event.reminder_interval,
+            associatedPerson.first_name + " " + associatedPerson.last_name,
+            event.type
+        )
+    }
+
 }
