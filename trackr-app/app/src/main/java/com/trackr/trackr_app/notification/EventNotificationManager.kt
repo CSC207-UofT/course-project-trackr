@@ -23,7 +23,7 @@ class EventNotificationManager @Inject constructor(private val context: Context)
      * Creates a notification for the given event
      */
     fun createNotification(name: String, eventType: String, eventDate: LocalDate,
-                           remindDate: LocalDate, id: Int) {
+                           remindDate: LocalDate, id: String) {
         var whichYear = LocalDate.now().year
         if (eventDate.withYear(whichYear).isBefore(LocalDate.now())) {whichYear ++}
         val instant: Instant = remindDate.withYear(whichYear)
@@ -37,7 +37,7 @@ class EventNotificationManager @Inject constructor(private val context: Context)
         intent.putExtra("notificationId", id)
 
         val pendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, id, intent, FLAG_IMMUTABLE)
+                PendingIntent.getBroadcast(context, id.hashCode(), intent, FLAG_IMMUTABLE)
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, remindDateMillis, pendingIntent)
     }
@@ -45,11 +45,11 @@ class EventNotificationManager @Inject constructor(private val context: Context)
     /**
      * Removes a notification for the given event
      */
-    fun removeNotification(id: Int) {
+    fun removeNotification(id: String) {
         val intent = Intent(context, EventBroadcastReceiver::class.java)
 
         val pendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, id, intent, FLAG_IMMUTABLE)
+                PendingIntent.getBroadcast(context, id.hashCode(), intent, FLAG_IMMUTABLE)
 
         pendingIntent.cancel()
         alarmManager.cancel(pendingIntent)
@@ -59,7 +59,7 @@ class EventNotificationManager @Inject constructor(private val context: Context)
      * Edits a notification for the given event
      */
     fun editNotification(name: String, eventType: String, eventDate: LocalDate,
-                         remindDate: LocalDate, id: Int) {
+                         remindDate: LocalDate, id: String) {
         removeNotification(id)
         createNotification(name, eventType, eventDate, remindDate, id)
     }

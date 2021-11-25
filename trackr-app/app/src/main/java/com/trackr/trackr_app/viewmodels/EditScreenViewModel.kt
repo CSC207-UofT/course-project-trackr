@@ -169,7 +169,7 @@ class EditScreenViewModel @Inject constructor(
                 eventName.value,
                 eventDate.value,
                 eventDate.value.minusDays(reminderInt.toLong()),
-                event.id.hashCode()
+                event.id
         )
     }
 
@@ -181,7 +181,7 @@ class EditScreenViewModel @Inject constructor(
         eventRepository.delete(event)
 
         //Delete notification
-        eventNotificationManager.removeNotification(event.id.hashCode())
+        eventNotificationManager.removeNotification(event.id)
     }
 }
 
