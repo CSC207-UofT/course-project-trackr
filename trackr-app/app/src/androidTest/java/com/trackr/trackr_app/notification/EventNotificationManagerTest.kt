@@ -20,7 +20,7 @@ class EventNotificationManagerTest {
 
     @Test
     fun createNotification() {
-        val id = 100
+        val id = "100"
         enm.createNotification(
                 "John", "Birthday",
                 LocalDate.of(2022, 10, 10),
@@ -28,13 +28,13 @@ class EventNotificationManagerTest {
         val intent = Intent(context, EventBroadcastReceiver::class.java)
         val pendingIntent =
                 PendingIntent.getBroadcast(
-                        context, id, intent, FLAG_IMMUTABLE or FLAG_NO_CREATE)
+                        context, id.hashCode(), intent, FLAG_IMMUTABLE or FLAG_NO_CREATE)
         assertNotEquals(null, pendingIntent)
     }
 
     @Test
     fun removeNotification() {
-        val id = 200
+        val id = "200"
         enm.createNotification(
                 "Jason", "Birthday",
                 LocalDate.of(2022, 10, 10),
@@ -43,7 +43,7 @@ class EventNotificationManagerTest {
         val intent = Intent(context, EventBroadcastReceiver::class.java)
         val pendingIntent =
                 PendingIntent.getBroadcast(
-                        context, id, intent, FLAG_IMMUTABLE or FLAG_NO_CREATE)
+                        context, id.hashCode(), intent, FLAG_IMMUTABLE or FLAG_NO_CREATE)
         assertEquals(null, pendingIntent)
     }
 }

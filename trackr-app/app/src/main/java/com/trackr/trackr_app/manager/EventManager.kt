@@ -1,13 +1,11 @@
 package com.trackr.trackr_app.manager
 
-import androidx.lifecycle.viewModelScope
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
 import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import com.trackr.trackr_app.repository.UserRepository
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -68,11 +66,11 @@ class EventManager @Inject constructor(
 
         //Add notification
         eventNotificationManager.createNotification(
-            "${firstName} ${lastName}",
+            "$firstName $lastName",
             if (eventType == 0) "Birthday" else "Anniversary",
             eventDate,
             eventDate.minusDays(reminderInt.toLong()),
-            newEvent.id.hashCode()
+            newEvent.id
         )
     }
 
@@ -97,7 +95,7 @@ class EventManager @Inject constructor(
             eventName,
             eventDate,
             eventDate.minusDays(reminderInt.toLong()),
-            event.id.hashCode()
+            event.id
         )
     }
 
@@ -109,7 +107,7 @@ class EventManager @Inject constructor(
         eventRepository.delete(event)
 
         //Delete notification
-        eventNotificationManager.removeNotification(event.id.hashCode())
+        eventNotificationManager.removeNotification(event.id)
     }
 
     /**

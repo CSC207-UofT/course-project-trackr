@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import com.trackr.trackr_app.MainActivity
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.select.SelectScreenActivity
@@ -38,6 +39,7 @@ fun MainScreen() {
     navController.addOnDestinationChangedListener { controller, _, _, ->
         canGoBack = controller.previousBackStackEntry != null
     }
+    val uri = "https://events.com"
 
     Scaffold(
         topBar = {
@@ -75,7 +77,9 @@ fun MainScreen() {
             composable("Home") { HomeScreenActivity(hiltViewModel(), navController) }
             composable("Add") { AddScreenActivity(hiltViewModel(), navController) }
             composable("Select") { SelectScreenActivity(hiltViewModel(), navController) }
-            composable("Edit/{eventId}") {
+            composable("Edit/{eventId}",
+                    deepLinks = listOf(navDeepLink { uriPattern = "$uri/eventId={eventId}" })
+            ) {
                     EditScreenActivity(
                         hiltViewModel(),
                         navController)
