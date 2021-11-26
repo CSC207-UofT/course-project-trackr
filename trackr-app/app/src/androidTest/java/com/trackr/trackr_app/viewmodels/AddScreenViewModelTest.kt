@@ -39,8 +39,8 @@ class AddScreenViewModelTest : TestCase() {
         eventRepository = EventRepository(db.eventDao())
         val eventNotificationManager = EventNotificationManager(context)
         viewModel = AddScreenViewModel(
-                eventRepository, personRepository, userRepository, eventNotificationManager,
-                EventManager(), PersonManager()
+                EventManager(eventRepository, personRepository, userRepository,
+                    eventNotificationManager, PersonManager())
         )
     }
 

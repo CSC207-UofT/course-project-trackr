@@ -3,6 +3,7 @@ package com.trackr.trackr_app.viewmodels
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import com.trackr.trackr_app.manager.EventManager
 import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
@@ -14,18 +15,13 @@ import javax.inject.Inject
 
 /**
  * The view model for the EditScreen which manages the data that appears on the EditScreen page
- * @param eventRepository an instance of the EventRepository class that can be used to store new
- * events in the data base
- * @param personRepository an instance of the PersonRepository class that can be used store new
- * persons in the data base
- * @param eventNotificationManager used to set a notification upon event creation
+ * @param eventManager an instance of the EventRepository class that is used to create new events
+ * and add them to the database
  */
 @HiltViewModel
 class EditScreenViewModel @Inject constructor(
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
+    private val eventManager: EventManager,
     state: SavedStateHandle,
-    private val eventNotificationManager: EventNotificationManager
 
 ) : ViewModel() {
 
@@ -49,14 +45,14 @@ class EditScreenViewModel @Inject constructor(
     //Get the data from the database for the event we are editing
     init {
         viewModelScope.launch {
-            val event = eventRepository.getById(eventID)
-            _eventName.value = if (event.type == 0) "Birthday" else "Anniversary"
-            _eventDate.value = LocalDate.ofEpochDay(event.date).withYear(event.firstYear)
+            val eventInfo = eventManager.getEventInfo(eventID)
+            _eventName.value = eventInfo[0].toString()
+            _eventDate.value = LocalDate.ofEpochDay(eventInfo[1].toString().toLong())
+                .withYear(eventInfo[2].toString().toInt())
             _chosenReminder.value = getReminderMap()
-                .entries.associate { (s, i) -> i to s }[event.reminder_interval]!!
-
-            val associatedPerson = personRepository.getPersonById(event.person_id)
-            _personName.value = associatedPerson.first_name + " " + associatedPerson.last_name
+                .entries.associate { (s, i) -> i to s }[eventInfo[3]]!!
+            _personName.value = eventInfo[4].toString()
+            eventType = eventInfo[5].toString().toInt()
         }
     }
 
@@ -153,35 +149,17 @@ class EditScreenViewModel @Inject constructor(
      * repositories to update this data in the database
      */
     fun editEvent() = viewModelScope.launch {
-        val event = eventRepository.getById(eventID)
         val reminderInt: Int = getReminderMap()[chosenReminder.value]!!
-      
-        eventRepository.editInterval(reminderInt, event)
-        
-        eventRepository.editDate(eventDate.value.withYear(2008), event)
 
-        eventRepository.editFirstYear(eventDate.value.year, event)
-        eventRepository.editType(eventType, event)
-
-        //Edit notification
-        eventNotificationManager.editNotification(
-                personName.value,
-                eventName.value,
-                eventDate.value,
-                eventDate.value.minusDays(reminderInt.toLong()),
-                event.id
-        )
+        eventManager.editEvent(eventID, reminderInt, eventDate.value,
+            eventType, personName.value, eventName.value)
     }
 
     /**
      * Delete the event from the database
      */
     fun deleteEvent() = viewModelScope.launch {
-        val event = eventRepository.getById(eventID)
-        eventRepository.delete(event)
-
-        //Delete notification
-        eventNotificationManager.removeNotification(event.id)
+        eventManager.deleteEvent(eventID)
     }
 }
 

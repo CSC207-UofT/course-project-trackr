@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.TrackrDatabase
+import com.trackr.trackr_app.manager.EventManager
+import com.trackr.trackr_app.manager.PersonManager
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
@@ -61,8 +63,8 @@ class EditScreenViewModelTest {
         val state = SavedStateHandle()
         state.set("eventId", event.id)
 
-        viewModel = EditScreenViewModel(
-                eventRepository, personRepository, state, eventNotificationManager)
+        viewModel = EditScreenViewModel(EventManager(eventRepository, personRepository,
+            userRepository, eventNotificationManager, PersonManager()), state)
     }
 
     @Test
