@@ -4,12 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.trackr.trackr_app.manager.EventManager
-import com.trackr.trackr_app.manager.PersonManager
-import com.trackr.trackr_app.model.User
-import com.trackr.trackr_app.notification.EventNotificationManager
-import com.trackr.trackr_app.repository.EventRepository
-import com.trackr.trackr_app.repository.PersonRepository
-import com.trackr.trackr_app.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
