@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.allGradients
+import com.trackr.trackr_app.viewmodels.PersonOutput
 import com.trackr.trackr_app.viewmodels.TrackrEventOutput
 import java.time.format.TextStyle
 import java.util.*
@@ -182,6 +183,70 @@ fun EventCard(navController: NavHostController, index: Int, event: TrackrEventOu
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White)
+            }
+        }
+    }
+}
+
+@Composable
+fun PersonList(
+        persons: List<PersonOutput>,
+        modifier: Modifier = Modifier,
+        navController: NavHostController,
+) {
+    if (persons.isEmpty()) {
+        Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+        ) {
+            Text(
+                    stringResource(R.string.no_people),
+                    fontFamily = Rubik,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+            )
+        }
+    } else {
+        LazyColumn(
+                modifier = modifier,
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            items(persons.count()) { index ->
+                val person = persons[index]
+                PersonCard(navController = navController, index = index, person = person)
+            }
+        }
+    }
+}
+
+@Composable
+fun PersonCard(navController: NavHostController, index: Int, person: PersonOutput) {
+    Surface(
+            modifier = Modifier
+                    .fillMaxWidth(),
+                    //TODO: make clickable after person detail screen is available
+            shape = RoundedCornerShape(20),
+    ) {
+        Row(
+                Modifier
+                        .background(
+                                brush = Brush.horizontalGradient(
+                                        colors = allGradients[index % 3]
+                                )
+                        )
+                        .padding(20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text("${person.firstName} ${person.lastName}",
+                        fontFamily = Rubik,
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                )
             }
         }
     }
