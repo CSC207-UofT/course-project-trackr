@@ -11,10 +11,13 @@ class PersonManager @Inject constructor(
     private val userManager: UserManager
 ) {
     private suspend fun createPerson(userId: String, firstName: String, lastName: String): Person {
-        return Person(
+        val newPerson = Person(
             user_id = userId,
             first_name = firstName,
             last_name = lastName)
+
+        personRepository.insert(newPerson)
+        return newPerson
     }
 
     /**
