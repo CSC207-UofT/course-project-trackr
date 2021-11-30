@@ -25,10 +25,8 @@ import javax.inject.Singleton
 @Singleton
 class EventManager @Inject constructor(
     private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
     private val eventNotificationManager: EventNotificationManager,
     private val personManager: PersonManager,
-    private val userManager: UserManager
 ) {
     fun createEvent(id: String, type: Int, date: Long, first_year: Int, reminder_interval: Int,
                     reminder_strategy: Int): TrackrEvent {
@@ -38,8 +36,7 @@ class EventManager @Inject constructor(
     suspend fun addEvent(firstName: String, lastName: String, eventType: Int, chosenReminder: String,
                          eventDate: LocalDate) {
         //Add the person specified by the first and last name fields to the database
-        val newPerson = personManager.createPerson(userManager.currentUser.id, firstName, lastName)
-        personRepository.insert(newPerson)
+        val newPerson = personManager.materializePerson(firstName, lastName)
 
         //Convert the reminder interval to an int using the following mapping
         val reminderInt: Int = mapOf(
@@ -111,7 +108,7 @@ class EventManager @Inject constructor(
      */
     suspend fun getEventInfo(eventID: String): List<Any> {
         val event = eventRepository.getById(eventID)
-        val associatedPerson = personRepository.getPersonById(event.person_id)
+        val associatedPerson = personManager.getPersonById(event.person_id)
 
         return listOf<Any>(
             if (event.type == 0) "Birthday" else "Anniversary",
