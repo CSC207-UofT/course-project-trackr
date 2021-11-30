@@ -30,19 +30,6 @@ fun HomeScreenActivity(
     val allEvents by viewModel.allEvents.observeAsState(listOf())
     val eventsToday by viewModel.eventsToday.observeAsState(listOf())
     Scaffold(
-            floatingActionButton = {
-                FloatingActionButton(
-                        onClick = {
-                            navController.navigate("Add")
-                        },
-                        backgroundColor = MaterialTheme.colors.onBackground,
-                        contentColor = MaterialTheme.colors.background,
-                ) {
-                    Icon(Icons.Filled.Add, "Add event")
-                }
-            },
-            isFloatingActionButtonDocked = true,
-            floatingActionButtonPosition = FabPosition.Center,
             backgroundColor = MaterialTheme.colors.background,
             bottomBar = {
                 BottomAppBar(
@@ -115,9 +102,26 @@ fun BottomAppBar(
                         "Calendar View",
                         tint = MaterialTheme.colors.onBackground
                 )},
-                label = {Text("View Calendar", fontFamily = Rubik)},
+                label = {Text("Calendar", fontFamily = Rubik)},
                 onClick = {
                     navController.navigate("Calendar")
+                    {
+                        launchSingleTop = true
+                    }
+                }
+        )
+        BottomNavigationItem(
+                icon = {
+                    Icon(
+                        Icons.Filled.Add,
+                        "Add event",
+                        tint = MaterialTheme.colors.onBackground,
+                    )
+                },
+                label = { Text(text = "Add Events") },
+                selected = false,
+                onClick = {
+                    navController.navigate("Add")
                     {
                         launchSingleTop = true
                     }
@@ -140,7 +144,6 @@ fun BottomAppBar(
                     }
                 }
         )
-
         BottomNavigationItem(
                 icon = {
                     Icon(
