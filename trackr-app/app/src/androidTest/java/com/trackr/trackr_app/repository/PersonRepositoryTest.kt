@@ -8,7 +8,6 @@ import com.trackr.trackr_app.database.TrackrDatabase
 import com.trackr.trackr_app.database.UserDao
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.User
-import junit.framework.TestCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
