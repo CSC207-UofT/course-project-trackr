@@ -225,8 +225,10 @@ fun PersonList(
 fun PersonCard(navController: NavHostController, index: Int, person: PersonOutput) {
     Surface(
             modifier = Modifier
-                    .fillMaxWidth(),
-                    //TODO: make clickable after person detail screen is available
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate("PersonDetails/${person.personId}")
+                },
             shape = RoundedCornerShape(20),
     ) {
         Row(

@@ -26,6 +26,7 @@ import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.viewmodels.CalendarViewModel
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.ui.people.AllPersonsScreenActivity
+import com.trackr.trackr_app.ui.person_details.PersonDetailsScreenActivity
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.AddScreenViewModel
@@ -90,6 +91,11 @@ fun MainScreen() {
             }
             composable("AllPersons") {
                 AllPersonsScreenActivity(hiltViewModel(), navController)
+            }
+            composable("PersonDetails/{personId}",
+                deepLinks = listOf(navDeepLink { uriPattern = "$uri/personId={personId}" })
+            ) {
+                PersonDetailsScreenActivity(hiltViewModel(), navController)
             }
         }
     }
