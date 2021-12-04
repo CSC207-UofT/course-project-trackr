@@ -25,6 +25,18 @@ class UserRepository @Inject constructor(private val userDao: UserDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    suspend fun hasUser(username: String): Boolean {
+        return userDao.hasUser(username)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getUser(username: String): User {
+        return userDao.getUser(username)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
     suspend fun deleteAll() {
         userDao.deleteAll()
     }

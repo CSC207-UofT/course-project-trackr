@@ -16,6 +16,12 @@ interface PersonDao {
     @Query("SELECT * FROM `person-table` WHERE id = :person_id")
     suspend fun getPersonById(person_id: String): Person
 
+    @Query("SELECT * FROM `person-table` WHERE first_name = :person_first_name and last_name = :person_last_name")
+    suspend fun getPersonByName(person_first_name: String, person_last_name: String): Person
+
+    @Query("SELECT EXISTS(SELECT * FROM `person-table` WHERE first_name = :person_first_name and last_name = :person_last_name)")
+    suspend fun hasPersonByName(person_first_name: String, person_last_name: String): Boolean
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(person: Person)
 
