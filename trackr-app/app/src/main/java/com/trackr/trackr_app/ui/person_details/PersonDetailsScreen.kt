@@ -3,10 +3,7 @@ package com.trackr.trackr_app.ui.person_details
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -194,19 +191,31 @@ fun BottomBar(viewModel: PersonDetailsScreenViewModel,
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
-
-        BottomNavigationItem(
-            selected = false,
-            icon = { Icon(
-                Icons.Filled.Edit,
-                "Edit Person",
-                tint = MaterialTheme.colors.onBackground
-            )
-            },
-            label = {Text("Edit Person", fontFamily = Rubik)},
-            onClick = {viewModel.editPerson()
-                viewMode.value = !viewMode.value}
-        )
+        if (viewMode.value) {
+            BottomNavigationItem(
+                selected = false,
+                icon = { Icon(
+                    Icons.Filled.Edit,
+                    "Edit Person",
+                    tint = MaterialTheme.colors.onBackground
+                )
+                },
+                label = {Text("Edit Person", fontFamily = Rubik)},
+                onClick = {viewModel.editPerson()
+                    viewMode.value = !viewMode.value}
+        ) } else {
+            BottomNavigationItem(
+                selected = false,
+                icon = { Icon(
+                    Icons.Filled.Check,
+                    "Save Changes",
+                    tint = MaterialTheme.colors.onBackground
+                )
+                },
+                label = {Text("Save Changes", fontFamily = Rubik)},
+                onClick = {viewModel.editPerson()
+                    viewMode.value = !viewMode.value})
+        }
         BottomNavigationItem(
             selected = false,
             icon = { Icon(
