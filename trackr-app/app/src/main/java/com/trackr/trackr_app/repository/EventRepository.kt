@@ -6,7 +6,6 @@ import androidx.annotation.WorkerThread
 import com.trackr.trackr_app.database.EventDao
 import com.trackr.trackr_app.model.Person
 import kotlinx.coroutines.flow.Flow
-import java.sql.Date
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,8 +29,8 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
     }
 
     @WorkerThread
-    fun getPersonsById(personId: String): Flow<List<TrackrEvent>> {
-        return eventDao.getPersonsById(personId)
+    fun getByPersonId(personId: String): Flow<List<TrackrEvent>> {
+        return eventDao.getByPersonId(personId)
     }
 
     @WorkerThread

@@ -19,11 +19,8 @@ import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.shared.EventList
 import com.trackr.trackr_app.ui.shared.InputWidget
-import com.trackr.trackr_app.ui.shared.PersonList
 import com.trackr.trackr_app.ui.theme.Rubik
-import com.trackr.trackr_app.viewmodels.AllPersonsScreenViewModel
 import com.trackr.trackr_app.viewmodels.PersonDetailsScreenViewModel
-import com.trackr.trackr_app.viewmodels.PersonOutput
 import com.trackr.trackr_app.viewmodels.TrackrEventOutput
 
 @Composable
@@ -32,18 +29,18 @@ fun PersonDetailsScreenActivity(
         navController: NavHostController
 ) {
     val confirmDelete = remember {mutableStateOf(false)}
-    val viewMode = remember {mutableStateOf(true)}
+    val displayMode = remember {mutableStateOf(true)}
     Scaffold(
             backgroundColor = MaterialTheme.colors.background,
             bottomBar = {
-                BottomBar(viewModel, confirmDelete, viewMode, navController)
+                BottomBar(viewModel, confirmDelete, displayMode, navController)
             }
     ) {
         Column(
             modifier = Modifier.padding(20.dp)
         ) {
-            if (viewMode.value) {
-                ViewMode(
+            if (displayMode.value) {
+                DisplayMode(
                     viewModel,
                     navController
                 )
@@ -58,7 +55,7 @@ fun PersonDetailsScreenActivity(
 
 
 @Composable
-fun ViewMode(
+fun DisplayMode(
     viewModel: PersonDetailsScreenViewModel,
     navController: NavHostController
 ) {
@@ -186,12 +183,12 @@ fun EventFeed(modifier: Modifier,
 @Composable
 fun BottomBar(viewModel: PersonDetailsScreenViewModel,
               confirmDelete: MutableState<Boolean>,
-              viewMode: MutableState<Boolean>,
+              displayMode: MutableState<Boolean>,
               navController: NavHostController) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
-        if (viewMode.value) {
+        if (displayMode.value) {
             BottomNavigationItem(
                 selected = false,
                 icon = { Icon(
@@ -202,7 +199,7 @@ fun BottomBar(viewModel: PersonDetailsScreenViewModel,
                 },
                 label = {Text("Edit Person", fontFamily = Rubik)},
                 onClick = {viewModel.editPerson()
-                    viewMode.value = !viewMode.value}
+                    displayMode.value = !displayMode.value}
         ) } else {
             BottomNavigationItem(
                 selected = false,
@@ -214,7 +211,7 @@ fun BottomBar(viewModel: PersonDetailsScreenViewModel,
                 },
                 label = {Text("Save Changes", fontFamily = Rubik)},
                 onClick = {viewModel.editPerson()
-                    viewMode.value = !viewMode.value})
+                    displayMode.value = !displayMode.value})
         }
         BottomNavigationItem(
             selected = false,
@@ -224,6 +221,7 @@ fun BottomBar(viewModel: PersonDetailsScreenViewModel,
                     tint = MaterialTheme.colors.onBackground,
                 )
             },
+            enabled = displayMode.value,
             label = { Text(text = "Delete Person") },
             onClick = {confirmDelete.value = true}
         )

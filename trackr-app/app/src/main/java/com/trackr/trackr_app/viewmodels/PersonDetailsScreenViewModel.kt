@@ -9,7 +9,6 @@ import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
@@ -39,11 +38,12 @@ class PersonDetailsScreenViewModel @Inject constructor(
             val personInfo = personRepository.getPersonById(personID)
             _firstName.value = personInfo.first_name
             _lastName.value = personInfo.last_name
-            eventRepository.getPersonsById(personID).collectLatest {
+
+            eventRepository.getByPersonId(personID).collectLatest {
                 val personList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
                     personList.add(TrackrEventOutput(event,
-                        personRepository.getPersonById(event.person_id),
+                        personRepository.getPersonById(personID),
                         Calendar.getInstance().get(Calendar.YEAR))
                     )
                 }
@@ -52,11 +52,11 @@ class PersonDetailsScreenViewModel @Inject constructor(
         }
     }
 
-    fun editFirstName(newFirstName: String) {
+    fun editFirstName(newFirstName: String) = viewModelScope.launch {
         _firstName.value = newFirstName
     }
 
-    fun editLastName(newLastName: String) {
+    fun editLastName(newLastName: String) = viewModelScope.launch {
         _lastName.value = newLastName
     }
 

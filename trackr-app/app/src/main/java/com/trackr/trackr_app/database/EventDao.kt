@@ -26,7 +26,7 @@ interface EventDao {
     suspend fun getById(id: String): TrackrEvent
 
     @Query("SELECT * FROM `event-table` WHERE person_id = :personId")
-    fun getPersonsById(personId: String): Flow<List<TrackrEvent>>
+    fun getByPersonId(personId: String): Flow<List<TrackrEvent>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(trackrEvent: TrackrEvent)

@@ -3,9 +3,8 @@ package com.trackr.trackr_app.manager
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
-import com.trackr.trackr_app.viewmodels.TrackrEventOutput
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,11 +25,6 @@ class PersonManager @Inject constructor(
         personRepository.editFirstName(first_name, person)
         personRepository.editLastName(last_name, person)
 
-        eventRepository.getPersonsById(id).collectLatest {
-            for (event in it) {
-                eventRepository.editPerson(person, event)
-            }
-        }
     }
 
     suspend fun deletePerson(personID: String) {
