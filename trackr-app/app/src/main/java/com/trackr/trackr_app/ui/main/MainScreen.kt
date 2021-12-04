@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import com.trackr.trackr_app.MainActivity
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.ui.add.AddPersonScreenActivity
 import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
@@ -63,11 +64,11 @@ fun MainScreen() {
                         Icon(
                             Icons.Filled.ArrowBackIos,
                             "Back",
-                            Modifier
-                                .fillMaxHeight()
-                                .clickable {
-                                    navController.popBackStack()
-                                },
+                                Modifier
+                                        .fillMaxHeight()
+                                        .clickable {
+                                            navController.popBackStack()
+                                        },
                             MaterialTheme.colors.onBackground
                         )
                     }
@@ -86,11 +87,12 @@ fun MainScreen() {
                         hiltViewModel(),
                         navController)
             }
-            composable("Calendar") {
-                CalendarScreenActivity(hiltViewModel(), navController)
-            }
+            composable("Calendar") { CalendarScreenActivity(hiltViewModel(), navController) }
             composable("AllPersons") {
                 AllPersonsScreenActivity(hiltViewModel(), navController)
+            }
+            composable("AddPerson") {
+                AddPersonScreenActivity(hiltViewModel(), navController)
             }
             composable("PersonDetails/{personId}",
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/personId={personId}" })

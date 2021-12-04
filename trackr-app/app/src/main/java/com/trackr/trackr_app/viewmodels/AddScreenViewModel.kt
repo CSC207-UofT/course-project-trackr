@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 /**
  * The view model for the AddScreen which manages the data that appears on the AddScreen page
- * @param eventManager an instance of the EventRepository class that is used to create new events
+ * @param eventManager an instance of the EventManager class that is used to create new events
  * and add them to the database
  */
 @HiltViewModel

@@ -15,12 +15,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonDetailsScreenViewModel @Inject constructor(
-    private val personManager: PersonManager,
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
-    state: SavedStateHandle,
+        private val personManager: PersonManager,
+        private val eventRepository: EventRepository,
+        private val personRepository: PersonRepository,
+        state: SavedStateHandle,
 
-    ): ViewModel() {
+        ): ViewModel() {
 
     private val personID: String = state.get<String>("personId")!!
 
@@ -43,8 +43,8 @@ class PersonDetailsScreenViewModel @Inject constructor(
                 val personList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
                     personList.add(TrackrEventOutput(event,
-                        personRepository.getPersonById(personID),
-                        Calendar.getInstance().get(Calendar.YEAR))
+                            personRepository.getPersonById(personID),
+                            Calendar.getInstance().get(Calendar.YEAR))
                     )
                 }
                 _personEvents.value = personList

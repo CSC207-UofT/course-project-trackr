@@ -1,9 +1,9 @@
 package com.trackr.trackr_app.ui.people
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -30,7 +30,8 @@ fun AllPersonsScreenActivity(
 ) {
     val personList by viewModel.allPersons.observeAsState(listOf())
     Scaffold(
-            backgroundColor = MaterialTheme.colors.background
+            backgroundColor = MaterialTheme.colors.background,
+            bottomBar = { BottomBarPersons(navController = navController) }
     ) {
         Column(
                 modifier = Modifier.padding(20.dp)
@@ -84,5 +85,32 @@ fun PersonFeed(modifier: Modifier,
                     nav,
             )
         }
+    }
+}
+
+@Composable
+fun BottomBarPersons(
+        navController: NavHostController
+) {
+    BottomNavigation(
+            backgroundColor = MaterialTheme.colors.primary,
+    ) {
+        BottomNavigationItem(
+                icon = {
+                    Icon(
+                            Icons.Filled.Add,
+                            "Add Person",
+                            tint = MaterialTheme.colors.onBackground,
+                    )
+                },
+                label = { Text(text = "Add People") },
+                selected = false,
+                onClick = {
+                    navController.navigate("AddPerson")
+                    {
+                        launchSingleTop = true
+                    }
+                }
+        )
     }
 }
