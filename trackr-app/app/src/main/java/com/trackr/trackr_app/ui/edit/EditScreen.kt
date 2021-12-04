@@ -31,18 +31,19 @@ fun EditScreenActivity(
     val chosenReminder by viewModel.chosenReminder
     val eventName by viewModel.eventName
     val personName by viewModel.personName
+    var isEditing by remember { mutableStateOf(false) }
 
-    Scaffold(
-    ) {
+    Scaffold {
         Column(
             Modifier.padding(20.dp)
         ) {
             Text("$personName's $eventName",
                 fontFamily = Rubik,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Black,
                 fontSize = 25.sp,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colors.onPrimary
             )
             Text( "on " +
                     eventDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()) + ", " +
@@ -51,78 +52,167 @@ fun EditScreenActivity(
                 fontSize = 16.sp,
                 modifier = Modifier.padding(top = 5.dp, bottom = 25.dp)
             )
-            Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
-            Row(
-                Modifier
-                    .selectableGroup()
-                    .padding(top = 5.dp, bottom = 20.dp)) {
-                RadioButton(
-                    selected = eventName == "Birthday",
-                    onClick = { viewModel.editEventName("Birthday") }
-                )
-                Text(text = "Birthday", Modifier.padding(start = 5.dp, end = 20.dp))
-                RadioButton(
-                    selected = eventName == "Anniversary",
-                    onClick = { viewModel.editEventName("Anniversary") }
-                )
-                Text(text = "Anniversary", Modifier.padding(start = 5.dp))
+            if (isEditing) {
+                EditScreen(
+                    eventName,
+                    eventDate,
+                    chosenReminder,
+                    nav,
+                    viewModel
+                ) { isEditing = false }
+            } else {
+                InfoScreen(
+                    personName,
+                    eventName,
+                    eventDate,
+                    chosenReminder,
+                ) { isEditing = true}
             }
-            InputWidget(title = "Date", widgets = listOf(
-                {InteractiveDropdownWidget(
-                    setter = {month: String -> viewModel.changeMonth(month)},
-                    getter = {eventDate.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())},
-                    options = viewModel.getMonths()
-                )
-                },
-                {InteractiveDropdownWidget(
-                    setter = {day: Int -> viewModel.changeDay(day)},
-                    getter = {eventDate.dayOfMonth},
-                    options = (1..eventDate.lengthOfMonth()).map{it}
-                )
-                },
-                {InteractiveDropdownWidget(
-                    setter = {year: Int -> viewModel.changeYear(year)},
-                    getter = {eventDate.year},
-                    options = (1900..2100).map{it}
-                )
-                }
+        }
+    }
+}
+
+
+@Composable
+fun EditScreen(
+    eventName: String,
+    eventDate: LocalDate,
+    chosenReminder: String,
+    nav: NavHostController,
+    viewModel: EditScreenViewModel,
+    stopEditing: () -> Unit
+) {
+    Column {
+        Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+        Row(
+            Modifier
+                .selectableGroup()
+                .padding(top = 5.dp, bottom = 20.dp)) {
+            RadioButton(
+                selected = eventName == "Birthday",
+                onClick = { viewModel.editEventName("Birthday") }
             )
+            Text(text = "Birthday", Modifier.padding(start = 5.dp, end = 20.dp))
+            RadioButton(
+                selected = eventName == "Anniversary",
+                onClick = { viewModel.editEventName("Anniversary") }
             )
-            InputWidget(title = "Remind Me") {
-                InteractiveDropdownWidget(
-                    setter = {reminder: String -> viewModel.changeReminderInterval(reminder)},
-                    getter = {chosenReminder},
-                    options = viewModel.getReminderIntervals()
-                )
+            Text(text = "Anniversary", Modifier.padding(start = 5.dp))
+        }
+        InputWidget(title = "Date", widgets = listOf(
+            {InteractiveDropdownWidget(
+                setter = {month: String -> viewModel.changeMonth(month)},
+                getter = {eventDate.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())},
+                options = viewModel.getMonths()
+            )
+            },
+            {InteractiveDropdownWidget(
+                setter = {day: Int -> viewModel.changeDay(day)},
+                getter = {eventDate.dayOfMonth},
+                options = (1..eventDate.lengthOfMonth()).map{it}
+            )
+            },
+            {InteractiveDropdownWidget(
+                setter = {year: Int -> viewModel.changeYear(year)},
+                getter = {eventDate.year},
+                options = (2100 downTo 1900).map{it}
+            )
             }
-            Button(
-                onClick = {
-                    viewModel.editEvent()
-                    nav.popBackStack()
-                },
-                Modifier.padding(top = 20.dp),
-            ) {
-                Text("Save Changes")
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Icon(
-                    Icons.Filled.Check,
-                    contentDescription = "Edit Event",
-                    modifier = Modifier.size(ButtonDefaults.IconSize)
-                )
-            }
-            Button(
-                onClick = {
-                    viewModel.deleteEvent()
-                    nav.popBackStack()
-                },
-                modifier = Modifier.padding(top = 10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
-            ) {
-                Text(text = "DELETE event",
-                    Modifier.padding(bottom = 5.dp),
-                    fontWeight = FontWeight.Bold,
-                )
-            }
+        )
+        )
+        InputWidget(title = "Remind Me") {
+            InteractiveDropdownWidget(
+                setter = {reminder: String -> viewModel.changeReminderInterval(reminder)},
+                getter = {chosenReminder},
+                options = viewModel.getReminderIntervals()
+            )
+        }
+        Button(
+            onClick = {
+                viewModel.editEvent()
+                stopEditing()
+            },
+            Modifier.padding(top = 20.dp),
+        ) {
+            Text("Save Changes")
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Icon(
+                Icons.Filled.Check,
+                contentDescription = "Edit Event",
+                modifier = Modifier.size(ButtonDefaults.IconSize)
+            )
+        }
+        Button(
+            onClick = {
+                viewModel.deleteEvent()
+                nav.popBackStack()
+            },
+            modifier = Modifier.padding(top = 10.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+        ) {
+            Text(text = "DELETE event",
+                Modifier.padding(bottom = 5.dp),
+                fontWeight = FontWeight.Bold,
+            )
+        }
+    }
+}
+
+@Composable
+fun InfoScreen(
+    personName: String,
+    eventName: String,
+    eventDate: LocalDate,
+    chosenReminder: String,
+    startEditing: () -> Unit
+) {
+    Column {
+        Text(
+            text = "This Event is for:",
+            Modifier.padding(bottom = 10.dp, top = 30.dp),
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onPrimary
+        )
+        Text(personName, Modifier.padding(bottom = 30.dp), fontSize = 18.sp)
+        Text(
+            text = "Type of event:",
+            Modifier.padding(bottom = 10.dp),
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onPrimary
+        )
+        Text(eventName, Modifier.padding(bottom = 30.dp), fontSize = 18.sp)
+        Text(
+            text = "Event Date:",
+            Modifier.padding(bottom = 10.dp),
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onPrimary
+        )
+        Text(
+            eventDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()) + ", " +
+                    eventDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) + " " +
+                    eventDate.dayOfMonth,
+            Modifier.padding(bottom = 30.dp),
+            fontSize = 18.sp
+        )
+        Text(
+            text = "Reminder Me:",
+            Modifier.padding(bottom = 10.dp),
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onPrimary
+        )
+        Text(chosenReminder,  Modifier.padding(bottom = 40.dp), fontSize = 18.sp)
+        Button(
+            onClick = {
+                startEditing()
+            },
+            Modifier.padding(top = 20.dp),
+        ) {
+            Text(text = "Edit", fontSize = 20.sp)
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
     }
 }
