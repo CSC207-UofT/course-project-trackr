@@ -1,14 +1,16 @@
 package com.trackr.trackr_app.manager
 
 import com.trackr.trackr_app.model.Person
+import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PersonManager @Inject constructor(
-    private val personRepository: PersonRepository,
-    private val userManager: UserManager
+        private val eventRepository: EventRepository,
+        private val personRepository: PersonRepository,
+        private val userManager: UserManager
 ) {
     private suspend fun createPerson(userId: String, firstName: String, lastName: String): Person {
         val newPerson = Person(
@@ -18,6 +20,18 @@ class PersonManager @Inject constructor(
 
         personRepository.insert(newPerson)
         return newPerson
+    }
+
+    suspend fun editPerson(id: String, first_name: String, last_name: String) {
+        val person = personRepository.getPersonById(id)
+        personRepository.editFirstName(first_name, person)
+        personRepository.editLastName(last_name, person)
+
+    }
+
+    suspend fun deletePerson(personID: String) {
+        val person = personRepository.getPersonById(personID)
+        personRepository.delete(person)
     }
 
     /**
@@ -43,4 +57,5 @@ class PersonManager @Inject constructor(
 
     suspend fun getPersonById(personId: String) =
         personRepository.getPersonById(personId)
+
 }
