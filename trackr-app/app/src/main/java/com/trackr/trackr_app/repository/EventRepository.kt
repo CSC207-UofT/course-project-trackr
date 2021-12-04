@@ -30,6 +30,11 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
     }
 
     @WorkerThread
+    fun getPersonsById(personId: String): Flow<List<TrackrEvent>> {
+        return eventDao.getPersonsById(personId)
+    }
+
+    @WorkerThread
     suspend fun insert(trackrEvent: TrackrEvent) {
         eventDao.insert(trackrEvent)
     }

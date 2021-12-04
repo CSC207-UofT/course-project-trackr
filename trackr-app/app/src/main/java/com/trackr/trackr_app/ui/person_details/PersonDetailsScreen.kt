@@ -34,92 +34,118 @@ fun PersonDetailsScreenActivity(
         viewModel: PersonDetailsScreenViewModel,
         navController: NavHostController
 ) {
-    val eventList by viewModel.personEvents.observeAsState(listOf())
     val confirmDelete = remember {mutableStateOf(false)}
+    val viewMode = remember {mutableStateOf(true)}
     Scaffold(
             backgroundColor = MaterialTheme.colors.background,
             bottomBar = {
-                BottomBar(confirmDelete)
+                BottomBar(viewModel, confirmDelete, viewMode, navController)
             }
     ) {
         Column(
-                modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(20.dp)
         ) {
-            Text("First Name:",
-                fontFamily = Rubik,
-                fontWeight = FontWeight.Normal,
-                fontSize = 17.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                viewModel.firstName.value,
-                fontFamily = Rubik,
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
-                modifier = Modifier.padding(top = 2.dp, bottom = 10.dp),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text("Last Name:",
-                fontFamily = Rubik,
-                fontWeight = FontWeight.Normal,
-                fontSize = 17.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(viewModel.lastName.value,
-                fontFamily = Rubik,
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
-                modifier = Modifier.padding(top = 2.dp, bottom = 25.dp),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            EventFeed(
-                    Modifier
-                        .padding(0.dp, 15.dp)
-                        .weight(2f),
-                    viewModel.firstName.value + "'s Events:",
-                    eventList,
+            if (viewMode.value) {
+                ViewMode(
+                    viewModel,
                     navController
-            )
+                )
+            } else {
+                EditMode(
+                    viewModel
+                )
+            }
         }
     }
-    if (confirmDelete.value) {
-        AlertDialog(
-            onDismissRequest = {
-                confirmDelete.value = false
-            },
-            title = {
-                Text(text = "Are You Sure You Want to Delete This Person?")
-            },
-            text = {
-                Text(text = "This will delete all events associated with this person")
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        confirmDelete.value = false
-                        viewModel.deletePerson()
-                        navController.popBackStack()
-                    },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
-                ) {
-                    Text("Delete Person")
-                }
-            },
-            dismissButton = {
-                Button(
-                    onClick = {
-                        confirmDelete.value = false
-                    }) {
-                    Text("Go Back")
-                }
+}
+
+
+@Composable
+fun ViewMode(
+    viewModel: PersonDetailsScreenViewModel,
+    navController: NavHostController
+) {
+    val eventList by viewModel.personEvents.observeAsState(listOf())
+    Column {
+        Text("First Name:",
+            fontFamily = Rubik,
+            fontWeight = FontWeight.Normal,
+            fontSize = 17.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            viewModel.firstName.value,
+            fontFamily = Rubik,
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            modifier = Modifier.padding(top = 2.dp, bottom = 10.dp),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text("Last Name:",
+            fontFamily = Rubik,
+            fontWeight = FontWeight.Normal,
+            fontSize = 17.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            viewModel.lastName.value,
+            fontFamily = Rubik,
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            modifier = Modifier.padding(top = 2.dp, bottom = 25.dp),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        EventFeed(
+            Modifier
+                .padding(0.dp, 15.dp)
+                .weight(2f),
+            viewModel.firstName.value + "'s Events:",
+            eventList,
+            navController
+        )
+    }
+}
+
+@Composable
+fun EditMode(
+    viewModel: PersonDetailsScreenViewModel
+) {
+    Column {
+        InputWidget(
+            title = "First Name",
+            widgets = listOf {
+                TextField(
+                    value = viewModel.firstName.value,
+                    onValueChange = { viewModel.editFirstName(it) },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        textColor = MaterialTheme.colors.onBackground,
+                    ),
+                    placeholder = { Text("First Name", fontFamily = Rubik) }
+                )
+            }
+        )
+        InputWidget(
+            title = "Last Name",
+            widgets = listOf {
+                TextField(
+                    value = viewModel.lastName.value,
+                    onValueChange = { viewModel.editLastName(it) },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        textColor = MaterialTheme.colors.onBackground,
+                    ),
+                    placeholder = { Text("Last Name", fontFamily = Rubik) }
+                )
             }
         )
     }
 }
+
 
 @Composable
 fun EventFeed(modifier: Modifier,
@@ -161,7 +187,10 @@ fun EventFeed(modifier: Modifier,
 }
 
 @Composable
-fun BottomBar(confirmDelete: MutableState<Boolean>) {
+fun BottomBar(viewModel: PersonDetailsScreenViewModel,
+              confirmDelete: MutableState<Boolean>,
+              viewMode: MutableState<Boolean>,
+              navController: NavHostController) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
@@ -175,7 +204,8 @@ fun BottomBar(confirmDelete: MutableState<Boolean>) {
             )
             },
             label = {Text("Edit Person", fontFamily = Rubik)},
-            onClick = {}
+            onClick = {viewModel.editPerson()
+                viewMode.value = !viewMode.value}
         )
         BottomNavigationItem(
             selected = false,
@@ -187,6 +217,39 @@ fun BottomBar(confirmDelete: MutableState<Boolean>) {
             },
             label = { Text(text = "Delete Person") },
             onClick = {confirmDelete.value = true}
+        )
+    }
+    if (confirmDelete.value) {
+        AlertDialog(
+            onDismissRequest = {
+                confirmDelete.value = false
+            },
+            title = {
+                Text(text = "Are You Sure You Want to Delete This Person?")
+            },
+            text = {
+                Text(text = "This will delete all events associated with this person")
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        confirmDelete.value = false
+                        viewModel.deletePerson()
+                        navController.popBackStack()
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+                ) {
+                    Text("Delete Person")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        confirmDelete.value = false
+                    }) {
+                    Text("Go Back")
+                }
+            }
         )
     }
 }

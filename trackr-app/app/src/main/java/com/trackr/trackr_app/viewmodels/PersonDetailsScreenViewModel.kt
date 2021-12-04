@@ -9,6 +9,7 @@ import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
@@ -33,29 +34,34 @@ class PersonDetailsScreenViewModel @Inject constructor(
     private val _lastName = mutableStateOf("")
     val lastName: State<String> get() = _lastName
 
-    /**
-     * Initialize the allEvents list to display all events.
-     */
     init {
         viewModelScope.launch {
             val personInfo = personRepository.getPersonById(personID)
             _firstName.value = personInfo.first_name
             _lastName.value = personInfo.last_name
-            eventRepository.allEvents.collectLatest{
-                val eventsPersonList = mutableListOf<TrackrEventOutput>()
-
+            eventRepository.getPersonsById(personID).collectLatest {
+                val personList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
-                    eventsPersonList.add(
-                        TrackrEventOutput(
-                            event,
-                            personRepository.getPersonById(event.person_id),
-                            Calendar.getInstance().get(Calendar.YEAR)
-                        )
+                    personList.add(TrackrEventOutput(event,
+                        personRepository.getPersonById(event.person_id),
+                        Calendar.getInstance().get(Calendar.YEAR))
                     )
                 }
-                _personEvents.value = eventsPersonList
+                _personEvents.value = personList
             }
         }
+    }
+
+    fun editFirstName(newFirstName: String) {
+        _firstName.value = newFirstName
+    }
+
+    fun editLastName(newLastName: String) {
+        _lastName.value = newLastName
+    }
+
+    fun editPerson() = viewModelScope.launch {
+        personManager.editPerson(personID, _firstName.value, _lastName.value)
     }
 
     fun deletePerson() = viewModelScope.launch {
