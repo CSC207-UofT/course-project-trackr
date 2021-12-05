@@ -22,8 +22,7 @@ fun AddPersonScreenActivity(
     val firstName by viewModel.firstName
     val lastName by viewModel.lastName
 
-    Scaffold(
-    ) {
+    Scaffold {
         Column (
                 Modifier.padding(20.dp)
                 ){

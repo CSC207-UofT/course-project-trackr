@@ -1,14 +1,12 @@
 package com.trackr.trackr_app.manager
 
 import com.trackr.trackr_app.model.Person
-import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PersonManager @Inject constructor(
-        private val eventRepository: EventRepository,
         private val personRepository: PersonRepository,
         private val userManager: UserManager
 ) {
@@ -48,10 +46,10 @@ class PersonManager @Inject constructor(
         // TODO: Can I query the database with a get method only once, and just
         //  Replace this with a null check instead?
         //  I'm not sure what a failed query would do.
-        if (personRepository.hasPersonByName(firstName, lastName)) {
-            return personRepository.getPersonByName(firstName, lastName)
+        return if (personRepository.hasPersonByName(firstName, lastName)) {
+            personRepository.getPersonByName(firstName, lastName)
         } else {
-            return createPerson(userManager.currentUser.id, firstName, lastName)
+            createPerson(userManager.currentUser.id, firstName, lastName)
         }
     }
 

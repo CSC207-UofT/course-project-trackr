@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.trackr.trackr_app.model.TrackrEvent
-import java.sql.Date
 
 import kotlinx.coroutines.flow.Flow
 

@@ -17,30 +17,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import com.trackr.trackr_app.MainActivity
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.add.AddPersonScreenActivity
 import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.ui.add.AddScreenActivity
-import com.trackr.trackr_app.viewmodels.CalendarViewModel
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.ui.people.AllPersonsScreenActivity
 import com.trackr.trackr_app.ui.people.Purpose
 import com.trackr.trackr_app.ui.person_details.PersonDetailsScreenActivity
-import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
-import com.trackr.trackr_app.viewmodels.AddScreenViewModel
-import com.trackr.trackr_app.viewmodels.EditScreenViewModel
-import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
     var canGoBack by remember { mutableStateOf(false) }
-    navController.addOnDestinationChangedListener { controller, _, _, ->
+    navController.addOnDestinationChangedListener { controller, _, _ ->
         canGoBack = controller.previousBackStackEntry != null
     }
     val uri = "https://events.com"

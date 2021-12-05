@@ -10,12 +10,9 @@ import javax.inject.Singleton
 
 /**
  * The view model for the AddScreen which manages the data that appears on the AddScreen page
+ *
  * @param eventRepository an instance of the EventRepository class that can be used to store new
  * events in the data base
- * @param personRepository an instance of the PersonRepository class that can be used store new
- * persons in the data base
- * @param userRepository an instance of the UserRepository class that can be used store new
- * users in the data base
  * @param eventNotificationManager used to set a notification upon event creation
  * @param personManager used to create a new Person object
  */

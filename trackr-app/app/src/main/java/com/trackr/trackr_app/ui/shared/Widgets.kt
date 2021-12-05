@@ -32,12 +32,12 @@ import java.util.*
 @Composable
 fun InputWidget(
     title: String,
-    widgets: List<@Composable() () -> Unit>,
+    widgets: List<@Composable () -> Unit>,
     modifier: Modifier = Modifier
 ) {
-    Column() {
+    Column {
         Text(text = title, Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
-        Row() {
+        Row {
             for (widget in widgets) {
                 Box(
                     modifier
@@ -60,7 +60,7 @@ fun InputWidget(
 }
 
 @Composable
-fun InputWidget(title: String, widget: @Composable() () -> Unit) {
+fun InputWidget(title: String, widget: @Composable () -> Unit) {
     InputWidget(title = title, widgets = listOf(widget))
 }
 

@@ -3,7 +3,6 @@ package com.trackr.trackr_app.viewmodels
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import java.time.LocalDate
-import java.util.*
 
 /**
  * A wrapper class used by the UI to display data
@@ -17,8 +16,6 @@ class TrackrEventOutput(event: TrackrEvent, person: Person, currentYear: Int) {
     val type = event.type
     val date: LocalDate = LocalDate.ofEpochDay(event.date)
     var eventAge: Int = 0
-    val reminderInterval = event.reminderInterval
-    val repeatStrategy = event.repeatStrategy
 
     /**
      * Calculates the event age to initialize it
