@@ -14,6 +14,11 @@ class UserManager @Inject constructor(
 
     var currentUser = runBlocking { getDefaultUser() }
 
+    /**
+     * Get the default user of the Trakr program, create it if it does not exist.
+     *
+     * @return The default user to attribute all database actions to
+     */
     private suspend fun getDefaultUser(): User {
         if (!userRepository.hasUser(defaultUserName)) {
             userRepository.insert(User(defaultUserName))
