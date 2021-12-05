@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.ManageAccounts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -153,7 +154,7 @@ fun BottomAppBar(
         BottomNavigationItem(
             icon = {
                 Icon(
-                    Icons.Filled.Edit,
+                    Icons.Filled.ManageAccounts,
                     "Edit people",
                     tint = MaterialTheme.colors.onBackground,
                 )
