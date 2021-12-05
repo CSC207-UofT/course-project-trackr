@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class PersonRepository @Inject constructor(
     private val personDao: PersonDao
-    ) {
+) {
     val allPersons: Flow<List<Person>> = personDao.listPersons()
 
     @WorkerThread

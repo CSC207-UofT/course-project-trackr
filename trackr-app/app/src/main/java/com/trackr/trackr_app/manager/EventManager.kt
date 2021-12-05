@@ -22,15 +22,19 @@ class EventManager @Inject constructor(
     private val eventNotificationManager: EventNotificationManager,
     private val personManager: PersonManager,
 ) : EventCreator, EventModifier, SingleEventAccessor {
-    private fun createEvent(id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int,
-                            reminderStrategy: Int): TrackrEvent {
+    private fun createEvent(
+        id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int,
+        reminderStrategy: Int
+    ): TrackrEvent {
         return TrackrEvent(id, type, date, firstYear, reminderInterval, reminderStrategy)
     }
 
-    override suspend fun addEvent(firstName: String, lastName: String, eventType: Int, chosenReminder: String,
-                         eventDate: LocalDate) {
-        //Add the person specified by the first and last name fields to the database
-        val newPerson = personManager.materializePerson(firstName, lastName)
+    override suspend fun addEvent(
+        personId: String, eventType: Int, chosenReminder: String,
+        eventDate: LocalDate
+    ) {
+        // get the specified person for which this event is for
+        val newPerson = personManager.getPersonById(personId)
 
         //Convert the reminder interval to an int using the following mapping
         val reminderInt: Int = mapOf(
@@ -43,17 +47,18 @@ class EventManager @Inject constructor(
 
         //Add the new event to the database
         val newEvent = createEvent(
-            newPerson.id,
+            personId,
             eventType,
             eventDate.withYear(2008)
                 .toEpochDay(),
             eventDate.year,
-            reminderInt, 0)
+            reminderInt, 0
+        )
         eventRepository.insert(newEvent)
 
         //Add notification
         eventNotificationManager.createNotification(
-            "$firstName $lastName",
+            "${newPerson.firstName} ${newPerson.lastName}",
             if (eventType == 0) "Birthday" else "Anniversary",
             eventDate,
             eventDate.minusDays(reminderInt.toLong()),
@@ -65,8 +70,10 @@ class EventManager @Inject constructor(
      * Aggregate the data that has been inputted and then tell the user, person, and event
      * repositories to update this data in the database
      */
-    override suspend fun editEvent(eventID: String, reminderInt: Int, eventDate: LocalDate, eventType: Int,
-                          personName: String, eventName: String) {
+    override suspend fun editEvent(
+        eventID: String, reminderInt: Int, eventDate: LocalDate, eventType: Int,
+        personName: String, eventName: String
+    ) {
         val event = eventRepository.getById(eventID)
 
         eventRepository.editInterval(reminderInt, event)

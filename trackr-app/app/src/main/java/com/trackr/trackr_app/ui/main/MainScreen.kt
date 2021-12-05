@@ -1,7 +1,10 @@
 package com.trackr.trackr_app.ui.main
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
@@ -19,14 +22,14 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import com.trackr.trackr_app.R
 import com.trackr.trackr_app.ui.add.AddPersonScreenActivity
-import com.trackr.trackr_app.ui.select.SelectScreenActivity
-import com.trackr.trackr_app.ui.edit.EditScreenActivity
-import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.ui.add.AddScreenActivity
+import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
+import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.ui.people.AllPersonsScreenActivity
 import com.trackr.trackr_app.ui.people.Purpose
 import com.trackr.trackr_app.ui.person_details.PersonDetailsScreenActivity
+import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.theme.Rubik
 
 @Composable
@@ -58,11 +61,11 @@ fun MainScreen() {
                         Icon(
                             Icons.Filled.ArrowBackIos,
                             "Back",
-                                Modifier
-                                        .fillMaxHeight()
-                                        .clickable {
-                                            navController.popBackStack()
-                                        },
+                            Modifier
+                                .fillMaxHeight()
+                                .clickable {
+                                    navController.popBackStack()
+                                },
                             MaterialTheme.colors.onBackground
                         )
                     }
@@ -74,19 +77,21 @@ fun MainScreen() {
             composable("Home") { HomeScreenActivity(hiltViewModel(), navController) }
             composable("Add/{personId}") { AddScreenActivity(hiltViewModel(), navController) }
             composable("Select") { SelectScreenActivity(hiltViewModel(), navController) }
-            composable("Edit/{eventId}",
-                    deepLinks = listOf(navDeepLink { uriPattern = "$uri/eventId={eventId}" })
+            composable(
+                "Edit/{eventId}",
+                deepLinks = listOf(navDeepLink { uriPattern = "$uri/eventId={eventId}" })
             ) {
-                    EditScreenActivity(
-                        hiltViewModel(),
-                        navController)
+                EditScreenActivity(
+                    hiltViewModel(),
+                    navController
+                )
             }
             composable("Calendar") { CalendarScreenActivity(hiltViewModel(), navController) }
             composable("AllPersons") {
                 AllPersonsScreenActivity(hiltViewModel(), navController, Purpose.VIEW_PERSON)
             }
             composable("SelectPerson") {
-                AllPersonsScreenActivity(hiltViewModel(), navController, Purpose.ADD_EVENT )
+                AllPersonsScreenActivity(hiltViewModel(), navController, Purpose.ADD_EVENT)
             }
             composable("AddPerson") {
                 AddPersonScreenActivity(hiltViewModel(), navController)

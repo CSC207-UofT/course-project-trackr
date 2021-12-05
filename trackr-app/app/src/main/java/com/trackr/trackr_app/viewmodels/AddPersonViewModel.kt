@@ -2,9 +2,9 @@ package com.trackr.trackr_app.viewmodels
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.trackr.trackr_app.manager.PersonCreator
-import com.trackr.trackr_app.manager.PersonManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,8 +16,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddPersonViewModel @Inject constructor(
-        private val personCreator: PersonCreator,
-        ): ViewModel() {
+    private val personCreator: PersonCreator,
+) : ViewModel() {
 
     private val _firstName = mutableStateOf("")
     val firstName: State<String> get() = _firstName
@@ -34,6 +34,6 @@ class AddPersonViewModel @Inject constructor(
     }
 
     fun addPerson() = viewModelScope.launch {
-        personCreator.materializePerson(firstName.value, lastName.value)
+        personCreator.createPerson(firstName.value, lastName.value)
     }
 }

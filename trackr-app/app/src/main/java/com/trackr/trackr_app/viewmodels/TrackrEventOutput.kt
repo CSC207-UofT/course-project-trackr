@@ -22,7 +22,7 @@ class TrackrEventOutput(event: TrackrEvent, person: Person, currentYear: Int) {
      */
     init {
         if (this.date.isBefore(LocalDate.now().withYear(2008))) {
-            this.eventAge = currentYear -  event.firstYear + 1
+            this.eventAge = currentYear - event.firstYear + 1
         } else {
             this.eventAge = currentYear - event.firstYear
         }

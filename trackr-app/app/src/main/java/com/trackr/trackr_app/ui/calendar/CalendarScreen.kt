@@ -1,10 +1,13 @@
 package com.trackr.trackr_app.ui.calendar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -59,15 +62,15 @@ fun EventOnDateHeader(
     date: LocalDate,
     modifier: Modifier = Modifier
 ) {
-   Text(
-       "Events on " +
-               date.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) +
-               " ${date.dayOfMonth}, " +
-               date.year,
-       modifier = modifier.fillMaxWidth(),
-       textAlign = TextAlign.Center,
-       fontFamily = Rubik,
-       fontWeight = FontWeight.Bold,
-       fontSize = 19.sp,
-   )
+    Text(
+        "Events on " +
+                date.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) +
+                " ${date.dayOfMonth}, " +
+                date.year,
+        modifier = modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center,
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Bold,
+        fontSize = 19.sp,
+    )
 }

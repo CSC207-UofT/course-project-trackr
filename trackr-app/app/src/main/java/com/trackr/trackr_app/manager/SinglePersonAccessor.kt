@@ -8,5 +8,5 @@ such as the person id.
 Any Manager class that can access a specific person in a database should implement this interface.
  */
 interface SinglePersonAccessor {
-    suspend fun getPersonById(personId: String) : Person
+    suspend fun getPersonById(personId: String): Person
 }

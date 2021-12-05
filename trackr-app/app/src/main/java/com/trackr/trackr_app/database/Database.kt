@@ -4,12 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.Person
+import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
 
 
-@Database(entities = [User::class, Person::class, TrackrEvent::class], version = 1, exportSchema = false)
+@Database(
+    entities = [User::class, Person::class, TrackrEvent::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class TrackrDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
@@ -27,9 +31,9 @@ abstract class TrackrDatabase : RoomDatabase() {
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        TrackrDatabase::class.java,
-                        "trackr_database"
+                    context.applicationContext,
+                    TrackrDatabase::class.java,
+                    "trackr_database"
                 ).build()
                 INSTANCE = instance
                 // return instance

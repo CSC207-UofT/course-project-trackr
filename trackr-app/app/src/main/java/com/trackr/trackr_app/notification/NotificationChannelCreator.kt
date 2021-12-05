@@ -15,14 +15,15 @@ class NotificationChannelCreator(private val context: Context) {
     fun createNotificationChannel() {
         val name = "Event notifications"
         val descriptionText = "Notifications for events"
-        val importance : Int = NotificationManager.IMPORTANCE_DEFAULT
+        val importance: Int = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(
-                NotificationConstants.CHANNEL_ID, name, importance).apply {
+            NotificationConstants.CHANNEL_ID, name, importance
+        ).apply {
             description = descriptionText
         }
 
-        val notificationManager : NotificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager: NotificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
 }

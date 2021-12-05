@@ -23,23 +23,29 @@ class EventNotificationManager @Inject constructor(private val context: Context)
     /**
      * Creates a notification for the given event
      */
-    fun createNotification(name: String, eventType: String, eventDate: LocalDate,
-                           remindDate: LocalDate, id: String) {
+    fun createNotification(
+        name: String, eventType: String, eventDate: LocalDate,
+        remindDate: LocalDate, id: String
+    ) {
         var whichYear = LocalDate.now().year
-        if (eventDate.withYear(whichYear).isBefore(LocalDate.now())) {whichYear ++}
+        if (eventDate.withYear(whichYear).isBefore(LocalDate.now())) {
+            whichYear++
+        }
         val instant: Instant = remindDate.withYear(whichYear)
-                .atStartOfDay(ZoneId.systemDefault()).toInstant()
+            .atStartOfDay(ZoneId.systemDefault()).toInstant()
         val remindDateMillis: Long = instant.toEpochMilli()
 
         val intent = Intent(context, EventBroadcastReceiver::class.java)
-                .setAction(ACTION_RECEIVE_NOTIFICATION)
+            .setAction(ACTION_RECEIVE_NOTIFICATION)
         intent.putExtra("contentTitle", "$name $eventType")
-        intent.putExtra("contentText", "You have a $eventType for $name on" +
-                " ${eventDate.withYear(whichYear)}.")
+        intent.putExtra(
+            "contentText", "You have a $eventType for $name on" +
+                    " ${eventDate.withYear(whichYear)}."
+        )
         intent.putExtra("notificationId", id)
 
         val pendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, id.hashCode(), intent, FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(context, id.hashCode(), intent, FLAG_IMMUTABLE)
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, remindDateMillis, pendingIntent)
     }
@@ -51,7 +57,7 @@ class EventNotificationManager @Inject constructor(private val context: Context)
         val intent = Intent(context, EventBroadcastReceiver::class.java)
 
         val pendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, id.hashCode(), intent, FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(context, id.hashCode(), intent, FLAG_IMMUTABLE)
 
         pendingIntent.cancel()
         alarmManager.cancel(pendingIntent)
@@ -60,8 +66,10 @@ class EventNotificationManager @Inject constructor(private val context: Context)
     /**
      * Edits a notification for the given event
      */
-    fun editNotification(name: String, eventType: String, eventDate: LocalDate,
-                         remindDate: LocalDate, id: String) {
+    fun editNotification(
+        name: String, eventType: String, eventDate: LocalDate,
+        remindDate: LocalDate, id: String
+    ) {
         removeNotification(id)
         createNotification(name, eventType, eventDate, remindDate, id)
     }

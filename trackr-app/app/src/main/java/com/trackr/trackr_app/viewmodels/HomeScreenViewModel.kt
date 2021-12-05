@@ -1,6 +1,9 @@
 package com.trackr.trackr_app.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +25,7 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
-    ): ViewModel() {
+) : ViewModel() {
     private val _allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
     val allEvents: LiveData<List<TrackrEventOutput>> get() = _allEvents
 
@@ -65,9 +68,12 @@ class HomeScreenViewModel @Inject constructor(
             ).collectLatest {
                 val eventsTodayList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
-                    eventsTodayList.add(TrackrEventOutput(event,
-                        personRepository.getPersonById(event.personId),
-                        Calendar.getInstance().get(Calendar.YEAR))
+                    eventsTodayList.add(
+                        TrackrEventOutput(
+                            event,
+                            personRepository.getPersonById(event.personId),
+                            Calendar.getInstance().get(Calendar.YEAR)
+                        )
                     )
                 }
                 _eventsToday.value = eventsTodayList

@@ -37,7 +37,8 @@ fun EditScreenActivity(
         Column(
             Modifier.padding(20.dp)
         ) {
-            Text("$personName's $eventName",
+            Text(
+                "$personName's $eventName",
                 fontFamily = Rubik,
                 fontWeight = FontWeight.Black,
                 fontSize = 25.sp,
@@ -45,10 +46,14 @@ fun EditScreenActivity(
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colors.onPrimary
             )
-            Text( "on " +
-                    eventDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()) + ", " +
-                    eventDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) + " " +
-                    eventDate.dayOfMonth,
+            Text(
+                "on " +
+                        eventDate.dayOfWeek.getDisplayName(
+                            TextStyle.FULL,
+                            Locale.getDefault()
+                        ) + ", " +
+                        eventDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) + " " +
+                        eventDate.dayOfMonth,
                 fontSize = 16.sp,
                 modifier = Modifier.padding(top = 5.dp, bottom = 25.dp)
             )
@@ -66,7 +71,7 @@ fun EditScreenActivity(
                     eventName,
                     eventDate,
                     chosenReminder,
-                ) { isEditing = true}
+                ) { isEditing = true }
             }
         }
     }
@@ -87,7 +92,8 @@ fun EditScreen(
         Row(
             Modifier
                 .selectableGroup()
-                .padding(top = 5.dp, bottom = 20.dp)) {
+                .padding(top = 5.dp, bottom = 20.dp)
+        ) {
             RadioButton(
                 selected = eventName == "Birthday",
                 onClick = { viewModel.editEventName("Birthday") }
@@ -100,30 +106,38 @@ fun EditScreen(
             Text(text = "Anniversary", Modifier.padding(start = 5.dp))
         }
         InputWidget(title = "Date", widgets = listOf(
-            {InteractiveDropdownWidget(
-                setter = {month: String -> viewModel.changeMonth(month)},
-                getter = {eventDate.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())},
-                options = viewModel.getMonths()
-            )
+            {
+                InteractiveDropdownWidget(
+                    setter = { month: String -> viewModel.changeMonth(month) },
+                    getter = {
+                        eventDate.month.getDisplayName(
+                            TextStyle.SHORT,
+                            Locale.getDefault()
+                        )
+                    },
+                    options = viewModel.getMonths()
+                )
             },
-            {InteractiveDropdownWidget(
-                setter = {day: Int -> viewModel.changeDay(day)},
-                getter = {eventDate.dayOfMonth},
-                options = (1..eventDate.lengthOfMonth()).map{it}
-            )
+            {
+                InteractiveDropdownWidget(
+                    setter = { day: Int -> viewModel.changeDay(day) },
+                    getter = { eventDate.dayOfMonth },
+                    options = (1..eventDate.lengthOfMonth()).map { it }
+                )
             },
-            {InteractiveDropdownWidget(
-                setter = {year: Int -> viewModel.changeYear(year)},
-                getter = {eventDate.year},
-                options = (2100 downTo 1900).map{it}
-            )
+            {
+                InteractiveDropdownWidget(
+                    setter = { year: Int -> viewModel.changeYear(year) },
+                    getter = { eventDate.year },
+                    options = (2100 downTo 1900).map { it }
+                )
             }
         )
         )
         InputWidget(title = "Remind Me") {
             InteractiveDropdownWidget(
-                setter = {reminder: String -> viewModel.changeReminderInterval(reminder)},
-                getter = {chosenReminder},
+                setter = { reminder: String -> viewModel.changeReminderInterval(reminder) },
+                getter = { chosenReminder },
                 options = viewModel.getReminderIntervals()
             )
         }
@@ -150,7 +164,8 @@ fun EditScreen(
             modifier = Modifier.padding(top = 10.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
         ) {
-            Text(text = "DELETE event",
+            Text(
+                text = "DELETE event",
                 Modifier.padding(bottom = 5.dp),
                 fontWeight = FontWeight.Bold,
             )
@@ -204,7 +219,7 @@ fun InfoScreen(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onPrimary
         )
-        Text(chosenReminder,  Modifier.padding(bottom = 40.dp), fontSize = 18.sp)
+        Text(chosenReminder, Modifier.padding(bottom = 40.dp), fontSize = 18.sp)
         Button(
             onClick = {
                 startEditing()

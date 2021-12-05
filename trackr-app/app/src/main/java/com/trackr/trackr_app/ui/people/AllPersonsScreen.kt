@@ -23,74 +23,75 @@ import com.trackr.trackr_app.viewmodels.PersonOutput
 
 @Composable
 fun AllPersonsScreenActivity(
-        viewModel: AllPersonsScreenViewModel,
-        navController: NavHostController,
-        purpose: Purpose
+    viewModel: AllPersonsScreenViewModel,
+    navController: NavHostController,
+    purpose: Purpose
 ) {
     val personList by viewModel.allPersons.observeAsState(listOf())
-    val title: String = when(purpose) {
+    val title: String = when (purpose) {
         Purpose.VIEW_PERSON -> "Select a Person to View:"
         Purpose.ADD_EVENT -> "Select a Person to Create an Event For:"
     }
 
     Scaffold(
-            backgroundColor = MaterialTheme.colors.background,
-            bottomBar = { BottomBarPersons(navController = navController) }
+        backgroundColor = MaterialTheme.colors.background,
+        bottomBar = { BottomBarPersons(navController = navController) }
     ) {
         Column(
-                modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(20.dp)
         ) {
             PersonFeed(
-                    Modifier
-                            .padding(0.dp, 15.dp)
-                            .weight(2f),
-                    title,
-                    personList,
-                    navController,
-                    purpose
+                Modifier
+                    .padding(0.dp, 15.dp)
+                    .weight(2f),
+                title,
+                personList,
+                navController,
+                purpose
             )
         }
     }
 }
 
 @Composable
-fun PersonFeed(modifier: Modifier,
-               title: String,
-               persons: List<PersonOutput>,
-               nav: NavHostController,
-               purpose: Purpose
+fun PersonFeed(
+    modifier: Modifier,
+    title: String,
+    persons: List<PersonOutput>,
+    nav: NavHostController,
+    purpose: Purpose
 ) {
     Column(
-            modifier = modifier,
+        modifier = modifier,
     ) {
         Text(
-                title,
-                fontFamily = Rubik,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(bottom = 5.dp),
+            title,
+            fontFamily = Rubik,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            color = MaterialTheme.colors.onPrimary,
+            modifier = Modifier.padding(bottom = 5.dp),
         )
         if (persons.isEmpty()) {
             Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
                 Text(
-                        stringResource(R.string.no_people),
-                        fontFamily = Rubik,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
+                    stringResource(R.string.no_people),
+                    fontFamily = Rubik,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
                 )
             }
         } else {
             PersonList(
-                    persons,
-                    Modifier.fillMaxWidth(),
-                    nav,
-                    purpose
+                persons,
+                Modifier.fillMaxWidth(),
+                nav,
+                purpose
             )
         }
     }
@@ -98,27 +99,27 @@ fun PersonFeed(modifier: Modifier,
 
 @Composable
 fun BottomBarPersons(
-        navController: NavHostController
+    navController: NavHostController
 ) {
     BottomNavigation(
-            backgroundColor = MaterialTheme.colors.primary,
+        backgroundColor = MaterialTheme.colors.primary,
     ) {
         BottomNavigationItem(
-                icon = {
-                    Icon(
-                            Icons.Filled.Add,
-                            "Add Person",
-                            tint = MaterialTheme.colors.onBackground,
-                    )
-                },
-                label = { Text(text = "Add People") },
-                selected = false,
-                onClick = {
-                    navController.navigate("AddPerson")
-                    {
-                        launchSingleTop = true
-                    }
+            icon = {
+                Icon(
+                    Icons.Filled.Add,
+                    "Add Person",
+                    tint = MaterialTheme.colors.onBackground,
+                )
+            },
+            label = { Text(text = "Add People") },
+            selected = false,
+            onClick = {
+                navController.navigate("AddPerson")
+                {
+                    launchSingleTop = true
                 }
+            }
         )
     }
 }

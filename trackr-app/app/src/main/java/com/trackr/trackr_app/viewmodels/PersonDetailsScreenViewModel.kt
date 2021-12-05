@@ -3,7 +3,6 @@ package com.trackr.trackr_app.viewmodels
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
-import com.trackr.trackr_app.manager.PersonManager
 import com.trackr.trackr_app.manager.PersonModifier
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
@@ -22,12 +21,12 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class PersonDetailsScreenViewModel @Inject constructor(
-        private val personModifier: PersonModifier,
-        private val eventRepository: EventRepository,
-        private val personRepository: PersonRepository,
-        state: SavedStateHandle,
+    private val personModifier: PersonModifier,
+    private val eventRepository: EventRepository,
+    private val personRepository: PersonRepository,
+    state: SavedStateHandle,
 
-        ): ViewModel() {
+    ) : ViewModel() {
 
     private val personID: String = state.get<String>("personId")!!
 
@@ -54,9 +53,12 @@ class PersonDetailsScreenViewModel @Inject constructor(
             eventRepository.getByPersonId(personID).collectLatest {
                 val personList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
-                    personList.add(TrackrEventOutput(event,
-                        personRepository.getPersonById(personID),
-                        Calendar.getInstance().get(Calendar.YEAR))
+                    personList.add(
+                        TrackrEventOutput(
+                            event,
+                            personRepository.getPersonById(personID),
+                            Calendar.getInstance().get(Calendar.YEAR)
+                        )
                     )
                 }
                 _personEvents.value = personList

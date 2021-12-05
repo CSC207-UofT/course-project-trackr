@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "user-table")
-class User (
-        var username: String,
+class User(
+    var username: String,
 
-        @PrimaryKey
-        val id: String = UUID.randomUUID().toString()
+    @PrimaryKey
+    val id: String = UUID.randomUUID().toString()
 )
