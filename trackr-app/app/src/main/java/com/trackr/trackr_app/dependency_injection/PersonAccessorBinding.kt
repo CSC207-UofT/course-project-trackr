@@ -1,4 +1,4 @@
-package com.trackr.trackr_app.di
+package com.trackr.trackr_app.dependency_injection
 
 import com.trackr.trackr_app.repository.PersonAccessor
 import com.trackr.trackr_app.repository.PersonRepository
