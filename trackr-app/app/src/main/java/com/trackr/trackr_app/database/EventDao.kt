@@ -17,6 +17,8 @@ interface EventDao {
 
     /**
      * List all the events in the database, ordered by date
+     *
+     * @return a Flow of a list of all Users in the database
      */
     @Query("SELECT * FROM `event-table` ORDER BY date DESC")
     fun listAll(): Flow<List<TrackrEvent>>

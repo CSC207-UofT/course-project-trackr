@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.Flow
 interface PersonDao {
 
     /**
-     * List all the people in the database, ordered by date
+     * List all the people in the database, ordered by their first then last names
+     *
+     * @return a Flow of a list of all Users in the database
      */
     @Query("SELECT * FROM `person-table` ORDER BY firstName, lastName")
     fun listPersons(): Flow<List<Person>>
