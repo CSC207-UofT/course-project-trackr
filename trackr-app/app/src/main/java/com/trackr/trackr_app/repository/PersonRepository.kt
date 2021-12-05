@@ -41,11 +41,13 @@ class PersonRepository @Inject constructor(
     @WorkerThread
     suspend fun editFirstName(newFirstName: String, person: Person) {
         personDao.editFirstName(newFirstName, person.id, person.userId)
+        person.firstName = newFirstName
     }
 
     @WorkerThread
     suspend fun editLastName(newLastName: String, person: Person) {
         personDao.editLastName(newLastName, person.id, person.userId)
+        person.lastName = newLastName
     }
 
     @WorkerThread
