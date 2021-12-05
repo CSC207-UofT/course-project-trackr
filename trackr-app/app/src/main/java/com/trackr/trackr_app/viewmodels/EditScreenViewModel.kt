@@ -18,7 +18,6 @@ import javax.inject.Inject
 class EditScreenViewModel @Inject constructor(
     private val eventManager: EventManager,
     state: SavedStateHandle,
-
 ) : ViewModel() {
 
     private val eventID: String = state.get<String>("eventId")!!

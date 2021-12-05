@@ -30,6 +30,7 @@ fun PersonDetailsScreenActivity(
 ) {
     val confirmDelete = remember {mutableStateOf(false)}
     val displayMode = remember {mutableStateOf(true)}
+
     Scaffold(
             backgroundColor = MaterialTheme.colors.background,
             bottomBar = {
@@ -60,6 +61,7 @@ fun DisplayMode(
     navController: NavHostController
 ) {
     val eventList by viewModel.personEvents.observeAsState(listOf())
+
     Column {
         Text("First Name:",
             fontFamily = Rubik,
@@ -210,8 +212,12 @@ fun BottomBar(viewModel: PersonDetailsScreenViewModel,
                 )
                 },
                 label = {Text("Save Changes", fontFamily = Rubik)},
-                onClick = {viewModel.editPerson()
-                    displayMode.value = !displayMode.value})
+                onClick = {
+                    viewModel.editPerson()
+                    displayMode.value = !displayMode.value
+                    viewModel.updatePersonDetailsEvents()
+                }
+            )
         }
         BottomNavigationItem(
             selected = false,

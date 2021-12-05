@@ -29,6 +29,8 @@ fun HomeScreenActivity(
 ) {
     val allEvents by viewModel.allEvents.observeAsState(listOf())
     val eventsToday by viewModel.eventsToday.observeAsState(listOf())
+    viewModel.updateHomeScreenData()
+
     Scaffold(
             backgroundColor = MaterialTheme.colors.background,
             bottomBar = {

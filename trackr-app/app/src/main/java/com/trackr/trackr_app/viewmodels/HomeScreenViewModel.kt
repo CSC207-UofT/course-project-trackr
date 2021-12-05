@@ -20,7 +20,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    eventRepository: EventRepository,
+    private val eventRepository: EventRepository,
     private val personRepository: PersonRepository,
     ): ViewModel() {
     private val _allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
@@ -34,6 +34,13 @@ class HomeScreenViewModel @Inject constructor(
      * Fetch all events and all events today.
      */
     init {
+        updateHomeScreenData()
+    }
+
+    /**
+     * Fetch the most update-to-date data from the database to display on the homescreen
+     */
+    fun updateHomeScreenData() {
         viewModelScope.launch {
             eventRepository.allEvents.collectLatest {
                 val allEventsList = mutableListOf<TrackrEventOutput>()
@@ -50,6 +57,7 @@ class HomeScreenViewModel @Inject constructor(
                 _allEvents.value = allEventsList
             }
         }
+
         viewModelScope.launch {
             eventRepository.listFromRange(
                 LocalDate.now().withYear(2008),

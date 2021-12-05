@@ -38,13 +38,18 @@ class PersonDetailsScreenViewModel @Inject constructor(
             val personInfo = personRepository.getPersonById(personID)
             _firstName.value = personInfo.first_name
             _lastName.value = personInfo.last_name
+        }
+        updatePersonDetailsEvents()
+    }
 
+    fun updatePersonDetailsEvents() {
+        viewModelScope.launch {
             eventRepository.getByPersonId(personID).collectLatest {
                 val personList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
                     personList.add(TrackrEventOutput(event,
-                            personRepository.getPersonById(personID),
-                            Calendar.getInstance().get(Calendar.YEAR))
+                        personRepository.getPersonById(personID),
+                        Calendar.getInstance().get(Calendar.YEAR))
                     )
                 }
                 _personEvents.value = personList
