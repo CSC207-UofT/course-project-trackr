@@ -1,11 +1,8 @@
 package com.trackr.trackr_app.manager
 
 import com.trackr.trackr_app.model.TrackrEvent
-import com.trackr.trackr_app.model.User
 import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
-import com.trackr.trackr_app.repository.PersonRepository
-import com.trackr.trackr_app.repository.UserRepository
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -108,14 +105,14 @@ class EventManager @Inject constructor(
      */
     suspend fun getEventInfo(eventID: String): List<Any> {
         val event = eventRepository.getById(eventID)
-        val associatedPerson = personManager.getPersonById(event.person_id)
+        val associatedPerson = personManager.getPersonById(event.personId)
 
         return listOf<Any>(
             if (event.type == 0) "Birthday" else "Anniversary",
             event.date,
             event.firstYear,
-            event.reminder_interval,
-            associatedPerson.first_name + " " + associatedPerson.last_name,
+            event.reminderInterval,
+            associatedPerson.firstName + " " + associatedPerson.lastName,
             event.type
         )
     }

@@ -10,29 +10,29 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PersonDao {
 
-    @Query("SELECT * FROM `person-table` ORDER BY first_name, last_name")
+    @Query("SELECT * FROM `person-table` ORDER BY firstName, lastName")
     fun listPersons(): Flow<List<Person>>
 
-    @Query("SELECT * FROM `person-table` WHERE id = :person_id")
-    suspend fun getPersonById(person_id: String): Person
+    @Query("SELECT * FROM `person-table` WHERE id = :personId")
+    suspend fun getPersonById(personId: String): Person
 
-    @Query("SELECT * FROM `person-table` WHERE first_name = :person_first_name and last_name = :person_last_name")
-    suspend fun getPersonByName(person_first_name: String, person_last_name: String): Person
+    @Query("SELECT * FROM `person-table` WHERE firstName = :personFirstName and lastName = :personLastName")
+    suspend fun getPersonByName(personFirstName: String, personLastName: String): Person
 
-    @Query("SELECT EXISTS(SELECT * FROM `person-table` WHERE first_name = :person_first_name and last_name = :person_last_name)")
-    suspend fun hasPersonByName(person_first_name: String, person_last_name: String): Boolean
+    @Query("SELECT EXISTS(SELECT * FROM `person-table` WHERE firstName = :personFirstName and lastName = :personLastName)")
+    suspend fun hasPersonByName(personFirstName: String, personLastName: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(person: Person)
 
-    @Query("DELETE FROM `person-table` WHERE id = :person_id and user_id = :user_id")
-    suspend fun delete(person_id: String, user_id: String)
+    @Query("DELETE FROM `person-table` WHERE id = :personId and userId = :userId")
+    suspend fun delete(personId: String, userId: String)
 
-    @Query("UPDATE `person-table`SET first_name = :new_first_name WHERE id= :person_id and user_id = :user_id")
-    suspend fun editFirstName(new_first_name: String, person_id: String, user_id: String)
+    @Query("UPDATE `person-table`SET firstName = :newFirstName WHERE id= :personId and userId = :userId")
+    suspend fun editFirstName(newFirstName: String, personId: String, userId: String)
 
-    @Query("UPDATE `person-table`SET last_name = :new_last_name WHERE id= :person_id and user_id = :user_id")
-    suspend fun editLastName(new_last_name: String, person_id: String, user_id: String)
+    @Query("UPDATE `person-table`SET lastName = :newLastName WHERE id= :personId and userId = :userId")
+    suspend fun editLastName(newLastName: String, personId: String, userId: String)
 
     @Query("DELETE FROM `person-table`")
     suspend fun deleteAll()

@@ -16,11 +16,11 @@ interface EventDao {
     fun listAll(): Flow<List<TrackrEvent>>
 
     // range is inclusive.
-    @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date ORDER BY date DESC")
-    fun listFromRange(start_date: Long, end_date: Long): Flow<List<TrackrEvent>>
+    @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :endDate ORDER BY date DESC")
+    fun listFromRange(start_date: Long, endDate: Long): Flow<List<TrackrEvent>>
 
-    @Query("SELECT * FROM `event-table` WHERE date BETWEEN :start_date AND :end_date")
-    suspend fun eventsBetweenDate(start_date: Long, end_date: Long): List<TrackrEvent>
+    @Query("SELECT * FROM `event-table` WHERE date BETWEEN :startDate AND :endDate")
+    suspend fun eventsBetweenDate(startDate: Long, endDate: Long): List<TrackrEvent>
 
     @Query("SELECT * FROM `event-table` WHERE id = :id")
     suspend fun getById(id: String): TrackrEvent
@@ -28,23 +28,23 @@ interface EventDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(trackrEvent: TrackrEvent)
 
-    @Query("DELETE FROM `event-table` WHERE id = :id AND person_id = :person_id")
-    suspend fun delete(id: String, person_id: String)
+    @Query("DELETE FROM `event-table` WHERE id = :id AND personId = :personId")
+    suspend fun delete(id: String, personId: String)
 
-    @Query("UPDATE `event-table` SET person_id = :new_person_id WHERE id = :id AND person_id = :person_id")
-    suspend fun editPerson(new_person_id: String, id: String, person_id: String)
+    @Query("UPDATE `event-table` SET personId = :newPersonId WHERE id = :id AND personId = :personId")
+    suspend fun editPerson(newPersonId: String, id: String, personId: String)
 
-    @Query("UPDATE `event-table` SET type = :new_type WHERE id = :id AND person_id = :person_id")
-    suspend fun editType(new_type: Int, id: String, person_id: String)
+    @Query("UPDATE `event-table` SET type = :newType WHERE id = :id AND personId = :personId")
+    suspend fun editType(newType: Int, id: String, personId: String)
 
-    @Query("UPDATE `event-table` SET date = :new_date WHERE id = :id AND person_id = :person_id")
-    suspend fun editDate(new_date: Long, id: String, person_id: String)
+    @Query("UPDATE `event-table` SET date = :newDate WHERE id = :id AND personId = :personId")
+    suspend fun editDate(newDate: Long, id: String, personId: String)
 
-    @Query("UPDATE `event-table` SET firstYear = :new_year WHERE id = :id AND person_id = :person_id")
-    suspend fun editFirstYear(new_year: Int, id: String, person_id: String)
+    @Query("UPDATE `event-table` SET firstYear = :newYear WHERE id = :id AND personId = :personId")
+    suspend fun editFirstYear(newYear: Int, id: String, personId: String)
 
-    @Query("UPDATE `event-table` SET reminder_interval = :new_interval WHERE id = :id AND person_id = :person_id")
-    suspend fun editInterval(new_interval: Int, id: String, person_id: String)
+    @Query("UPDATE `event-table` SET reminderInterval = :newInterval WHERE id = :id AND personId = :personId")
+    suspend fun editInterval(newInterval: Int, id: String, personId: String)
 
     @Query("DELETE FROM `event-table`")
     suspend fun deleteAll()

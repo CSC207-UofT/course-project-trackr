@@ -71,7 +71,7 @@ class CalendarViewModel @Inject constructor(
                 ).map {
                     TrackrEventOutput(
                         it,
-                        personRepository.getPersonById(it.person_id),
+                        personRepository.getPersonById(it.personId),
                         LocalDate.now().year
                     )
                 }

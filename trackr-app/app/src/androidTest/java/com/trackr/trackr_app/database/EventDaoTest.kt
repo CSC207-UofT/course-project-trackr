@@ -8,7 +8,6 @@ import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
 import junit.framework.TestCase.*
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -222,7 +221,7 @@ class EventDaoTest {
             3,
             0)
         eventDao.insert(event2)
-        eventDao.delete(event1.id, event1.person_id)
+        eventDao.delete(event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
         assertEquals(eventsFromDatabase[0].id, event2.id)
         assertEquals(eventsFromDatabase.size, 1)
@@ -243,7 +242,7 @@ class EventDaoTest {
             7,
             0)
         eventDao.insert(event1)
-        eventDao.editDate(event1.date + 1, event1.id, event1.person_id)
+        eventDao.editDate(event1.date + 1, event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
         assertEquals(eventsFromDatabase[0].date, event1.date + 1)
     }
@@ -263,9 +262,9 @@ class EventDaoTest {
             7,
             0)
         eventDao.insert(event1)
-        eventDao.editInterval(14, event1.id, event1.person_id)
+        eventDao.editInterval(14, event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
-        assertEquals(eventsFromDatabase[0].reminder_interval, 14)
+        assertEquals(eventsFromDatabase[0].reminderInterval, 14)
     }
 
     @Test
@@ -285,9 +284,9 @@ class EventDaoTest {
                 7,
                 0)
         eventDao.insert(event1)
-        eventDao.editPerson(person2.id, event1.id, event1.person_id)
+        eventDao.editPerson(person2.id, event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
-        assertEquals(eventsFromDatabase[0].person_id, person2.id)
+        assertEquals(eventsFromDatabase[0].personId, person2.id)
     }
 
     @Test
@@ -305,7 +304,7 @@ class EventDaoTest {
             7,
             0)
         eventDao.insert(event1)
-        eventDao.editType(1, event1.id, event1.person_id)
+        eventDao.editType(1, event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
         assertEquals(eventsFromDatabase[0].type, 1)
     }

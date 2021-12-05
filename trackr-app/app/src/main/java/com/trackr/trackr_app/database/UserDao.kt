@@ -13,8 +13,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: User)
 
-    @Query("UPDATE `user-table` SET username = :new_username WHERE id = :user_id")
-    suspend fun updateUsername(new_username:String, user_id: String)
+    @Query("UPDATE `user-table` SET username = :new_username WHERE id = :userId")
+    suspend fun updateUsername(new_username:String, userId: String)
 
     @Query("SELECT EXISTS(SELECT * FROM `user-table` WHERE username = :username)")
     suspend fun hasUser(username:String): Boolean

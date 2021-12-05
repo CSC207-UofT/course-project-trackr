@@ -75,7 +75,7 @@ class PersonRepositoryTest {
         val person = Person(user.id, "tom", "sawyer")
         personRepository.insert(person)
         personRepository.editFirstName("Huckleberry", person)
-        val result = personRepository.allPersons.first()[0].first_name
+        val result = personRepository.allPersons.first()[0].firstName
         val expected = "Huckleberry"
         assertEquals(expected, result)
     }
@@ -87,7 +87,7 @@ class PersonRepositoryTest {
         val person = Person(user.id, "tom", "Fin")
         personRepository.insert(person)
         personRepository.editLastName("Fin", person)
-        val result = personRepository.allPersons.first()[0].last_name
+        val result = personRepository.allPersons.first()[0].lastName
         val expected = "Fin"
         assertEquals(expected, result)
     }
