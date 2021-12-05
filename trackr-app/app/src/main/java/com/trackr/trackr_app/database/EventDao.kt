@@ -26,6 +26,7 @@ interface EventDao {
      *
      * @param startDate The start date of the range
      * @param endDate The end date of the range
+     * @return A Flow of a list of TrackrEvents between the date range, inclusive
      */
     @Query("SELECT * FROM `event-table` WHERE date BETWEEN :startDate AND :endDate ORDER BY date DESC")
     fun listFromRange(startDate: Long, endDate: Long): Flow<List<TrackrEvent>>
@@ -35,6 +36,7 @@ interface EventDao {
      *
      * @param startDate The start date of the range
      * @param endDate The end date of the range
+     * @return A list of TrackrEvents between the date range, inclusive
      */
     @Query("SELECT * FROM `event-table` WHERE date BETWEEN :startDate AND :endDate")
     suspend fun eventsBetweenDate(startDate: Long, endDate: Long): List<TrackrEvent>
@@ -43,6 +45,7 @@ interface EventDao {
      * Get an event by it's ID
      *
      * @param id The event to get
+     * @return The requested TrackrEvent
      */
     @Query("SELECT * FROM `event-table` WHERE id = :id")
     suspend fun getById(id: String): TrackrEvent
@@ -51,6 +54,7 @@ interface EventDao {
      * Get all events by the person they are connected to
      *
      * @param personId The ID of the person to query
+     * @return A Flow of a list of TrackrEvents associated with the person
      */
     @Query("SELECT * FROM `event-table` WHERE personId = :personId")
     fun getByPersonId(personId: String): Flow<List<TrackrEvent>>
