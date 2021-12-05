@@ -45,8 +45,8 @@ class AddScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val person = personManager.getPersonById(personID)
-            _firstName.value = person.first_name
-            _lastName.value = person.last_name
+            _firstName.value = person.firstName
+            _lastName.value = person.lastName
         }
     }
 

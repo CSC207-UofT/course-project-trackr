@@ -22,10 +22,10 @@ class PersonManager @Inject constructor(
         return newPerson
     }
 
-    suspend fun editPerson(id: String, first_name: String, last_name: String) {
+    suspend fun editPerson(id: String, firstName: String, lastName: String) {
         val person = personRepository.getPersonById(id)
-        personRepository.editFirstName(first_name, person)
-        personRepository.editLastName(last_name, person)
+        personRepository.editFirstName(firstName, person)
+        personRepository.editLastName(lastName, person)
 
     }
 

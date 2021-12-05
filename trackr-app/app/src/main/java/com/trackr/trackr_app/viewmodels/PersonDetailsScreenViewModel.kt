@@ -36,8 +36,8 @@ class PersonDetailsScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val personInfo = personRepository.getPersonById(personID)
-            _firstName.value = personInfo.first_name
-            _lastName.value = personInfo.last_name
+            _firstName.value = personInfo.firstName
+            _lastName.value = personInfo.lastName
         }
         updatePersonDetailsEvents()
     }

@@ -8,6 +8,6 @@ import com.trackr.trackr_app.model.Person
  */
 class PersonOutput(person: Person) {
     val personId:String = person.id
-    val firstName:String = person.first_name
-    val lastName:String = person.last_name
+    val firstName:String = person.firstName
+    val lastName:String = person.lastName
 }

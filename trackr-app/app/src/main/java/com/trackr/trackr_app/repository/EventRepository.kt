@@ -14,13 +14,13 @@ import javax.inject.Singleton
 class EventRepository @Inject constructor(private val eventDao: EventDao) {
     val allEvents: Flow<List<TrackrEvent>> = eventDao.listAll()
 
-    fun listFromRange(start_date: LocalDate, end_date: LocalDate): Flow<List<TrackrEvent>> {
-        return eventDao.listFromRange(start_date.toEpochDay(), end_date.toEpochDay())
+    fun listFromRange(startDate: LocalDate, endDate: LocalDate): Flow<List<TrackrEvent>> {
+        return eventDao.listFromRange(startDate.toEpochDay(), endDate.toEpochDay())
     }
 
     @WorkerThread
-    suspend fun getEventsInRange(start_date: LocalDate, end_date: LocalDate): List<TrackrEvent> {
-        return eventDao.eventsBetweenDate(start_date.toEpochDay(), end_date.toEpochDay())
+    suspend fun getEventsInRange(startDate: LocalDate, endDate: LocalDate): List<TrackrEvent> {
+        return eventDao.eventsBetweenDate(startDate.toEpochDay(), endDate.toEpochDay())
     }
 
     @WorkerThread
@@ -44,28 +44,28 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
     }
 
     @WorkerThread
-    suspend fun editPerson(new_person: Person, trackrEvent: TrackrEvent) {
-        eventDao.editPerson(new_person.id, trackrEvent.id, trackrEvent.personId)
+    suspend fun editPerson(newPerson: Person, trackrEvent: TrackrEvent) {
+        eventDao.editPerson(newPerson.id, trackrEvent.id, trackrEvent.personId)
     }
 
     @WorkerThread
-    suspend fun editType(new_type: Int, trackrEvent: TrackrEvent) {
-        eventDao.editType(new_type, trackrEvent.id, trackrEvent.personId)
+    suspend fun editType(newType: Int, trackrEvent: TrackrEvent) {
+        eventDao.editType(newType, trackrEvent.id, trackrEvent.personId)
     }
 
     @WorkerThread
-    suspend fun editDate(new_date: LocalDate, event: TrackrEvent) {
-        eventDao.editDate(new_date.toEpochDay(), event.id, event.personId)
+    suspend fun editDate(newDate: LocalDate, event: TrackrEvent) {
+        eventDao.editDate(newDate.toEpochDay(), event.id, event.personId)
     }
 
     @WorkerThread
-    suspend fun editFirstYear(new_year: Int, event: TrackrEvent) {
-        eventDao.editFirstYear(new_year, event.id, event.personId)
+    suspend fun editFirstYear(newYear: Int, event: TrackrEvent) {
+        eventDao.editFirstYear(newYear, event.id, event.personId)
     }
 
     @WorkerThread
-    suspend fun editInterval(new_interval: Int, trackrEvent: TrackrEvent) {
-        eventDao.editInterval(new_interval, trackrEvent.id, trackrEvent.personId)
+    suspend fun editInterval(newInterval: Int, trackrEvent: TrackrEvent) {
+        eventDao.editInterval(newInterval, trackrEvent.id, trackrEvent.personId)
     }
 
     @WorkerThread
