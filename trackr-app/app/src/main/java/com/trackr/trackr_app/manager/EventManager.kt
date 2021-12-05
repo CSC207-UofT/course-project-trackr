@@ -22,6 +22,14 @@ class EventManager @Inject constructor(
     private val eventNotificationManager: EventNotificationManager,
     private val personManager: PersonManager,
 ) : EventCreator, EventModifier, SingleEventAccessor {
+    /**
+     * Add a new event to the repository
+     *
+     * @param id The id of the event to be created
+     * @param type The type of the event to be created
+     * @param firstYear The first year that this even occurs in
+     * @param reminderInterval When the user would like to be reminded of this event
+     */
     private fun createEvent(
         id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int,
         reminderStrategy: Int
@@ -29,6 +37,15 @@ class EventManager @Inject constructor(
         return TrackrEvent(id, type, date, firstYear, reminderInterval, reminderStrategy)
     }
 
+    /**
+     * Add a new event to the program, and register it for notifications.
+     *
+     * @param personId The ID of the person associated with this event.
+     * @param eventType The type of this event
+     * @param chosenReminder The string corresponding to when the user
+     *                       would like to be reminded of this event.
+     * @param eventDate The date of this event
+     */
     override suspend fun addEvent(
         personId: String, eventType: Int, chosenReminder: String,
         eventDate: LocalDate
@@ -69,6 +86,13 @@ class EventManager @Inject constructor(
     /**
      * Aggregate the data that has been inputted and then tell the user, person, and event
      * repositories to update this data in the database
+     *
+     * @param eventID The ID of the event to modify
+     * @param reminderInt The new reminder time to notify the user for the event
+     * @param eventDate The new date associated with the event
+     * @param eventType The new type associated with the event
+     * @param personName Name of the person associated with this event
+     * @param eventName Name of the event
      */
     override suspend fun editEvent(
         eventID: String, reminderInt: Int, eventDate: LocalDate, eventType: Int,
@@ -81,6 +105,7 @@ class EventManager @Inject constructor(
         eventRepository.editDate(eventDate.withYear(2008), event)
 
         eventRepository.editFirstYear(eventDate.year, event)
+
         eventRepository.editType(eventType, event)
 
         //Edit notification
@@ -94,7 +119,9 @@ class EventManager @Inject constructor(
     }
 
     /**
-     * Delete the event from the database
+     * Delete an event from the database
+     *
+     * @param eventID The ID of the event to delete from the database
      */
     override suspend fun deleteEvent(eventID: String) {
         val event = eventRepository.getById(eventID)
@@ -106,6 +133,8 @@ class EventManager @Inject constructor(
 
     /**
      * Get event info from the database
+     *
+     * @param eventID The ID of the event to grab from the database
      */
     override suspend fun getEventInfo(eventID: String): List<Any> {
         val event = eventRepository.getById(eventID)
