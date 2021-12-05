@@ -34,6 +34,6 @@ class AddPersonViewModel @Inject constructor(
     }
 
     fun addPerson() = viewModelScope.launch {
-        personCreator.materializePerson(firstName.value, lastName.value)
+        personCreator.createPerson(firstName.value, lastName.value)
     }
 }

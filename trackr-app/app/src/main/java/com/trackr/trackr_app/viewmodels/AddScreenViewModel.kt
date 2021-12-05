@@ -1,11 +1,11 @@
 package com.trackr.trackr_app.viewmodels
 
-import android.media.metrics.Event
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.trackr.trackr_app.manager.EventCreator
-import com.trackr.trackr_app.manager.PersonManager
 import com.trackr.trackr_app.manager.SinglePersonAccessor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,10 +21,10 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddScreenViewModel @Inject constructor(
-        private val singlePersonAccessor: SinglePersonAccessor,
-        private val eventCreator: EventCreator,
-        state: SavedStateHandle
-): ViewModel() {
+    private val singlePersonAccessor: SinglePersonAccessor,
+    private val eventCreator: EventCreator,
+    state: SavedStateHandle
+) : ViewModel() {
 
     private val personID: String = state.get<String>("personId")!!
 
@@ -128,12 +128,15 @@ class AddScreenViewModel @Inject constructor(
     }
 
     /**
-     * Aggregate the data that has been inputted and then tell the user, person, and event
-     * repositories to store this data
+     * Create a new event based off the current event data and add it to the database
      */
     fun addEvent() = viewModelScope.launch {
         //Add the current user to the database
-        eventCreator.addEvent(firstName.value, lastName.value,
-                eventType, chosenReminder.value, eventDate.value)
+        eventCreator.addEvent(
+            personID,
+            eventType,
+            chosenReminder.value,
+            eventDate.value
+        )
     }
 }

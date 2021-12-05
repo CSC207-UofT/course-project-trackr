@@ -10,9 +10,9 @@ class PersonManager @Inject constructor(
         private val personRepository: PersonRepository,
         private val userManager: UserManager
 ) : PersonCreator, PersonModifier, SinglePersonAccessor {
-    private suspend fun createPerson(userId: String, firstName: String, lastName: String): Person {
+    override suspend fun createPerson(firstName: String, lastName: String): Person {
         val newPerson = Person(
-            userId = userId,
+            userId = userManager.currentUser.id,
             firstName = firstName,
             lastName = lastName)
 
@@ -32,28 +32,6 @@ class PersonManager @Inject constructor(
         personRepository.delete(person)
     }
 
-    /**
-     * Retrieve a person from the database.
-     * If the person with the required first and last
-     * name does not exist in the database, create and add
-     * them and return the object.
-     *
-     * @param firstName the first name of the wanted person
-     * @param lastName the last name of the wanted person
-     * @return the person object corresponding to this first and last name
-     */
-    override suspend fun materializePerson(firstName: String, lastName: String): Person {
-        // TODO: Can I query the database with a get method only once, and just
-        //  Replace this with a null check instead?
-        //  I'm not sure what a failed query would do.
-        return if (personRepository.hasPersonByName(firstName, lastName)) {
-            personRepository.getPersonByName(firstName, lastName)
-        } else {
-            createPerson(userManager.currentUser.id, firstName, lastName)
-        }
-    }
-
     override suspend fun getPersonById(personId: String) =
         personRepository.getPersonById(personId)
-
 }
