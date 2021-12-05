@@ -23,27 +23,17 @@ class EventManager @Inject constructor(
     private val personManager: PersonManager,
 ) : EventCreator, EventModifier, SingleEventAccessor {
     private fun createEvent(
-        id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int,
-        reminderStrategy: Int
+        id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int
     ): TrackrEvent {
-        return TrackrEvent(id, type, date, firstYear, reminderInterval, reminderStrategy)
+        return TrackrEvent(id, type, date, firstYear, reminderInterval)
     }
 
     override suspend fun addEvent(
-        personId: String, eventType: Int, chosenReminder: String,
+        personId: String, eventType: Int, chosenReminder: Int,
         eventDate: LocalDate
     ) {
         // get the specified person for which this event is for
         val newPerson = personManager.getPersonById(personId)
-
-        //Convert the reminder interval to an int using the following mapping
-        val reminderInt: Int = mapOf(
-            "1 day before" to 1,
-            "3 days before" to 3,
-            "1 week before" to 7,
-            "2 weeks before" to 14,
-            "1 month before" to 30
-        )[chosenReminder]!!
 
         //Add the new event to the database
         val newEvent = createEvent(
@@ -52,7 +42,7 @@ class EventManager @Inject constructor(
             eventDate.withYear(2008)
                 .toEpochDay(),
             eventDate.year,
-            reminderInt, 0
+            chosenReminder
         )
         eventRepository.insert(newEvent)
 
@@ -61,7 +51,7 @@ class EventManager @Inject constructor(
             "${newPerson.firstName} ${newPerson.lastName}",
             if (eventType == 0) "Birthday" else "Anniversary",
             eventDate,
-            eventDate.minusDays(reminderInt.toLong()),
+            eventDate.minusDays(chosenReminder.toLong()),
             newEvent.id
         )
     }

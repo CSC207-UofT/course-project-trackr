@@ -28,8 +28,6 @@ class TrackrEvent(
 
     val reminderInterval: Int,
 
-    val repeatStrategy: Int,
-
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
 )
