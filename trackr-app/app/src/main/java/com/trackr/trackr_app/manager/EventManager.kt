@@ -22,8 +22,8 @@ class EventManager @Inject constructor(
     private val eventNotificationManager: EventNotificationManager,
     private val personManager: PersonManager,
 ) {
-    fun createEvent(id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int,
-                    reminderStrategy: Int): TrackrEvent {
+    private fun createEvent(id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int,
+                            reminderStrategy: Int): TrackrEvent {
         return TrackrEvent(id, type, date, firstYear, reminderInterval, reminderStrategy)
     }
 
