@@ -1,6 +1,7 @@
 package com.trackr.trackr_app.viewmodels
 
 import android.content.Context
+import androidx.lifecycle.SavedStateHandle
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -8,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.TrackrDatabase
 import com.trackr.trackr_app.manager.EventManager
 import com.trackr.trackr_app.manager.PersonManager
+import com.trackr.trackr_app.manager.UserManager
 import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
@@ -31,16 +33,20 @@ class AddScreenViewModelTest : TestCase() {
     @Before
     public override fun setUp() {
         super.setUp()
+        val state = SavedStateHandle()
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, TrackrDatabase::class.java)
             .allowMainThreadQueries().build()
         val userRepository = UserRepository(db.userDao())
         val personRepository = PersonRepository(db.personDao())
+        val userManager = UserManager(userRepository)
         eventRepository = EventRepository(db.eventDao())
         val eventNotificationManager = EventNotificationManager(context)
         viewModel = AddScreenViewModel(
-                EventManager(eventRepository, personRepository, userRepository,
-                    eventNotificationManager, PersonManager())
+                PersonManager(personRepository, userManager),
+                EventManager(eventRepository, eventNotificationManager,
+                        PersonManager(personRepository, userManager)),
+                state
         )
     }
 
@@ -48,20 +54,6 @@ class AddScreenViewModelTest : TestCase() {
     @Throws(IOException::class)
     fun closeDatabase() {
         db.close()
-    }
-
-    @Test
-    fun testEditFirstName(){
-        viewModel.editFirstName("Your")
-        val result = viewModel.firstName.value
-        assertEquals("Your", result)
-    }
-
-    @Test
-    fun testEditLastName(){
-        viewModel.editLastName("Mom")
-        val result = viewModel.lastName.value
-        assertEquals("Mom", result)
     }
 
     @Test

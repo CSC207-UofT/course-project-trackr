@@ -8,6 +8,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.TrackrDatabase
 import com.trackr.trackr_app.manager.EventManager
 import com.trackr.trackr_app.manager.PersonManager
+import com.trackr.trackr_app.manager.SingleEventAccessor
+import com.trackr.trackr_app.manager.UserManager
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
@@ -41,6 +43,9 @@ class EditScreenViewModelTest {
         val personRepository = PersonRepository(db.personDao())
         eventRepository = EventRepository(db.eventDao())
         val eventNotificationManager = EventNotificationManager(context)
+        val userManager = UserManager(userRepository)
+        val personManager = PersonManager(personRepository, userManager)
+        val eventManager = EventManager(eventRepository, eventNotificationManager, personManager)
 
         val defaultUser = User("Default User")
         userRepository.insert(defaultUser)
@@ -63,8 +68,7 @@ class EditScreenViewModelTest {
         val state = SavedStateHandle()
         state.set("eventId", event.id)
 
-        viewModel = EditScreenViewModel(EventManager(eventRepository, personRepository,
-            userRepository, eventNotificationManager, PersonManager()), state)
+        viewModel = EditScreenViewModel(eventManager, eventManager, state)
     }
 
     @Test
