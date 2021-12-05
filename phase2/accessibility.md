@@ -6,7 +6,7 @@ As a group, answer the following questions:
 
 ### Principle 1: Equitable Use
 
-- All data is stored locally, and thus cannot be accessed outside the device. Thus the user's data cannot be distributed without their consent and can only be accessed by them and only them. This addresses all security concerns.
+- All data is stored locally, and thus cannot be accessed outside the device. This means that the user's data cannot be distributed without their consent and can only be accessed by them and only them. This addresses all security concerns.
 - Our app is open source and free, and thus everyone can have access to our app free of segregation and stigmatizing.
 - Our app works with Android's built in screen reader TalkBack and text-to speech to support a diverse group of people. 
 - One thing we could implement in the future is support for multiple languages. Right now our app is hard-coded in English. However, we could extract the strings into their own resource files and provide support for other languages by having a resource file for each language with the translated strings.
