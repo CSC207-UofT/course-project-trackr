@@ -19,7 +19,7 @@ As a group, answer the following questions:
 
 ### Principle 3: Simple and Intuitive to Use
 
-- Our app is very simple to use. The app just consists of apping on event boxes or using the nav bar to navigate, or filling in forms to create a new event. Anything that requires user action is labeled or has a symbol that denotes the purpose or both.
+- Our app is very simple to use. The app just consists of tapping on event boxes or using the nav bar to navigate, or filling in forms to create a new event. Anything that requires user action is labeled or has a symbol that denotes the purpose or both.
 - Our app uses very basic vocabulary, nothing that includes super difficult language.
 - Important text is emphasised with the bold font, or font size, or even font color.
 - Users from all different skill levels should be able to use our app with ease.
