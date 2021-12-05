@@ -61,24 +61,29 @@ class EventManager @Inject constructor(
      * repositories to update this data in the database
      */
     override suspend fun editEvent(
-        eventID: String, reminderInt: Int, eventDate: LocalDate, eventType: Int,
-        personName: String, eventName: String
+        eventID: String, reminderInt: Int?, eventDate: LocalDate?, eventType: Int?
     ) {
         val event = eventRepository.getById(eventID)
 
-        eventRepository.editInterval(reminderInt, event)
+        if (reminderInt != null) {
+            eventRepository.editInterval(reminderInt, event)
+        }
 
-        eventRepository.editDate(eventDate.withYear(2008), event)
+        if (eventDate != null) {
+            eventRepository.editDate(eventDate.withYear(2008), event)
+            eventRepository.editFirstYear(eventDate.year, event)
+        }
 
-        eventRepository.editFirstYear(eventDate.year, event)
-        eventRepository.editType(eventType, event)
+        if (eventType != null) {
+            eventRepository.editType(eventType, event)
+        }
 
         //Edit notification
         eventNotificationManager.editNotification(
-            personName,
-            eventName,
-            eventDate,
-            eventDate.minusDays(reminderInt.toLong()),
+            personManager.getPersonById(event.personId).firstName,
+            if (event.type == 0) "Birthday" else "Anniversary",
+            LocalDate.ofEpochDay(event.date),
+            LocalDate.ofEpochDay(event.date).minusDays(event.reminderInterval.toLong()),
             event.id
         )
     }

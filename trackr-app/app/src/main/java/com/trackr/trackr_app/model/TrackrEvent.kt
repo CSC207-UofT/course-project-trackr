@@ -22,11 +22,11 @@ class TrackrEvent(
 
     var type: Int,
 
-    val date: Long,
+    var date: Long,
 
-    val firstYear: Int,
+    var firstYear: Int,
 
-    val reminderInterval: Int,
+    var reminderInterval: Int,
 
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
