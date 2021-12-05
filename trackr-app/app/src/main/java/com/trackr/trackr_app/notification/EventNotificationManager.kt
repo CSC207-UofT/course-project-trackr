@@ -6,6 +6,7 @@ import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import com.trackr.trackr_app.notification.NotificationConstants.ACTION_RECEIVE_NOTIFICATION
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -31,6 +32,7 @@ class EventNotificationManager @Inject constructor(private val context: Context)
         val remindDateMillis: Long = instant.toEpochMilli()
 
         val intent = Intent(context, EventBroadcastReceiver::class.java)
+                .setAction(ACTION_RECEIVE_NOTIFICATION)
         intent.putExtra("contentTitle", "$name $eventType")
         intent.putExtra("contentText", "You have a $eventType for $name on" +
                 " ${eventDate.withYear(whichYear)}.")
