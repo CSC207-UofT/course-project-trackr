@@ -11,14 +11,14 @@ import java.util.*
  */
 class TrackrEventOutput(event: TrackrEvent, person: Person, currentYear: Int) {
     val id = event.id
-    val personId = event.person_id
-    val firstName = person.first_name
-    val lastName = person.last_name
+    val personId = event.personId
+    val firstName = person.firstName
+    val lastName = person.lastName
     val type = event.type
     val date: LocalDate = LocalDate.ofEpochDay(event.date)
     var eventAge: Int = 0
-    val reminderInterval = event.reminder_interval
-    val repeatStrategy = event.repeat_strategy
+    val reminderInterval = event.reminderInterval
+    val repeatStrategy = event.repeatStrategy
 
     /**
      * Calculates the event age to initialize it
