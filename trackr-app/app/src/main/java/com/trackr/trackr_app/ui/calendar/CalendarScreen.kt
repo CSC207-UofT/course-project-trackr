@@ -27,15 +27,8 @@ fun CalendarScreenActivity(
     val selectedDate by calendarViewModel.selectedDate
     val events by calendarViewModel.selectedEvents.observeAsState(listOf())
     val eventDates by calendarViewModel.eventDates.observeAsState(setOf())
-    var isCalendarScreen by remember { mutableStateOf(false) }
-    navController.addOnDestinationChangedListener { _, destination, _ ->
-        isCalendarScreen = destination == navController.findDestination("Calendar")
-    }
-
-    if (isCalendarScreen) {
-        calendarViewModel.updateSelectedEvents()
-        calendarViewModel.updateEventDates()
-    }
+    calendarViewModel.updateSelectedEvents()
+    calendarViewModel.updateEventDates()
 
     Column {
         Calendar(

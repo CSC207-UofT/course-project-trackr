@@ -17,26 +17,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import com.trackr.trackr_app.MainActivity
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.ui.add.AddPersonScreenActivity
 import com.trackr.trackr_app.ui.select.SelectScreenActivity
 import com.trackr.trackr_app.ui.edit.EditScreenActivity
 import com.trackr.trackr_app.ui.calendar.CalendarScreenActivity
 import com.trackr.trackr_app.ui.add.AddScreenActivity
-import com.trackr.trackr_app.viewmodels.CalendarViewModel
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
-import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
+import com.trackr.trackr_app.ui.people.AllPersonsScreenActivity
+import com.trackr.trackr_app.ui.people.Purpose
+import com.trackr.trackr_app.ui.person_details.PersonDetailsScreenActivity
 import com.trackr.trackr_app.ui.theme.Rubik
-import com.trackr.trackr_app.viewmodels.AddScreenViewModel
-import com.trackr.trackr_app.viewmodels.EditScreenViewModel
-import com.trackr.trackr_app.viewmodels.SelectScreenViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
     var canGoBack by remember { mutableStateOf(false) }
-    navController.addOnDestinationChangedListener { controller, _, _, ->
+    navController.addOnDestinationChangedListener { controller, _, _ ->
         canGoBack = controller.previousBackStackEntry != null
     }
     val uri = "https://events.com"
@@ -61,11 +58,11 @@ fun MainScreen() {
                         Icon(
                             Icons.Filled.ArrowBackIos,
                             "Back",
-                            Modifier
-                                .fillMaxHeight()
-                                .clickable {
-                                    navController.popBackStack()
-                                },
+                                Modifier
+                                        .fillMaxHeight()
+                                        .clickable {
+                                            navController.popBackStack()
+                                        },
                             MaterialTheme.colors.onBackground
                         )
                     }
@@ -75,7 +72,7 @@ fun MainScreen() {
     ) {
         NavHost(navController = navController, startDestination = "Home") {
             composable("Home") { HomeScreenActivity(hiltViewModel(), navController) }
-            composable("Add") { AddScreenActivity(hiltViewModel(), navController) }
+            composable("Add/{personId}") { AddScreenActivity(hiltViewModel(), navController) }
             composable("Select") { SelectScreenActivity(hiltViewModel(), navController) }
             composable("Edit/{eventId}",
                     deepLinks = listOf(navDeepLink { uriPattern = "$uri/eventId={eventId}" })
@@ -84,8 +81,18 @@ fun MainScreen() {
                         hiltViewModel(),
                         navController)
             }
-            composable("Calendar") {
-                CalendarScreenActivity(hiltViewModel(), navController)
+            composable("Calendar") { CalendarScreenActivity(hiltViewModel(), navController) }
+            composable("AllPersons") {
+                AllPersonsScreenActivity(hiltViewModel(), navController, Purpose.VIEW_PERSON)
+            }
+            composable("SelectPerson") {
+                AllPersonsScreenActivity(hiltViewModel(), navController, Purpose.ADD_EVENT )
+            }
+            composable("AddPerson") {
+                AddPersonScreenActivity(hiltViewModel(), navController)
+            }
+            composable("PersonDetails/{personId}") {
+                PersonDetailsScreenActivity(hiltViewModel(), navController)
             }
         }
     }

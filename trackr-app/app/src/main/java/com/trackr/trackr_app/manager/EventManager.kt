@@ -10,12 +10,9 @@ import javax.inject.Singleton
 
 /**
  * The view model for the AddScreen which manages the data that appears on the AddScreen page
+ *
  * @param eventRepository an instance of the EventRepository class that can be used to store new
  * events in the data base
- * @param personRepository an instance of the PersonRepository class that can be used store new
- * persons in the data base
- * @param userRepository an instance of the UserRepository class that can be used store new
- * users in the data base
  * @param eventNotificationManager used to set a notification upon event creation
  * @param personManager used to create a new Person object
  */
@@ -25,9 +22,9 @@ class EventManager @Inject constructor(
     private val eventNotificationManager: EventNotificationManager,
     private val personManager: PersonManager,
 ) {
-    fun createEvent(id: String, type: Int, date: Long, first_year: Int, reminder_interval: Int,
-                    reminder_strategy: Int): TrackrEvent {
-        return TrackrEvent(id, type, date, first_year, reminder_interval, reminder_strategy)
+    fun createEvent(id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int,
+                    reminderStrategy: Int): TrackrEvent {
+        return TrackrEvent(id, type, date, firstYear, reminderInterval, reminderStrategy)
     }
 
     suspend fun addEvent(firstName: String, lastName: String, eventType: Int, chosenReminder: String,

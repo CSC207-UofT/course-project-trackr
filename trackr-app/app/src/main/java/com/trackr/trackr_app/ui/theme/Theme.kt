@@ -24,20 +24,10 @@ private val LightColorPalette = lightColors(
     onPrimary = DarkBlueVariant,
     background = LightBackground,
     onBackground = DarkBlue
-
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
 )
 
 @Composable
-fun TrackrappTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun TrackrappTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val systemUiController = rememberSystemUiController()
 
     val colors = if (darkTheme) {

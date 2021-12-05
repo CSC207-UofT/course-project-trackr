@@ -129,7 +129,7 @@ fun CalendarMonth(
  */
 @Composable
 fun CalendarHeader() {
-    Row() {
+    Row {
         CalendarGridContainer("Su")
         CalendarGridContainer("Mo")
         CalendarGridContainer("Tu")

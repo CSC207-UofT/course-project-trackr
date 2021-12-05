@@ -19,8 +19,8 @@ class UserRepository @Inject constructor(private val userDao: UserDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun updateUsername(new_username: String, user: User) {
-        userDao.updateUsername(new_username, user.id)
+    suspend fun updateUsername(newUsername: String, user: User) {
+        userDao.updateUsername(newUsername, user.id)
     }
 
     @Suppress("RedundantSuspendModifier")

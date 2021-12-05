@@ -15,7 +15,16 @@ class TrackrEventOutput(event: TrackrEvent, person: Person, currentYear: Int) {
     val lastName = person.lastName
     val type = event.type
     val date: LocalDate = LocalDate.ofEpochDay(event.date)
-    val eventAge: Int = currentYear -  event.firstYear
-    val reminderInterval = event.reminderInterval
-    val repeatStrategy = event.repeatStrategy
+    var eventAge: Int = 0
+
+    /**
+     * Calculates the event age to initialize it
+     */
+    init {
+        if (this.date.isBefore(LocalDate.now().withYear(2008))) {
+            this.eventAge = currentYear -  event.firstYear + 1
+        } else {
+            this.eventAge = currentYear - event.firstYear
+        }
+    }
 }
