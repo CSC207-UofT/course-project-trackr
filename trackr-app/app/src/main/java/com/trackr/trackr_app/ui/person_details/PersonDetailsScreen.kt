@@ -61,6 +61,7 @@ fun DisplayMode(
     navController: NavHostController
 ) {
     val eventList by viewModel.personEvents.observeAsState(listOf())
+    viewModel.updatePersonDetailsEvents()
 
     Column {
         Text("First Name:",
@@ -215,7 +216,6 @@ fun BottomBar(viewModel: PersonDetailsScreenViewModel,
                 onClick = {
                     viewModel.editPerson()
                     displayMode.value = !displayMode.value
-                    viewModel.updatePersonDetailsEvents()
                 }
             )
         }
