@@ -35,17 +35,17 @@ class PersonRepository @Inject constructor(
 
     @WorkerThread
     suspend fun delete(person: Person) {
-        personDao.delete(person.id, person.user_id)
+        personDao.delete(person.id, person.userId)
     }
 
     @WorkerThread
     suspend fun editFirstName(new_first_name: String, person: Person) {
-        personDao.editFirstName(new_first_name, person.id, person.user_id)
+        personDao.editFirstName(new_first_name, person.id, person.userId)
     }
 
     @WorkerThread
     suspend fun editLastName(new_last_name: String, person: Person) {
-        personDao.editLastName(new_last_name, person.id, person.user_id)
+        personDao.editLastName(new_last_name, person.id, person.userId)
     }
 
     @WorkerThread

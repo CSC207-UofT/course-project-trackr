@@ -49,7 +49,7 @@ class HomeScreenViewModel @Inject constructor(
                     allEventsList.add(
                         TrackrEventOutput(
                             event,
-                            personRepository.getPersonById(event.person_id),
+                            personRepository.getPersonById(event.personId),
                             Calendar.getInstance().get(Calendar.YEAR)
                         )
                     )
@@ -66,7 +66,7 @@ class HomeScreenViewModel @Inject constructor(
                 val eventsTodayList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
                     eventsTodayList.add(TrackrEventOutput(event,
-                        personRepository.getPersonById(event.person_id),
+                        personRepository.getPersonById(event.personId),
                         Calendar.getInstance().get(Calendar.YEAR))
                     )
                 }

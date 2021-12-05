@@ -40,32 +40,32 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
 
     @WorkerThread
     suspend fun delete(trackrEvent: TrackrEvent) {
-        eventDao.delete(trackrEvent.id, trackrEvent.person_id)
+        eventDao.delete(trackrEvent.id, trackrEvent.personId)
     }
 
     @WorkerThread
     suspend fun editPerson(new_person: Person, trackrEvent: TrackrEvent) {
-        eventDao.editPerson(new_person.id, trackrEvent.id, trackrEvent.person_id)
+        eventDao.editPerson(new_person.id, trackrEvent.id, trackrEvent.personId)
     }
 
     @WorkerThread
     suspend fun editType(new_type: Int, trackrEvent: TrackrEvent) {
-        eventDao.editType(new_type, trackrEvent.id, trackrEvent.person_id)
+        eventDao.editType(new_type, trackrEvent.id, trackrEvent.personId)
     }
 
     @WorkerThread
     suspend fun editDate(new_date: LocalDate, event: TrackrEvent) {
-        eventDao.editDate(new_date.toEpochDay(), event.id, event.person_id)
+        eventDao.editDate(new_date.toEpochDay(), event.id, event.personId)
     }
 
     @WorkerThread
     suspend fun editFirstYear(new_year: Int, event: TrackrEvent) {
-        eventDao.editFirstYear(new_year, event.id, event.person_id)
+        eventDao.editFirstYear(new_year, event.id, event.personId)
     }
 
     @WorkerThread
     suspend fun editInterval(new_interval: Int, trackrEvent: TrackrEvent) {
-        eventDao.editInterval(new_interval, trackrEvent.id, trackrEvent.person_id)
+        eventDao.editInterval(new_interval, trackrEvent.id, trackrEvent.personId)
     }
 
     @WorkerThread

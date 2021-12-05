@@ -33,7 +33,7 @@ class SelectScreenViewModel @Inject constructor(
                 for (event in it) {
                     eventList.add(
                         TrackrEventOutput(event,
-                        personRepository.getPersonById(event.person_id),
+                        personRepository.getPersonById(event.personId),
                             Calendar.getInstance().get(Calendar.YEAR)
                         )
                     )

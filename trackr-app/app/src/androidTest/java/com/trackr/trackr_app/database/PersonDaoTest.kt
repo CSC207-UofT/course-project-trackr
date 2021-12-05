@@ -6,7 +6,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.User
-import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.first
@@ -75,7 +74,7 @@ class PersonDaoTest {
         personDao.insert(person1)
         personDao.editFirstName("spongier", person1.id, user.id)
         val personsFromDatabase = personDao.listPersons().first()
-        assertEquals(personsFromDatabase[0].first_name, "spongier")
+        assertEquals(personsFromDatabase[0].firstName, "spongier")
     }
 
     @Test
@@ -87,7 +86,7 @@ class PersonDaoTest {
         personDao.insert(person1)
         personDao.editLastName("bobert", person1.id, user.id)
         val personsFromDatabase = personDao.listPersons().first()
-        assertEquals(personsFromDatabase[0].last_name, "bobert")
+        assertEquals(personsFromDatabase[0].lastName, "bobert")
     }
 
     @Test
@@ -99,7 +98,7 @@ class PersonDaoTest {
         personDao.insert(person1)
         val person2 = Person(user.id, "patrick", "star")
         personDao.insert(person2)
-        personDao.delete(person1.id, person1.user_id)
+        personDao.delete(person1.id, person1.userId)
         val personsFromDatabase = personDao.listPersons().first()
         assertEquals(personsFromDatabase[0].id, person2.id)
         assertEquals(personsFromDatabase.size, 1)
