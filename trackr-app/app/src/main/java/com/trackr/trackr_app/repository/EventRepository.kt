@@ -1,10 +1,9 @@
 package com.trackr.trackr_app.repository
 
-import com.trackr.trackr_app.model.TrackrEvent
-
 import androidx.annotation.WorkerThread
 import com.trackr.trackr_app.database.EventDao
 import com.trackr.trackr_app.model.Person
+import com.trackr.trackr_app.model.TrackrEvent
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import javax.inject.Inject

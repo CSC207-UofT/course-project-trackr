@@ -1,5 +1,7 @@
-package com.trackr.trackr_app.manager
+package com.trackr.trackr_app.di
 
+import com.trackr.trackr_app.manager.EventCreator
+import com.trackr.trackr_app.manager.EventManager
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

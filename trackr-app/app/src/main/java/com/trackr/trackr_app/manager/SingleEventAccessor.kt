@@ -1,4 +1,5 @@
 package com.trackr.trackr_app.manager
+
 /*
 An interface depended on by any view model that needs to access a single event using a property such
 as name or person.

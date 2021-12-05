@@ -7,7 +7,7 @@ import com.trackr.trackr_app.model.Person
  * instead of directly depending on the Person entity
  */
 class PersonOutput(person: Person) {
-    val personId:String = person.id
-    val firstName:String = person.firstName
-    val lastName:String = person.lastName
+    val personId: String = person.id
+    val firstName: String = person.firstName
+    val lastName: String = person.lastName
 }

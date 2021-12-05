@@ -16,7 +16,8 @@ class NotificationModule {
     @Singleton
     @Provides
     fun provideEventNotificationManager(
-            @ApplicationContext context: Context): EventNotificationManager {
+        @ApplicationContext context: Context
+    ): EventNotificationManager {
         return EventNotificationManager(context)
     }
 

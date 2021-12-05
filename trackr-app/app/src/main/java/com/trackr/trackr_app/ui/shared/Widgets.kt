@@ -51,7 +51,8 @@ fun InputWidget(
                                 )
                             ),
                             shape = RoundedCornerShape(10.dp)
-                        )){
+                        )
+                ) {
                     widget()
                 }
             }
@@ -65,7 +66,7 @@ fun InputWidget(title: String, widget: @Composable () -> Unit) {
 }
 
 @Composable
-fun <T>InteractiveDropdownWidget(setter: (T) -> Unit, getter: () -> T, options: List<T>) {
+fun <T> InteractiveDropdownWidget(setter: (T) -> Unit, getter: () -> T, options: List<T>) {
     var expanded by remember { mutableStateOf(false) }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -146,7 +147,8 @@ fun EventCard(navController: NavHostController, index: Int, event: TrackrEventOu
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
-                Text("${event.firstName} ${event.lastName}'s ",
+                Text(
+                    "${event.firstName} ${event.lastName}'s ",
                     fontFamily = Rubik,
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Bold,
@@ -166,7 +168,8 @@ fun EventCard(navController: NavHostController, index: Int, event: TrackrEventOu
                     event.eventAge.toString() +
                             if (event.eventAge.toString().endsWith("11") ||
                                 event.eventAge.toString().endsWith("12") ||
-                                event.eventAge.toString().endsWith("13"))
+                                event.eventAge.toString().endsWith("13")
+                            )
                                 "th"
                             else if (event.eventAge.toString().endsWith("1"))
                                 "st"
@@ -179,11 +182,13 @@ fun EventCard(navController: NavHostController, index: Int, event: TrackrEventOu
                     fontWeight = FontWeight.Black,
                     fontSize = 24.sp
                 )
-                Text(if (event.type == 0) "Birthday" else "Anniversary",
+                Text(
+                    if (event.type == 0) "Birthday" else "Anniversary",
                     fontFamily = Rubik,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White)
+                    color = Color.White
+                )
             }
         }
     }
@@ -191,29 +196,29 @@ fun EventCard(navController: NavHostController, index: Int, event: TrackrEventOu
 
 @Composable
 fun PersonList(
-        persons: List<PersonOutput>,
-        modifier: Modifier = Modifier,
-        navController: NavHostController,
-        purpose: Purpose
+    persons: List<PersonOutput>,
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    purpose: Purpose
 ) {
     if (persons.isEmpty()) {
         Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
             Text(
-                    stringResource(R.string.no_people),
-                    fontFamily = Rubik,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
+                stringResource(R.string.no_people),
+                fontFamily = Rubik,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onBackground,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
             )
         }
     } else {
         LazyColumn(
-                modifier = modifier,
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             items(persons.count()) { index ->
                 val person = persons[index]
@@ -224,10 +229,11 @@ fun PersonList(
 }
 
 @Composable
-fun PersonCard(navController: NavHostController,
-               index: Int,
-               person: PersonOutput,
-               purpose: Purpose
+fun PersonCard(
+    navController: NavHostController,
+    index: Int,
+    person: PersonOutput,
+    purpose: Purpose
 ) {
     val route: String = when (purpose) {
         Purpose.VIEW_PERSON -> "PersonDetails/${person.personId}"
@@ -235,30 +241,31 @@ fun PersonCard(navController: NavHostController,
     }
 
     Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    navController.navigate(route)
-                },
-            shape = RoundedCornerShape(20),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                navController.navigate(route)
+            },
+        shape = RoundedCornerShape(20),
     ) {
         Row(
-                Modifier
-                        .background(
-                                brush = Brush.horizontalGradient(
-                                        colors = allGradients[index % 3]
-                                )
-                        )
-                        .padding(20.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Modifier
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = allGradients[index % 3]
+                    )
+                )
+                .padding(20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
-                Text("${person.firstName} ${person.lastName}",
-                        fontFamily = Rubik,
-                        fontSize = 17.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                Text(
+                    "${person.firstName} ${person.lastName}",
+                    fontFamily = Rubik,
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
                 )
             }
         }

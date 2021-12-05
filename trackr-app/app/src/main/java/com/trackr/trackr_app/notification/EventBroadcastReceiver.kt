@@ -1,6 +1,5 @@
 package com.trackr.trackr_app.notification
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
@@ -24,12 +23,12 @@ class EventBroadcastReceiver : BroadcastReceiver() {
             val id = intent.getStringExtra("notificationId")
             val pendingIntent = id?.let { getNotificationIntent(context, it) }
             val builder = NotificationCompat.Builder(context, NotificationConstants.CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentTitle(intent.getStringExtra("contentTitle"))
-                    .setContentText(intent.getStringExtra("contentText"))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle(intent.getStringExtra("contentTitle"))
+                .setContentText(intent.getStringExtra("contentText"))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
 
             with(NotificationManagerCompat.from(context)) {
                 notify(id.hashCode(), builder.build())
@@ -45,8 +44,8 @@ class EventBroadcastReceiver : BroadcastReceiver() {
      */
     private fun getNotificationIntent(context: Context, id: String): PendingIntent {
         val notifIntent = Intent(
-                Intent.ACTION_VIEW,
-                "https://events.com/eventId=${id}".toUri(),
+            Intent.ACTION_VIEW,
+            "https://events.com/eventId=${id}".toUri(),
         )
 
         val pendingIntent: PendingIntent = TaskStackBuilder.create(context).run {

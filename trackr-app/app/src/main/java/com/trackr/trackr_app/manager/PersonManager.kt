@@ -7,14 +7,15 @@ import javax.inject.Singleton
 
 @Singleton
 class PersonManager @Inject constructor(
-        private val personRepository: PersonRepository,
-        private val userManager: UserManager
+    private val personRepository: PersonRepository,
+    private val userManager: UserManager
 ) : PersonCreator, PersonModifier, SinglePersonAccessor {
     override suspend fun createPerson(firstName: String, lastName: String): Person {
         val newPerson = Person(
             userId = userManager.currentUser.id,
             firstName = firstName,
-            lastName = lastName)
+            lastName = lastName
+        )
 
         personRepository.insert(newPerson)
         return newPerson

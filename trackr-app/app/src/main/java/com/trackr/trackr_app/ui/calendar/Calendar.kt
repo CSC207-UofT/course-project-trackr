@@ -4,9 +4,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.NavigateBefore
+import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -157,9 +160,10 @@ fun CalendarGridContainer(
 
     if (isSelected) {
         modifier = modifier.border(
-        2.dp,
-        MaterialTheme.colors.onPrimary,
-        CircleShape)
+            2.dp,
+            MaterialTheme.colors.onPrimary,
+            CircleShape
+        )
     }
 
     if (gridText.isNotEmpty()) {

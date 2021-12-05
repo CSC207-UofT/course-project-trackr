@@ -3,7 +3,9 @@ package com.trackr.trackr_app.ui.person_details
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -25,17 +27,17 @@ import com.trackr.trackr_app.viewmodels.TrackrEventOutput
 
 @Composable
 fun PersonDetailsScreenActivity(
-        viewModel: PersonDetailsScreenViewModel,
-        navController: NavHostController
+    viewModel: PersonDetailsScreenViewModel,
+    navController: NavHostController
 ) {
-    val confirmDelete = remember {mutableStateOf(false)}
-    val displayMode = remember {mutableStateOf(true)}
+    val confirmDelete = remember { mutableStateOf(false) }
+    val displayMode = remember { mutableStateOf(true) }
 
     Scaffold(
-            backgroundColor = MaterialTheme.colors.background,
-            bottomBar = {
-                BottomBar(viewModel, confirmDelete, displayMode, navController)
-            }
+        backgroundColor = MaterialTheme.colors.background,
+        bottomBar = {
+            BottomBar(viewModel, confirmDelete, displayMode, navController)
+        }
     ) {
         Column(
             modifier = Modifier.padding(20.dp)
@@ -64,7 +66,8 @@ fun DisplayMode(
     viewModel.updatePersonDetailsEvents()
 
     Column {
-        Text("First Name:",
+        Text(
+            "First Name:",
             fontFamily = Rubik,
             fontWeight = FontWeight.Normal,
             fontSize = 17.sp,
@@ -80,7 +83,8 @@ fun DisplayMode(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        Text("Last Name:",
+        Text(
+            "Last Name:",
             fontFamily = Rubik,
             fontWeight = FontWeight.Normal,
             fontSize = 17.sp,
@@ -145,10 +149,12 @@ fun EditMode(
 
 
 @Composable
-fun EventFeed(modifier: Modifier,
-               title: String,
-               events: List<TrackrEventOutput>,
-               nav: NavHostController) {
+fun EventFeed(
+    modifier: Modifier,
+    title: String,
+    events: List<TrackrEventOutput>,
+    nav: NavHostController
+) {
     Column(
         modifier = modifier,
     ) {
@@ -184,35 +190,42 @@ fun EventFeed(modifier: Modifier,
 }
 
 @Composable
-fun BottomBar(viewModel: PersonDetailsScreenViewModel,
-              confirmDelete: MutableState<Boolean>,
-              displayMode: MutableState<Boolean>,
-              navController: NavHostController) {
+fun BottomBar(
+    viewModel: PersonDetailsScreenViewModel,
+    confirmDelete: MutableState<Boolean>,
+    displayMode: MutableState<Boolean>,
+    navController: NavHostController
+) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
     ) {
         if (displayMode.value) {
             BottomNavigationItem(
                 selected = false,
-                icon = { Icon(
-                    Icons.Filled.Edit,
-                    "Edit Person",
-                    tint = MaterialTheme.colors.onBackground
-                )
+                icon = {
+                    Icon(
+                        Icons.Filled.Edit,
+                        "Edit Person",
+                        tint = MaterialTheme.colors.onBackground
+                    )
                 },
-                label = {Text("Edit Person", fontFamily = Rubik)},
-                onClick = {viewModel.editPerson()
-                    displayMode.value = !displayMode.value}
-        ) } else {
+                label = { Text("Edit Person", fontFamily = Rubik) },
+                onClick = {
+                    viewModel.editPerson()
+                    displayMode.value = !displayMode.value
+                }
+            )
+        } else {
             BottomNavigationItem(
                 selected = false,
-                icon = { Icon(
-                    Icons.Filled.Check,
-                    "Save Changes",
-                    tint = MaterialTheme.colors.onBackground
-                )
+                icon = {
+                    Icon(
+                        Icons.Filled.Check,
+                        "Save Changes",
+                        tint = MaterialTheme.colors.onBackground
+                    )
                 },
-                label = {Text("Save Changes", fontFamily = Rubik)},
+                label = { Text("Save Changes", fontFamily = Rubik) },
                 onClick = {
                     viewModel.editPerson()
                     displayMode.value = !displayMode.value
@@ -221,7 +234,8 @@ fun BottomBar(viewModel: PersonDetailsScreenViewModel,
         }
         BottomNavigationItem(
             selected = false,
-            icon = { Icon(
+            icon = {
+                Icon(
                     Icons.Filled.Delete,
                     "Delete Person",
                     tint = MaterialTheme.colors.onBackground,
@@ -229,7 +243,7 @@ fun BottomBar(viewModel: PersonDetailsScreenViewModel,
             },
             enabled = displayMode.value,
             label = { Text(text = "Delete Person") },
-            onClick = {confirmDelete.value = true}
+            onClick = { confirmDelete.value = true }
         )
     }
     if (confirmDelete.value) {

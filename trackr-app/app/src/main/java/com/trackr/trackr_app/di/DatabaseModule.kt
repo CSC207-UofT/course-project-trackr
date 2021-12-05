@@ -1,7 +1,10 @@
 package com.trackr.trackr_app.di
 
 import android.content.Context
-import com.trackr.trackr_app.database.*
+import com.trackr.trackr_app.database.EventDao
+import com.trackr.trackr_app.database.PersonDao
+import com.trackr.trackr_app.database.TrackrDatabase
+import com.trackr.trackr_app.database.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

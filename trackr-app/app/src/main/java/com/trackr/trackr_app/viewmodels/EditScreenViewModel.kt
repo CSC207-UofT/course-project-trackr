@@ -2,8 +2,9 @@ package com.trackr.trackr_app.viewmodels
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.*
-import com.trackr.trackr_app.manager.EventManager
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.trackr.trackr_app.manager.EventModifier
 import com.trackr.trackr_app.manager.SingleEventAccessor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -69,8 +70,8 @@ class EditScreenViewModel @Inject constructor(
      */
     fun changeMonth(newMonth: String) {
         _eventDate.value = _eventDate.value
-                .withMonth(getMonths().indexOf(newMonth) + 1)
-                .withDayOfMonth(_eventDate.value.dayOfMonth)
+            .withMonth(getMonths().indexOf(newMonth) + 1)
+            .withDayOfMonth(_eventDate.value.dayOfMonth)
     }
 
     /**
@@ -102,18 +103,18 @@ class EditScreenViewModel @Inject constructor(
      */
     fun getMonths(): List<String> {
         return listOf(
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec"
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
         )
     }
 
@@ -133,11 +134,11 @@ class EditScreenViewModel @Inject constructor(
     //Convert the reminder interval to an int using the following mapping
     private fun getReminderMap(): Map<String, Int> {
         return mapOf(
-                "1 day before" to 1,
-                "3 days before" to 3,
-                "1 week before" to 7,
-                "2 weeks before" to 14,
-                "1 month before" to 30
+            "1 day before" to 1,
+            "3 days before" to 3,
+            "1 week before" to 7,
+            "2 weeks before" to 14,
+            "1 month before" to 30
         )
     }
 
@@ -149,8 +150,10 @@ class EditScreenViewModel @Inject constructor(
     fun editEvent() = viewModelScope.launch {
         val reminderInt: Int = getReminderMap()[chosenReminder.value]!!
 
-        eventModifier.editEvent(eventID, reminderInt, eventDate.value,
-            eventType, personName.value, eventName.value)
+        eventModifier.editEvent(
+            eventID, reminderInt, eventDate.value,
+            eventType, personName.value, eventName.value
+        )
     }
 
     /**

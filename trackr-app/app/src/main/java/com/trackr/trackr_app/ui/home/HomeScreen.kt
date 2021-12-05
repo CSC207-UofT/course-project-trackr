@@ -1,6 +1,8 @@
 package com.trackr.trackr_app.ui.home
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -24,42 +26,42 @@ import com.trackr.trackr_app.viewmodels.TrackrEventOutput
 
 @Composable
 fun HomeScreenActivity(
-        viewModel: HomeScreenViewModel,
-        navController: NavHostController
+    viewModel: HomeScreenViewModel,
+    navController: NavHostController
 ) {
     val allEvents by viewModel.allEvents.observeAsState(listOf())
     val eventsToday by viewModel.eventsToday.observeAsState(listOf())
     viewModel.updateHomeScreenData()
 
     Scaffold(
-            backgroundColor = MaterialTheme.colors.background,
-            bottomBar = {
-                BottomAppBar(
-                        navController,
-                )
-            }
+        backgroundColor = MaterialTheme.colors.background,
+        bottomBar = {
+            BottomAppBar(
+                navController,
+            )
+        }
     ) {
-       Column(
-           modifier = Modifier
-               .padding(20.dp)
-       ) {
-           HomeFeed(
-               Modifier
-                   .padding(vertical = 10.dp)
-                   .weight(1f),
-               stringResource(R.string.todays_events),
-               eventsToday,
-               navController
-           )
-           HomeFeed(
-               Modifier
-                   .padding(bottom = 40.dp)
-                   .weight(2f),
-               "Events This Year:",
-               allEvents,
-               navController
-           )
-       }
+        Column(
+            modifier = Modifier
+                .padding(20.dp)
+        ) {
+            HomeFeed(
+                Modifier
+                    .padding(vertical = 10.dp)
+                    .weight(1f),
+                stringResource(R.string.todays_events),
+                eventsToday,
+                navController
+            )
+            HomeFeed(
+                Modifier
+                    .padding(bottom = 40.dp)
+                    .weight(2f),
+                "Events This Year:",
+                allEvents,
+                navController
+            )
+        }
     }
 }
 
@@ -71,97 +73,99 @@ fun HomeFeed(
     navController: NavHostController,
 ) {
     Column(
-            modifier = modifier,
+        modifier = modifier,
     ) {
         Text(
-                title,
-                fontFamily = Rubik,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(bottom = 5.dp),
+            title,
+            fontFamily = Rubik,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            color = MaterialTheme.colors.onPrimary,
+            modifier = Modifier.padding(bottom = 5.dp),
         )
         EventList(
-                events,
-                modifier = Modifier.fillMaxWidth(),
-                navController,
+            events,
+            modifier = Modifier.fillMaxWidth(),
+            navController,
         )
     }
 }
 
 @Composable
 fun BottomAppBar(
-        navController: NavHostController,
+    navController: NavHostController,
 ) {
     BottomNavigation(
-            backgroundColor = MaterialTheme.colors.primary,
+        backgroundColor = MaterialTheme.colors.primary,
     ) {
 
         BottomNavigationItem(
-                selected = false,
-                icon = { Icon(
-                        Icons.Filled.Event,
-                        "Calendar View",
-                        tint = MaterialTheme.colors.onBackground
-                )},
-                label = {Text("Calendar", fontFamily = Rubik)},
-                onClick = {
-                    navController.navigate("Calendar")
-                    {
-                        launchSingleTop = true
-                    }
+            selected = false,
+            icon = {
+                Icon(
+                    Icons.Filled.Event,
+                    "Calendar View",
+                    tint = MaterialTheme.colors.onBackground
+                )
+            },
+            label = { Text("Calendar", fontFamily = Rubik) },
+            onClick = {
+                navController.navigate("Calendar")
+                {
+                    launchSingleTop = true
                 }
+            }
         )
         BottomNavigationItem(
-                icon = {
-                    Icon(
-                        Icons.Filled.Add,
-                        "Add event",
-                        tint = MaterialTheme.colors.onBackground,
-                    )
-                },
-                label = { Text(text = "Add Events") },
-                selected = false,
-                onClick = {
-                    navController.navigate("SelectPerson")
-                    {
-                        launchSingleTop = true
-                    }
+            icon = {
+                Icon(
+                    Icons.Filled.Add,
+                    "Add event",
+                    tint = MaterialTheme.colors.onBackground,
+                )
+            },
+            label = { Text(text = "Add Events") },
+            selected = false,
+            onClick = {
+                navController.navigate("SelectPerson")
+                {
+                    launchSingleTop = true
                 }
+            }
         )
         BottomNavigationItem(
-                icon = {
-                    Icon(
-                            Icons.Filled.Edit,
-                            "Edit event",
-                            tint = MaterialTheme.colors.onBackground,
-                    )
-                },
-                label = { Text(text = "Edit Events") },
-                selected = false,
-                onClick = {
-                    navController.navigate("Select")
-                    {
-                        launchSingleTop = true
-                    }
+            icon = {
+                Icon(
+                    Icons.Filled.Edit,
+                    "Edit event",
+                    tint = MaterialTheme.colors.onBackground,
+                )
+            },
+            label = { Text(text = "Edit Events") },
+            selected = false,
+            onClick = {
+                navController.navigate("Select")
+                {
+                    launchSingleTop = true
                 }
+            }
         )
         BottomNavigationItem(
-                icon = {
-                    Icon(
-                            Icons.Filled.Edit,
-                            "Edit people",
-                            tint = MaterialTheme.colors.onBackground,
-                    )
-                },
-                label = { Text(text = "Edit People") },
-                selected = false,
-                onClick = {
-                    navController.navigate("AllPersons")
-                    {
-                        launchSingleTop = true
-                    }
+            icon = {
+                Icon(
+                    Icons.Filled.Edit,
+                    "Edit people",
+                    tint = MaterialTheme.colors.onBackground,
+                )
+            },
+            label = { Text(text = "Edit People") },
+            selected = false,
+            onClick = {
+                navController.navigate("AllPersons")
+                {
+                    launchSingleTop = true
                 }
+            }
         )
     }
 }

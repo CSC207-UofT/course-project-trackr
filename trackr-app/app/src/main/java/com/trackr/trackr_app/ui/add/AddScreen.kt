@@ -5,7 +5,8 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,14 +33,19 @@ fun AddScreenActivity(
         Column(
             Modifier.padding(20.dp)
         ) {
-            Text(text = "Creating event for $firstName $lastName",
-                    Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
-            Text(text = "Type of event:",
-                    Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+            Text(
+                text = "Creating event for $firstName $lastName",
+                Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Type of event:",
+                Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold
+            )
             Row(
                 Modifier
                     .selectableGroup()
-                    .padding(top = 5.dp, bottom = 20.dp)) {
+                    .padding(top = 5.dp, bottom = 20.dp)
+            ) {
                 RadioButton(
                     selected = eventName == "Birthday",
                     onClick = { viewModel.editEventName("Birthday") }
@@ -52,30 +58,38 @@ fun AddScreenActivity(
                 Text(text = "Anniversary", Modifier.padding(start = 5.dp))
             }
             InputWidget(title = "Date", widgets = listOf(
-                {InteractiveDropdownWidget(
-                    setter = {month: String -> viewModel.changeMonth(month)},
-                    getter = {eventDate.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())},
-                    options = viewModel.getMonths()
-                )
+                {
+                    InteractiveDropdownWidget(
+                        setter = { month: String -> viewModel.changeMonth(month) },
+                        getter = {
+                            eventDate.month.getDisplayName(
+                                TextStyle.SHORT,
+                                Locale.getDefault()
+                            )
+                        },
+                        options = viewModel.getMonths()
+                    )
                 },
-                {InteractiveDropdownWidget(
-                    setter = {day: Int -> viewModel.changeDay(day)},
-                    getter = {eventDate.dayOfMonth},
-                    options = (1..eventDate.lengthOfMonth()).map{it}
-                )
+                {
+                    InteractiveDropdownWidget(
+                        setter = { day: Int -> viewModel.changeDay(day) },
+                        getter = { eventDate.dayOfMonth },
+                        options = (1..eventDate.lengthOfMonth()).map { it }
+                    )
                 },
-                {InteractiveDropdownWidget(
-                    setter = {year: Int -> viewModel.changeYear(year)},
-                    getter = {eventDate.year},
-                    options = (1900..2100).map{it}
-                )
+                {
+                    InteractiveDropdownWidget(
+                        setter = { year: Int -> viewModel.changeYear(year) },
+                        getter = { eventDate.year },
+                        options = (1900..2100).map { it }
+                    )
                 }
             )
             )
             InputWidget(title = "Remind Me") {
                 InteractiveDropdownWidget(
-                    setter = {reminder: String -> viewModel.changeReminderInterval(reminder)},
-                    getter = {chosenReminder},
+                    setter = { reminder: String -> viewModel.changeReminderInterval(reminder) },
+                    getter = { chosenReminder },
                     options = viewModel.getReminderIntervals()
                 )
             }

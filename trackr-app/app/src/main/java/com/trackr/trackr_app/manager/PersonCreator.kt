@@ -7,5 +7,5 @@ An interface depended on by any view model that needs to add new persons to the 
 Any Manager class that creates and adds persons to the database should implement this interface.
  */
 interface PersonCreator {
-   suspend fun createPerson(firstName: String, lastName: String): Person
+    suspend fun createPerson(firstName: String, lastName: String): Person
 }

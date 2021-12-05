@@ -19,8 +19,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AllPersonsScreenViewModel @Inject constructor(
-        private val personRepository: PersonRepository
-        ): ViewModel() {
+    private val personRepository: PersonRepository
+) : ViewModel() {
     private val _allPersons: MutableLiveData<List<PersonOutput>> = MutableLiveData(listOf())
     val allPersons: LiveData<List<PersonOutput>> get() = _allPersons
 
