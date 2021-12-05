@@ -329,4 +329,45 @@ class EventDaoTest {
         val actual = LocalDate.ofEpochDay(eventsFromDatabase[0].date)
         assertEquals(actual, expected)
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun getById() = runBlocking {
+        val user = User("test")
+        userDao.insert(user)
+        val person = Person(user.id, "sponge", "bob")
+        personDao.insert(person)
+        val event1 = TrackrEvent(
+                person.id,
+                0,
+                LocalDate.of(2004, 1, 1).toEpochDay(),
+                2004,
+                7,
+                0)
+        eventDao.insert(event1)
+        val eventsFromDatabase = eventDao.listAll().first()
+        val expected = eventsFromDatabase[0].id
+        val actual = eventDao.getById(event1.id).id
+        assertEquals(actual, expected)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun getByPersonId() = runBlocking {
+        val user = User("test")
+        userDao.insert(user)
+        val person = Person(user.id, "sponge", "bob")
+        personDao.insert(person)
+        val event1 = TrackrEvent(
+                person.id,
+                0,
+                LocalDate.of(2004, 1, 1).toEpochDay(),
+                2004,
+                7,
+                0)
+        eventDao.insert(event1)
+        val expected = event1.id
+        val actual = eventDao.getByPersonId(person.id).first()[0].id
+        assertEquals(actual, expected)
+    }
 }
