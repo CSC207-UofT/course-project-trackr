@@ -1,10 +1,12 @@
 package com.trackr.trackr_app.viewmodels
 
+import android.media.metrics.Event
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
-import com.trackr.trackr_app.manager.EventManager
+import com.trackr.trackr_app.manager.EventCreator
 import com.trackr.trackr_app.manager.PersonManager
+import com.trackr.trackr_app.manager.SinglePersonAccessor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -12,13 +14,15 @@ import javax.inject.Inject
 
 /**
  * The view model for the AddScreen which manages the data that appears on the AddScreen page
- * @param eventManager an instance of the EventManager class that is used to create new events
- * and add them to the database
+ * @param singlePersonAccessor an object that implements SinglePersonAccessor and is used to access
+ * a single person from the database.
+ * @param eventCreator an instance of a class which implements EventCreator that is used to create
+ * new events and add them to the database
  */
 @HiltViewModel
 class AddScreenViewModel @Inject constructor(
-        private val personManager: PersonManager,
-        private val eventManager: EventManager,
+        private val singlePersonAccessor: SinglePersonAccessor,
+        private val eventCreator: EventCreator,
         state: SavedStateHandle
 ): ViewModel() {
 
@@ -44,7 +48,7 @@ class AddScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val person = personManager.getPersonById(personID)
+            val person = singlePersonAccessor.getPersonById(personID)
             _firstName.value = person.firstName
             _lastName.value = person.lastName
         }
@@ -129,7 +133,7 @@ class AddScreenViewModel @Inject constructor(
      */
     fun addEvent() = viewModelScope.launch {
         //Add the current user to the database
-        eventManager.addEvent(firstName.value, lastName.value,
+        eventCreator.addEvent(firstName.value, lastName.value,
                 eventType, chosenReminder.value, eventDate.value)
     }
 }

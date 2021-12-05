@@ -3,6 +3,7 @@ package com.trackr.trackr_app.viewmodels
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import com.trackr.trackr_app.manager.PersonCreator
 import com.trackr.trackr_app.manager.PersonManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -11,12 +12,11 @@ import javax.inject.Inject
 /**
  * The view model for AddPersonScreen which manages the data that appears on the AddPersonScreen
  *
- * @param personManager an instance of the PersonManager class that is used to create new people
- * and add them to the database
+ * @param personCreator an object that implements PersonCreator that is used to create new people
  */
 @HiltViewModel
 class AddPersonViewModel @Inject constructor(
-        private val personManager: PersonManager,
+        private val personCreator: PersonCreator,
         ): ViewModel() {
 
     private val _firstName = mutableStateOf("")
@@ -34,6 +34,6 @@ class AddPersonViewModel @Inject constructor(
     }
 
     fun addPerson() = viewModelScope.launch {
-        personManager.materializePerson(firstName.value, lastName.value)
+        personCreator.materializePerson(firstName.value, lastName.value)
     }
 }

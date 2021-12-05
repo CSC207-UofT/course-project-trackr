@@ -21,13 +21,13 @@ class EventManager @Inject constructor(
     private val eventRepository: EventRepository,
     private val eventNotificationManager: EventNotificationManager,
     private val personManager: PersonManager,
-) {
+) : EventCreator, EventModifier, SingleEventAccessor {
     private fun createEvent(id: String, type: Int, date: Long, firstYear: Int, reminderInterval: Int,
                             reminderStrategy: Int): TrackrEvent {
         return TrackrEvent(id, type, date, firstYear, reminderInterval, reminderStrategy)
     }
 
-    suspend fun addEvent(firstName: String, lastName: String, eventType: Int, chosenReminder: String,
+    override suspend fun addEvent(firstName: String, lastName: String, eventType: Int, chosenReminder: String,
                          eventDate: LocalDate) {
         //Add the person specified by the first and last name fields to the database
         val newPerson = personManager.materializePerson(firstName, lastName)
@@ -65,7 +65,7 @@ class EventManager @Inject constructor(
      * Aggregate the data that has been inputted and then tell the user, person, and event
      * repositories to update this data in the database
      */
-    suspend fun editEvent(eventID: String, reminderInt: Int, eventDate: LocalDate, eventType: Int,
+    override suspend fun editEvent(eventID: String, reminderInt: Int, eventDate: LocalDate, eventType: Int,
                           personName: String, eventName: String) {
         val event = eventRepository.getById(eventID)
 
@@ -89,7 +89,7 @@ class EventManager @Inject constructor(
     /**
      * Delete the event from the database
      */
-    suspend fun deleteEvent(eventID: String) {
+    override suspend fun deleteEvent(eventID: String) {
         val event = eventRepository.getById(eventID)
         eventRepository.delete(event)
 
@@ -100,7 +100,7 @@ class EventManager @Inject constructor(
     /**
      * Get event info from the database
      */
-    suspend fun getEventInfo(eventID: String): List<Any> {
+    override suspend fun getEventInfo(eventID: String): List<Any> {
         val event = eventRepository.getById(eventID)
         val associatedPerson = personManager.getPersonById(event.personId)
 
@@ -113,5 +113,4 @@ class EventManager @Inject constructor(
             event.type
         )
     }
-
 }

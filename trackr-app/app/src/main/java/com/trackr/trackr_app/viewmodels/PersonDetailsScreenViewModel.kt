@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.trackr.trackr_app.manager.PersonManager
+import com.trackr.trackr_app.manager.PersonModifier
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,10 +13,16 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-
+/**
+ * The view model for the PersonDetailsScreen which manages the data that appears on the
+ * PersonDetails page
+ * @param personModifier an object that is used to modify existing persons in the database
+ * @param eventRepository an object that is used to read multiple events from the database
+ * @param personRepository an object that is used to read multiple people from the database
+ */
 @HiltViewModel
 class PersonDetailsScreenViewModel @Inject constructor(
-        private val personManager: PersonManager,
+        private val personModifier: PersonModifier,
         private val eventRepository: EventRepository,
         private val personRepository: PersonRepository,
         state: SavedStateHandle,
@@ -66,10 +73,10 @@ class PersonDetailsScreenViewModel @Inject constructor(
     }
 
     fun editPerson() = viewModelScope.launch {
-        personManager.editPerson(personID, _firstName.value, _lastName.value)
+        personModifier.editPerson(personID, _firstName.value, _lastName.value)
     }
 
     fun deletePerson() = viewModelScope.launch {
-        personManager.deletePerson(personID = personID)
+        personModifier.deletePerson(personID = personID)
     }
 }

@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class PersonManager @Inject constructor(
         private val personRepository: PersonRepository,
         private val userManager: UserManager
-) {
+) : PersonCreator, PersonModifier, SinglePersonAccessor {
     private suspend fun createPerson(userId: String, firstName: String, lastName: String): Person {
         val newPerson = Person(
             userId = userId,
@@ -20,14 +20,14 @@ class PersonManager @Inject constructor(
         return newPerson
     }
 
-    suspend fun editPerson(id: String, firstName: String, lastName: String) {
+    override suspend fun editPerson(id: String, firstName: String, lastName: String) {
         val person = personRepository.getPersonById(id)
         personRepository.editFirstName(firstName, person)
         personRepository.editLastName(lastName, person)
 
     }
 
-    suspend fun deletePerson(personID: String) {
+    override suspend fun deletePerson(personID: String) {
         val person = personRepository.getPersonById(personID)
         personRepository.delete(person)
     }
@@ -42,7 +42,7 @@ class PersonManager @Inject constructor(
      * @param lastName the last name of the wanted person
      * @return the person object corresponding to this first and last name
      */
-    suspend fun materializePerson(firstName: String, lastName: String): Person {
+    override suspend fun materializePerson(firstName: String, lastName: String): Person {
         // TODO: Can I query the database with a get method only once, and just
         //  Replace this with a null check instead?
         //  I'm not sure what a failed query would do.
@@ -53,7 +53,7 @@ class PersonManager @Inject constructor(
         }
     }
 
-    suspend fun getPersonById(personId: String) =
+    override suspend fun getPersonById(personId: String) =
         personRepository.getPersonById(personId)
 
 }
