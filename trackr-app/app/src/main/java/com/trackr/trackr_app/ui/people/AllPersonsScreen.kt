@@ -16,19 +16,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
-import com.trackr.trackr_app.ui.shared.EventList
 import com.trackr.trackr_app.ui.shared.PersonList
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.viewmodels.AllPersonsScreenViewModel
 import com.trackr.trackr_app.viewmodels.PersonOutput
-import com.trackr.trackr_app.viewmodels.TrackrEventOutput
 
 @Composable
 fun AllPersonsScreenActivity(
         viewModel: AllPersonsScreenViewModel,
-        navController: NavHostController
+        navController: NavHostController,
+        purpose: Purpose
 ) {
     val personList by viewModel.allPersons.observeAsState(listOf())
+    val title: String = when(purpose) {
+        Purpose.VIEW_PERSON -> "Select a Person to View:"
+        Purpose.ADD_EVENT -> "Select a Person to Create an Event For:"
+    }
+
     Scaffold(
             backgroundColor = MaterialTheme.colors.background,
             bottomBar = { BottomBarPersons(navController = navController) }
@@ -40,9 +44,10 @@ fun AllPersonsScreenActivity(
                     Modifier
                             .padding(0.dp, 15.dp)
                             .weight(2f),
-                    "Select a Person to View:",
+                    title,
                     personList,
-                    navController
+                    navController,
+                    purpose
             )
         }
     }
@@ -52,7 +57,9 @@ fun AllPersonsScreenActivity(
 fun PersonFeed(modifier: Modifier,
                title: String,
                persons: List<PersonOutput>,
-               nav: NavHostController) {
+               nav: NavHostController,
+               purpose: Purpose
+) {
     Column(
             modifier = modifier,
     ) {
@@ -83,6 +90,7 @@ fun PersonFeed(modifier: Modifier,
                     persons,
                     Modifier.fillMaxWidth(),
                     nav,
+                    purpose
             )
         }
     }
@@ -113,4 +121,11 @@ fun BottomBarPersons(
                 }
         )
     }
+}
+
+/**
+ * Enum to hold specified purposes for the AllPersonsScreen
+ */
+enum class Purpose {
+    VIEW_PERSON, ADD_EVENT
 }

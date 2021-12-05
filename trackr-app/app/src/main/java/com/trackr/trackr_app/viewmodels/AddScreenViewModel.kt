@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.trackr.trackr_app.manager.EventManager
+import com.trackr.trackr_app.manager.PersonManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -16,16 +17,20 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddScreenViewModel @Inject constructor(
-    private val eventManager: EventManager,
+        private val personManager: PersonManager,
+        private val eventManager: EventManager,
+        state: SavedStateHandle
 ): ViewModel() {
 
-    //Define variables for the input fields
+    private val personID: String = state.get<String>("personId")!!
+
     private val _firstName = mutableStateOf("")
     val firstName: State<String> get() = _firstName
 
     private val _lastName = mutableStateOf("")
     val lastName: State<String> get() = _lastName
 
+    //Define variables for the input fields
     private val _eventName = mutableStateOf("Birthday")
     val eventName: State<String> get() = _eventName
 
@@ -37,20 +42,12 @@ class AddScreenViewModel @Inject constructor(
     private val _chosenReminder = mutableStateOf("1 day before")
     val chosenReminder: State<String> get() = _chosenReminder
 
-    /**
-     * Edit the first name of the person the added event corresponds to
-     * @param newFirstName the value given by the first name text input field
-     */
-    fun editFirstName(newFirstName: String) {
-        _firstName.value = newFirstName
-    }
-
-    /**
-     * Edit the last name of the person the added event corresponds to
-     * @param newLastName the value given by the last name text input field
-     */
-    fun editLastName(newLastName: String) {
-        _lastName.value = newLastName
+    init {
+        viewModelScope.launch {
+            val person = personManager.getPersonById(personID)
+            _firstName.value = person.first_name
+            _lastName.value = person.last_name
+        }
     }
 
     /**
@@ -132,7 +129,7 @@ class AddScreenViewModel @Inject constructor(
      */
     fun addEvent() = viewModelScope.launch {
         //Add the current user to the database
-        eventManager.addEvent(firstName.value, lastName.value, eventType, chosenReminder.value,
-            eventDate.value)
+        eventManager.addEvent(firstName.value, lastName.value,
+                eventType, chosenReminder.value, eventDate.value)
     }
 }

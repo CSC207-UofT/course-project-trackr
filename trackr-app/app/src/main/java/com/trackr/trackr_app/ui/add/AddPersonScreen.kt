@@ -24,7 +24,9 @@ fun AddPersonScreenActivity(
 
     Scaffold(
     ) {
-        Column {
+        Column (
+                Modifier.padding(20.dp)
+                ){
             InputWidget(
                     title = "First Name",
                     widgets = listOf {
@@ -35,7 +37,9 @@ fun AddPersonScreenActivity(
                                         backgroundColor = Color.Transparent,
                                         textColor = MaterialTheme.colors.onBackground,
                                 ),
-                                placeholder = { Text("First Name", fontFamily = Rubik) }
+                                placeholder = { Text("First Name", fontFamily = Rubik,
+
+                                ) }
                         )
                     }
             )

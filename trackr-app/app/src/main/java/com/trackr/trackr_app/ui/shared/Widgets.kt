@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.trackr.trackr_app.R
+import com.trackr.trackr_app.ui.people.Purpose
 import com.trackr.trackr_app.ui.theme.Rubik
 import com.trackr.trackr_app.ui.theme.allGradients
 import com.trackr.trackr_app.viewmodels.PersonOutput
@@ -193,6 +194,7 @@ fun PersonList(
         persons: List<PersonOutput>,
         modifier: Modifier = Modifier,
         navController: NavHostController,
+        purpose: Purpose
 ) {
     if (persons.isEmpty()) {
         Box(
@@ -215,19 +217,28 @@ fun PersonList(
         ) {
             items(persons.count()) { index ->
                 val person = persons[index]
-                PersonCard(navController = navController, index = index, person = person)
+                PersonCard(navController = navController, index = index, person = person, purpose)
             }
         }
     }
 }
 
 @Composable
-fun PersonCard(navController: NavHostController, index: Int, person: PersonOutput) {
+fun PersonCard(navController: NavHostController,
+               index: Int,
+               person: PersonOutput,
+               purpose: Purpose
+) {
+    val route: String = when (purpose) {
+        Purpose.VIEW_PERSON -> "PersonDetails/${person.personId}"
+        Purpose.ADD_EVENT -> "Add/${person.personId}"
+    }
+
     Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    navController.navigate("PersonDetails/${person.personId}")
+                    navController.navigate(route)
                 },
             shape = RoundedCornerShape(20),
     ) {

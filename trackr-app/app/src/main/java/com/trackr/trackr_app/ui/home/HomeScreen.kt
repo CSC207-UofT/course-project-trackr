@@ -121,7 +121,7 @@ fun BottomAppBar(
                 label = { Text(text = "Add Events") },
                 selected = false,
                 onClick = {
-                    navController.navigate("Add")
+                    navController.navigate("SelectPerson")
                     {
                         launchSingleTop = true
                     }

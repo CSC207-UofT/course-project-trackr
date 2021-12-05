@@ -27,6 +27,7 @@ import com.trackr.trackr_app.ui.add.AddScreenActivity
 import com.trackr.trackr_app.viewmodels.CalendarViewModel
 import com.trackr.trackr_app.ui.home.HomeScreenActivity
 import com.trackr.trackr_app.ui.people.AllPersonsScreenActivity
+import com.trackr.trackr_app.ui.people.Purpose
 import com.trackr.trackr_app.ui.person_details.PersonDetailsScreenActivity
 import com.trackr.trackr_app.viewmodels.HomeScreenViewModel
 import com.trackr.trackr_app.ui.theme.Rubik
@@ -78,7 +79,7 @@ fun MainScreen() {
     ) {
         NavHost(navController = navController, startDestination = "Home") {
             composable("Home") { HomeScreenActivity(hiltViewModel(), navController) }
-            composable("Add") { AddScreenActivity(hiltViewModel(), navController) }
+            composable("Add/{personId}") { AddScreenActivity(hiltViewModel(), navController) }
             composable("Select") { SelectScreenActivity(hiltViewModel(), navController) }
             composable("Edit/{eventId}",
                     deepLinks = listOf(navDeepLink { uriPattern = "$uri/eventId={eventId}" })
@@ -89,14 +90,15 @@ fun MainScreen() {
             }
             composable("Calendar") { CalendarScreenActivity(hiltViewModel(), navController) }
             composable("AllPersons") {
-                AllPersonsScreenActivity(hiltViewModel(), navController)
+                AllPersonsScreenActivity(hiltViewModel(), navController, Purpose.VIEW_PERSON)
+            }
+            composable("SelectPerson") {
+                AllPersonsScreenActivity(hiltViewModel(), navController, Purpose.ADD_EVENT )
             }
             composable("AddPerson") {
                 AddPersonScreenActivity(hiltViewModel(), navController)
             }
-            composable("PersonDetails/{personId}",
-                deepLinks = listOf(navDeepLink { uriPattern = "$uri/personId={personId}" })
-            ) {
+            composable("PersonDetails/{personId}") {
                 PersonDetailsScreenActivity(hiltViewModel(), navController)
             }
         }

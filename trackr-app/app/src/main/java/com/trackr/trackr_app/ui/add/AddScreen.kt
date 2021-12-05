@@ -35,7 +35,10 @@ fun AddScreenActivity(
         Column(
             Modifier.padding(20.dp)
         ) {
-            Text(text = "Type of event:", Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+            Text(text = "Creating event for $firstName $lastName",
+                    Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
+            Text(text = "Type of event:",
+                    Modifier.padding(bottom = 5.dp), fontWeight = FontWeight.Bold)
             Row(
                 Modifier
                     .selectableGroup()
@@ -51,34 +54,6 @@ fun AddScreenActivity(
                 )
                 Text(text = "Anniversary", Modifier.padding(start = 5.dp))
             }
-            InputWidget(
-                title = "Whose birthday/anniversary is it?",
-                widgets = listOf(
-                    {
-                        TextField(
-                            value = firstName,
-                            onValueChange = { viewModel.editFirstName(it) },
-                            colors = TextFieldDefaults.textFieldColors(
-                                backgroundColor = Color.Transparent,
-                                textColor = MaterialTheme.colors.onBackground,
-                            ),
-                            placeholder = { Text("First Name", fontFamily = Rubik) }
-                        )
-                    },
-                    {
-                        TextField(
-                            value = lastName,
-                            onValueChange = { viewModel.editLastName(it) },
-                            colors = TextFieldDefaults.textFieldColors(
-                                backgroundColor = Color.Transparent,
-                                textColor = MaterialTheme.colors.onBackground,
-                            ),
-                            placeholder = { Text("Last Name", fontFamily = Rubik) }
-                        )
-                    }
-                ),
-                Modifier.weight(1/2f)
-            )
             InputWidget(title = "Date", widgets = listOf(
                 {InteractiveDropdownWidget(
                     setter = {month: String -> viewModel.changeMonth(month)},
@@ -110,7 +85,7 @@ fun AddScreenActivity(
             Button(
                 onClick = {
                     viewModel.addEvent()
-                    nav.popBackStack()
+                    nav.navigate("Home")
                 },
                 Modifier.padding(top = 20.dp),
             ) {
