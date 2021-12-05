@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 /**
  * The view model for AddPersonScreen which manages the data that appears on the AddPersonScreen
- *
  * @param personCreator an object that implements PersonCreator that is used to create new people
  */
 @HiltViewModel

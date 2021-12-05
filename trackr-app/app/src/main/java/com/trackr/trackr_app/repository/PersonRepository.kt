@@ -11,7 +11,9 @@ import javax.inject.Singleton
 class PersonRepository @Inject constructor(
     private val personDao: PersonDao
 ) : PersonAccessor {
-    val allPersons: Flow<List<Person>> = personDao.listPersons()
+    override fun getAllPersons(): Flow<List<Person>> {
+        return personDao.listPersons()
+    }
 
     @WorkerThread
     override suspend fun getPersonById(id: String): Person {

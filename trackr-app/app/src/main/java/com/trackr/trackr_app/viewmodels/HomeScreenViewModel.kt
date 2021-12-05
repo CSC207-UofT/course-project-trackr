@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.trackr.trackr_app.repository.EventRepository
-import com.trackr.trackr_app.repository.PersonRepository
+import com.trackr.trackr_app.manager.SinglePersonAccessor
+import com.trackr.trackr_app.repository.EventAccessor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -17,14 +17,14 @@ import javax.inject.Inject
  * A viewmodel that manages the state of the home screen view.
  * This viewmodel manages all the data and business logic required for
  * the homescreen to work.
- * @param eventRepository the EventRepository instance used to fetch events from the database
- * @param personRepository the PersonRepository instance used to retrieve person data from the
+ * @param eventAccessor the EventAccessor instance used to access all events from the database
+ * @param singlePersonAccessor the SinglePersonAccesor instance used to retrieve person data from the
  * database
  */
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
+    private val eventAccessor: EventAccessor,
+    private val singlePersonAccessor: SinglePersonAccessor,
 ) : ViewModel() {
     private val _allEvents: MutableLiveData<List<TrackrEventOutput>> = MutableLiveData(listOf())
     val allEvents: LiveData<List<TrackrEventOutput>> get() = _allEvents
@@ -45,14 +45,14 @@ class HomeScreenViewModel @Inject constructor(
      */
     fun updateHomeScreenData() {
         viewModelScope.launch {
-            eventRepository.allEvents.collectLatest {
+            eventAccessor.getAllEvents().collectLatest {
                 val allEventsList = mutableListOf<TrackrEventOutput>()
 
                 for (event in it) {
                     allEventsList.add(
                         TrackrEventOutput(
                             event,
-                            personRepository.getPersonById(event.personId),
+                            singlePersonAccessor.getPersonById(event.personId),
                             Calendar.getInstance().get(Calendar.YEAR)
                         )
                     )
@@ -62,7 +62,7 @@ class HomeScreenViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            eventRepository.listFromRange(
+            eventAccessor.listFromRange(
                 LocalDate.now().withYear(2008),
                 LocalDate.now().withYear(2008)
             ).collectLatest {
@@ -71,9 +71,9 @@ class HomeScreenViewModel @Inject constructor(
                     eventsTodayList.add(
                         TrackrEventOutput(
                             event,
-                            personRepository.getPersonById(event.personId),
-                            Calendar.getInstance().get(Calendar.YEAR)
-                        )
+                            singlePersonAccessor.getPersonById (event.personId),
+                        Calendar.getInstance().get(Calendar.YEAR)
+                    )
                     )
                 }
                 _eventsToday.value = eventsTodayList
