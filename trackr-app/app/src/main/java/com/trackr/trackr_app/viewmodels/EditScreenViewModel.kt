@@ -4,6 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.trackr.trackr_app.manager.EventManager
+import com.trackr.trackr_app.manager.EventModifier
+import com.trackr.trackr_app.manager.SingleEventAccessor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -11,12 +13,13 @@ import javax.inject.Inject
 
 /**
  * The view model for the EditScreen which manages the data that appears on the EditScreen page
- * @param eventManager an instance of the EventRepository class that is used to create new events
- * and add them to the database
+ * @param eventModifier an instance of a class which implements EventModifier that is used to edit
+ * or delete events.
  */
 @HiltViewModel
 class EditScreenViewModel @Inject constructor(
-    private val eventManager: EventManager,
+    private val eventModifier: EventModifier,
+    private val singleEventAccessor: SingleEventAccessor,
     state: SavedStateHandle,
 ) : ViewModel() {
 
@@ -40,7 +43,7 @@ class EditScreenViewModel @Inject constructor(
     //Get the data from the database for the event we are editing
     init {
         viewModelScope.launch {
-            val eventInfo = eventManager.getEventInfo(eventID)
+            val eventInfo = singleEventAccessor.getEventInfo(eventID)
             _eventName.value = eventInfo[0].toString()
             _eventDate.value = LocalDate.ofEpochDay(eventInfo[1].toString().toLong())
                 .withYear(eventInfo[2].toString().toInt())
@@ -146,7 +149,7 @@ class EditScreenViewModel @Inject constructor(
     fun editEvent() = viewModelScope.launch {
         val reminderInt: Int = getReminderMap()[chosenReminder.value]!!
 
-        eventManager.editEvent(eventID, reminderInt, eventDate.value,
+        eventModifier.editEvent(eventID, reminderInt, eventDate.value,
             eventType, personName.value, eventName.value)
     }
 
@@ -154,7 +157,7 @@ class EditScreenViewModel @Inject constructor(
      * Delete the event from the database
      */
     fun deleteEvent() = viewModelScope.launch {
-        eventManager.deleteEvent(eventID)
+        eventModifier.deleteEvent(eventID)
     }
 }
 

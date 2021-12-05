@@ -4,6 +4,6 @@ An interface depended on by any view model that needs to access a single event u
 as name or person.
 Any Manager class that can access a specific person in a database should implement this interface.
  */
-interface SingleEventAccessorInterface {
+interface SingleEventAccessor {
     suspend fun getEventInfo(eventID: String): List<Any>
 }
