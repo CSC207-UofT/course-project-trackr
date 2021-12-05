@@ -12,9 +12,9 @@ class PersonManager @Inject constructor(
 ) {
     private suspend fun createPerson(userId: String, firstName: String, lastName: String): Person {
         val newPerson = Person(
-            user_id = userId,
-            first_name = firstName,
-            last_name = lastName)
+            userId = userId,
+            firstName = firstName,
+            lastName = lastName)
 
         personRepository.insert(newPerson)
         return newPerson

@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -43,7 +42,7 @@ class HomeScreenViewModel @Inject constructor(
                     allEventsList.add(
                         TrackrEventOutput(
                             event,
-                            personRepository.getPersonById(event.person_id),
+                            personRepository.getPersonById(event.personId),
                             Calendar.getInstance().get(Calendar.YEAR)
                         )
                     )
@@ -59,7 +58,7 @@ class HomeScreenViewModel @Inject constructor(
                 val eventsTodayList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
                     eventsTodayList.add(TrackrEventOutput(event,
-                        personRepository.getPersonById(event.person_id),
+                        personRepository.getPersonById(event.personId),
                         Calendar.getInstance().get(Calendar.YEAR))
                     )
                 }

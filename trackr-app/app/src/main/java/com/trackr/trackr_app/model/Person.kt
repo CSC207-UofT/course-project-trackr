@@ -14,14 +14,14 @@ import java.util.*
         foreignKeys = [
                 ForeignKey(entity = User::class,
                         parentColumns = ["id"],
-                        childColumns = ["user_id"],
+                        childColumns = ["userId"],
                         onDelete = CASCADE)])
 class Person(
-        val user_id: String,
+        val userId: String,
 
-        var first_name: String,
+        var firstName: String,
 
-        var last_name: String = "",
+        var lastName: String = "",
 
         @PrimaryKey
         val id: String = UUID.randomUUID().toString(),

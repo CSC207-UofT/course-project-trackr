@@ -8,11 +8,11 @@ import java.util.*
         foreignKeys = [
             ForeignKey(entity = Person::class,
                     parentColumns = ["id"],
-                    childColumns = ["person_id"],
+                    childColumns = ["personId"],
                     onDelete = ForeignKey.CASCADE)])
 class TrackrEvent (
 
-        var person_id: String,
+        var personId: String,
 
         var type: Int,
 
@@ -20,9 +20,9 @@ class TrackrEvent (
 
         val firstYear: Int,
 
-        val reminder_interval: Int,
+        val reminderInterval: Int,
 
-        val repeat_strategy: Int,
+        val repeatStrategy: Int,
 
         @PrimaryKey
         val id: String = UUID.randomUUID().toString(),

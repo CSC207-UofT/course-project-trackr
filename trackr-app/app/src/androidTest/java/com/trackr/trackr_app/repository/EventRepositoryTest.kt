@@ -181,7 +181,7 @@ class EventRepositoryTest {
         eventRepository.insert(event1)
         eventRepository.editPerson(newPerson, event1)
         val result = eventRepository.allEvents.first()
-        assertEquals(newPerson.id, result[0].person_id)
+        assertEquals(newPerson.id, result[0].personId)
     }
 
     @Test
@@ -266,7 +266,7 @@ class EventRepositoryTest {
         eventRepository.insert(event1)
         eventRepository.editInterval(7, event1)
         val result = eventRepository.allEvents.first()
-        assertEquals(7, result[0].reminder_interval)
+        assertEquals(7, result[0].reminderInterval)
     }
 
     @Test

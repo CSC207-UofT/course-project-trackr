@@ -46,9 +46,9 @@ class EditScreenViewModelTest {
         userRepository.insert(defaultUser)
 
         person = Person(
-                user_id = defaultUser.id,
-                first_name = "jon",
-                last_name = "d")
+                userId = defaultUser.id,
+                firstName = "jon",
+                lastName = "d")
         personRepository.insert(person)
 
         event = TrackrEvent(
