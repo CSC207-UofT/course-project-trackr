@@ -1,9 +1,12 @@
 package com.trackr.trackr_app.viewmodels
 
+import android.media.metrics.Event
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.trackr.trackr_app.manager.EventManager
+import com.trackr.trackr_app.manager.EventCreator
+import com.trackr.trackr_app.manager.EventCreatorInterface
 import com.trackr.trackr_app.manager.PersonManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddScreenViewModel @Inject constructor(
         private val personManager: PersonManager,
-        private val eventManager: EventManager,
+        private val eventManager: EventCreatorInterface,
         state: SavedStateHandle
 ): ViewModel() {
 
