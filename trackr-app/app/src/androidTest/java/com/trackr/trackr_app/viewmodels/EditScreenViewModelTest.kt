@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.TrackrDatabase
 import com.trackr.trackr_app.manager.EventManager
 import com.trackr.trackr_app.manager.PersonManager
+import com.trackr.trackr_app.manager.UserManager
 import com.trackr.trackr_app.model.Person
 import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
@@ -41,6 +42,9 @@ class EditScreenViewModelTest {
         val personRepository = PersonRepository(db.personDao())
         eventRepository = EventRepository(db.eventDao())
         val eventNotificationManager = EventNotificationManager(context)
+        val userManager = UserManager(userRepository)
+        val personManager = PersonManager(personRepository, userManager)
+        val eventManager = EventManager(eventRepository, eventNotificationManager, personManager)
 
         val defaultUser = User("Default User")
         userRepository.insert(defaultUser)
@@ -56,15 +60,14 @@ class EditScreenViewModelTest {
                 0,
                 LocalDate.now().withYear(1970).toEpochDay(),
                 LocalDate.now().year,
-                1,
-                0)
+                1
+        )
         eventRepository.insert(event)
 
         val state = SavedStateHandle()
         state.set("eventId", event.id)
 
-        viewModel = EditScreenViewModel(EventManager(eventRepository, personRepository,
-            userRepository, eventNotificationManager, PersonManager()), state)
+        viewModel = EditScreenViewModel(eventManager, eventManager, state)
     }
 
     @Test
@@ -111,9 +114,10 @@ class EditScreenViewModelTest {
                 1,
                 LocalDate.now().withYear(1970).toEpochDay(),
                 2020,
-                1,
-                0)
+                1
+        )
         val result = eventRepository.getById(event.id)
+
         assertNotEquals(event.type, result.type)
         assertEquals(expected.type, result.type)
     }
@@ -122,7 +126,7 @@ class EditScreenViewModelTest {
     fun deleteEvent() = runBlocking {
         viewModel.deleteEvent().join()
         val expected: List<TrackrEvent> = emptyList()
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(expected, result)
     }
 }

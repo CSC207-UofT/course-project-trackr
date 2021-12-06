@@ -1,6 +1,7 @@
 package com.trackr.trackr_app.viewmodels
 
 import android.content.Context
+import androidx.lifecycle.SavedStateHandle
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -8,6 +9,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.TrackrDatabase
 import com.trackr.trackr_app.manager.EventManager
 import com.trackr.trackr_app.manager.PersonManager
+import com.trackr.trackr_app.manager.UserManager
+import com.trackr.trackr_app.model.Person
+import com.trackr.trackr_app.model.User
 import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
@@ -15,11 +19,9 @@ import com.trackr.trackr_app.repository.UserRepository
 import junit.framework.TestCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.IOException
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
@@ -29,39 +31,31 @@ class AddScreenViewModelTest : TestCase() {
     private lateinit var viewModel: AddScreenViewModel
 
     @Before
-    public override fun setUp() {
+    public override fun setUp() = runBlocking {
         super.setUp()
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, TrackrDatabase::class.java)
             .allowMainThreadQueries().build()
         val userRepository = UserRepository(db.userDao())
         val personRepository = PersonRepository(db.personDao())
+        val userManager = UserManager(userRepository)
         eventRepository = EventRepository(db.eventDao())
         val eventNotificationManager = EventNotificationManager(context)
+
+        val user = User("test")
+        userRepository.insert(user)
+        val person = Person(user.id, "tom", "sawyer")
+        personRepository.insert(person)
+
+        val state = SavedStateHandle()
+        state.set("personId", person.id)
+
         viewModel = AddScreenViewModel(
-                EventManager(eventRepository, personRepository, userRepository,
-                    eventNotificationManager, PersonManager())
+                PersonManager(personRepository, userManager),
+                EventManager(eventRepository, eventNotificationManager,
+                        PersonManager(personRepository, userManager)),
+                state
         )
-    }
-
-    @After
-    @Throws(IOException::class)
-    fun closeDatabase() {
-        db.close()
-    }
-
-    @Test
-    fun testEditFirstName(){
-        viewModel.editFirstName("Your")
-        val result = viewModel.firstName.value
-        assertEquals("Your", result)
-    }
-
-    @Test
-    fun testEditLastName(){
-        viewModel.editLastName("Mom")
-        val result = viewModel.lastName.value
-        assertEquals("Mom", result)
     }
 
     @Test
@@ -103,7 +97,7 @@ class AddScreenViewModelTest : TestCase() {
     @Test
     fun testAddEvent() = runBlocking {
         viewModel.addEvent().join()
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertNotNull(result[0])
     }
 }

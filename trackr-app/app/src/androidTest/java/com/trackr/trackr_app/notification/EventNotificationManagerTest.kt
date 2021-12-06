@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.trackr.trackr_app.notification.NotificationConstants.ACTION_RECEIVE_NOTIFICATION
 import org.junit.Assert.*
 
 import org.junit.Test
@@ -26,6 +27,7 @@ class EventNotificationManagerTest {
                 LocalDate.of(2022, 10, 10),
                 LocalDate.of(2022, 10, 9), id)
         val intent = Intent(context, EventBroadcastReceiver::class.java)
+                .setAction(ACTION_RECEIVE_NOTIFICATION)
         val pendingIntent =
                 PendingIntent.getBroadcast(
                         context, id.hashCode(), intent, FLAG_IMMUTABLE or FLAG_NO_CREATE)
