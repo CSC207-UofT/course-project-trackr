@@ -52,9 +52,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(1999, 1, 1).toEpochDay(),
                 1999,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         val result1 = eventRepository.listFromRange(
@@ -81,9 +79,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2020, 2, 10).toEpochDay(),
                 1999,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         val result1 = eventRepository.getEventsInRange(
@@ -110,9 +106,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 12, 15).toEpochDay(),
                 1984,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         val result = eventRepository.getById(event1.id)
@@ -130,9 +124,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 12, 15).toEpochDay(),
                 1984,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         val result = eventRepository.getAllEvents().first()
@@ -150,9 +142,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 12, 15).toEpochDay(),
                 1984,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         eventRepository.delete(event1)
@@ -172,9 +162,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 12, 15).toEpochDay(),
                 1984,
-                7,
-                0
-        )
+                7)
         val newPerson = Person(user.id, "tom", "sawyer")
         personDao.insert(newPerson)
 
@@ -195,9 +183,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
 
         eventRepository.insert(event1)
         eventRepository.editType(1, event1)
@@ -216,9 +202,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
 
         eventRepository.insert(event1)
         eventRepository.editDate(LocalDate.of(1980, 11, 2), event1)
@@ -238,9 +222,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
 
         eventRepository.insert(event1)
         eventRepository.editFirstYear(2020, event1)
@@ -259,9 +241,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
 
         eventRepository.insert(event1)
         eventRepository.editInterval(7, event1)
@@ -280,17 +260,13 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
         val event2 = TrackrEvent(
                 person.id,
                 0,
                 LocalDate.of(2008, 3, 8).toEpochDay(),
                 1990,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         eventRepository.insert(event2)
