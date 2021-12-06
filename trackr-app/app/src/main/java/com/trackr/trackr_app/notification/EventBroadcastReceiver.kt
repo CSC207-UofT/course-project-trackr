@@ -23,7 +23,7 @@ class EventBroadcastReceiver : BroadcastReceiver() {
             val id = intent.getStringExtra("notificationId")
             val pendingIntent = id?.let { getNotificationIntent(context, it) }
             val builder = NotificationCompat.Builder(context, NotificationConstants.CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(intent.getStringExtra("contentTitle"))
                 .setContentText(intent.getStringExtra("contentText"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
