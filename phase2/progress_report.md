@@ -42,7 +42,7 @@ In phase 2, some new things that have worked well are:
 
 ### Work Distribution
 
-Menghao Yu:
+**Menghao Yu**:
 
 Phase 1:
 - Designed HomeScreen and Calendar Screen
@@ -56,7 +56,7 @@ Phase 2:
 - Cleaned up all files and removed unused imports
 - Integrated the new data access/manager interfaces with some of the viewmodels
 
-Roman Zupancic:
+**Roman Zupancic**:
 
 Phase 1:
 - Refactored event repeat systems
@@ -64,11 +64,11 @@ Phase 1:
 - Abstracted away various view components for reuse
 
 Phase 2:
--
+- Add here
 
-Jonathan Ginevro:
+**Jonathan Ginevro**:
 
-Phase 1:
+ Phase 1:
 - Designed and built EditScreen and SelectScreen
 - Implemented basic functionalities for these screens (such as the ability to edit an Event or select an Event from the HomeScreen and edit that event specifically)
 - Wrote and worked on tests for AddScreenViewModel, CalendarScreenViewModel,
@@ -80,7 +80,7 @@ Phase 2:
 - Implemented PersonDetailsViewModel
 - Implemented ui improvements such as a toggle to switch between viewing/editing a person, and a popup to ensure that the user wants to delete a person
 
-Nathan Hansen:
+**Nathan Hansen**:
 
 Phase 1:
 - Wrote classes and test for database and data access objects
@@ -88,9 +88,9 @@ Phase 1:
 - Made sure database was serializable/could persist through runs
  
 Phase 2:
--
+- Add here
 
-Jeremiah Djianto:
+**Jeremiah Djianto**:
 
 Phase 1:
 - Wrote classes and tests to implement a notification functionality
@@ -107,7 +107,7 @@ such as AllPersonsScreen, AllPersonsScreenViewModel
 - Adjusted user navigation by integrating the ability to add/choose people as the user 
 creates events
 
-Daniel Hocevar:
+**Daniel Hocevar**:
 
 Phase 1:
 - Designed and implemented AddScreen and HomeScreen
