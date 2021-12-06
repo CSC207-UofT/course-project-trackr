@@ -14,7 +14,8 @@ As a group, answer the following questions:
 ### Principle 2: Flexibility in Use
 
 - Our app can be used by both left handed and right handed people.
-- They can input strings with their own keyboard (regardless or language)
+- They can input strings with their own keyboard (regardless of language)
+- The font size unit is in `sp` which scales with the user preference font size defined in the OS settings, allowing users to scale the font size up or down however they wish.
 - One feature we could implement in the future is a landscape mode. This would provide different methods of choice for the user. We haven't implemented it right now to prevent the UI from breaking but this could definitely be a feature in the future
 
 ### Principle 3: Simple and Intuitive to Use
@@ -28,7 +29,7 @@ As a group, answer the following questions:
 
 - We have a calendar which allows the user to navigate information in a more visual way. The built-in text to speech for android can be easily used with our app as well.
 - The different colors found throughout the app are chosen to contrast and not blend in with each other, this way words and other elements become much more readable.
-- adquate sized font was used to maximize readability
+- Adequate sized font was used to maximize readability, and the font scales to user preference which is defined in the system settings.
 
 ### Principle 5: Tolorance for Error
 
