@@ -44,6 +44,16 @@ bloating code smells because we predicted one view model would get too big.
 That would also be a violation of the single responsibility principle as the
 single view model would be responsible for managing multiple screens.
 
+### Use of Boundaries between Interface Adapters and Use cases
+
+One choice we made was to implement an interface between Interface Adapters and Use cases, 
+specifically so the view models do not directly depend on the managers. This is not
+essential in clean architecture since the view models (interface adapters) 
+are lower level than the managers (use cases) and having a direct dependency
+does not violate dependency inversion principle. However, we chose to add an interface anyway
+to reduce coupling which is a main goal of object-oriented programming as
+it allows tests, modifications, and extensions to be done easier.
+
 ## Adherence to Clean Architecture
 
 As for serialization, our group opted for a local SQLite Database through the Room persistence library.
