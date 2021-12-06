@@ -18,9 +18,18 @@ Remember to keep the document concise and focused
 
 ### Kotlin
 
-While not necessarily a design change, the largest project change we've made between Phase 0 and Phase 1 is our decision to use the Kotlin programming language instead of Java. We had a few reasons for doing this, but most of them revolved around ecosystem and maintainability: Kotlin is simply nicer to work with in the Android development space. 
+While not necessarily a design change, the largest project change we've made between Phase 0 and
+Phase 1 is our decision to use the Kotlin programming language instead of Java. We had a few reasons
+for doing this, but most of them revolved around ecosystem and maintainability: Kotlin is simply
+nicer to work with in the Android development space.
 
-Jetpack compose, for example, is the framework we are using to programmatically build our application views: it allows us to only use Kotlin to design and structure our interface layouts, allowing us to avoid learning the android-specific of and then using XML. This means that we could keep our code more organized (a single view file instead of a few) and stick with patterns that we were familiar with (Jetpack follows a similar structure to Flutter, which some of us have experience with). Unfortunately, Jetpack compose is only available for Kotlin, and so forced our hand into the language transition.
+Jetpack compose, for example, is the framework we are using to programmatically build our
+application views: it allows us to only use Kotlin to design and structure our interface layouts,
+allowing us to avoid learning the android-specific of and then using XML. This means that we could
+keep our code more organized (a single view file instead of a few) and stick with patterns that we
+were familiar with (Jetpack follows a similar structure to Flutter, which some of us have experience
+with). Unfortunately, Jetpack compose is only available for Kotlin, and so forced our hand into the
+language transition.
 
 ### Model-View-ViewModel (MVVM)
 
@@ -36,6 +45,14 @@ context that asynchronous functions can be called in.
 Hilt, our dependency injection library, also works specifically with viewmodels, and injecting
 dependencies within them.
 
+We have also extended the design of MVVM to better fit the principles of Clean Architecture and
+SOLID: instead of relying solely on the models to preform buisness and application logic (which is
+generally encouraged in some MVVM styles), we have implemented additional interfaces and a manager /
+use-case layer that coordinated data processing and access between our database and the volatile
+memory of our program. This architecture makes our program more extensible: we can add an arbitrary
+amount of proccessing logic between the models and the view without having to bloat/become overly
+coupled with other parts of our program.
+
 ### Multiple ViewModels instead of one
 
 Another design choice was to use multiple view models, one for each screen,
@@ -43,6 +60,12 @@ instead of one view model for all screens. This choice was to prevent any
 bloating code smells because we predicted one view model would get too big.
 That would also be a violation of the single responsibility principle as the
 single view model would be responsible for managing multiple screens.
+
+Multiple Viewmodels also allows us to separate the contexts of the views away from eachother: one
+view no longer has to depend on all the conditions another view needs for proper functioning. This
+means that we are forced to prioritize data access, traversing our Clean Architecture layers instead
+of just passing potentially volatile data between views (this kind of design constraint means that
+future extensions of this pattern are less error prone and easier to debug).
 
 ### Use of Boundaries between Interface Adapters and Use cases
 
@@ -53,6 +76,8 @@ are lower level than the managers (use cases) and having a direct dependency
 does not violate dependency inversion principle. However, we chose to add an interface anyway
 to reduce coupling which is a main goal of object-oriented programming as
 it allows tests, modifications, and extensions to be done easier.
+
+Adding interfaces also makes the app more easily extensible in the future: we could decide that the manager classes have become too bloated, and split them up without having to change the dependency calls in the lower level classes. Or, we might want to change the functions of certain managers based on the state of the application; accommodating permissions across many users might require new manager classes that would implement some of the same interfaces we are already defining.
 
 ## Adherence to Clean Architecture
 
