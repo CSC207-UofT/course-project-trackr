@@ -10,25 +10,27 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class EventRepository @Inject constructor(private val eventDao: EventDao) {
-    val allEvents: Flow<List<TrackrEvent>> = eventDao.listAll()
+class EventRepository @Inject constructor(private val eventDao: EventDao) : EventAccessor {
+    override fun getAllEvents(): Flow<List<TrackrEvent>> {
+        return eventDao.listAll()
+    }
 
-    fun listFromRange(startDate: LocalDate, endDate: LocalDate): Flow<List<TrackrEvent>> {
+    override fun listFromRange(startDate: LocalDate, endDate: LocalDate): Flow<List<TrackrEvent>> {
         return eventDao.listFromRange(startDate.toEpochDay(), endDate.toEpochDay())
     }
 
     @WorkerThread
-    suspend fun getEventsInRange(startDate: LocalDate, endDate: LocalDate): List<TrackrEvent> {
+    override suspend fun getEventsInRange(startDate: LocalDate, endDate: LocalDate): List<TrackrEvent> {
         return eventDao.eventsBetweenDate(startDate.toEpochDay(), endDate.toEpochDay())
     }
 
     @WorkerThread
-    suspend fun getById(id: String): TrackrEvent {
+    override suspend fun getById(id: String): TrackrEvent {
         return eventDao.getById(id)
     }
 
     @WorkerThread
-    fun getByPersonId(personId: String): Flow<List<TrackrEvent>> {
+    override fun getByPersonId(personId: String): Flow<List<TrackrEvent>> {
         return eventDao.getByPersonId(personId)
     }
 

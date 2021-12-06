@@ -10,21 +10,23 @@ import javax.inject.Singleton
 @Singleton
 class PersonRepository @Inject constructor(
     private val personDao: PersonDao
-) {
-    val allPersons: Flow<List<Person>> = personDao.listPersons()
+) : PersonAccessor {
+    override fun getAllPersons(): Flow<List<Person>> {
+        return personDao.listPersons()
+    }
 
     @WorkerThread
-    suspend fun getPersonById(id: String): Person {
+    override suspend fun getPersonById(id: String): Person {
         return personDao.getPersonById(id)
     }
 
     @WorkerThread
-    suspend fun getPersonByName(firstName: String, lastName: String): Person {
+    override suspend fun getPersonByName(firstName: String, lastName: String): Person {
         return personDao.getPersonByName(firstName, lastName)
     }
 
     @WorkerThread
-    suspend fun hasPersonByName(firstName: String, lastName: String): Boolean {
+    override suspend fun hasPersonByName(firstName: String, lastName: String): Boolean {
         return personDao.hasPersonByName(firstName, lastName)
     }
 
