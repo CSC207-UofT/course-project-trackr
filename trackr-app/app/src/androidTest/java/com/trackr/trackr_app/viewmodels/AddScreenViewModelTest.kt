@@ -19,11 +19,9 @@ import com.trackr.trackr_app.repository.UserRepository
 import junit.framework.TestCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.IOException
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
@@ -99,7 +97,7 @@ class AddScreenViewModelTest : TestCase() {
     @Test
     fun testAddEvent() = runBlocking {
         viewModel.addEvent().join()
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertNotNull(result[0])
     }
 }

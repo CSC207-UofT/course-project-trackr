@@ -5,8 +5,11 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.trackr.trackr_app.database.TrackrDatabase
+import com.trackr.trackr_app.manager.PersonManager
+import com.trackr.trackr_app.manager.UserManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
+import com.trackr.trackr_app.repository.UserRepository
 import org.junit.Assert.*
 
 import org.junit.After
@@ -27,8 +30,11 @@ class CalendarViewModelTest {
                 .allowMainThreadQueries().build()
         val personRepository = PersonRepository(db.personDao())
         val eventRepository = EventRepository(db.eventDao())
+        val userRepository = UserRepository(db.userDao())
         viewModel = CalendarViewModel(
-                eventRepository, personRepository)
+                eventRepository, PersonManager(personRepository,
+                UserManager(userRepository)
+        ))
     }
 
     @After
