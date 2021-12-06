@@ -142,7 +142,6 @@ class EditScreenViewModel @Inject constructor(
         )
     }
 
-
     /**
      * Aggregate the data that has been inputted and then tell the user, person, and event
      * repositories to update this data in the database

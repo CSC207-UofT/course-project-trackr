@@ -9,6 +9,11 @@ import com.trackr.trackr_app.model.TrackrEvent
 import com.trackr.trackr_app.model.User
 
 
+/**
+ * Initializes and manages the broader SQL database.
+ * Provides access to data access objects which can
+ * be used to interact with models within the database.
+ */
 @Database(
     entities = [User::class, Person::class, TrackrEvent::class],
     version = 1,
@@ -26,6 +31,10 @@ abstract class TrackrDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: TrackrDatabase? = null
 
+        /**
+         * Build the database and initialize it as a singleton
+         * @param context The app context the database exists within
+         */
         fun getDatabase(context: Context): TrackrDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database

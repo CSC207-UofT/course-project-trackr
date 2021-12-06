@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.trackr.trackr_app.manager.SinglePersonAccessor
+import com.trackr.trackr_app.repository.EventAccessor
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,15 +19,15 @@ import javax.inject.Inject
 /**
  * A viewmodel that is responsible for managing the state and the business logic of the
  * calendar screen.
- * @param eventRepository an instance of the EventRepository used to fetch event data from
+ * @param eventAccessor an instance of the EventRepository used to fetch event data from
  * the database
- * @param personRepository an instance of the PersonRepository used to fetch person data from
+ * @param singlePersonAccessor an instance of the PersonRepository used to fetch person data from
  * the database.
  */
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
+    private val eventAccessor: EventAccessor,
+    private val singlePersonAccessor: SinglePersonAccessor,
 ) : ViewModel() {
 
     private val _selectedDate: MutableState<LocalDate> = mutableStateOf(LocalDate.now())
@@ -68,14 +70,14 @@ class CalendarViewModel @Inject constructor(
      */
     fun updateSelectedEvents() {
         viewModelScope.launch {
-            _selectedEvents.value = eventRepository
+            _selectedEvents.value = eventAccessor
                 .getEventsInRange(
                     _selectedDate.value.withYear(2008),
                     _selectedDate.value.withYear(2008)
                 ).map {
                     TrackrEventOutput(
                         it,
-                        personRepository.getPersonById(it.personId),
+                        singlePersonAccessor.getPersonById(it.personId),
                         LocalDate.now().year
                     )
                 }
@@ -87,7 +89,7 @@ class CalendarViewModel @Inject constructor(
      */
     fun updateEventDates() {
         viewModelScope.launch {
-            _eventDates.value = eventRepository
+            _eventDates.value = eventAccessor
                 .getEventsInRange(
                     _selectedDate.value.withYear(2008).withDayOfMonth(1),
                     _selectedDate.value.withYear(2008).withDayOfMonth(

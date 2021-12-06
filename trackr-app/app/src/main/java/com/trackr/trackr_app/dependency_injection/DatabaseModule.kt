@@ -1,4 +1,4 @@
-package com.trackr.trackr_app.di
+package com.trackr.trackr_app.dependency_injection
 
 import android.content.Context
 import com.trackr.trackr_app.database.EventDao

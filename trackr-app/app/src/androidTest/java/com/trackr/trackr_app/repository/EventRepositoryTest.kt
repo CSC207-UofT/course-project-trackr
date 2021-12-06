@@ -135,7 +135,7 @@ class EventRepositoryTest {
         )
 
         eventRepository.insert(event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(event1.id, result[0].id)
     }
 
@@ -156,7 +156,7 @@ class EventRepositoryTest {
 
         eventRepository.insert(event1)
         eventRepository.delete(event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         val emptyList: List<TrackrEvent> = emptyList()
         assertEquals(emptyList, result)
     }
@@ -180,7 +180,7 @@ class EventRepositoryTest {
 
         eventRepository.insert(event1)
         eventRepository.editPerson(newPerson, event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(newPerson.id, result[0].personId)
     }
 
@@ -201,7 +201,7 @@ class EventRepositoryTest {
 
         eventRepository.insert(event1)
         eventRepository.editType(1, event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(1, result[0].type)
     }
 
@@ -222,7 +222,7 @@ class EventRepositoryTest {
 
         eventRepository.insert(event1)
         eventRepository.editDate(LocalDate.of(1980, 11, 2), event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(LocalDate.of(1980, 11, 2),
                 LocalDate.ofEpochDay(result[0].date))
     }
@@ -244,7 +244,7 @@ class EventRepositoryTest {
 
         eventRepository.insert(event1)
         eventRepository.editFirstYear(2020, event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(2020, result[0].firstYear)
     }
 
@@ -265,7 +265,7 @@ class EventRepositoryTest {
 
         eventRepository.insert(event1)
         eventRepository.editInterval(7, event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(7, result[0].reminderInterval)
     }
 
@@ -295,7 +295,7 @@ class EventRepositoryTest {
         eventRepository.insert(event1)
         eventRepository.insert(event2)
         eventRepository.deleteAll()
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         val emptyList: List<TrackrEvent> = emptyList()
         assertEquals(emptyList, result)
     }
