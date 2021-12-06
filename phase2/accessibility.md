@@ -8,12 +8,12 @@ As a group, answer the following questions:
 
 - All data is stored locally, and thus cannot be accessed outside the device. This means that the user's data cannot be distributed without their consent and can only be accessed by them and only them. This addresses all security concerns.
 - Our app is open source and free, and thus everyone can have access to our app free of segregation and stigmatizing.
-- Our app works with Android's built-in screen reader TalkBack and text-to speech to support a diverse group of people. 
+- Our app works with Android's built in screen reader TalkBack and text-to speech to support a diverse group of people. 
 - One thing we could implement in the future is support for multiple languages. Right now our app is hard-coded in English. However, we could extract the strings into their own resource files and provide support for other languages by having a resource file for each language with the translated strings.
 
 ### Principle 2: Flexibility in Use
 
-- Our app can be used by both left-handed and right-handed people.
+- Our app can be used by both left handed and right handed people.
 - They can input strings with their own keyboard (regardless of language)
 - The font size unit is in `sp` which scales with the user preference font size defined in the OS settings, allowing users to scale the font size up or down however they wish.
 - One feature we could implement in the future is a landscape mode. This would provide different methods of choice for the user. We haven't implemented it right now to prevent the UI from breaking but this could definitely be a feature in the future
@@ -21,6 +21,7 @@ As a group, answer the following questions:
 ### Principle 3: Simple and Intuitive to Use
 
 - Our app is very simple to use. The app just consists of tapping on event boxes or using the nav bar to navigate, or filling in forms to create a new event. Anything that requires user action is labeled or has a symbol that denotes the purpose or both.
+- The navigation in our app is super simple and straightfoward, it consists of just navigating back and forth between screens, similar to a web browser.
 - Our app uses very basic vocabulary, nothing that includes super difficult language.
 - Important text is emphasised with the bold font, or font size, or even font color.
 - Users from all different skill levels should be able to use our app with ease.
@@ -40,19 +41,19 @@ As a group, answer the following questions:
 
 - In our app, we allow the user to create a person, and reuse that person, to prevent the tedious repetition of creating the same person over and over again.
 - The app can be used however the user wants to use it, in any position they would like to use it.
-- The only element that is restricting is the lack of landscape mode, which is definitely a feature that we should implement in the future to allow the user for more control over how they can use the app.
+- The only element that is restricting is the lack of landscape mode, which is defintely a feature that we should implement in the future to allow the user for more control over how they can use the app.
 
 ### Principle 7: Size and Space for Approach and Use
 
-- The elements of our app are visible from all different angles due to the strong color contrast between elements.
-- We provide adequate sized buttons and widgets for the user to use, which can accommodate all sorts of hand sizes and grips.
+- The elements of our app are visible from all different angles due to the strong color contast between elements.
+- We provide adequate sized buttons and widgets for the user to use, which can accomadate all sorts of hand sizes and grips.
 - The TalkBack screen reader can be easily used with our app.
 
 
 2. Write a paragraph about who you would market your program towards, if you were to sell or license your program to customers. This could be a specific category such as "students" or more vague, such as "people who like games". Try to give a bit more detail along with the category.
 
-Our app is geared towards the general public. Since our program is an android app, the only audience we can reach with this app are people with an android phone. Thus, our program is actually for people with android phones who have trouble remembering upcoming events. Everyone would find a calendar app that reminds you of upcoming birthdays and anniversaries as useful in some way. Everyone forgets things, be it birthdays, anniversaries, deadlines, etc. Our app helps those who are forgetful of upcoming events and helps them remember and keep up with all the different events in their lives. We are more of a utility app geared towards everyone rather than a niche app geared towards a single small group of people. 
+Our app is geared towards the general public. Since our program is an android app, the only audience we can reach with this app are people with a android phone. Thus our program is actually for people with android phones who have trouble remembering upcoming events. Everyone would find a calendar app that reminds you of upcoming birthdays and anniversaries as useful in some way. Everyone forgets things, be it birthdays, anniversaries, deadlines, etc. Our app helps those who are forgetful of upcoming events and helps them remember and keep up with all the different events in their lives. We are more of a ultility app geared towards everyone rather than a niche app geared towards a single small group of people. 
 
 3. Write a paragraph about whether or not your program is less likely to be used by certain demographics. For example, a program that converts txt files to files that can be printed by a braille printer are less likely to be used by people who do not read braille.
 
-All throughout our app is targets the general public, it is possible that more forgetful people will tend to use our app, rather than people who don't need assistance to remember all upcoming events. As a result, our program may be used by more forgetful people such as the elderly, children, or those with memory loss. Since our program may be more commonly used by those who are more vulnerable, it is important that we put features and policies in place to protect them and provide adequate ways for them to interact with our app with ease.  
+Althrough our app is targets the general public, it is possible that more forgetful people will tend to use our app, rather than people who don't need assisstance to rememeber all upcoming events. As a result, our program may be used by more forgetful people such as the elderly, children, or those with memory loss. Since our program may be more commonly used by those who are more vulnerable, it is important that we put features and policies in place to protect them and provide adequate ways for them to interact with our app with ease.  
