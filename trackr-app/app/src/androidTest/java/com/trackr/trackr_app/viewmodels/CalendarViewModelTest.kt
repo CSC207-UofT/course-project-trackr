@@ -37,11 +37,6 @@ class CalendarViewModelTest {
         ))
     }
 
-    @After
-    fun tearDown() {
-        db.close()
-    }
-
     @Test
     fun changeMonth() {
         viewModel.changeMonth(2)
