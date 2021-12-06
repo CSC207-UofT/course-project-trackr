@@ -43,7 +43,10 @@ Phase 1:
 - integrated Hilt for dependency injection into the project and created the dependency injection modules
 
 Phase 2:
--
+- Created an edit toggle for the event details screen
+- Fixed bug where the UI wasn't displaying the most up-to-date data after a Person edit
+- Cleaned up all files and removed unused imports
+- Integrated the new data access/manager interfaces with some of the viewmodels
 
 Roman Zupancic:
 
