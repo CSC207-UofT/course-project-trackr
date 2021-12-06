@@ -32,6 +32,14 @@ Here were some of the things that worked well in phase 1 of the project.
   for people) allows us to do specific operations on each entity. As opposed to
   our phase 0 which had one data access object, this keeps things modular and convenient.
 
+In phase 2, some new things that have worked well are:
+- Using interfaces to create boundaries between view models and managers. Although not necessary, 
+  this reduced coupling. It made it easier to refactor our codebase (specifically our view models and managers) without
+  needing to adjust one when we adjust another.
+- Splitting the responsibilities of our view models between the view models and managers
+  helped our code adhere to SRP and keep classes readable and helped fixed the slight
+  bloating code smell.
+
 ### Work Distribution
 
 Menghao Yu:
@@ -88,7 +96,13 @@ Phase 1:
 - Worked on tests for `EditScreenViewModel`
 
 Phase 2:
--
+- Created classes and tests to add people such as AddPersonScreen, 
+  AddPersonViewModel
+- Created classes and tests to view/choose from all available people
+such as AllPersonsScreen, AllPersonsScreenViewModel
+- Worked on tests for PersonDetailsScreenViewModel
+- Adjusted user navigation by integrating the ability to add/choose people as the user 
+creates events
 
 Daniel Hocevar:
 
