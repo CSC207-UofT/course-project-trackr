@@ -4,6 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
+/**
+ * A User for the program.
+ *
+ * A user should have a unique id and username.
+ */
 @Entity(tableName = "user-table")
 class User(
     var username: String,

@@ -5,6 +5,12 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.*
 
+/**
+ * An Event for the program.
+ *
+ * The Event class is responsible for storing the details of a specific event
+ * and know which person the event is for.
+ */
 @Entity(
     tableName = "event-table",
     // Establish foreign key relation

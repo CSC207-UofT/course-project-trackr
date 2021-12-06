@@ -8,6 +8,7 @@ import java.util.*
 
 /**
  * A Person who is the target for an Event.
+ *
  * The Person class is responsible for storing the first and last name of the person,
  * along with a description and tags associated with this person.
  */
