@@ -10,6 +10,8 @@ import com.trackr.trackr_app.database.TrackrDatabase
 import com.trackr.trackr_app.manager.EventManager
 import com.trackr.trackr_app.manager.PersonManager
 import com.trackr.trackr_app.manager.UserManager
+import com.trackr.trackr_app.model.Person
+import com.trackr.trackr_app.model.User
 import com.trackr.trackr_app.notification.EventNotificationManager
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
@@ -31,9 +33,8 @@ class AddScreenViewModelTest : TestCase() {
     private lateinit var viewModel: AddScreenViewModel
 
     @Before
-    public override fun setUp() {
+    public override fun setUp() = runBlocking {
         super.setUp()
-        val state = SavedStateHandle()
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, TrackrDatabase::class.java)
             .allowMainThreadQueries().build()
@@ -42,18 +43,21 @@ class AddScreenViewModelTest : TestCase() {
         val userManager = UserManager(userRepository)
         eventRepository = EventRepository(db.eventDao())
         val eventNotificationManager = EventNotificationManager(context)
+
+        val user = User("test")
+        userRepository.insert(user)
+        val person = Person(user.id, "tom", "sawyer")
+        personRepository.insert(person)
+
+        val state = SavedStateHandle()
+        state.set("personId", person.id)
+
         viewModel = AddScreenViewModel(
                 PersonManager(personRepository, userManager),
                 EventManager(eventRepository, eventNotificationManager,
                         PersonManager(personRepository, userManager)),
                 state
         )
-    }
-
-    @After
-    @Throws(IOException::class)
-    fun closeDatabase() {
-        db.close()
     }
 
     @Test
