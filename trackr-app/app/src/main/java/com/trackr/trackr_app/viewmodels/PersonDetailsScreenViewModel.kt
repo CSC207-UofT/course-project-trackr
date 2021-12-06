@@ -17,6 +17,7 @@ import javax.inject.Inject
 /**
  * The view model for the PersonDetailsScreen which manages the data that appears on the
  * PersonDetails page
+ *
  * @param personModifier an object that is used to modify existing persons in the database
  * @param eventAccessor an object that is used to read multiple events from the database
  * @param singlePersonAccessor an object that is used to access the person data from the database one person at a time
@@ -68,18 +69,34 @@ class PersonDetailsScreenViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Edit the first name of the person to be edited.
+     *
+     * @param newFirstName the new first name of the person
+     */
     fun editFirstName(newFirstName: String) = viewModelScope.launch {
         _firstName.value = newFirstName
     }
 
+    /**
+     * Edit the last name of the person to be edited.
+     *
+     * @param newLastName the new last name of the person
+     */
     fun editLastName(newLastName: String) = viewModelScope.launch {
         _lastName.value = newLastName
     }
 
+    /**
+     * Edits the existing person in the database according to this.firstName and this.lastName
+     */
     fun editPerson() = viewModelScope.launch {
         personModifier.editPerson(personID, _firstName.value, _lastName.value)
     }
 
+    /**
+     * Deletes the existing person in the database according to this.personID
+     */
     fun deletePerson() = viewModelScope.launch {
         personModifier.deletePerson(personID = personID)
     }
