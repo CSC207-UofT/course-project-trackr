@@ -77,7 +77,11 @@ does not violate dependency inversion principle. However, we chose to add an int
 to reduce coupling which is a main goal of object-oriented programming as
 it allows tests, modifications, and extensions to be done easier.
 
-Adding interfaces also makes the app more easily extensible in the future: we could decide that the manager classes have become too bloated, and split them up without having to change the dependency calls in the lower level classes. Or, we might want to change the functions of certain managers based on the state of the application; accommodating permissions across many users might require new manager classes that would implement some of the same interfaces we are already defining.
+Adding interfaces also makes the app more easily extensible in the future: we could decide that the
+manager classes have become too bloated, and split them up without having to change the dependency
+calls in the lower level classes. Or, we might want to change the functions of certain managers
+based on the state of the application; accommodating permissions across many users might require new
+manager classes that would implement some of the same interfaces we are already defining.
 
 ## Adherence to Clean Architecture
 

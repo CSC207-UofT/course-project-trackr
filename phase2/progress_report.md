@@ -64,7 +64,19 @@ Phase 1:
 - Abstracted away various view components for reuse
 
 Phase 2:
-- Add here
+- Cleaned up convention violations (snake_case naming violations, for example) and added
+  comments/documentation to classes and methods
+- Added UserManager class and orchestrated how single-user functionality works through our app.
+- Refactored codebase for isolation/decoupling between the ViewModels and lower-level classes
+
+A Significant Pull Request:
+[Phase 1: PR 90](https://github.com/CSC207-UofT/course-project-trackr/pull/90)
+
+This pull request introduced our first concrete implementation of the Model-View-Viewmodel pattern
+in our application, and was the first commit to actually get data from the front end to the backend.
+While I wrote the code, I did not implement it alone: I worked with team members to find examples of
+MVVM in other applications, listened to opinions on implementation, and eventually made some
+executive decisions to actually get everything to work.
 
 **Jonathan Ginevro**:
 
