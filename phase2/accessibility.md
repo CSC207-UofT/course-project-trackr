@@ -31,7 +31,7 @@ As a group, answer the following questions:
 - The different colors found throughout the app are chosen to contrast and not blend in with each other, this way words and other elements become much more readable.
 - Adequate sized font was used to maximize readability, and the font scales to user preference which is defined in the system settings.
 
-### Principle 5: Tolorance for Error
+### Principle 5: Tolerance for Error
 
 - When deleting a person a delete confirmation message appears to notify the user of what they are about to do, and to make sure that the user is attentive of the important task at hand.
 - The delete event button is in red, which is a common color to alert the user of danger. This will keep the user vigilante when they are deleting an event.
@@ -42,7 +42,7 @@ As a group, answer the following questions:
 - The app can be used however the user wants to use it, in any position they would like to use it.
 - The only element that is restricting is the lack of landscape mode, which is defintely a feature that we should implement in the future to allow the user for more control over how they can use the app.
 
-### Principle 7: Size and Space for Appraoch and Use
+### Principle 7: Size and Space for Approach and Use
 
 - The elements of our app are visible from all different angles due to the strong color contast between elements.
 - We provide adequate sized buttons and widgets for the user to use, which can accomadate all sorts of hand sizes and grips.
