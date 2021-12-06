@@ -79,13 +79,15 @@ Here is a UML diagram for our program.
     for each screen so there is not one big one responsible for too much. 
     We have repositories that have the single responsibility of giving/getting
     data from the database. We have an EventNotificationManager who's sole responsibility is 
-    setting/removing alarms for a notification.
-    The only minor violation to the SRP is that our view models (AddScreenViewModel and EditScreenViewModel) 
-    hold 2 responsibilities. One is transforming data into a usable form and the other is telling the other
-    classes what to do with this information. For example, the EditScreenViewModel tells the eventRepository
-    to perform multiple tasks in a series of steps to edit an event. If we had more time, we would split these 
-    responsibilities into a class that transforms data to and from the screen, and another that takes this 
-    information and tells the other classes what to do.
+    setting/removing alarms for a notification.  
+  
+    In phase 1, we had a minor violation to the SRP is that our view models (AddScreenViewModel and EditScreenViewModel) 
+    held 2 responsibilities. In this phase we fixed that by splitting the 
+    responsibilities (e.g. https://github.com/CSC207-UofT/course-project-trackr/pull/144). Now, the view model view models are responsible only
+    for updating data from the view and sending them to the use cases. Then we extracted
+    the responsibility for creating entities and related operations to manager classes
+    which have the sole responsibility for creating/editing/deleting entities.
+  
 - Open/closed principle:  
   - Our program adheres to the open/closed principle as well. For example, instead
     we use Android's ViewModel class as a tool that is closed for modification
@@ -93,6 +95,12 @@ Here is a UML diagram for our program.
     models that are needed for our program. This way, whenever we want to create a new screen that
     requires a new view model, we do not have to modify any old code, we can just
     extend the ViewModel class to create as many implementations as we need.
+    
+    Moreover, in phase 2, we allowed the view models to depend on manager interfaces rahter
+    than concrete manager use cases (e.g. https://github.com/CSC207-UofT/course-project-trackr/pull/152). This allows us to extend our project by adding different
+    implementations of managers if needed rather than having to modify previously existing
+    code if we want a new behaviour.
+  
 - Liskov substitution principle:
   - Any time there is inheritance or implementation of an interface, we make sure
     that the derived object only extends the base classes features, not modify or remove anything.
@@ -101,12 +109,13 @@ Here is a UML diagram for our program.
     functionality by allowing it to send a notification upon receiving a specific intent.
 - Interface segregation principle:
   - For the most part, our group keeps interfaces concise, including only essential
-    methods. However, in a few cases, there are unnecessary methods. 
-    For example, our EventDao interface requires an editPerson method which we 
-    currently are not using. If we had more time, we would definitely implement a person
-    editing functionality in which we would require that method. In that case, it
-    would not have violated the interface segregation principle.
-- Dependency inversion principle:
+    methods.  
+    In phase 2, we implemented all our methods declared in interfaces that were not before
+    so those methods are not violations of ISP. Moreover, as previously mentioned, we 
+    implemented interfaces for managers, but we also split those interfaces because
+    not every would need every part of every interface. Therefore, the interfaces
+    are segregated requiring only the essential methods, adhering to ISP.  
+- Dependency inversion principle
   - Our group does a good job implementing the dependency inversion principle
     into our program. For example, to prevent our repositories such as EventRepository
     from depending directly on lower level classes such as the Database, we 
