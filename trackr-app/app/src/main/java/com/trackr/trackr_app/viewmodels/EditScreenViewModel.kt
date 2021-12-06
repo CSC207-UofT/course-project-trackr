@@ -142,7 +142,6 @@ class EditScreenViewModel @Inject constructor(
         )
     }
 
-
     /**
      * Aggregate the data that has been inputted and then tell the user, person, and event
      * repositories to update this data in the database
@@ -151,8 +150,7 @@ class EditScreenViewModel @Inject constructor(
         val reminderInt: Int = getReminderMap()[chosenReminder.value]!!
 
         eventModifier.editEvent(
-            eventID, reminderInt, eventDate.value,
-            eventType, personName.value, eventName.value
+            eventID, reminderInt, eventDate.value, eventType
         )
     }
 

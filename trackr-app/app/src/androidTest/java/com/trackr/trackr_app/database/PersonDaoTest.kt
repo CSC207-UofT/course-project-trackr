@@ -118,4 +118,18 @@ class PersonDaoTest {
         val personsFromDatabase = personDao.listPersons().first()
         assertTrue(personsFromDatabase.isEmpty())
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun getPersonById() = runBlocking {
+        val user = User("test")
+        userDao.insert(user)
+        val person1 = Person(user.id, "sponge", "bob")
+        personDao.insert(person1)
+        val person2 = Person(user.id, "patrick", "star")
+        personDao.insert(person2)
+
+        val actual = personDao.getPersonById(person2.id)
+        assertEquals(actual.id, person2.id)
+    }
 }

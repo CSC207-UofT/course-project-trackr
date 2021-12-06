@@ -4,6 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.trackr.trackr_app.manager.PersonModifier
+import com.trackr.trackr_app.manager.SinglePersonAccessor
+import com.trackr.trackr_app.repository.EventAccessor
 import com.trackr.trackr_app.repository.EventRepository
 import com.trackr.trackr_app.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,14 +18,14 @@ import javax.inject.Inject
  * The view model for the PersonDetailsScreen which manages the data that appears on the
  * PersonDetails page
  * @param personModifier an object that is used to modify existing persons in the database
- * @param eventRepository an object that is used to read multiple events from the database
- * @param personRepository an object that is used to read multiple people from the database
+ * @param eventAccessor an object that is used to read multiple events from the database
+ * @param singlePersonAccessor an object that is used to access the person data from the database one person at a time
  */
 @HiltViewModel
 class PersonDetailsScreenViewModel @Inject constructor(
     private val personModifier: PersonModifier,
-    private val eventRepository: EventRepository,
-    private val personRepository: PersonRepository,
+    private val eventAccessor: EventAccessor,
+    private val singlePersonAccessor: SinglePersonAccessor,
     state: SavedStateHandle,
 
     ) : ViewModel() {
@@ -41,7 +43,7 @@ class PersonDetailsScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val personInfo = personRepository.getPersonById(personID)
+            val personInfo = singlePersonAccessor.getPersonById(personID)
             _firstName.value = personInfo.firstName
             _lastName.value = personInfo.lastName
         }
@@ -50,13 +52,13 @@ class PersonDetailsScreenViewModel @Inject constructor(
 
     fun updatePersonDetailsEvents() {
         viewModelScope.launch {
-            eventRepository.getByPersonId(personID).collectLatest {
+            eventAccessor.getByPersonId(personID).collectLatest {
                 val personList = mutableListOf<TrackrEventOutput>()
                 for (event in it) {
                     personList.add(
                         TrackrEventOutput(
                             event,
-                            personRepository.getPersonById(personID),
+                            singlePersonAccessor.getPersonById(personID),
                             Calendar.getInstance().get(Calendar.YEAR)
                         )
                     )

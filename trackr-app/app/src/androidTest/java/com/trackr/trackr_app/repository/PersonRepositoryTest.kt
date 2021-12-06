@@ -52,7 +52,7 @@ class PersonRepositoryTest {
         userDao.insert(user)
         val person = Person(user.id, "tom", "sawyer")
         personRepository.insert(person)
-        val result = personRepository.allPersons.first()
+        val result = personRepository.getAllPersons().first()
         assertEquals(person.id, result[0].id)
     }
 
@@ -63,7 +63,7 @@ class PersonRepositoryTest {
         val person = Person(user.id, "tom", "sawyer")
         personRepository.insert(person)
         personRepository.delete(person)
-        val result = personRepository.allPersons.first()
+        val result = personRepository.getAllPersons().first()
         val expected: List<Person> = emptyList()
         assertEquals(expected, result)
     }
@@ -75,7 +75,7 @@ class PersonRepositoryTest {
         val person = Person(user.id, "tom", "sawyer")
         personRepository.insert(person)
         personRepository.editFirstName("Huckleberry", person)
-        val result = personRepository.allPersons.first()[0].firstName
+        val result = personRepository.getAllPersons().first()[0].firstName
         val expected = "Huckleberry"
         assertEquals(expected, result)
     }
@@ -87,7 +87,7 @@ class PersonRepositoryTest {
         val person = Person(user.id, "tom", "Fin")
         personRepository.insert(person)
         personRepository.editLastName("Fin", person)
-        val result = personRepository.allPersons.first()[0].lastName
+        val result = personRepository.getAllPersons().first()[0].lastName
         val expected = "Fin"
         assertEquals(expected, result)
     }
@@ -101,7 +101,7 @@ class PersonRepositoryTest {
         personRepository.insert(person1)
         personRepository.insert(person2)
         personRepository.deleteAll()
-        val result = personRepository.allPersons.first()
+        val result = personRepository.getAllPersons().first()
         val expected: List<Person> = emptyList()
         assertEquals(expected, result)
     }

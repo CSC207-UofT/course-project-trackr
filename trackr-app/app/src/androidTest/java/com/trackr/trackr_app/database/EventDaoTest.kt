@@ -55,9 +55,7 @@ class EventDaoTest {
             0,
             LocalDate.of(1999, 1, 1).toEpochDay(),
             1999,
-            7,
-                0
-        )
+            7)
         eventDao.insert(event1)
         val eventsFromDatabase = eventDao.listAll().first()
         assertEquals(event1.id, eventsFromDatabase[0].id)
@@ -75,22 +73,19 @@ class EventDaoTest {
                 0,
                 LocalDate.of(1999, 1, 1).toEpochDay(),
                 1999,
-                7,
-                0)
+                7)
         val event2 = TrackrEvent(
                 person.id,
                 0,
                 LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-                3,
-                0)
+                3)
         val event3 = TrackrEvent(
                 person.id,
                 0,
                 LocalDate.of(2004, 4, 1).toEpochDay(),
                 2004,
-                3,
-                0)
+                3)
         eventDao.insert(event1)
         eventDao.insert(event2)
         eventDao.insert(event3)
@@ -113,24 +108,21 @@ class EventDaoTest {
                 0,
                 LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-                7,
-                0)
+                7)
         eventDao.insert(event1)
         val event2 = TrackrEvent(
                 person.id,
                 0,
                 LocalDate.of(2004, 1, 2).toEpochDay(),
             2004,
-                3,
-                0)
+                3)
         eventDao.insert(event2)
         val event3 = TrackrEvent(
                 person.id,
                 0,
                 LocalDate.of(2004, 1, 4).toEpochDay(),
             2004,
-                3,
-                0)
+                3)
         eventDao.insert(event3)
         val eventsFromDatabase = eventDao.listFromRange(LocalDate.of(2004, 1, 1).toEpochDay(),
                 LocalDate.of(2004, 1, 3).toEpochDay()).first()
@@ -151,16 +143,14 @@ class EventDaoTest {
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-            7,
-            0)
+            7)
         eventDao.insert(event1)
         val event2 = TrackrEvent(
             person.id,
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-            3,
-            0)
+            3)
         eventDao.insert(event2)
 
         val eventsFromDatabase = eventDao.listFromRange(
@@ -182,16 +172,14 @@ class EventDaoTest {
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-            7,
-            0)
+            7)
         eventDao.insert(event1)
         val event2 = TrackrEvent(
             person.id,
             0,
             LocalDate.of(2004, 1, 2).toEpochDay(),
             2004,
-            3,
-            0)
+            3)
         eventDao.insert(event2)
         eventDao.deleteAll()
         val eventsFromDatabase = eventDao.listAll().first()
@@ -210,16 +198,14 @@ class EventDaoTest {
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-            7,
-            0)
+            7)
         eventDao.insert(event1)
         val event2 = TrackrEvent(
             person.id,
             0,
             LocalDate.of(2004, 1, 2).toEpochDay(),
             2004,
-            3,
-            0)
+            3)
         eventDao.insert(event2)
         eventDao.delete(event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -239,8 +225,7 @@ class EventDaoTest {
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-            7,
-            0)
+            7)
         eventDao.insert(event1)
         eventDao.editDate(event1.date + 1, event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -259,8 +244,7 @@ class EventDaoTest {
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-            7,
-            0)
+            7)
         eventDao.insert(event1)
         eventDao.editInterval(14, event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -281,8 +265,7 @@ class EventDaoTest {
                 0,
                 LocalDate.of(1999, 1, 1).toEpochDay(),
             1999,
-                7,
-                0)
+                7)
         eventDao.insert(event1)
         eventDao.editPerson(person2.id, event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -301,8 +284,7 @@ class EventDaoTest {
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-            7,
-            0)
+            7)
         eventDao.insert(event1)
         eventDao.editType(1, event1.id, event1.personId)
         val eventsFromDatabase = eventDao.listAll().first()
@@ -321,12 +303,50 @@ class EventDaoTest {
             0,
             LocalDate.of(2004, 1, 1).toEpochDay(),
             2004,
-            7,
-            0)
+            7)
         eventDao.insert(event1)
         val eventsFromDatabase = eventDao.listAll().first()
         val expected = LocalDate.of(2004, 1, 1)
         val actual = LocalDate.ofEpochDay(eventsFromDatabase[0].date)
+        assertEquals(actual, expected)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun getById() = runBlocking {
+        val user = User("test")
+        userDao.insert(user)
+        val person = Person(user.id, "sponge", "bob")
+        personDao.insert(person)
+        val event1 = TrackrEvent(
+                person.id,
+                0,
+                LocalDate.of(2004, 1, 1).toEpochDay(),
+                2004,
+                7)
+        eventDao.insert(event1)
+        val eventsFromDatabase = eventDao.listAll().first()
+        val expected = eventsFromDatabase[0].id
+        val actual = eventDao.getById(event1.id).id
+        assertEquals(actual, expected)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun getByPersonId() = runBlocking {
+        val user = User("test")
+        userDao.insert(user)
+        val person = Person(user.id, "sponge", "bob")
+        personDao.insert(person)
+        val event1 = TrackrEvent(
+                person.id,
+                0,
+                LocalDate.of(2004, 1, 1).toEpochDay(),
+                2004,
+                7)
+        eventDao.insert(event1)
+        val expected = event1.id
+        val actual = eventDao.getByPersonId(person.id).first()[0].id
         assertEquals(actual, expected)
     }
 }

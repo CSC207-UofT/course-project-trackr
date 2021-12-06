@@ -52,9 +52,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(1999, 1, 1).toEpochDay(),
                 1999,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         val result1 = eventRepository.listFromRange(
@@ -81,9 +79,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2020, 2, 10).toEpochDay(),
                 1999,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         val result1 = eventRepository.getEventsInRange(
@@ -110,9 +106,7 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 12, 15).toEpochDay(),
                 1984,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         val result = eventRepository.getById(event1.id)
@@ -130,12 +124,10 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 12, 15).toEpochDay(),
                 1984,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(event1.id, result[0].id)
     }
 
@@ -150,13 +142,11 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 12, 15).toEpochDay(),
                 1984,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         eventRepository.delete(event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         val emptyList: List<TrackrEvent> = emptyList()
         assertEquals(emptyList, result)
     }
@@ -172,15 +162,13 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 12, 15).toEpochDay(),
                 1984,
-                7,
-                0
-        )
+                7)
         val newPerson = Person(user.id, "tom", "sawyer")
         personDao.insert(newPerson)
 
         eventRepository.insert(event1)
         eventRepository.editPerson(newPerson, event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(newPerson.id, result[0].personId)
     }
 
@@ -195,13 +183,11 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
 
         eventRepository.insert(event1)
         eventRepository.editType(1, event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(1, result[0].type)
     }
 
@@ -216,13 +202,11 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
 
         eventRepository.insert(event1)
         eventRepository.editDate(LocalDate.of(1980, 11, 2), event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(LocalDate.of(1980, 11, 2),
                 LocalDate.ofEpochDay(result[0].date))
     }
@@ -238,13 +222,11 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
 
         eventRepository.insert(event1)
         eventRepository.editFirstYear(2020, event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(2020, result[0].firstYear)
     }
 
@@ -259,13 +241,11 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
 
         eventRepository.insert(event1)
         eventRepository.editInterval(7, event1)
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         assertEquals(7, result[0].reminderInterval)
     }
 
@@ -280,22 +260,18 @@ class EventRepositoryTest {
                 0,
                 LocalDate.of(2008, 10, 1).toEpochDay(),
                 1900,
-                1,
-                0
-        )
+                1)
         val event2 = TrackrEvent(
                 person.id,
                 0,
                 LocalDate.of(2008, 3, 8).toEpochDay(),
                 1990,
-                7,
-                0
-        )
+                7)
 
         eventRepository.insert(event1)
         eventRepository.insert(event2)
         eventRepository.deleteAll()
-        val result = eventRepository.allEvents.first()
+        val result = eventRepository.getAllEvents().first()
         val emptyList: List<TrackrEvent> = emptyList()
         assertEquals(emptyList, result)
     }

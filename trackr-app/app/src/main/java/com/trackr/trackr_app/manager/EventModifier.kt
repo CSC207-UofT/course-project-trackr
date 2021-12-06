@@ -8,8 +8,7 @@ Any Manager class that can edit or delete events in the database should implemen
  */
 interface EventModifier {
     suspend fun editEvent(
-        eventID: String, reminderInt: Int, eventDate: LocalDate, eventType: Int,
-        personName: String, eventName: String
+        eventID: String, reminderInt: Int?, eventDate: LocalDate?, eventType: Int?
     )
 
     suspend fun deleteEvent(eventID: String)

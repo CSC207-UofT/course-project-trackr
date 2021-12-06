@@ -8,7 +8,7 @@ Any Manager class that creates and adds events to the database should implement 
  */
 interface EventCreator {
     suspend fun addEvent(
-        personId: String, eventType: Int, chosenReminder: String,
+        personId: String, eventType: Int, chosenReminder: Int,
         eventDate: LocalDate
     )
 }
