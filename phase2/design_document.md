@@ -107,20 +107,25 @@ Here is a UML diagram for our program.
     For example, our EventBroadcastReceiver class extends Android's BroadcastReceiver
     object. EventBroadcastReceiver has the same fields and responsibilities as BroadcastReceiver, and it extends its functionality by implementing its abstract method "onReceive". We extend the
     functionality by allowing it to send a notification upon receiving a specific intent.
+    
 - Interface segregation principle:
   - For the most part, our group keeps interfaces concise, including only essential
     methods.  
+    
     In phase 2, we implemented all our methods declared in interfaces that were not before
     so those methods are not violations of ISP. Moreover, as previously mentioned, we 
     implemented interfaces for managers, but we also split those interfaces because
     not every would need every part of every interface. Therefore, the interfaces
     are segregated requiring only the essential methods, adhering to ISP.  
+    
 - Dependency inversion principle
   - Our group does a good job implementing the dependency inversion principle
     into our program. For example, to prevent our repositories such as EventRepository
     from depending directly on lower level classes such as the Database, we 
     have the EventRepository depend on the EventDao interface instead. As a result, 
     the EventRepository does not need to know about how the Database is implemented.
+    
+  - Futhermore, the viewmodels depend on interfaces which the managers and repositories implement in order to interact with the database. For instance the `HomeScreenViewmodel`     depends on a interface called `SinglePersonAccessor` which the PersonManager implements, which allows the home screen to view Person data from the database. This also           allows us to easily swap out the concrete implementation of a interface for another implementation with ease.
 
 ## Packaging Strategies
 
@@ -138,7 +143,7 @@ This hybrid approach allows us to reap the benefits of both modules: we get the 
 
 ### Dependency Injection 
 
-We used dependency injection extensively throughout our program. We injected our data access object interfaces into the repositories classes which was then injected again into all our viewmodel classes. This was all done with a library called Hilt which makes dependency injection much easier and removes all the boilerplate code required. This resulted in a very loosely coupled classes and allows us to substitute the repositories with their subclasses (if we wish to create them).
+We used dependency injection extensively throughout our program. We injected our data access object interfaces into the repositories classes which was then injected again into all our Manager classes. These repositories and managers then implemented interfaces which were then injected into the viewmodels for data access and manipulation. This was all done with a library called Hilt which makes dependency injection much easier and removes all the boilerplate code required. This resulted in a very loosely coupled classes and allows us to use different implementations of the interfaces (for instance we can have a implementation of the interfaces which allow for cloud data management) in the future.
 
 ### Singleton Pattern
 
