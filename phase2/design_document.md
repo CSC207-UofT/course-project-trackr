@@ -126,7 +126,7 @@ Here is a UML diagram for our program.
     have the EventRepository depend on the EventDao interface instead. As a result, 
     the EventRepository does not need to know about how the Database is implemented.
     
-  - Futhermore, the viewmodels depend on interfaces which the managers and repositories implement in order to interact with the database. For instance the `HomeScreenViewmodel` depends on a interface called `SinglePersonAccessor` which the PersonManager implements, instead of directly allowing the viewmodel to depend on the manager. This also allows us to easily swap out the concrete implementation of a interface for another implementation with ease.
+  - Futhermore, in phase 2, the viewmodels now depend on interfaces which the managers and repositories implement in order to interact with the database, rather than directly allowing the viewmodel to depend on the manager (which violates dependency inversion). For instance the `HomeScreenViewmodel` now depends on a interface called `SinglePersonAccessor` which the PersonManager implements, while in phase 1, this viewmodels depended directly on the managers and repositories. This also allows us to easily swap out the concrete implementation of a interface for another implementation with ease.
 
 ## Packaging Strategies
 
