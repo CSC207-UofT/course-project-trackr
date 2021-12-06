@@ -110,7 +110,8 @@ Here is a UML diagram for our program.
     
 - Interface segregation principle:
   - For the most part, our group keeps interfaces concise, including only essential
-    methods.  
+    methods. In phase 1, we did not have time to implement some methods in interfaces
+    making some methods obsolete at the time and a violation to ISP.
     
     In phase 2, we implemented all our methods declared in interfaces that were not before
     so those methods are not violations of ISP. Moreover, as previously mentioned, we 
