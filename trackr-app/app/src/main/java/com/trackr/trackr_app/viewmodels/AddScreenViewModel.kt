@@ -131,11 +131,20 @@ class AddScreenViewModel @Inject constructor(
      * Create a new event based off the current event data and add it to the database
      */
     fun addEvent() = viewModelScope.launch {
+        //Convert the reminder interval to an int using the following mapping
+        val reminderInt: Int = mapOf(
+            "1 day before" to 1,
+            "3 days before" to 3,
+            "1 week before" to 7,
+            "2 weeks before" to 14,
+            "1 month before" to 30
+        )[chosenReminder.value]!!
+
         //Add the current user to the database
         eventCreator.addEvent(
             personID,
             eventType,
-            chosenReminder.value,
+            reminderInt,
             eventDate.value
         )
     }

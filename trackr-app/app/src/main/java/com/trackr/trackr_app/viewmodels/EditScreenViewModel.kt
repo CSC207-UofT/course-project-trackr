@@ -150,8 +150,7 @@ class EditScreenViewModel @Inject constructor(
         val reminderInt: Int = getReminderMap()[chosenReminder.value]!!
 
         eventModifier.editEvent(
-            eventID, reminderInt, eventDate.value,
-            eventType, personName.value, eventName.value
+            eventID, reminderInt, eventDate.value, eventType
         )
     }
 
