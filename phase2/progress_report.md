@@ -75,7 +75,10 @@ Phase 1:
   and EditScreenViewModel
 
 Phase 2:
--
+- Added functionality for users to edit and delete people
+- Designed and built PersonDetailsScreen
+- Implemented PersonDetailsViewModel
+- Implemented ui improvements such as a toggle to switch between viewing/editing a person, and a popup to ensure that the user wants to delete a person
 
 Nathan Hansen:
 
