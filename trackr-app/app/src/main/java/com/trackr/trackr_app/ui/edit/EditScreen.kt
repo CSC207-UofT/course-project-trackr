@@ -161,7 +161,6 @@ fun EditScreen(
                 viewModel.deleteEvent()
                 nav.popBackStack()
             },
-            modifier = Modifier.padding(top = 10.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
         ) {
             Text(
@@ -184,24 +183,24 @@ fun InfoScreen(
     Column {
         Text(
             text = "This Event is for:",
-            Modifier.padding(bottom = 10.dp, top = 30.dp),
-            fontSize = 25.sp,
+            Modifier.padding(bottom = 10.dp, top = 20.dp),
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onPrimary
         )
-        Text(personName, Modifier.padding(bottom = 30.dp), fontSize = 18.sp)
+        Text(personName, Modifier.padding(bottom = 25.dp), fontSize = 15.sp)
         Text(
             text = "Type of event:",
             Modifier.padding(bottom = 10.dp),
-            fontSize = 25.sp,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onPrimary
         )
-        Text(eventName, Modifier.padding(bottom = 30.dp), fontSize = 18.sp)
+        Text(eventName, Modifier.padding(bottom = 25.dp), fontSize = 15.sp)
         Text(
             text = "Event Date:",
             Modifier.padding(bottom = 10.dp),
-            fontSize = 25.sp,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onPrimary
         )
@@ -210,21 +209,20 @@ fun InfoScreen(
                     eventDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) + " " +
                     eventDate.dayOfMonth,
             Modifier.padding(bottom = 30.dp),
-            fontSize = 18.sp
+            fontSize = 15.sp
         )
         Text(
             text = "Reminder Me:",
             Modifier.padding(bottom = 10.dp),
-            fontSize = 25.sp,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onPrimary
         )
-        Text(chosenReminder, Modifier.padding(bottom = 40.dp), fontSize = 18.sp)
+        Text(chosenReminder, Modifier.padding(bottom = 40.dp), fontSize = 15.sp)
         Button(
             onClick = {
                 startEditing()
             },
-            Modifier.padding(top = 20.dp),
         ) {
             Text(text = "Edit", fontSize = 20.sp)
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
