@@ -96,7 +96,11 @@ fun AddScreenActivity(
             Button(
                 onClick = {
                     viewModel.addEvent()
-                    nav.navigate("Home")
+                    nav.navigate("Home") {
+                        popUpTo("Home") {
+                            inclusive = true
+                        }
+                    }
                 },
                 Modifier.padding(top = 20.dp),
             ) {
