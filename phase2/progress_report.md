@@ -123,6 +123,23 @@ such as AllPersonsScreen, AllPersonsScreenViewModel
 - Adjusted user navigation by integrating the ability to add/choose people as the user 
 creates events
 
+[PR #149](https://github.com/CSC207-UofT/course-project-trackr/pull/149): 
+This was a pull request involving 3 people (including me) but I created the
+classes (view and view model) for displaying all the people in the database
+as well as allowed people to be added/selected first before an event is created.
+As a result, I implemented a major change to how events and people are 
+created which is a significant contribution to how the user navigates and uses
+the program in the final product.
+
+[PR #84](https://github.com/CSC207-UofT/course-project-trackr/pull/84):
+In this pull request, I created the initial classes for allowing notifications
+to be sent when an event is approaching. In later pull request, I build upon
+this feature however this was the foundation for all notification related
+features. This is a significant contribution since reminding the user when
+an event is approaching is one of the key aspects of the specification. Therefore,
+I made a significant contribution by fulfilling one of the specification requirements.
+
+
 **Daniel Hocevar**:
 
 Phase 1:
