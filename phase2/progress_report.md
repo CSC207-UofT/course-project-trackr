@@ -56,9 +56,9 @@ Phase 2:
 - Cleaned up all files and removed unused imports
 - Integrated the new data access/manager interfaces with some of the viewmodels
 
-[https://github.com/CSC207-UofT/course-project-trackr/pull/92](PR #92): I created a reusable UI component which displays a list of events from the database. This UI component provided to be very useful as a simple way to show events, and has been used throughout many different screens of our program. This component reduced lots of duplicate code, and provided a consistent way to display events throughout the app. It also allows the user to tap on an event and go to the details/edit screen.
+[PR #92](https://github.com/CSC207-UofT/course-project-trackr/pull/92): I created a reusable UI component which displays a list of events from the database. This UI component provided to be very useful as a simple way to show events, and has been used throughout many different screens of our program. This component reduced lots of duplicate code, and provided a consistent way to display events throughout the app. It also allows the user to tap on an event and go to the details/edit screen.
 
-[https://github.com/CSC207-UofT/course-project-trackr/pull/108/files](PR #108): I created a wrapper class and integrated the TrackEventOutput wrapper event into the UI. I refactored a of code and moved all data processing/anything related to data that was being done on the UI to the viewmodels instead. As a result, I standardized how the ViewModels fetch and give data to the UI. As a result, all other viewmodel from that PR on will deal with data from the database in a similar way, and the UI will no longer interact with the database/entities directly.
+[PR #108](https://github.com/CSC207-UofT/course-project-trackr/pull/108/files): I created a wrapper class and integrated the TrackEventOutput wrapper event into the UI. I refactored a of code and moved all data processing/anything related to data that was being done on the UI to the viewmodels instead. As a result, I standardized how the ViewModels fetch and give data to the UI. From that point on, all other viewmodel will deal with data from the database in a similar way, and the UI will no longer interact with the database/entities directly.
 
 **Roman Zupancic**:
 
