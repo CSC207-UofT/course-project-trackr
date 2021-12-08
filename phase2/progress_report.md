@@ -154,3 +154,7 @@ Phase 2:
 - Created multiple interfaces that the manager classes and repository classes implement
 - Applied DIP to ensure that view models depended on interfaces rather than the manager and repository classes.
 - Created HILT bindings for each of the new interfaces, to allow the interfaces to conform to the existing Dependency Injection protocols within the codebase.
+
+[PR #152](https://github.com/CSC207-UofT/course-project-trackr/pull/152)
+This pull request included interfaces to separate the view models from the manager classes. Each of the manager classes implemented some of these new interfaces, which meant that the view models could depend on these interfaces instead of the manager classes themselves. This ensured that our program conformed to the dependency inverersion principle. This pull request also ensured that our program conformed to the interface segregation principle since each manager classes implements multiple interfaces each with specific functions. Pull requests that I also authored that are related to this one include [PR #157](https://github.com/CSC207-UofT/course-project-trackr/pull/157) which added interfaces for the repository classes and [PR #157](https://github.com/CSC207-UofT/course-project-trackr/pull/144) which first introduced the manager classes.
+
