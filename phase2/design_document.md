@@ -96,7 +96,7 @@ With our data in seperate tables for each entity, we can avoid having duplicate 
 which also decreases overall coupling.
 
 Here is a UML diagram for our program.
-![erd](https://media.discordapp.net/attachments/892174330329448455/909670610689462313/UML_1-3.png?width=1770&height=1269)
+![erd](https://cdn.discordapp.com/attachments/647259871334367233/918248633068052500/unknown.png)
 
 ## Consistency with SOLID design principles
 
