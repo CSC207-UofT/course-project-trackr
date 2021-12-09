@@ -1,7 +1,5 @@
 # Accessibility
 
-As a group, answer the following questions:
-
 1. For each Principle of Universal Design, write 2-5 sentences or point form notes explaining which features your program adhere to that principle. If you do not have any such features you can either:
 
 ### Principle 1: Equitable Use
