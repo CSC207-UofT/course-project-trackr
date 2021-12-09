@@ -1,17 +1,3 @@
-This is arguably the most important part of your project — even more important than the code itself! Phase 1 should have given your group a great start on this document, so you should just need to update it based on what you work on in phase 2. Take the time to polish it up and catch any typos, poor formatting, or missing content.
-
-Reminder: Your TA will start by reading this document when they grade your project, so make a good first impression!
-
-The document should include everything outlined in phase 1, except the progress report should contain:
-
-- a brief summary of what each group member has been working on since phase 1
-- Each group member should include a link to a significant pull request (or two if you can't pick just one) that they made throughout the term. Include a sentence or two explaining why you think this demonstrates a significant contribution to the team.
-- *NEW* Please read A Suggested Development Workflow if you or your group has been having trouble with the idea of using branching and pull requests in your workflow.
-
-Your group may choose to include other information in your design document, as you see fit. For example, you might include additional information about testing in your program and a summary of the test coverage. Including links to specific parts of the code or pull requests are strongly encouraged.
-
-Remember to keep the document concise and focused
-
 # Design Document
 
 ## Major Design Decisions
@@ -30,6 +16,9 @@ keep our code more organized (a single view file instead of a few) and stick wit
 were familiar with (Jetpack follows a similar structure to Flutter, which some of us have experience
 with). Unfortunately, Jetpack compose is only available for Kotlin, and so forced our hand into the
 language transition.
+
+In phase 2 we have continued to use Jetpack compose with Kotlin, since we have found it to be very 
+useful.
 
 ### Model-View-ViewModel (MVVM)
 
@@ -169,11 +158,14 @@ Our solution to these issues, then, is to group modules based on their functiona
 
 This hybrid approach allows us to reap the benefits of both modules: we get the intuitive module layout of organizing by function (if you want to edit a viewmodel, find the viewmodel folder) and the ease-of-adherence to clean architecture through the examination of module imports.
 
+In phase 2 we have kept the packaging strategy from phase 1. The only changes we made were providing more descriptive package names (for example changing the name of the package "di" to "dependency-injection").
+
+
 ## Design Patterns
 
 ### Dependency Injection 
 
-We used dependency injection extensively throughout our program. We injected our data access object interfaces into the repositories classes which was then injected again into all our Manager classes. These repositories and managers then implemented interfaces which were then injected into the viewmodels for data access and manipulation. This was all done with a library called Hilt which makes dependency injection much easier and removes all the boilerplate code required. This resulted in a very loosely coupled classes and allows us to use different implementations of the interfaces (for instance we can have a implementation of the interfaces which allow for cloud data management) in the future.
+We used dependency injection extensively throughout our program. We injected our data access object interfaces into the repositories classes which was then injected again into all our Manager classes. These repositories and managers then implemented interfaces which were then injected into the viewmodels for data access and manipulation. This was all done with a library called Hilt which makes dependency injection much easier and removes all the boilerplate code required. This resulted in a very loosely coupled classes and allows us to use different implementations of the interfaces (for instance we can have a implementation of the interfaces which allow for cloud data management) in the future. 
 
 ### Singleton Pattern
 
@@ -207,7 +199,7 @@ Kotlin also changes what it means for a unit of code to exist: functions no long
 
 ## Testing
 
-Our application's data access objects, notification system, calendar view, and view models have a robust test suite to ensure proper access and storage of user information.
+Our application's data access objects, managers, notification system, calendar view, and view models have a robust test suite to ensure proper access and storage of user information.
 Since these serve as our application's primary use cases and interfaces, it is critical that we are sure they are working properly.
 Every method used to read or write to the database has its own test.
 
@@ -223,6 +215,9 @@ This refactoring involved extracting a UI component from the HomeScreen file and
 
 ### PR - 115
 In this pull request, we intentionally avoided a major refactor by instead undertaking a smaller one. One of the main features we wanted to include in our app was the ability to track the current age of an event (i.e. 6th birthday or 10th anniversary). This was one of the last features we added in the app, so when we attempted to add it the majority of the app had already been built. Such a feature depended on storing the first year of the event in the database. One option would have been to store the first year of the event in the date property of the Event entity. However, this would have required a major refactor of the CalendarScreen, since the CalendarScreen depends on a dummy year being stored in the date property. Since the logic controlling the CalendarScreen was quite complex, we instead decided to refactor the TrackrEvent entity class by adding a new property to store the first year of the event. This also meant we had to add new methods to the EventRepository class and EventDao interface which entailed the less than ideal act of "shotgun surgery". Regardless we were able to complete the refactor and implement the desired feature.
+
+### PR - 144
+This pull request involved refactoring the view models to conform to the single responsibility principle. After phase 1, we recieved feedback which pointed out that the view model classes did not conform to SRP, since they were responsible for managing the state of the UI as well as handling entity objects such as events. This pull request moves the responsibility for handling entity objects out of the view models and places it in a number of manager classes that the view models then depend on.
 
 ## Code Organization
 
