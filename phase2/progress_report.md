@@ -99,12 +99,19 @@ Phase 2:
 **Nathan Hansen**:
 
 Phase 1:
-- Wrote classes and test for database and data access objects
+- Designed SQLite Database structure
+- Wrote classes and tests for database and data access objects
 - Wrote classes for repositories that fetch and store data from the database
 - Made sure database was serializable/could persist through runs
  
 Phase 2:
-- Add here
+- Created new tests for new Data Access methods for retrieving person and event data by IDs
+- Found and helped fix setup bugs in several ViewModel tests caused by new interfaces
+- Designed and implemented a basic logo for the app
+- Helped update app notification icons
+
+[PR #83] (https://github.com/CSC207-UofT/course-project-trackr/pull/83) 
+In this pull request, I set up the groundwork for our app's backend and serialization strategy. Using Room, a persistence library for databases on Android, I built the app's data access methods, repositories, and initial viewmodels. Many design decisions pertaining to the database structure and how we chose to implement it were condensed into this pull request. If it were not for our team's frequent discussions and exchange of ideas, we could have wasted a lot of time choosing a good approach. As a result of our careful planning, our database is designed to be efficient and scalable with zero compromise for the end user.
 
 **Jeremiah Djianto**:
 
@@ -156,22 +163,5 @@ Phase 2:
 - Created HILT bindings for each of the new interfaces, to allow the interfaces to conform to the existing Dependency Injection protocols within the codebase.
 
 [PR #152](https://github.com/CSC207-UofT/course-project-trackr/pull/152)
-This pull request included interfaces to separate the view models from the manager 
-classes. Each of the manager classes implemented some of these new interfaces, 
-which meant that the view models could depend on these interfaces instead of the
-manager classes themselves. This ensured that our program conformed to the dependency
-inverersion principle. This pull request also ensured that our program conformed to
-the interface segregation principle since each manager classes implements multiple 
-interfaces each with specific functions. Pull requests that I also authored that are
-related to this one include 
-[PR #157](https://github.com/CSC207-UofT/course-project-trackr/pull/157) which added
-interfaces for the repository classes and 
-[PR #157](https://github.com/CSC207-UofT/course-project-trackr/pull/144) which first
-introduced the manager classes.
-
-[PR #81](https://github.com/CSC207-UofT/course-project-trackr/pull/81)
-This pull request implemented the AddEventScreen. This screen is integral to the app
-because it is where the user inputs event. I helped create the UI components for this
-screen and design the AddScreenViewModel to manage the state of this screen. 
-
+This pull request included interfaces to separate the view models from the manager classes. Each of the manager classes implemented some of these new interfaces, which meant that the view models could depend on these interfaces instead of the manager classes themselves. This ensured that our program conformed to the dependency inverersion principle. This pull request also ensured that our program conformed to the interface segregation principle since each manager classes implements multiple interfaces each with specific functions. Pull requests that I also authored that are related to this one include [PR #157](https://github.com/CSC207-UofT/course-project-trackr/pull/157) which added interfaces for the repository classes and [PR #157](https://github.com/CSC207-UofT/course-project-trackr/pull/144) which first introduced the manager classes.
 
