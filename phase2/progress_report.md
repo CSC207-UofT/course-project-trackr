@@ -113,7 +113,7 @@ Phase 2:
 - Designed and implemented a basic logo for the app
 - Helped update app notification icons
 
-[PR #83] (https://github.com/CSC207-UofT/course-project-trackr/pull/83) 
+[PR #83](https://github.com/CSC207-UofT/course-project-trackr/pull/83) 
 In this pull request, I set up the groundwork for our app's backend and serialization strategy. Using Room, a persistence library for databases on Android, I built the app's data access methods, repositories, and initial viewmodels. Many design decisions pertaining to the database structure and how we chose to implement it were condensed into this pull request. If it were not for our team's frequent discussions and exchange of ideas, we could have wasted a lot of time choosing a good approach. As a result of our careful planning, our database is designed to be efficient and scalable with zero compromise for the end user.
 
 **Jeremiah Djianto**:
